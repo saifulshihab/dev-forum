@@ -10,15 +10,16 @@ const app = express();
 
 app.use(express.json());
 
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 // Routes
 app.get('/', (req, res) => {
   res.end('Backend server is running...');
 });
 
 // Middleware
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 app.use(notFound);
 app.use(errorHandler);
 

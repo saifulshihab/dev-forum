@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const WelComeHeader = () => {
   return (
-    <div className='max-w-7xl mx-auto'>
+    <>
       <div className='relative pt-6 px-4 sm:px-6 lg:px-8'>
         <nav
           className='relative flex items-center justify-between sm:h-10 lg:justify-start'
@@ -10,11 +11,12 @@ const WelComeHeader = () => {
         >
           <div className='flex items-center flex-grow flex-shrink-0 lg:flex-grow-0'>
             <div className='flex items-center justify-between w-full md:w-auto'>
-              <a href='/'>
+              <Link to='/'>
                 <span className='sr-only'>Workflow</span>
-
-                <span className='text-3xl font-bold'>BD Dev Forum</span>
-              </a>
+                <span className='text-3xl text-3xl font-extrabold text-gray-900'>
+                  BD Dev Forum
+                </span>
+              </Link>
               <div className='-mr-2 flex items-center md:hidden'>
                 <button
                   type='button'
@@ -44,33 +46,30 @@ const WelComeHeader = () => {
             </div>
           </div>
           <div className='hidden md:block md:ml-10 md:pr-4 md:space-x-8'>
-            <a
-              href='/'
+            <Link
+              to='/about'
               className='font-medium text-gray-500 hover:text-gray-900'
             >
               About Us
-            </a>
-
-            <a
-              href='/'
-              className='font-medium text-gray-500 hover:text-gray-900'
-            >
-              FAQ
-            </a>
-
-            <a
-              href='/'
+            </Link>
+            <Link
+              to='/'
               className='font-medium text-gray-500 hover:text-gray-900'
             >
               Features
-            </a>
-
-            <a
-              href='/'
+            </Link>
+            <Link
+              to='/'
+              className='font-medium text-gray-500 hover:text-gray-900'
+            >
+              FAQ
+            </Link>
+            <Link
+              to='/login'
               className='font-medium text-indigo-600 hover:text-indigo-500'
             >
               Log in
-            </a>
+            </Link>
           </div>
         </nav>
       </div>
@@ -116,51 +115,43 @@ const WelComeHeader = () => {
             aria-labelledby='main-menu'
           >
             <div className='px-2 pt-2 pb-3 space-y-1' role='none'>
-              <a
-                href='/'
+              <Link
+                to='/about'
                 className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                 role='menuitem'
               >
-                Product
-              </a>
+                About
+              </Link>
 
-              <a
-                href='/'
+              <Link
+                to='/'
                 className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                 role='menuitem'
               >
                 Features
-              </a>
+              </Link>
 
-              <a
-                href='/'
+              <Link
+                to='/'
                 className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                 role='menuitem'
               >
-                Marketplace
-              </a>
-
-              <a
-                href='/'
-                className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
-                role='menuitem'
-              >
-                Company
-              </a>
+                FAQ
+              </Link>
             </div>
             <div role='none'>
-              <a
-                href='/'
+              <Link
+                to='/login'
                 className='block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100'
                 role='menuitem'
               >
                 Log in
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

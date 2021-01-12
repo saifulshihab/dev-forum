@@ -101,7 +101,7 @@ const LoginPage = () => {
                     />
                   </svg>
                 </span>
-                Sign in
+                <Link to='/home'>Sign in</Link>
               </button>
             </div>
           </form>

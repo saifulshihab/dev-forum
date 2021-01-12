@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const WelComeHeader = () => {
   return (
     <>
-      <div className='relative pt-6 px-4 sm:px-6 lg:px-8'>
+      <div className='relative p-3 px-4 sm:px-6 lg:px-8'>
         <nav
           className='relative flex items-center justify-between sm:h-10 lg:justify-start'
           aria-label='Global'
@@ -12,9 +12,9 @@ const WelComeHeader = () => {
           <div className='flex items-center flex-grow flex-shrink-0 lg:flex-grow-0'>
             <div className='flex items-center justify-between w-full md:w-auto'>
               <Link to='/'>
-                <span className='sr-only'>Workflow</span>
+                <span className='sr-only'>DevForum</span>
                 <span className='text-3xl text-3xl font-extrabold text-gray-900'>
-                  BD Dev Forum
+                  DevForum
                 </span>
               </Link>
               <div className='-mr-2 flex items-center md:hidden'>

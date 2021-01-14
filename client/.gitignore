@@ -10,7 +10,7 @@
 
 # production
 /build
-
+demo.png
 # misc
 .DS_Store
 .env.local

@@ -16,12 +16,14 @@ const CustomSVG = ({ d, text, d1 }) => {
             strokeWidth='2'
             d={d}
           />
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth='2'
-            d={d1 && d1}
-          />
+          {d1 && (
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d={d1}
+            />
+          )}
         </svg>
       </span>
       <span className='h-full'>{text}</span>

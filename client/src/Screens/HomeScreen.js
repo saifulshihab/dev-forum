@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
+import { Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import CustomSVG from '../Components/CustomSVG';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
@@ -78,19 +78,15 @@ const HomeScreen = () => {
         </div>
         <div className='col-span-4 h-screen'>
           <div className='relative feed_right_content h-full'>
-            <Switch>
-              <Route exact path={path} component={AskQuestionsScreen} />
-              <Route
-                path={`${path}/askQuestion`}
-                component={AskQuestionsScreen}
-              />
+          
+              <Route path={path} component={AskQuestionsScreen} />          
               <Route path={`${path}/freelance`} component={FreelanceScreen} />
               <Route path={`${path}/jobs`} component={JobsScreen} />
               <Route path={`${path}/people`} component={FindPeopleScreen} />
               <Route path={`${path}/notification`} component={NotificationScreen} />
               <Route path={`${path}/settings`} component={Settings} />
               <Route path={`${path}/more`} component={MoreScreen} />
-            </Switch>
+            
           </div>
         </div>
       </div>

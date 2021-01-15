@@ -17,12 +17,12 @@ const HomeScreen = () => {
       <div className='grid grid-cols-5'>
         <div className='col-span-1 border-r-2 h-screen'>
           <ul className='text-gray-600'>
-            <Link to='/h'>
+            <Link to={`${url}/forum`}>
               <CustomSVG
                 d={
-                  'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                  'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z'
                 }
-                text={'Ask Question'}
+                text={'Forum'}
               />
             </Link>
             <Link to={`${url}/freelance`}>
@@ -78,15 +78,19 @@ const HomeScreen = () => {
         </div>
         <div className='col-span-4 h-screen'>
           <div className='relative feed_right_content h-full'>
-          
-              <Route path={path} component={AskQuestionsScreen} />          
+            <Switch>
+              <Route exact path={path} component={AskQuestionsScreen} />
+              <Route path={`${path}/forum`} component={AskQuestionsScreen} />
               <Route path={`${path}/freelance`} component={FreelanceScreen} />
               <Route path={`${path}/jobs`} component={JobsScreen} />
               <Route path={`${path}/people`} component={FindPeopleScreen} />
-              <Route path={`${path}/notification`} component={NotificationScreen} />
+              <Route
+                path={`${path}/notification`}
+                component={NotificationScreen}
+              />
               <Route path={`${path}/settings`} component={Settings} />
               <Route path={`${path}/more`} component={MoreScreen} />
-            
+            </Switch>
           </div>
         </div>
       </div>

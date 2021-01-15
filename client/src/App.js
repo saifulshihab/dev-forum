@@ -17,15 +17,15 @@ function App() {
     <div>
       <div className='max-w-7xl mx-auto'>
         <WelComeHeader />
-        <div className='relative px-4 sm:px-6 lg:px-8'>          
-            <Route path='/' exact component={Welcome} />
-            <Route path='/regfirststep' component={RegFirstStep} />
-            <Route path='/registration' component={RegPage} />
-            <Route path='/login' component={LoginPage} />
-            <Route path='/forgot-password' component={ForgotPassword} />
-            <Route path='/about' component={AboutUs} />
-            <Route path='/h' component={HomeScreen} />          
-            {/* <Route path="/*" component={PageNotFound}  /> */}
+        <div className='relative px-4 sm:px-6 lg:px-8'>
+          <Route path='/' exact component={Welcome} />
+          <Route path='/regfirststep' component={RegFirstStep} />
+          <Route path='/registration' component={RegPage} />
+          <Route path='/login' component={LoginPage} />
+          <Route path='/forgot-password' component={ForgotPassword} />
+          <Route path='/about' component={AboutUs} />
+          <Route path='/h' component={HomeScreen} />
+          {/* <Route path="/*" component={PageNotFound}  /> */}
         </div>
       </div>
     </div>

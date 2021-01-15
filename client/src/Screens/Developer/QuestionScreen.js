@@ -2,7 +2,7 @@ import React from 'react';
 import QuestionPost from '../../Components/QuestionPost';
 import { Question } from '../../Data';
 
-const QuestionScreen = ({}) => {
+const QuestionScreen = () => {
   return (
     <div>
       {Question.map((qu) => (

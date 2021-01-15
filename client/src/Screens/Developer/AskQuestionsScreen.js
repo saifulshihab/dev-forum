@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import ArticleScreen from './ArticleScreen';
 import QuestionScreen from './QuestionScreen';
@@ -88,7 +88,7 @@ const AskQuestionsScreen = () => {
                           setArticleOn(false);
                           setQuestionOn(false);
                         }}
-                        to={`${url}/articles`}
+                        to={`${url}/topArticles`}
                       >
                         <div
                           className={`flex items-center cursor-pointer ${
@@ -125,7 +125,16 @@ const AskQuestionsScreen = () => {
           <Switch>
             <Route exact path={path} component={QuestionScreen} />
             <Route path={`${path}/questions`} component={QuestionScreen} />
-            <Route path={`${path}/articles`} component={ArticleScreen} />
+            <Route
+              exact
+              path={`${path}/articles`}
+              component={() => <ArticleScreen topArticle={false} />}
+            />
+            <Route
+              exact
+              path={`${path}/topArticles`}
+              component={() => <ArticleScreen topArticle />}
+            />
           </Switch>
         </div>
       </div>

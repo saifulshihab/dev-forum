@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Comment from './Comment';
 
 const Article = ({ article }) => {
+  const [showComment, setshowComment] = useState(false);
   return (
     <>
       <div className='w-full rounded-md border my-2 px-5 py-2'>
@@ -57,7 +59,10 @@ const Article = ({ article }) => {
         </div>
 
         <div className='flex   mt-3 border-t cursor-pointer pt-1 text-center'>
-          <div className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'>
+          <div
+            onClick={() => setshowComment(!showComment)}
+            className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'
+          >
             <span className='w-4 mr-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -99,6 +104,17 @@ const Article = ({ article }) => {
           </div>
         </div>
       </div>
+      {showComment && (
+        <div className='py-2 ml-6'>
+          <div className='text-gray-500 text-sm border-b pb-1'>
+            <span className='mr-3'>{article.comments.length} Comments</span>
+            <span>{article.share} Shares</span>
+          </div>
+          {article.comments.map((comment) => (
+            <Comment cmnt={comment} />
+          ))}
+        </div>
+      )}
     </>
   );
 };

@@ -90,6 +90,29 @@ export const ArticleData = [
     upvote: 23,
     downvote: 2,
     createdAt: '18h',
+    comments: [
+      {
+        _id: 34,
+        comment: 'Awesome wrting',
+        user: {
+          _id: 34536,
+          username: 'shihab',
+          dp: '',
+          fullname: 'saidu shih sdhisgf',
+        },
+      },
+      {
+        _id: 894,
+        comment: 'Good',
+        user: {
+          _id: 34536,
+          username: 'shihab',
+          dp: '',
+          fullname: 'saidu shih sdhisgf',
+        },
+      },
+    ],
+    share: 5,
   },
   {
     _id: 25,
@@ -105,6 +128,8 @@ export const ArticleData = [
     upvote: 723,
     downvote: 2,
     createdAt: '18h',
+    comments: [],
+    share: 5,
   },
   {
     _id: 7,
@@ -120,5 +145,7 @@ export const ArticleData = [
     upvote: 4345,
     downvote: 45,
     createdAt: '18h',
+    comments: [],
+    share: 5,
   },
 ];

@@ -77,7 +77,7 @@ const HomeScreen = () => {
           </ul>
         </div>
         <div className='col-span-4 h-screen'>
-          <div className='relative feed_right_content h-full'>
+          <div className='relative feed_right_content bg-gray-50 h-full'>
             <Switch>
               <Route exact path={path} component={AskQuestionsScreen} />
               <Route path={`${path}/forum`} component={AskQuestionsScreen} />

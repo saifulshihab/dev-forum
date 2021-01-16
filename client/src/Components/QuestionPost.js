@@ -5,7 +5,7 @@ const QuestionPost = ({ question }) => {
   const [ansOpen, setAnsOpen] = useState(false);
   return (
     <>
-      <div className='w-full shadow rounded-md my-2 px-5 py-2 '>
+      <div className='w-full bg-white shadow rounded-md my-2 px-5 py-2 '>
         <div className='flex items-center'>
           <div className='w-10'>
             <img

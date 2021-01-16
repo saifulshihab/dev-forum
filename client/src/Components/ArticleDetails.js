@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React from 'react';
 import Comment from './Comment';
 
-const Article = ({ article }) => {
-  const [showComment, setshowComment] = useState(false);
-  const [showMore, setshowMore] = useState(false);
-  const { url } = useRouteMatch();
-  console.log(url);
+const ArticleDetails = ({ article }) => {
   return (
     <>
       <div className='w-full bg-white rounded-md border my-2 px-5 py-2'>
@@ -44,11 +39,9 @@ const Article = ({ article }) => {
             </div>
           </div>
           <div className=''>
-            <Link to={`${url}/${article && article._id}`}>
-              <div className='text-gray-500 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
-                {article.title}
-              </div>
-            </Link>
+            <div className='text-gray-500 text-xl font-semibold'>
+              {article.title}
+            </div>
             <div className='text-gray-400 text-xs'>
               <span className='mr-2'>{article.upvote} upvotes</span>
               <span className='mr-4'>{article.downvote} downvotes</span>
@@ -60,27 +53,14 @@ const Article = ({ article }) => {
           </div>
         </div>
 
-        <div
-          className={`mt-3 ${
-            showMore ? 'h-full' : 'h-24'
-          } max-h-50 overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
-        >
+        <div className={`mt-3 h-full max-h-50 overflow-ellipsis`}>
           <div className='text-gray-600 text-sm text-justify'>
             {article.body}
           </div>
         </div>
-        <span
-          onClick={() => setshowMore(!showMore)}
-          className='text-xs text-indigo-600 hover:text-indigo-800 cursor-pointer'
-        >
-          Show{showMore ? ' less' : ' more'}...
-        </span>
 
         <div className='flex   mt-3 border-t cursor-pointer pt-1 text-center'>
-          <div
-            onClick={() => setshowComment(!showComment)}
-            className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'
-          >
+          <div className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'>
             <span className='w-4 mr-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -122,19 +102,18 @@ const Article = ({ article }) => {
           </div>
         </div>
       </div>
-      {showComment && (
-        <div className='py-2 ml-6'>
-          <div className='text-gray-500 text-sm border-b pb-1'>
-            <span className='mr-3'>{article.comments.length} Comments</span>
-            <span>{article.share} Shares</span>
-          </div>
-          {article.comments.map((comment) => (
-            <Comment cmnt={comment} />
-          ))}
+
+      <div className='py-2 ml-6'>
+        <div className='text-gray-500 text-sm border-b pb-1'>
+          <span className='mr-3'>{article.comments.length} Comments</span>
+          <span>{article.share} Shares</span>
         </div>
-      )}
+        {article.comments.map((comment) => (
+          <Comment cmnt={comment} />
+        ))}
+      </div>
     </>
   );
 };
 
-export default Article;
+export default ArticleDetails;

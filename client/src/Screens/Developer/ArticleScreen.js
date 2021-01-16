@@ -3,7 +3,6 @@ import Article from '../../Components/Article';
 import { ArticleData } from '../../Data';
 
 const ArticleScreen = ({ topArticle }) => {
-  console.log(topArticle + '\n');
   return (
     <div>
       {topArticle === true

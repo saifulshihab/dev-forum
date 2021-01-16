@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
+import { Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import ArticleScreen from './ArticleScreen';
 import QuestionScreen from './QuestionScreen';
+import SingleArticleScreen from './SingleArticleScreen';
 
 const AskQuestionsScreen = () => {
   const [questionOn, setQuestionOn] = useState(true);
@@ -126,12 +127,14 @@ const AskQuestionsScreen = () => {
             <Route exact path={path} component={QuestionScreen} />
             <Route path={`${path}/questions`} component={QuestionScreen} />
             <Route
-              exact
+              path={`${path}/articles/:articleId`}
+              component={SingleArticleScreen}
+            />
+            <Route
               path={`${path}/articles`}
               component={() => <ArticleScreen topArticle={false} />}
             />
             <Route
-              exact
               path={`${path}/topArticles`}
               component={() => <ArticleScreen topArticle />}
             />

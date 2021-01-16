@@ -3,7 +3,7 @@ import React from 'react';
 const Comment = ({ cmnt }) => {
   return (
     <>
-      <div className='w-4/5 flex items-center rounded-md my-2 px-5'>
+      <div className='w-full flex bg-white rounded py-2 items-center rounded-md my-2 px-5'>
         <div className='w-full'>
           <div className='text-gray-500 text-sm'>{cmnt.comment}</div>
           <div className='flex text-gray-400 text-xs w-full'>

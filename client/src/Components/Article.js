@@ -9,7 +9,7 @@ const Article = ({ article }) => {
   console.log(url);
   return (
     <>
-      <div className='w-full bg-white rounded-md border my-2 px-5 py-2'>
+      <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>
         <div className='flex h-12 items-center pb-3 my-1.5 border-b'>
           <div className='mr-3 w-6'>
             <div className='w-full cursor-pointer hover:bg-gray-300 bg-gray-200 mb-1 rounded-full text-gray-500'>

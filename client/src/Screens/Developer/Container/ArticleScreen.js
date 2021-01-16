@@ -1,6 +1,6 @@
 import React from 'react';
-import Article from '../../Components/Article';
-import { ArticleData } from '../../Data';
+import Article from '../../../Components/Article';
+import { ArticleData } from '../../../Data';
 
 const ArticleScreen = ({ topArticle }) => {
   return (

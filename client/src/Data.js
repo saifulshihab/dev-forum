@@ -149,3 +149,42 @@ export const ArticleData = [
     share: 5,
   },
 ];
+
+export const FreelanceProjectData = [
+  {
+    _id: 1,
+    title: 'Looking for PHP Laravel developer',
+    description:
+      'I have ongoing project mobile (Java & Swift) and desktop (electron) app for chatting and i would like to integrate Jitsi meeting on it and add some more feature.',
+    languages: ['PHP', 'Html', 'css', 'JavaScript'],
+    budget: '10k',
+    duration: 7,
+  },
+  {
+    _id: 2,
+    title: 'MERN stack dveloper needed',
+    description:
+      'Need a mern stacjk developer who can heko both as a front-end & back-end developer, w need a social nedia application ehere user can foloow each other, post photos, status, chat with others, and get daily update news of whole world, Need a mern stacjk developer who can heko both as a front-end & back-end developer, w need a social nedia application ehere user can foloow each other, post photos, status, chat with others, and get daily update news of whole world. Need a mern stacjk developer who can heko both as a front-end & back-end developer, w need a social nedia application ehere user can foloow each other, post photos, status, chat with others, and get daily update news of whole world. Need a mern stacjk developer who can heko both as a front-end & back-end developer, w need a social nedia application ehere user can foloow each other, post photos, status, chat with others, and get daily update news of whole world',
+    languages: ['React.js', 'Node.js', 'Express', 'MongoDB'],
+    budget: '69k',
+    duration: 7,
+  },
+  {
+    _id: 3,
+    title: 'Swift developer needed',
+    description:
+      'I have ongoing project mobile (Java & Swift) and desktop (electron) app for chatting and i would like to integrate Jitsi meeting on it and add some more feature.',
+    languages: ['Swift', 'iOS', 'C#'],
+    budget: '50k',
+    duration: 7,
+  },
+  {
+    _id: 4,
+    title: 'Need Python Django Developer (Django REST Framework)',
+    description:
+      'I have ongoing project mobile (Java & Swift) and desktop (electron) app for chatting and i would like to integrate Jitsi meeting on it and add some more feature.',
+    languages: ['Django', 'python', 'RESTful ', 'API'],
+    budget: '20k',
+    duration: 7,
+  },
+];

@@ -2,7 +2,9 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 const FreelanceProject = ({ project }) => {
+
   const { url } = useRouteMatch();
+  
   return (
     <div className='w-full text-gray-600 mb-2 rounded shadow p-3 bg-white '>
       <Link to={`${url}/${project._id}`}>
@@ -10,7 +12,7 @@ const FreelanceProject = ({ project }) => {
           {project.title}
         </div>
       </Link>
-      <div className='my-2 w-full h-20 overflow-hidden text-sm overflow-ellipsis'>
+      <div className='my-2 w-full h-20 overflow-hidden text-justify text-sm overflow-ellipsis'>
         {project.description}
       </div>
       <div className='w-full flex text-sm'>

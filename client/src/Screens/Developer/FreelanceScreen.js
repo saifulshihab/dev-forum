@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import FreelanceProjectScreen from './Container/FreelanceProjectScreen';
-import SingleFreelanceProject from './Container/SingleFreelanceProject';
+import FreelanceProjectContainer from '../../Container/FreelanceProjectContainer';
+import SingleFreelanceProjectContainer from '../../Container/SingleFreelanceProjectContainer';
 
 const FreelanceScreen = () => {
   const { path } = useRouteMatch();
@@ -15,10 +15,10 @@ const FreelanceScreen = () => {
 
           <div className='job_feed px-2'>
             <Switch>
-              <Route exact path={path} component={FreelanceProjectScreen} />
+              <Route exact path={path} component={FreelanceProjectContainer} />
               <Route
                 path={`${path}/:projectId`}
-                component={SingleFreelanceProject}
+                component={SingleFreelanceProjectContainer}
               />
             </Switch>
           </div>

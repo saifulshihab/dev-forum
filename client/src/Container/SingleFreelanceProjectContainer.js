@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import FProjectDetails from '../../../Components/FProjectDetails';
-import { FreelanceProjectData } from '../../../Data';
+import FProjectDetails from '../Components/FProjectDetails';
+import { FreelanceProjectData } from '../Data';
 
-const SingleFreelanceProject = () => {
+const SingleFreelanceProjectContainer = () => {
   const { projectId } = useParams();
   return (
     <>
@@ -17,4 +17,4 @@ const SingleFreelanceProject = () => {
   );
 };
 
-export default SingleFreelanceProject;
+export default SingleFreelanceProjectContainer;

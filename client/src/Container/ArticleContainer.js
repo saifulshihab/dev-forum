@@ -1,8 +1,8 @@
 import React from 'react';
-import Article from '../../../Components/Article';
-import { ArticleData } from '../../../Data';
+import Article from '../Components/Article';
+import { ArticleData } from '../Data';
 
-const ArticleScreen = ({ topArticle }) => {
+const ArticleContainer = ({ topArticle }) => {
   return (
     <div>
       {topArticle === true
@@ -15,4 +15,4 @@ const ArticleScreen = ({ topArticle }) => {
   );
 };
 
-export default ArticleScreen;
+export default ArticleContainer;

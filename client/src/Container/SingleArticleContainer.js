@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ArticleDetails from '../../../Components/ArticleDetails';
-import { ArticleData } from '../../../Data';
+import ArticleDetails from '../Components/ArticleDetails';
+import { ArticleData } from '../Data';
 
-const SingleArticleScreen = () => {
+const SingleArticleContainer = () => {
   const { articleId } = useParams();
- 
+
   return (
     <>
       {ArticleData.map(
@@ -18,4 +18,4 @@ const SingleArticleScreen = () => {
   );
 };
 
-export default SingleArticleScreen;
+export default SingleArticleContainer;

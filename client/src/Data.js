@@ -188,3 +188,82 @@ export const FreelanceProjectData = [
     duration: 7,
   },
 ];
+
+export const ProfileData = {
+  full_name: 'Saiful Islam Shihab',
+  username: 'saifulshihab',
+  dp: 'images',
+  cover: 'images',
+  bio: 'React & Node.js Enthusiast <3',
+  email: 'saiful35-1970@diu.edu.bd',
+  website: 'shihabms-portfolio.netlify.app',
+  location: '79 Kazi Nazrul Islam Eve, Farmgate, Dhaka-1215',
+  github: 'saifulshihab',
+  social_links: [
+    {
+      category: 'fb',
+      link: 'https://facebook.com/isihsihab',      
+    },
+    {
+      category: 'tweet',
+      link: 'https://twitter.com/isihsihab',      
+    },
+    {
+      category: 'insta',
+      link: 'https://instagram.com/isihsihab',      
+    }
+  ],
+  education: [
+    {
+      type: 'SSC',
+      institute: 'Sholla School & College',
+      from: 'Jul 2009',
+      to: 'Feb 2014',
+      present: false,
+      desc: 'Background: Science | GPA 4.75'
+    },
+    {
+      type: 'HSC',
+      institute: 'Hajigonj Model University College',
+      from: 'Jan 2014',
+      to: 'Aug 2016',
+      present: false,
+      desc: 'Background: Science | GPA 4.75'
+    },
+    {
+      type: 'Bachelor Degree',
+      institute: 'Sholla School & College',
+      from: 'Jan 2017',      
+      present: true,
+      desc: 'BSc in Software Engineering | CGPA 3.83'
+    }
+  ],
+  experiences: [
+    {
+      company: 'SoftCare IT USA',
+      role: 'Junior Software Engineer',
+      from: 'Feb 2012',
+      to: 'Dec 2015',
+      present: false,
+      desc: 'My first job. Had a good experience.'
+    },
+    {
+      company: 'Brain Station 23',
+      role: 'Full Stack Engineer',
+      from: 'Jan 2015',
+      to: 'Feb 2018',
+      present: false,
+      desc: 'Second job. Was definitely good'
+    },
+    {
+      company: 'Fiverr',
+      role: 'Full Stack Web Developer',
+      from: 'Oct 2019',     
+      present: true,
+      desc: 'Freelancing, working as a full stack web developer, Have 5 star rated profile.'
+    }
+  ],
+  createdAt: 'June 29 2019'
+
+
+}

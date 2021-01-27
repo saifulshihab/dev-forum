@@ -7,18 +7,18 @@ const QuestionPost = ({ question }) => {
     <>
       <div className='w-full bg-white shadow rounded-md my-2 px-5 py-2 '>
         <div className='flex items-center'>
-          <div className='w-10'>
+          <div className='w-10 h-10'>
             <img
-              className='rounded-full'
-              src={question && question.user.dp}
+              className='border w-full h-full rounded-full'
+              src={'https://picsum.photos/seed/picsum/200/300'}
               alt={question.user.username}
             />
           </div>
-          <div className='ml-2'>
-            <h2 className='text-gray-700 font-medium cursor-pointer hover:text-gray-800'>
+          <div className='ml-2 w-40 h-10'>
+            <h4 className='text-gray-700 font-medium cursor-pointer hover:text-gray-800'>
               {question.user.fullname}
-            </h2>
-            <span className='text-gray-400 text-xs'>{question.createdAt}</span>
+            </h4>
+            <p className='-mt-0.5 text-gray-400 text-xs'>{question.createdAt}</p>
           </div>
         </div>
         <div className='text-gray-600 text-2xl'>{question.title}</div>

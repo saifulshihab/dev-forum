@@ -1,0 +1,14 @@
+.image_center {
+  object-fit: cover;
+  object-position: center;
+}
+.dev_dp_cover .cover {
+  z-index: -999;
+}
+.dev_dp_cover .dp {
+  margin-left: 13px;
+}
+.dev_dp_cover .dp img {
+  z-index: 1000;
+  margin-top: -90px;
+}

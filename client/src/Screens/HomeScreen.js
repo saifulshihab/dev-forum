@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import CustomSVG from '../Components/CustomSVG';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
+import DeveloperProfileScreen from './Developer/DeveloperProfileScreen';
 import FindPeopleScreen from './Developer/FindPeopleScreen';
 import FreelanceScreen from './Developer/FreelanceScreen';
 import JobsScreen from './Developer/JobsScreen';
@@ -98,6 +99,7 @@ const HomeScreen = () => {
                 component={NotificationScreen}
               />
               <Route path={`${path}/settings`} component={Settings} />
+              <Route path={`${path}/profile`} component={DeveloperProfileScreen} />
               <Route path={`${path}/more`} component={MoreScreen} />
             </Switch>
           </div>

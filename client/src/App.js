@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import './App.css';
 import AboutUs from './Screens/AboutUs';
 import ForgotPassword from './Screens/ForgotPassword';
 import HomeScreen from './Screens/HomeScreen';
 import LoginPage from './Screens/LoginPage';
-import PageNotFound from './Screens/PageNotFound';
+// import PageNotFound from './Screens/PageNotFound';
 import RegFirstStep from './Screens/RegFirstStep';
 import RegPage from './Screens/RegPage';
 import Welcome from './Screens/Welcome';
 import WelComeHeader from './Screens/WelComeHeader';
 import './styles/main.css';
+import './App.css';
 
 function App() {
   return (

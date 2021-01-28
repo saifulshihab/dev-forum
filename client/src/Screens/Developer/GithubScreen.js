@@ -19,8 +19,6 @@ const GithubScreen = ({ username }) => {
       fetchGhData();
     }
   }, [username]);
-  console.log(gh);
-  console.log(repo);
   return (
     <div>
       {Object.keys(gh).length === 0 ? (
@@ -51,7 +49,12 @@ const GithubScreen = ({ username }) => {
                 <i class='fas fa-code-branch mr-2'></i>
                 {gh.public_repos} repos, {gh.public_gists} gists
               </p>
-              {gh.company !== '' && <p><i class="far fa-building mr-2"></i>{gh.company}</p>}
+              {gh.company !== null && (
+                <p>
+                  <i class='far fa-building mr-2'></i>
+                  {gh.company}
+                </p>
+              )}
               {gh.email !== '' && <p>{gh.email}</p>}
               {gh.blog !== '' && (
                 <p>

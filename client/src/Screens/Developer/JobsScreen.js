@@ -1,11 +1,29 @@
-import React from 'react'
+import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router';
+import JobsContainer from '../../Container/JobsContainer';
+import SingleJobContainer from '../../Container/SingleJobContainer';
 
 const JobsScreen = () => {
-    return (
-        <div>
-            Get Jobs
-        </div>
-    )
-}
+  const { path } = useRouteMatch();
+  return (
+    <div>
+      <div className='grid grid-cols-4 h-full'>
+        <div className='col-span-3 border-r-2'>
+          <div className='mb-2 text-lg text-gray-600 bg-gray-100 flex items-center h-10 shadow font-semibold p-2'>
+            Job Circular
+          </div>
 
-export default JobsScreen
+          <div className='job_feed px-2'>
+            <Switch>
+              <Route exact path={path} component={JobsContainer} />
+              <Route path={`${path}/:jobId`} component={SingleJobContainer} />
+            </Switch>
+          </div>
+        </div>
+        <div>Similer Jobs</div>
+      </div>
+    </div>
+  );
+};
+
+export default JobsScreen;

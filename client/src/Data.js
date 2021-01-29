@@ -13,7 +13,7 @@ export const Question = [
         user: {
           username: 'shihab',
           fullname: 'Saiful Islam Shihab',
-          dp: require('./demo.png'),
+          dp: '',
         },
       },
       {
@@ -24,7 +24,7 @@ export const Question = [
         user: {
           username: 'shihab',
           fullname: 'Saiful Islam Shihab',
-          dp: require('./demo.png'),
+          dp: '',
         },
       },
     ],
@@ -32,7 +32,7 @@ export const Question = [
     user: {
       username: 'shihab',
       fullname: 'Saiful Islam Shihab',
-      dp: require('./demo.png'),
+      dp: '',
     },
     createdAt: '1h',
   },
@@ -50,7 +50,7 @@ export const Question = [
         user: {
           username: 'shihab',
           fullname: 'Saiful Islam Shihab',
-          dp: require('./demo.png'),
+          dp: '',
         },
       },
       {
@@ -61,7 +61,7 @@ export const Question = [
         user: {
           username: 'johndo9',
           fullname: 'Saiful Islam Shihab',
-          dp: require('./demo.png'),
+          dp: '',
         },
       },
     ],
@@ -69,7 +69,7 @@ export const Question = [
     user: {
       username: 'johndo9',
       fullname: 'John Doe',
-      dp: require('./demo.png'),
+      dp: '',
     },
     createdAt: '1h',
   },
@@ -85,7 +85,7 @@ export const ArticleData = [
     user: {
       username: 'johndo9',
       fullname: 'John Doe',
-      dp: require('./demo.png'),
+      dp: '',
     },
     upvote: 23,
     downvote: 2,
@@ -123,7 +123,7 @@ export const ArticleData = [
     user: {
       username: 'johndo9',
       fullname: 'John Doe',
-      dp: require('./demo.png'),
+      dp: '',
     },
     upvote: 723,
     downvote: 2,
@@ -140,7 +140,7 @@ export const ArticleData = [
     user: {
       username: 'johndo9',
       fullname: 'John Doe',
-      dp: require('./demo.png'),
+      dp: '',
     },
     upvote: 4345,
     downvote: 45,

@@ -1,11 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router';
+import JobDetails from '../Components/JobDetails';
+import { JobData } from '../Data';
 
 const SingleJobContainer = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  const { jobId } = useParams();
 
-export default SingleJobContainer
+  return (
+    <div>
+      {JobData.map(
+        (el) => el.id.toString() === jobId.toString() && <JobDetails job={el} />
+      )}
+    </div>
+  );
+};
+
+export default SingleJobContainer;

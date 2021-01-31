@@ -36,13 +36,12 @@ const LoginPage = () => {
             {({ handleSubmit }) => (
               <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
                 <input type='hidden' name='remember' value='true' />
-                <div className='rounded-md shadow-sm -space-y-px'>
+                <div className='rounded-md -space-y-px'>
                   <MyTextField
-                    id='email-address'
+                    id='username'
                     name='username'
-                    type='email'
+                    type='text'
                     placeholder='Email or username'
-                    label=''
                   />
 
                   <MyTextField

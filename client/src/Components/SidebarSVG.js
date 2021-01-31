@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CustomSVG = ({ d, text, d1 }) => {
+const SidebarSVG = ({ d, text, d1 }) => {
   return (
     <li className='flex justify-left px-7 items-center text-lg font-semibold h-10 hover:text-indigo-600 cursor-pointer py-6'>
       <span className='h-full items-center w-7 mr-3'>
@@ -31,4 +31,4 @@ const CustomSVG = ({ d, text, d1 }) => {
   );
 };
 
-export default CustomSVG;
+export default SidebarSVG;

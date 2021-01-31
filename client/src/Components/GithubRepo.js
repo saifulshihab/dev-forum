@@ -4,7 +4,7 @@ import RepoLangDot from './RepoLangDot';
 const GithubRepo = ({ repo }) => {
   return (
     <div className='w-80 lg:w-96 h-36 border border-indigo-500 inline-block rounded p-4 shadow mr-2 mb-2 text-gray-600 overflow-ellipsis overflow-hidden'>
-      <a href={repo.svn_url} target='_blank'>
+      <a href={repo.svn_url}>
         <p className='text-md h-6 font-semibold mb-1'>
           <i class='fas fa-book mr-2'></i>
           {repo.name}

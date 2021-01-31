@@ -62,7 +62,7 @@ const FProjectDetails = ({ project }) => {
                 type='submit'
                 className='group mt-2 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
               >
-                {3 === 3 && (
+                {3 === 33 && (
                   <svg
                     className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
                     xmlns='http://www.w3.org/2000/svg'
@@ -85,7 +85,7 @@ const FProjectDetails = ({ project }) => {
                   </svg>
                 )}
                 
-                  {3 == 3 ? 'Processing...' : 'Bid now'}
+                  {3 == 23 ? 'Processing...' : 'Bid now'}
                 
               </button>
           </form>

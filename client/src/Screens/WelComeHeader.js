@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Transition } from '@headlessui/react';
 
 const WelComeHeader = () => {
+  const [dpDropdown, setdpDropdown] = useState(false);
   return (
     <>
-      <div className='relative p-3 px-4 sm:px-6 lg:px-8'>
+      <div className='relative z-40 p-3 px-4 sm:px-6 lg:px-8'>
         <nav
           className='relative flex items-center justify-between sm:h-10 lg:justify-start'
           aria-label='Global'
@@ -45,7 +47,7 @@ const WelComeHeader = () => {
               </div>
             </div>
           </div>
-          <div className='hidden md:block md:ml-10 md:pr-4 md:space-x-8'>
+          <div className='hidden md:flex items-center ml-auto md:space-x-8'>
             <Link
               to='/about'
               className='font-medium text-gray-500 hover:text-gray-900'
@@ -68,8 +70,76 @@ const WelComeHeader = () => {
               to='/login'
               className='font-medium text-indigo-600 hover:text-indigo-500'
             >
+              <i className='fas fa-sign-in-alt mr-2'></i>
               Log in
             </Link>
+            <div className='inline-block'>
+              <div className=''>
+                <button
+                  onClick={() => setdpDropdown(!dpDropdown)}
+                  className='max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                  id='user-menu'
+                  aria-haspopup='true'
+                >
+                  <span className='sr-only'>Open user menu</span>
+                  <img
+                    className='h-8 w-8 rounded-full'
+                    src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                    alt=''
+                  />
+                </button>
+                {dpDropdown && (
+                  <div
+                    onClick={() => setdpDropdown(false)}
+                    className='fixed top-0 left-0 right-0 bottom-0 w-full'
+                  ></div>
+                )}
+              </div>
+              <Transition
+                show={dpDropdown}
+                enter='transition ease-out duration-100 transform'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='transition ease-in duration-75 transform'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'
+              >
+                {(ref) => (
+                  <div
+                    ref={ref}
+                    className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'
+                    role='menu'
+                    aria-orientation='vertical'
+                    aria-labelledby='user-menu'
+                    area-aria-expanded={`${dpDropdown && true}`}
+                  >
+                    <Link
+                      to='/h/profile'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      role='menuitem'
+                    >
+                      <i class='fas fa-user-circle mr-2'></i>Profile
+                    </Link>
+
+                    <Link
+                      to='/'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      role='menuitem'
+                    >
+                      <i class='fas fa-cog mr-2'></i>Settings
+                    </Link>
+
+                    <Link
+                      to='/'
+                      className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                      role='menuitem'
+                    >
+                      <i className='fas fa-sign-out-alt mr-2'></i>Sign out
+                    </Link>
+                  </div>
+                )}
+              </Transition>
+            </div>
           </div>
         </nav>
       </div>

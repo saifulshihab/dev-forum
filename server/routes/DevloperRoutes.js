@@ -1,5 +1,8 @@
 import express from 'express';
 const router = express.Router();
+import { corsWithOptions } from './cors.js';
+import cors from 'cors';
+
 import {
   signupDeveloper,
   signinDeveloper,

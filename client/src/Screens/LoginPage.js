@@ -4,7 +4,15 @@ import { Formik } from 'formik';
 import logo from '../logo.svg';
 import MyTextField from '../Components/MyTextField';
 import * as yup from 'yup';
+import { devSignin } from '../redux/action/DeveloperAction';
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from '../Components/Alert';
+
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const signInDev = useSelector((state) => state.signInDev);
+  const { loading, userInfo, error } = signInDev;
+
   const fieldValidationSchema = yup.object({
     username: yup.string().required('Required!'),
     password: yup.string().required('Required!'),
@@ -30,10 +38,10 @@ const LoginPage = () => {
           </div>
           <Formik
             initialValues={{ username: '', password: '' }}
-            onSubmit={(data) => console.log(data)}
+            onSubmit={(data, { setSubmitting }) => dispatch(devSignin(data))}
             validationSchema={fieldValidationSchema}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, isSubmitting }) => (
               <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
                 <input type='hidden' name='remember' value='true' />
                 <div className='rounded-md -space-y-px'>
@@ -80,10 +88,13 @@ const LoginPage = () => {
 
                 <div>
                   <button
+                    disabled={isSubmitting}
                     type='submit'
-                    className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+                      isSubmitting ? 'bg-indigo-400' : 'bg-indigo-600'
+                    }  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
                   >
-                    {3 === 37 && (
+                    {loading && (
                       <svg
                         className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
                         xmlns='http://www.w3.org/2000/svg'
@@ -105,14 +116,17 @@ const LoginPage = () => {
                         ></path>
                       </svg>
                     )}
-                    <Link to='/h/forum'>
-                      {3 == 63 ? 'Signing in...' : 'Sign in'}
-                    </Link>
+                    {loading ? 'Signing in...' : 'Sign in'}
                   </button>
                 </div>
               </form>
             )}
           </Formik>
+          {userInfo ? (
+            <Alert success msg={'Sign in successfull!'} />
+          ) : (
+            error && <Alert fail msg={error} />
+          )}
         </div>
       </div>
     </>

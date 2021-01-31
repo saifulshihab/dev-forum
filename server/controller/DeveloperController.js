@@ -7,7 +7,8 @@ import _ from 'lodash';
 // routes: api/dev/signup
 // access: public
 const signupDeveloper = asyncHandler(async (req, res) => {
-  const { full_name, username, email, password, c_password } = req.body;
+  const { full_name, username, email, password, c_password } = req.body.dev;
+
   const devExist = await Developer.findOne({ email: email });
   const devExist2 = await Developer.findOne({ username: username });
   if (devExist) {
@@ -33,7 +34,7 @@ const signupDeveloper = asyncHandler(async (req, res) => {
 // routes: api/dev/signin
 // access: public
 const signinDeveloper = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = req.body.credentials;
   const dev = await Developer.findOne({ username });
   if (dev && (await dev.verifyPassword(password))) {
     res.status(200).json({

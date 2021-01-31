@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../logo.svg';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import MyTextField from '../Components/MyTextField';
+import { devSignup } from '../redux/action/DeveloperAction';
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from '../Components/Alert';
+import Loader from '../Components/Loader';
 
 const RegPage = () => {
+  const dispatch = useDispatch();
+  const signUpDev = useSelector((state) => state.signUpDev);
+  const { loading, success, error } = signUpDev;
+
+  useEffect(() => {
+    return () => {};
+  }, [dispatch]);
+
   const fieldValidationSchema = yup.object({
-    f_name: yup
+    full_name: yup
       .string()
       .max(20, 'Must be 20 charecters or less!')
       .min(4, 'At least 4 charecter!')
       .required('Required!'),
     username: yup
       .string()
-      .max(10, 'Must be 10 charecter or less!')
+      .max(15, 'Must be 15 charecter or less!')
       .min(4, 'At least 4 charecter!')
       .required('Required!'),
     email: yup.string().email().required('Required!'),
@@ -39,23 +51,24 @@ const RegPage = () => {
         </div>
         <Formik
           initialValues={{
-            f_name: '',
+            full_name: '',
             username: '',
             email: '',
             password: '',
             c_password: '',
           }}
           validationSchema={fieldValidationSchema}
-          onSubmit={(data) => {
-            console.log(data);
+          onSubmit={(data, { setSubmitting }) => {
+            dispatch(devSignup(data));
+            setSubmitting(false);
           }}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, isSubmitting }) => (
             <form className='mt-6' onSubmit={handleSubmit}>
               <MyTextField
                 id='fname'
                 type='text'
-                name='f_name'
+                name='full_name'
                 label='Full name'
                 placeholder='Your full name'
               />
@@ -92,6 +105,7 @@ const RegPage = () => {
                 label='Confirm password'
               />
               <button
+                disabled={isSubmitting}
                 type='submit'
                 className='w-full py-3 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
               >
@@ -105,6 +119,13 @@ const RegPage = () => {
             </form>
           )}
         </Formik>
+        {loading ? (
+          <Loader />
+        ) : success ? (
+          <Alert success msg={'Registration successfull!'} />
+        ) : (
+          error && <Alert fail msg={error} />
+        )}
       </div>
     </div>
   );

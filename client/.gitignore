@@ -12,6 +12,7 @@
 # production
 /build
 demo.png
+baseURL.js
 # misc
 .DS_Store
 .env.local

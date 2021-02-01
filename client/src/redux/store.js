@@ -2,11 +2,16 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import jwt from 'jsonwebtoken';
-import { devSigninReducer, devSignupReducer } from './reducer/DeveloperReducer';
+import {
+  devSigninReducer,
+  devSignupReducer,
+  devProfileReducer,
+} from './reducer/DeveloperReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
   signInDev: devSigninReducer,
+  devProfile: devProfileReducer,
 });
 
 const initialState = {

@@ -5,12 +5,13 @@ import 'colors';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import developerRoutes from './routes/DevloperRoutes.js';
+import cors from 'cors';
 
 dotenv.config();
 connectDB();
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {

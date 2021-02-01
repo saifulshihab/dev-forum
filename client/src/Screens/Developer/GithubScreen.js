@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GithubRepo from '../../Components/GithubRepo';
+import Loader from '../../Components/Loader';
 
 const GithubScreen = ({ username }) => {
   const [gh, setGithubData] = useState({});
@@ -15,14 +16,15 @@ const GithubScreen = ({ username }) => {
       setGithubData(res.data);
       setRepo(repoData.data);
     };
-    if (username !== '') {
-      fetchGhData();
-    }
+    // if (username !== '') {
+    //   fetchGhData();
+    // }
+    fetchGhData();
   }, [username]);
   return (
     <div>
       {Object.keys(gh).length === 0 ? (
-        'No Data'
+        <Loader />
       ) : (
         <div>
           <div className='flex items-center'>
@@ -38,27 +40,27 @@ const GithubScreen = ({ username }) => {
               <p className='text-sm'>@{gh.login}</p>
               <p className='italic'>{gh.bio}</p>
               <p className=''>
-                <i class='fas fa-map-marker-alt mr-2'></i>
+                <i className='fas fa-map-marker-alt mr-2'></i>
                 {gh.location}
               </p>
               <p>
-                <i class='fas fa-users mr-2'></i>
+                <i className='fas fa-users mr-2'></i>
                 {gh.followers} Followers, {gh.following} Following
               </p>
               <p>
-                <i class='fas fa-code-branch mr-2'></i>
+                <i className='fas fa-code-branch mr-2'></i>
                 {gh.public_repos} repos, {gh.public_gists} gists
               </p>
               {gh.company !== null && (
                 <p>
-                  <i class='far fa-building mr-2'></i>
+                  <i className='far fa-building mr-2'></i>
                   {gh.company}
                 </p>
               )}
               {gh.email !== '' && <p>{gh.email}</p>}
               {gh.blog !== '' && (
                 <p>
-                  <i class='fas fa-globe mr-2'></i>
+                  <i className='fas fa-globe mr-2'></i>
                   {gh.blog}
                 </p>
               )}

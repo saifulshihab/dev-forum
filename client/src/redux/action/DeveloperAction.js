@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { baseURL } from '../../baseURL';
+import { baseURL } from '../../baseURL';
 import {
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_REQUEST,
@@ -8,6 +8,9 @@ import {
   DEV_SIGNUP_FAIL,
   DEV_SIGNUP_REQUEST,
   DEV_SIGNUP_SUCCESS,
+  GET_DEV_PROFILE_FAIL,
+  GET_DEV_PROFILE_REQUEST,
+  GET_DEV_PROFILE_SUCCESS,
 } from '../ActionTypes';
 
 // Developer signup
@@ -21,7 +24,7 @@ export const devSignup = (dev) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post('api/dev/signup', { dev }, config);
+    await axios.post(`${baseURL}/api/dev/signup`, { dev }, config);
     dispatch({
       type: DEV_SIGNUP_SUCCESS,
     });
@@ -48,7 +51,7 @@ export const devSignin = (credentials) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      'api/dev/signin',
+      `${baseURL}/api/dev/signin`,
       { credentials },
       config
     );
@@ -72,4 +75,34 @@ export const devSignin = (credentials) => async (dispatch) => {
 export const devSignout = () => async (dispatch) => {
   localStorage.removeItem('devInfo');
   dispatch({ type: DEV_SIGNOUT });
+};
+
+// Fetch developer profile
+export const fetchDevProfile = (username) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_DEV_PROFILE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`${baseURL}/api/dev/${username}`, config);
+    dispatch({
+      type: GET_DEV_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_DEV_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };

@@ -6,6 +6,10 @@ import {
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_SUCCESS,
   DEV_SIGNOUT,
+  GET_DEV_PROFILE_REQUEST,
+  GET_DEV_PROFILE_SUCCESS,
+  GET_DEV_PROFILE_FAIL,
+  GET_DEV_PROFILE_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -35,6 +39,24 @@ export const devSigninReducer = (state = {}, action) => {
       return { loading: false, error: action.payload, isAuthenticated: false };
     case DEV_SIGNOUT:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const devProfileReducer = (
+  state = { user: { social: [], education: [], experience: [] } },
+  action
+) => {
+  switch (action.type) {
+    case GET_DEV_PROFILE_REQUEST:
+      return { loading: true };
+    case GET_DEV_PROFILE_SUCCESS:
+      return { loading: false, user: action.payload };
+    case GET_DEV_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_DEV_PROFILE_RESET:
+      return { user: { social: [], education: [], experience: [] } };
     default:
       return state;
   }

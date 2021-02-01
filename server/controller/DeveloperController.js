@@ -30,11 +30,12 @@ const signupDeveloper = asyncHandler(async (req, res) => {
     res.status(201).json(newDeveloper);
   }
 });
+
 // desc: signin developer
 // routes: api/dev/signin
 // access: public
 const signinDeveloper = asyncHandler(async (req, res) => {
-  const { username, password } = req.body.credentials;
+  const { username, password } = req.body;
   const dev = await Developer.findOne({ username });
   if (dev && (await dev.verifyPassword(password))) {
     res.status(200).json({
@@ -48,4 +49,20 @@ const signinDeveloper = asyncHandler(async (req, res) => {
   }
 });
 
-export { signupDeveloper, signinDeveloper };
+// desc: Fetch Developer profile data by username
+// routes: api/dev/:username
+// access: private
+const getDevprofile = asyncHandler(async (req, res) => {
+  const user = await Developer.findOne({ username: req.params.username })
+    .populate('education')
+    .populate('social')
+    .populate('experience');
+  if (user) {
+    res.status(200).json({ status: 'ok', data: user });
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+
+export { signupDeveloper, signinDeveloper, getDevprofile };

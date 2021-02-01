@@ -6,7 +6,7 @@ const JobsContainer = () => {
   return (
     <div>
       {JobData.map((job) => (
-        <Job job={job} />
+        <Job key={job.id} job={job} />
       ))}
     </div>
   );

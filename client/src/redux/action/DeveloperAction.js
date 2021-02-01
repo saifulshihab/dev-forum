@@ -4,6 +4,7 @@ import {
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_REQUEST,
   DEV_SIGNIN_SUCCESS,
+  DEV_SIGNOUT,
   DEV_SIGNUP_FAIL,
   DEV_SIGNUP_REQUEST,
   DEV_SIGNUP_SUCCESS,
@@ -46,12 +47,16 @@ export const devSignin = (credentials) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     };
-
-    const { data } = await axios.post('api/dev/signin', { credentials }, config);
+    const { data } = await axios.post(
+      'api/dev/signin',
+      { credentials },
+      config
+    );
     dispatch({
       type: DEV_SIGNIN_SUCCESS,
       payload: data,
     });
+    localStorage.setItem('devInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: DEV_SIGNIN_FAIL,
@@ -61,4 +66,10 @@ export const devSignin = (credentials) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// Developer signout
+export const devSignout = () => async (dispatch) => {
+  localStorage.removeItem('devInfo');
+  dispatch({ type: DEV_SIGNOUT });
 };

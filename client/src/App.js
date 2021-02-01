@@ -9,6 +9,7 @@ import RegFirstStep from './Screens/RegFirstStep';
 import RegPage from './Screens/RegPage';
 import Welcome from './Screens/Welcome';
 import WelComeHeader from './Screens/WelComeHeader';
+import PrivateRoute from './Components/PrivateRoute';
 import './styles/main.css';
 import './App.css';
 
@@ -24,8 +25,7 @@ function App() {
           <Route path='/login' component={LoginPage} />
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/about' component={AboutUs} />
-          <Route path='/h' component={HomeScreen} />
-          {/* <Route path="/*" component={PageNotFound}  /> */}
+          <PrivateRoute path='/h' component={HomeScreen} />
         </div>
       </div>
     </div>

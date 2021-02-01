@@ -5,6 +5,7 @@ import {
   DEV_SIGNIN_REQUEST,
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_SUCCESS,
+  DEV_SIGNOUT,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -25,9 +26,15 @@ export const devSigninReducer = (state = {}, action) => {
     case DEV_SIGNIN_REQUEST:
       return { loading: true };
     case DEV_SIGNIN_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return {
+        loading: false,
+        devInfo: action.payload,
+        isAuthenticated: true,
+      };
     case DEV_SIGNIN_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, error: action.payload, isAuthenticated: false };
+    case DEV_SIGNOUT:
+      return {};
     default:
       return state;
   }

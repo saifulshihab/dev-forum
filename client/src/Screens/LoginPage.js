@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import logo from '../logo.svg';
@@ -8,15 +8,23 @@ import { devSignin } from '../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Components/Alert';
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
   const dispatch = useDispatch();
   const signInDev = useSelector((state) => state.signInDev);
-  const { loading, userInfo, error } = signInDev;
+  const { loading, isAuthenticated, error } = signInDev;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/h');
+    }
+    return () => {};
+  }, [history, isAuthenticated]);
 
   const fieldValidationSchema = yup.object({
     username: yup.string().required('Required!'),
     password: yup.string().required('Required!'),
   });
+
   return (
     <>
       <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
@@ -38,7 +46,10 @@ const LoginPage = () => {
           </div>
           <Formik
             initialValues={{ username: '', password: '' }}
-            onSubmit={(data, { setSubmitting }) => dispatch(devSignin(data))}
+            onSubmit={(data, { setSubmitting }) => {
+              dispatch(devSignin(data));
+              setSubmitting(false);
+            }}
             validationSchema={fieldValidationSchema}
           >
             {({ handleSubmit, isSubmitting }) => (
@@ -122,11 +133,7 @@ const LoginPage = () => {
               </form>
             )}
           </Formik>
-          {userInfo ? (
-            <Alert success msg={'Sign in successfull!'} />
-          ) : (
-            error && <Alert fail msg={error} />
-          )}
+          {error && <Alert fail msg={error} />}
         </div>
       </div>
     </>

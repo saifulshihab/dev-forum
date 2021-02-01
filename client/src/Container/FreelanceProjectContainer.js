@@ -6,7 +6,7 @@ const FreelanceProjectContainer = () => {
   return (
     <div>
       {FreelanceProjectData.map((project) => (
-        <FreelanceProject project={project} />
+        <FreelanceProject project={project} key={project._id} />
       ))}
     </div>
   );

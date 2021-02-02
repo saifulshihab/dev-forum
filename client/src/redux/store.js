@@ -6,12 +6,14 @@ import {
   devSigninReducer,
   devSignupReducer,
   devProfileReducer,
+  devProfileDelReducer,
 } from './reducer/DeveloperReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
   signInDev: devSigninReducer,
   devProfile: devProfileReducer,
+  devProfileDelete: devProfileDelReducer,
 });
 
 const initialState = {
@@ -19,7 +21,7 @@ const initialState = {
     isAuthenticated: localStorage.getItem('devInfo')
       ? jwt.verify(
           JSON.parse(localStorage.getItem('devInfo')).token,
-          `dev12@#4545fo655dfo55drum`,
+          `dev12@#4545fo655dfo55drum`, // will be hidden in prod mode
           (err, dec) => {
             if (err) {
               localStorage.removeItem('devInfo');

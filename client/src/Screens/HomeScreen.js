@@ -9,7 +9,7 @@ import FreelanceScreen from './Developer/FreelanceScreen';
 import JobsScreen from './Developer/JobsScreen';
 import MoreScreen from './Developer/MoreScreen';
 import NotificationScreen from './Developer/NotificationScreen';
-import Settings from './Developer/Settings';
+import SettingsScreen from './Developer/SettingsScreen';
 
 const HomeScreen = () => {
   const { path, url } = useRouteMatch();
@@ -98,7 +98,7 @@ const HomeScreen = () => {
                 path={`${path}/notification`}
                 component={NotificationScreen}
               />
-              <Route path={`${path}/settings`} component={Settings} />
+              <Route path={`${path}/settings`} component={SettingsScreen} />
               <Route
                 path={`${path}/profile`}
                 component={DeveloperProfileScreen}

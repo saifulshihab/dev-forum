@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { baseURL } from '../../baseURL';
 import {
+  DEV_PROFILE_DELETE_FAIL,
+  DEV_PROFILE_DELETE_REQUEST,
+  DEV_PROFILE_DELETE_RESET,
+  DEV_PROFILE_DELETE_SUCCESS,
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_REQUEST,
   DEV_SIGNIN_SUCCESS,
@@ -99,6 +103,38 @@ export const fetchDevProfile = (username) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_DEV_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Permanantly delete developer profile
+export const deleteDevAccount = (username) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DEV_PROFILE_DELETE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.delete(`${baseURL}/api/dev/${username}/deleteAccount`, config);
+    dispatch({
+      type: DEV_PROFILE_DELETE_SUCCESS,
+    });
+    dispatch({
+      type: DEV_PROFILE_DELETE_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEV_PROFILE_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

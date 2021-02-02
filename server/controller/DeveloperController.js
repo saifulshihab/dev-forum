@@ -53,7 +53,6 @@ const signinDeveloper = asyncHandler(async (req, res) => {
 // routes: api/dev/:username
 // access: private
 const getDevprofile = asyncHandler(async (req, res) => {
-  console.log(req.params);
   const user = await Developer.findOne({ username: req.params.username })
     .populate('education')
     .populate('social')
@@ -66,4 +65,20 @@ const getDevprofile = asyncHandler(async (req, res) => {
   }
 });
 
-export { signupDeveloper, signinDeveloper, getDevprofile };
+// desc: Fetch Developer profile data by username
+// routes: api/dev/:username
+// access: private
+const delDevprofile = asyncHandler(async (req, res) => {
+  const user = await Developer.findOne({ username: req.params.username });
+  if (user) {
+    await user.remove();
+    res.status(200).json({
+      status: 'user deleted!',
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+
+export { signupDeveloper, signinDeveloper, getDevprofile, delDevprofile };

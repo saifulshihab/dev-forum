@@ -122,7 +122,6 @@ const WelComeHeader = () => {
                       role='menu'
                       aria-orientation='vertical'
                       aria-labelledby='user-menu'
-                      area-aria-expanded={`${dpDropdown && true}`}
                     >
                       <Link
                         onClick={closeDD}
@@ -142,7 +141,7 @@ const WelComeHeader = () => {
                       </Link>
                       <Link
                         onClick={closeDD}
-                        to='/'
+                        to='/h/settings'
                         className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                         role='menuitem'
                       >

@@ -14,6 +14,10 @@ const WelComeHeader = () => {
     dispatch(devSignout());
   };
 
+  const closeDD = () => {
+    setdpDropdown(false);
+  };
+
   return (
     <>
       <div className='relative z-40 p-3 px-4 sm:px-6 lg:px-8'>
@@ -23,7 +27,7 @@ const WelComeHeader = () => {
         >
           <div className='flex items-center flex-grow flex-shrink-0 lg:flex-grow-0'>
             <div className='flex items-center justify-between w-full md:w-auto'>
-              <Link to='/'>
+              <Link to='/' onClick={closeDD}>
                 <span className='sr-only'>DevForum</span>
                 <span className='text-3xl text-3xl font-extrabold text-gray-900'>
                   DevForum
@@ -59,18 +63,21 @@ const WelComeHeader = () => {
           </div>
           <div className='hidden md:flex items-center ml-auto md:space-x-8'>
             <Link
+              onClick={closeDD}
               to='/about'
               className='font-medium text-gray-500 hover:text-gray-900'
             >
               About Us
             </Link>
             <Link
+              onClick={closeDD}
               to='/'
               className='font-medium text-gray-500 hover:text-gray-900'
             >
               Features
             </Link>
             <Link
+              onClick={closeDD}
               to='/'
               className='font-medium text-gray-500 hover:text-gray-900'
             >
@@ -80,7 +87,7 @@ const WelComeHeader = () => {
               <div className='inline-block'>
                 <div className=''>
                   <button
-                    onClick={() => setdpDropdown(!dpDropdown)}
+                    onClick={() => setdpDropdown((prev) => !prev)}
                     className='max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                     id='user-menu'
                     aria-haspopup='true'
@@ -118,6 +125,7 @@ const WelComeHeader = () => {
                       area-aria-expanded={`${dpDropdown && true}`}
                     >
                       <Link
+                        onClick={closeDD}
                         to='/h/profile'
                         className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                         role='menuitem'
@@ -125,6 +133,7 @@ const WelComeHeader = () => {
                         <i className='fas fa-user-circle mr-2'></i>Profile
                       </Link>
                       <Link
+                        onClick={closeDD}
                         to='/h'
                         className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                         role='menuitem'
@@ -132,6 +141,7 @@ const WelComeHeader = () => {
                         <i className='fas fa-tachometer-alt mr-2'></i>Dashboard
                       </Link>
                       <Link
+                        onClick={closeDD}
                         to='/'
                         className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                         role='menuitem'

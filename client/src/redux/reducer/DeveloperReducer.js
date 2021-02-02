@@ -13,6 +13,7 @@ import {
   DEV_PROFILE_DELETE_REQUEST,
   DEV_PROFILE_DELETE_SUCCESS,
   DEV_PROFILE_DELETE_FAIL,
+  DEV_PROFILE_DELETE_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -73,6 +74,8 @@ export const devProfileDelReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case DEV_PROFILE_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    case DEV_PROFILE_DELETE_RESET:
+      return {};
     default:
       return state;
   }

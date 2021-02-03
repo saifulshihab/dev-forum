@@ -65,16 +65,22 @@ const getDevprofile = asyncHandler(async (req, res) => {
   }
 });
 
-// desc: Fetch Developer profile data by username
+// desc: Del developer profile
 // routes: api/dev/:username
 // access: private
 const delDevprofile = asyncHandler(async (req, res) => {
   const user = await Developer.findOne({ username: req.params.username });
   if (user) {
-    await user.remove();
-    res.status(200).json({
-      status: 'user deleted!',
-    });
+    console.log(req.user);
+    if (user._id.equals(req.user._id)) {
+      await user.remove();
+      res.status(200).json({
+        status: 'user deleted!',
+      });
+    } else {
+      res.status(400);
+      throw new Error('You are not authorized to delete this!');
+    }
   } else {
     res.status(404);
     throw new Error('User not found!');

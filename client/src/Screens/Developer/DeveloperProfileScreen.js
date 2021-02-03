@@ -9,26 +9,72 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
 import { fetchDevProfile } from '../../redux/action/DeveloperAction';
 import Alert from '../../Components/Alert';
+import DevProfileEditScreen from './DevProfileEditScreen';
+import { baseURL } from '../../baseURL';
 
-const DeveloperProfileScreen = () => {
+const DeveloperProfileScreen = ({ location }) => {
   const { url, path } = useRouteMatch();
   const dispatch = useDispatch();
 
-  const [aboutOn, setAbout] = useState(true);
+  const [aboutOn, setAbout] = useState(false);
   const [githubOn, setGithub] = useState(false);
   const [projectsOn, setProjects] = useState(false);
   const [articleOn, setArticle] = useState(false);
   const [ques, setQues] = useState(false);
+  const [editOn, setEdit] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
   const devProfile = useSelector((state) => state.devProfile);
   const { loading, error, user } = devProfile;
-
+  const currentPath = location.pathname.split('/')[3];
   useEffect(() => {
     dispatch(fetchDevProfile(devInfo.username));
+    if (currentPath === undefined || currentPath === 'about') {
+      setAbout(true);
+      setGithub(false);
+      setProjects(false);
+      setArticle(false);
+      setQues(false);
+      setEdit(false);
+    } else if (currentPath === 'gh-profile') {
+      setGithub(true);
+      setAbout(false);
+      setProjects(false);
+      setArticle(false);
+      setQues(false);
+      setEdit(false);
+    } else if (currentPath === 'projects') {
+      setProjects(true);
+      setAbout(false);
+      setGithub(false);
+      setArticle(false);
+      setQues(false);
+      setEdit(false);
+    } else if (currentPath === 'articles') {
+      setArticle(true);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setQues(false);
+      setEdit(false);
+    } else if (currentPath === 'ques') {
+      setQues(true);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setArticle(false);
+      setEdit(false);
+    } else if (currentPath === 'edit') {
+      setEdit(true);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setArticle(false);
+      setQues(false);
+    }
     return () => {};
-  }, [dispatch, devInfo.username]);
+  }, [dispatch, devInfo.username, currentPath]);
 
   return (
     <div className='profile p-1'>
@@ -42,14 +88,14 @@ const DeveloperProfileScreen = () => {
             <div className='cover w-full'>
               <img
                 className='image_center w-full h-48'
-                src='https://picsum.photos/seed/picsum/960/960'
+                src={baseURL + user?.cover}
                 alt='cover'
               />
             </div>
             <div className='dp w-40'>
               <img
                 className='image_center border-2 border-indigo-400 rounded-full w-full h-40'
-                src='https://picsum.photos/seed/picsum/200/300'
+                src={baseURL + user?.dp}
                 alt='dp'
               />
             </div>
@@ -92,16 +138,7 @@ const DeveloperProfileScreen = () => {
                   <div className='flex items-center'>
                     <div className='hidden md:block'>
                       <div className='flex items-baseline space-x-4'>
-                        <Link
-                          onClick={() => {
-                            setAbout(true);
-                            setGithub(false);
-                            setProjects(false);
-                            setArticle(false);
-                            setQues(false);
-                          }}
-                          to={`${url}/about`}
-                        >
+                        <Link to={`${url}/about`}>
                           <div
                             className={`flex items-center cursor-pointer ${
                               aboutOn && 'bg-white'
@@ -111,16 +148,7 @@ const DeveloperProfileScreen = () => {
                             <span className='h-full'>About</span>
                           </div>
                         </Link>
-                        <Link
-                          onClick={() => {
-                            setAbout(false);
-                            setGithub(true);
-                            setProjects(false);
-                            setArticle(false);
-                            setQues(false);
-                          }}
-                          to={`${url}/gh-profile`}
-                        >
+                        <Link to={`${url}/gh-profile`}>
                           <div
                             className={`flex items-center cursor-pointer ${
                               githubOn && 'bg-white'
@@ -130,16 +158,7 @@ const DeveloperProfileScreen = () => {
                             <span className='h-full'>GitHub</span>
                           </div>
                         </Link>
-                        <Link
-                          onClick={() => {
-                            setAbout(false);
-                            setGithub(false);
-                            setProjects(true);
-                            setArticle(false);
-                            setQues(false);
-                          }}
-                          to={`${url}/projects`}
-                        >
+                        <Link to={`${url}/projects`}>
                           <div
                             className={`flex items-center cursor-pointer ${
                               projectsOn && 'bg-white'
@@ -149,16 +168,7 @@ const DeveloperProfileScreen = () => {
                             <span className='h-full'>Projects</span>
                           </div>
                         </Link>
-                        <Link
-                          onClick={() => {
-                            setAbout(false);
-                            setGithub(false);
-                            setProjects(false);
-                            setArticle(true);
-                            setQues(false);
-                          }}
-                          to={`${url}/articles`}
-                        >
+                        <Link to={`${url}/articles`}>
                           <div
                             className={`flex items-center cursor-pointer ${
                               articleOn && 'bg-white'
@@ -168,16 +178,7 @@ const DeveloperProfileScreen = () => {
                             <span className='h-full'>Article</span>
                           </div>
                         </Link>
-                        <Link
-                          onClick={() => {
-                            setAbout(false);
-                            setGithub(false);
-                            setProjects(false);
-                            setArticle(false);
-                            setQues(true);
-                          }}
-                          to={`${url}/ques`}
-                        >
+                        <Link to={`${url}/ques`}>
                           <div
                             className={`flex items-center cursor-pointer ${
                               ques && 'bg-white'
@@ -186,6 +187,17 @@ const DeveloperProfileScreen = () => {
                             <i className='fas fa-question mr-2'></i>
 
                             <span className='h-full'>Question Asked</span>
+                          </div>
+                        </Link>
+                        <Link to={`${url}/edit`}>
+                          <div
+                            className={`flex items-center cursor-pointer ${
+                              editOn && 'bg-white'
+                            }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          >
+                            <i className='fas fa-edit mr-2'></i>
+
+                            <span className='h-full'>Edit Profile</span>
                           </div>
                         </Link>
                       </div>
@@ -215,6 +227,10 @@ const DeveloperProfileScreen = () => {
                 />
                 <Route path={`${path}/articles`} component={DevArticleScreen} />
                 <Route path={`${path}/ques`} component={DevQuesAskScreen} />
+                <Route
+                  path={`${path}/edit`}
+                  component={() => <DevProfileEditScreen user={user} />}
+                />
               </Switch>
             </div>
           </div>

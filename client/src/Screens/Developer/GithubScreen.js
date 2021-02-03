@@ -16,10 +16,9 @@ const GithubScreen = ({ username }) => {
       setGithubData(res.data);
       setRepo(repoData.data);
     };
-    // if (username !== '') {
-    //   fetchGhData();
-    // }
-    fetchGhData();
+    if (username !== '') {
+      fetchGhData();
+    }
   }, [username]);
   return (
     <div>

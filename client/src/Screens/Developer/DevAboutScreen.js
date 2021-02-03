@@ -32,7 +32,7 @@ const DevAboutScreen = ({ profile }) => {
               <p className='text-gray-400 text-sm italic'>
                 {d.from} - {d.present ? 'Present' : d.to && d.to}
               </p>
-              <p className='text-sm'>{d.desc}</p>
+              <p className='text-sm'>{d.description}</p>
             </div>
           ))}
         </div>

@@ -27,6 +27,9 @@ const EduSchema = mongoose.Schema({
   desc: {
     type: String,
   },
+  type: {
+    type: String,
+  },
 });
 
 const ExperienceSchema = mongoose.Schema({
@@ -72,9 +75,11 @@ const DeveloperSchema = mongoose.Schema(
     },
     dp: {
       type: String,
+      default: '/uploads/default.png',
     },
     cover: {
       type: String,
+      default: '/uploads/cover.png',
     },
     bio: {
       type: String,

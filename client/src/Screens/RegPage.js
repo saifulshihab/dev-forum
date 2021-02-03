@@ -9,14 +9,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
 
-const RegPage = () => {
+const RegPage = ({ history }) => {
   const dispatch = useDispatch();
   const signUpDev = useSelector((state) => state.signUpDev);
   const { loading, success, error } = signUpDev;
 
+  const signInDev = useSelector((state) => state.signInDev);
+  const { isAuthenticated } = signInDev;
+
   useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/h');
+    }
     return () => {};
-  }, [dispatch]);
+  }, [history, isAuthenticated]);
 
   const fieldValidationSchema = yup.object({
     full_name: yup
@@ -107,7 +113,7 @@ const RegPage = () => {
               <button
                 disabled={isSubmitting}
                 type='submit'
-                className='w-full py-3 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
+                className='w-full rounded py-3 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
               >
                 Sign up
               </button>

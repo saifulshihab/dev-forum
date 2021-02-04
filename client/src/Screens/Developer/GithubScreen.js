@@ -34,7 +34,7 @@ const GithubScreen = ({ username }) => {
                 src={gh.avatar_url}
               />
             </div>
-            <div className='text-gray-600 ml-3'>
+            <div className='text-sm text-gray-600 ml-3'>
               <p className='text-xl font-semibold'>{gh.name}</p>
               <p className='text-sm'>@{gh.login}</p>
               <p className='italic'>{gh.bio}</p>

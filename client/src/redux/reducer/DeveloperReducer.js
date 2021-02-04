@@ -14,6 +14,10 @@ import {
   DEV_PROFILE_DELETE_SUCCESS,
   DEV_PROFILE_DELETE_FAIL,
   DEV_PROFILE_DELETE_RESET,
+  DEV_PROFILE_EDIT_REQUEST,
+  DEV_PROFILE_EDIT_SUCCESS,
+  DEV_PROFILE_EDIT_FAIL,
+  DEV_PROFILE_EDIT_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -75,6 +79,21 @@ export const devProfileDelReducer = (state = {}, action) => {
     case DEV_PROFILE_DELETE_FAIL:
       return { loading: false, error: action.payload };
     case DEV_PROFILE_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const devProfileEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_PROFILE_EDIT_REQUEST:
+      return { loading: true };
+    case DEV_PROFILE_EDIT_SUCCESS:
+      return { loading: false, success: true, user: action.payload };
+    case DEV_PROFILE_EDIT_FAIL:
+      return { loading: false, error: action.payload };
+    case DEV_PROFILE_EDIT_RESET:
       return {};
     default:
       return state;

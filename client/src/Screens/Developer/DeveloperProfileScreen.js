@@ -101,7 +101,7 @@ const DeveloperProfileScreen = ({ location }) => {
             </div>
           </div>
           <div className='name_others rounded mt-1 p-3 bg-white'>
-            <div className=''>
+            <div className='name_address_location'>
               <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
               <span className='text-gray-400'>@{user?.username}</span>
               <div className='h-5'>{user?.bio}</div>
@@ -130,6 +130,37 @@ const DeveloperProfileScreen = ({ location }) => {
                 </span>
               </div>
             </div>
+            <div className='social_links cursor-pointer mt-1 text-xl flex items-center space-x-2'>
+              {user.social.length > 0 &&
+                user.social.reverse().map((el) => {
+                  const icn_cls =
+                    el.platform === 'facebook'
+                      ? 'fab fa-facebook text-blue-600 hover:text-blue-700'
+                      : el.platform === 'twitter'
+                      ? 'fab fa-twitter text-blue-400 hover:text-blue-500'
+                      : el.platform === 'instagram'
+                      ? 'fab fa-instagram text-pink-600 hover:text-pink-700'
+                      : el.platform === 'linkedin'
+                      ? 'fab fa-linkedin text-blue-700 hover:text-blue-800'
+                      : el.platform === 'medium'
+                      ? 'fab fa-medium text-blue-700 hover:text-blue-800'
+                      : el.platform === 'github'
+                      ? 'fab fa-github text-gray-800 hover:text-gray-900'
+                      : el.platform === 'dribble'
+                      ? 'fas fa-basketball-ball text-pink-500 hover:text-pink-600'
+                      : el.platform === 'behance'
+                      ? 'fab fa-behance-square text-blue-800 hover:text-blue-900'
+                      : el.platform === 'portfolio'
+                      ? 'fas fa-globe-asia text-gray-400 hover:text-gray-500'
+                      : el.platform === 'stackoverflow' &&
+                        'fab fa-stack-overflow text-yellow-600 hover:text-amber-700';
+                  return (
+                    <a href={el.link}>
+                      <i className={icn_cls}></i>
+                    </a>
+                  );
+                })}
+            </div>
           </div>
           <div className='others mt-2'>
             <nav className='bg-gray-100 text-dark'>
@@ -144,7 +175,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               aboutOn && 'bg-white'
                             } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='far fa-address-card mr-2'></i>
+                            <i className='far fa-address-card mr-2 text-blue-500'></i>
                             <span className='h-full'>About</span>
                           </div>
                         </Link>
@@ -154,7 +185,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               githubOn && 'bg-white'
                             } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='fas fa-code-branch mr-2'></i>
+                            <i className='fas fa-code-branch mr-2 text-green-600'></i>
                             <span className='h-full'>GitHub</span>
                           </div>
                         </Link>
@@ -164,7 +195,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               projectsOn && 'bg-white'
                             } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='fas fa-tasks mr-2'></i>
+                            <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                             <span className='h-full'>Projects</span>
                           </div>
                         </Link>
@@ -174,7 +205,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               articleOn && 'bg-white'
                             }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='far fa-newspaper mr-2'></i>
+                            <i className='far fa-newspaper mr-2 text-purple-500'></i>
                             <span className='h-full'>Article</span>
                           </div>
                         </Link>
@@ -184,7 +215,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               ques && 'bg-white'
                             }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='fas fa-question mr-2'></i>
+                            <i className='fas fa-question mr-2 text-red-500'></i>
 
                             <span className='h-full'>Question Asked</span>
                           </div>
@@ -195,7 +226,7 @@ const DeveloperProfileScreen = ({ location }) => {
                               editOn && 'bg-white'
                             }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                           >
-                            <i className='fas fa-edit mr-2'></i>
+                            <i className='fas fa-edit mr-2 text-yellow-400'></i>
 
                             <span className='h-full'>Edit Profile</span>
                           </div>

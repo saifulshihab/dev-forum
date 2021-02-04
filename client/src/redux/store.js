@@ -7,6 +7,7 @@ import {
   devSignupReducer,
   devProfileReducer,
   devProfileDelReducer,
+  devProfileEditReducer,
 } from './reducer/DeveloperReducer';
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   signInDev: devSigninReducer,
   devProfile: devProfileReducer,
   devProfileDelete: devProfileDelReducer,
+  devProfileEdit: devProfileEditReducer,
 });
 
 const initialState = {

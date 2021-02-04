@@ -5,6 +5,10 @@ import {
   DEV_PROFILE_DELETE_REQUEST,
   DEV_PROFILE_DELETE_RESET,
   DEV_PROFILE_DELETE_SUCCESS,
+  DEV_PROFILE_EDIT_FAIL,
+  DEV_PROFILE_EDIT_REQUEST,
+  DEV_PROFILE_EDIT_RESET,
+  DEV_PROFILE_EDIT_SUCCESS,
   DEV_SIGNIN_FAIL,
   DEV_SIGNIN_REQUEST,
   DEV_SIGNIN_SUCCESS,
@@ -63,7 +67,7 @@ export const devSignin = (credentials) => async (dispatch) => {
       type: DEV_SIGNIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('devInfo', JSON.stringify(data));
+    localStorage.setItem('devInfo', JSON.stringify(data));  
   } catch (error) {
     dispatch({
       type: DEV_SIGNIN_FAIL,
@@ -135,6 +139,45 @@ export const deleteDevAccount = (username) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DEV_PROFILE_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Edit developer profile
+export const editDevAccount = (username, updateUser) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: DEV_PROFILE_EDIT_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${baseURL}/api/dev/${username}`,
+      updateUser.data,
+      config
+    );
+    dispatch({
+      type: DEV_PROFILE_EDIT_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: DEV_PROFILE_EDIT_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEV_PROFILE_EDIT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

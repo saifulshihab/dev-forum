@@ -14,7 +14,7 @@ const MyTextField = ({ label, flex_content, ...props }) => {
         {label}
       </label>
       <input
-        className={`appearance-none rounded-none mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm ${
+        className={`appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm ${
           flex_content && 'w-3/5'
         }`}
         {...field}

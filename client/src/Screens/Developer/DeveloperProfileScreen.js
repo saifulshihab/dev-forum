@@ -11,6 +11,7 @@ import { fetchDevProfile } from '../../redux/action/DeveloperAction';
 import Alert from '../../Components/Alert';
 import DevProfileEditScreen from './DevProfileEditScreen';
 import { baseURL } from '../../baseURL';
+import DevPhotos from './DevPhotos';
 
 const DeveloperProfileScreen = ({ location }) => {
   const { url, path } = useRouteMatch();
@@ -22,6 +23,7 @@ const DeveloperProfileScreen = ({ location }) => {
   const [articleOn, setArticle] = useState(false);
   const [ques, setQues] = useState(false);
   const [editOn, setEdit] = useState(false);
+  const [photoOn, setPhotos] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -37,6 +39,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setArticle(false);
       setQues(false);
       setEdit(false);
+      setPhotos(false);
     } else if (currentPath === 'gh-profile') {
       setGithub(true);
       setAbout(false);
@@ -44,6 +47,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setArticle(false);
       setQues(false);
       setEdit(false);
+      setPhotos(false);
     } else if (currentPath === 'projects') {
       setProjects(true);
       setAbout(false);
@@ -51,6 +55,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setArticle(false);
       setQues(false);
       setEdit(false);
+      setPhotos(false);
     } else if (currentPath === 'articles') {
       setArticle(true);
       setAbout(false);
@@ -58,6 +63,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setProjects(false);
       setQues(false);
       setEdit(false);
+      setPhotos(false);
     } else if (currentPath === 'ques') {
       setQues(true);
       setAbout(false);
@@ -65,8 +71,18 @@ const DeveloperProfileScreen = ({ location }) => {
       setProjects(false);
       setArticle(false);
       setEdit(false);
+      setPhotos(false);
     } else if (currentPath === 'edit') {
       setEdit(true);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setArticle(false);
+      setPhotos(false);
+      setQues(false);
+    } else if (currentPath === 'photos') {
+      setPhotos(true);
+      setEdit(false);
       setAbout(false);
       setGithub(false);
       setProjects(false);
@@ -94,7 +110,7 @@ const DeveloperProfileScreen = ({ location }) => {
             </div>
             <div className='dp w-40'>
               <img
-                className='image_center border-2 border-indigo-400 rounded-full w-full h-40'
+                className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
                 src={baseURL + user?.dp}
                 alt='dp'
               />
@@ -132,7 +148,7 @@ const DeveloperProfileScreen = ({ location }) => {
             </div>
             <div className='social_links cursor-pointer mt-1 text-xl flex items-center space-x-2'>
               {user.social.length > 0 &&
-                user.social.reverse().map((el) => {
+                user.social.reverse().map((el, idx) => {
                   const icn_cls =
                     el.platform === 'facebook'
                       ? 'fab fa-facebook text-blue-600 hover:text-blue-700'
@@ -155,7 +171,7 @@ const DeveloperProfileScreen = ({ location }) => {
                       : el.platform === 'stackoverflow' &&
                         'fab fa-stack-overflow text-yellow-600 hover:text-amber-700';
                   return (
-                    <a href={el.link}>
+                    <a key={idx} href={el.link}>
                       <i className={icn_cls}></i>
                     </a>
                   );
@@ -231,6 +247,17 @@ const DeveloperProfileScreen = ({ location }) => {
                             <span className='h-full'>Edit Profile</span>
                           </div>
                         </Link>
+                        <Link to={`${url}/photos`}>
+                          <div
+                            className={`flex items-center cursor-pointer ${
+                              photoOn && 'bg-white'
+                            }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          >
+                            <i className='fas fa-image mr-2 text-green-500'></i>
+
+                            <span className='h-full'>Dp/Cover</span>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -261,6 +288,10 @@ const DeveloperProfileScreen = ({ location }) => {
                 <Route
                   path={`${path}/edit`}
                   component={() => <DevProfileEditScreen user={user} />}
+                />
+                <Route
+                  path={`${path}/photos`}
+                  component={() => <DevPhotos user={user} />}
                 />
               </Switch>
             </div>

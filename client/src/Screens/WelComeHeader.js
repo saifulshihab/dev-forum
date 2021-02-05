@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { devSignout } from '../redux/action/DeveloperAction';
+import { devSignout, fetchDevProfile } from '../redux/action/DeveloperAction';
+import { baseURL } from '../baseURL';
 
 const WelComeHeader = () => {
   const dispatch = useDispatch();
   const signInDev = useSelector((state) => state.signInDev);
-  const { isAuthenticated } = signInDev;
+  const { isAuthenticated, devInfo } = signInDev;
   const [dpDropdown, setdpDropdown] = useState(false);
 
+  const devProfile = useSelector((state) => state.devProfile);
+  const { user } = devProfile;
+
+  useEffect(() => {
+    dispatch(fetchDevProfile(devInfo.username));
+  }, [dispatch, devInfo.username]);
   const logoutHandler = () => {
     dispatch(devSignout());
   };
@@ -94,8 +101,8 @@ const WelComeHeader = () => {
                   >
                     <span className='sr-only'>Open user menu</span>
                     <img
-                      className='h-8 w-8 rounded-full'
-                      src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                      className='h-8 w-8 rounded-full image_center'
+                      src={baseURL + user?.dp}
                       alt=''
                     />
                   </button>

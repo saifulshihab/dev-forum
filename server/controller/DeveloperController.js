@@ -1,3 +1,5 @@
+import path from 'path';
+import fs from 'fs';
 import asyncHandler from 'express-async-handler';
 import { generateToken } from '../utils/generateToken.js';
 import Developer from '../models/DeveloperModel.js';
@@ -90,23 +92,10 @@ const delDevprofile = asyncHandler(async (req, res) => {
 // access: private
 const editDevProfile = asyncHandler(async (req, res) => {
   const user = await Developer.findOne({ username: req.params.username });
-  console.log(req.body);
+
   if (user) {
     if (user._id.equals(req.user._id)) {
-      const {
-        full_name,
-        username,
-        email,
-        dp,
-        cover,
-        bio,
-        location,
-        website,
-        social,
-        education,
-        experience,
-        github,
-      } = req.body;
+      const { email } = req.body;
       const devExist = await Developer.findOne({ email: email });
       if (!devExist || devExist._id.equals(user._id)) {
         const updateProfile = await Developer.findByIdAndUpdate(
@@ -136,10 +125,64 @@ const editDevProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// desc: Update developer dp
+// routes: /api/dev/updateDp
+// access: private
+const updateDevDp = asyncHandler(async (req, res) => {
+  const { dp } = req.body;
+  const user = await Developer.findById(req.user._id);
+  if (user) {
+    const __dirname = path.resolve();
+    fs.unlink(path.join(__dirname + user.dp), (err) => {
+      if (err) {
+        res.send(err);
+      }
+    });
+    user.dp = dp || user.dp;
+    const updatedUser = await user.save();
+    if (updatedUser) {
+      res.status(200).json({ status: 'Dp updated!' });
+    } else {
+      throw new Error();
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+
+// desc: Update developer cover
+// routes: /api/dev/updateCover
+// access: private
+const updateDevCover = asyncHandler(async (req, res) => {
+  const { cover } = req.body;
+  const user = await Developer.findById(req.user._id);
+  if (user) {
+    const __dirname = path.resolve();
+    fs.unlink(path.join(__dirname + user.cover), (err) => {
+      if (err) {
+        res.send(err);
+      }
+    });
+    user.cover = cover || user.cover;
+    const updatedUser = await user.save();
+    if (updatedUser) {
+      res.status(200).json({ status: 'Cover updated!' });
+    } else {
+      throw new Error();
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+
 export {
   signupDeveloper,
   signinDeveloper,
   getDevprofile,
   delDevprofile,
   editDevProfile,
+  updateDevDp,
+  updateDevCover,
 };

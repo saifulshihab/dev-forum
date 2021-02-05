@@ -8,6 +8,8 @@ import {
   devProfileReducer,
   devProfileDelReducer,
   devProfileEditReducer,
+  devProfileDpEditReducer,
+  devProfileCoverEditReducer,
 } from './reducer/DeveloperReducer';
 
 const reducer = combineReducers({
@@ -16,6 +18,8 @@ const reducer = combineReducers({
   devProfile: devProfileReducer,
   devProfileDelete: devProfileDelReducer,
   devProfileEdit: devProfileEditReducer,
+  devDpEdit: devProfileDpEditReducer,
+  devCoverEdit: devProfileCoverEditReducer,
 });
 
 const initialState = {

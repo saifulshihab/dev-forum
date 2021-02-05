@@ -18,6 +18,14 @@ import {
   DEV_PROFILE_EDIT_SUCCESS,
   DEV_PROFILE_EDIT_FAIL,
   DEV_PROFILE_EDIT_RESET,
+  DEV_DP_EDIT_REQUEST,
+  DEV_DP_EDIT_SUCCESS,
+  DEV_DP_EDIT_FAIL,
+  DEV_DP_EDIT_RESET,
+  DEV_COVER_EDIT_REQUEST,
+  DEV_COVER_EDIT_SUCCESS,
+  DEV_COVER_EDIT_FAIL,
+  DEV_COVER_EDIT_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -94,6 +102,36 @@ export const devProfileEditReducer = (state = {}, action) => {
     case DEV_PROFILE_EDIT_FAIL:
       return { loading: false, error: action.payload };
     case DEV_PROFILE_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const devProfileDpEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_DP_EDIT_REQUEST:
+      return { loading: true };
+    case DEV_DP_EDIT_SUCCESS:
+      return { loading: false, success: true };
+    case DEV_DP_EDIT_FAIL:
+      return { loading: false, error: action.payload };
+    case DEV_DP_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const devProfileCoverEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_COVER_EDIT_REQUEST:
+      return { loading: true };
+    case DEV_COVER_EDIT_SUCCESS:
+      return { loading: false, success: true };
+    case DEV_COVER_EDIT_FAIL:
+      return { loading: false, error: action.payload };
+    case DEV_COVER_EDIT_RESET:
       return {};
     default:
       return state;

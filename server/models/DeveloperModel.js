@@ -75,11 +75,11 @@ const DeveloperSchema = mongoose.Schema(
     },
     dp: {
       type: String,
-      default: '/uploads/default.png',
+      default: '/public/images/default.png',
     },
     cover: {
       type: String,
-      default: '/uploads/cover.png',
+      default: '/public/images/cover.png',
     },
     bio: {
       type: String,

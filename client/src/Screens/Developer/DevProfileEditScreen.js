@@ -14,7 +14,9 @@ const DevProfileEditScreen = ({ user }) => {
   const dispatch = useDispatch();
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
+
   const devProfileEdit = useSelector((state) => state.devProfileEdit);
+
   const {
     loading: editLoading,
     success: editSuccess,
@@ -81,6 +83,7 @@ const DevProfileEditScreen = ({ user }) => {
     ),
     github: yup.string().min(1).max(20),
   });
+
   return (
     <div className=''>
       {editLoading ? (
@@ -95,8 +98,6 @@ const DevProfileEditScreen = ({ user }) => {
           full_name: user.full_name,
           username: user.username,
           email: user.email,
-          dp: user.dp,
-          cover: user.cover,
           bio: user.bio,
           location: user.location,
           website: user.website,
@@ -246,7 +247,7 @@ const DevProfileEditScreen = ({ user }) => {
                       ))
                     ) : (
                       <button
-                        className='text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                         type='button'
                         onClick={() => arrayHelpers.push('')}
                       >
@@ -335,7 +336,7 @@ const DevProfileEditScreen = ({ user }) => {
                       ))
                     ) : (
                       <button
-                        className=' text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        className='focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                         type='button'
                         onClick={() => arrayHelpers.push('')}
                       >
@@ -386,7 +387,6 @@ const DevProfileEditScreen = ({ user }) => {
                                   Stack Overflow
                                 </option>
                                 <option value='medium'>Medium</option>
-                                
                               </Field>
                             </div>
 
@@ -418,7 +418,7 @@ const DevProfileEditScreen = ({ user }) => {
                       ))
                     ) : (
                       <button
-                        className=' text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        className='focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                         type='button'
                         onClick={() => arrayHelpers.push('')}
                       >
@@ -431,7 +431,7 @@ const DevProfileEditScreen = ({ user }) => {
             />
             <button
               type='submit'
-              // disabled={isSubmitting}
+              disabled={isSubmitting}
               className='w-full rounded py-2 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
             >
               Update

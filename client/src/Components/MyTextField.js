@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 
-const MyTextField = ({ label, flex_content, ...props }) => {
+const MyTextField = ({ label, flex_content, ref, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className={flex_content && 'flex items-center'}>
@@ -19,6 +19,7 @@ const MyTextField = ({ label, flex_content, ...props }) => {
         }`}
         {...field}
         {...props}
+        ref={ref}
       />
       {meta.touched && meta.error ? (
         <div style={{ color: 'red' }}>{meta.error}</div>

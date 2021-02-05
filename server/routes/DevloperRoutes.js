@@ -8,12 +8,20 @@ import {
   signupDeveloper,
   signinDeveloper,
   getDevprofile,
-  delDevprofile, editDevProfile
+  delDevprofile,
+  editDevProfile,
+  updateDevDp,
+  updateDevCover,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
 router.route('/signin').post(signinDeveloper);
-router.route('/:username').get(protect, getDevprofile).put(protect, editDevProfile);
+router.route('/updateDp').put(protect, updateDevDp);
+router.route('/updateCover').put(protect, updateDevCover);
+router
+  .route('/:username')
+  .get(protect, getDevprofile)
+  .put(protect, editDevProfile);
 router.route('/:username/deleteAccount').delete(protect, delDevprofile);
 
 export default router;

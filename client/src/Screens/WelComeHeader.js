@@ -15,8 +15,8 @@ const WelComeHeader = () => {
   const { user } = devProfile;
 
   useEffect(() => {
-    dispatch(fetchDevProfile(devInfo.username));
-  }, [dispatch, devInfo.username]);
+    dispatch(fetchDevProfile(devInfo?.username));
+  }, [dispatch, devInfo?.username]);
   const logoutHandler = () => {
     dispatch(devSignout());
   };

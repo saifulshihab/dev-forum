@@ -12,8 +12,8 @@ import {
 
 const DevPhotos = ({ user }) => {
   const dispatch = useDispatch();
-  const [dp, setDp] = useState(user.dp);
-  const [cover, setCover] = useState(user.cover);
+  const [dp, setDp] = useState(user?.dp);
+  const [cover, setCover] = useState(user?.cover);
   const [uploading, setUploading] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
@@ -91,8 +91,8 @@ const DevPhotos = ({ user }) => {
         <div className='w-2/5 flex flex-col space-y-2 justify-center'>
           <img
             className='rounded-full w-40 h-40 image_center'
-            src={baseURL + user.dp}
-            alt={user.username}
+            src={baseURL + user?.dp}
+            alt={user?.username}
           />
           <input
             onChange={uploadDpFileHandler}
@@ -118,8 +118,8 @@ const DevPhotos = ({ user }) => {
         <div className='w-3/5 flex flex-col space-y-1 justify-center'>
           <img
             className='w-full h-40 image_center'
-            src={baseURL + user.cover}
-            alt={user.username}
+            src={baseURL + user?.cover}
+            alt={user?.username}
           />
           <input
             type='file'

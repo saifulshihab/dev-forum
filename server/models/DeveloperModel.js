@@ -96,6 +96,8 @@ const DeveloperSchema = mongoose.Schema(
     github: {
       type: String,
     },
+    topSkills: [],
+    otherSkills: [],
   },
   {
     timestamps: true,

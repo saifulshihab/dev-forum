@@ -14,7 +14,6 @@ const DevProfileEditScreen = ({ user }) => {
   const dispatch = useDispatch();
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
-
   const devProfileEdit = useSelector((state) => state.devProfileEdit);
 
   const {
@@ -27,7 +26,7 @@ const DevProfileEditScreen = ({ user }) => {
     if (editSuccess) {
       dispatch(fetchDevProfile(devInfo.username));
     }
-  }, [dispatch, editSuccess, devInfo.username]);
+  }, [dispatch, editSuccess, devInfo.username, user]);
 
   const fieldValidationSchema = yup.object().shape({
     full_name: yup
@@ -95,20 +94,23 @@ const DevProfileEditScreen = ({ user }) => {
       )}
       <Formik
         initialValues={{
-          full_name: user.full_name,
-          username: user.username,
-          email: user.email,
-          bio: user.bio,
-          location: user.location,
-          website: user.website,
-          social: user.social,
-          education: user.education,
-          experience: user.experience,
-          github: user.github,
+          full_name: user?.full_name,
+          username: user?.username,
+          email: user?.email,
+          bio: user?.bio,
+          location: user?.location,
+          website: user?.website,
+          social: user?.social,
+          education: user?.education,
+          experience: user?.experience,
+          github: user?.github,
+          topSkills: user?.topSkills,
+          otherSkills: user?.otherSkills,
         }}
         validationSchema={fieldValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
           dispatch(editDevAccount(devInfo.username, { data }));
+
           setSubmitting(false);
         }}
       >
@@ -171,6 +173,108 @@ const DevProfileEditScreen = ({ user }) => {
               flex_content
             />
             <FieldArray
+              name='topSkills'
+              render={(arrayHelpers) => (
+                <div className='flex items-center mt-2'>
+                  <div className='w-2/5'>
+                    <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      Top Skills
+                    </label>
+                  </div>
+                  <div className='w-3/5 border border-blue-300 p-2 rounded'>
+                    {values.topSkills?.length > 0 ? (
+                      values.topSkills?.map((data, idx) => (
+                        <div
+                          key={idx}
+                          className='float-left mr-2 flex items-center'
+                        >
+                          <Field
+                            type='text'
+                            name={`topSkills.${idx}`}
+                            value={data}
+                            className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                          />
+                          <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.remove(idx)}
+                            >
+                              <i className='far fa-trash-alt'></i>
+                            </button>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.insert(idx, '')}
+                            >
+                              <i className='fas fa-plus'></i>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <button
+                        className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        type='button'
+                        onClick={() => arrayHelpers.push('')}
+                      >
+                        Add Skills
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            />
+            <FieldArray
+              name='otherSkills'
+              render={(arrayHelpers) => (
+                <div className='flex items-center mt-2'>
+                  <div className='w-2/5'>
+                    <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      Other Skills
+                    </label>
+                  </div>
+                  <div className='w-3/5 items-center border border-yellow-300 p-2 rounded'>
+                    {values.otherSkills?.length > 0 ? (
+                      values.otherSkills?.map((data, idx) => (
+                        <div
+                          key={idx}
+                          className='float-left mr-2 flex items-center'
+                        >
+                          <Field
+                            type='text'
+                            name={`otherSkills.${idx}`}
+                            value={data}
+                            className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                          />
+                          <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.remove(idx)}
+                            >
+                              <i className='far fa-trash-alt'></i>
+                            </button>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.insert(idx, '')}
+                            >
+                              <i className='fas fa-plus'></i>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <button
+                        className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        type='button'
+                        onClick={() => arrayHelpers.push('')}
+                      >
+                        Add Skills
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            />
+            <FieldArray
               name='education'
               render={(arrayHelpers) => (
                 <div className='flex items-center mt-2'>
@@ -179,10 +283,10 @@ const DevProfileEditScreen = ({ user }) => {
                       Education
                     </label>
                   </div>
-                  <div className='w-3/5'>
-                    {values.education.length > 0 ? (
-                      values.education.map((data, idx) => (
-                        <div key={idx} className='mb-2'>
+                  <div className='w-3/5 border border-green-400 p-2 rounded space-y-2'>
+                    {values.education?.length > 0 ? (
+                      values.education?.map((data, idx) => (
+                        <div key={idx}>
                           <MyTextField
                             type='text'
                             id='ins'
@@ -233,7 +337,7 @@ const DevProfileEditScreen = ({ user }) => {
                               type='button'
                               onClick={() => arrayHelpers.remove(idx)}
                             >
-                              <i className='fas fa-trash'></i>
+                              <i className='far fa-trash-alt'></i>
                             </button>
                             <button
                               className='py-1.5 rounded-full text-gray-400 focus:outline-none px-3 border border-gray-300'
@@ -267,9 +371,9 @@ const DevProfileEditScreen = ({ user }) => {
                       Experience
                     </label>
                   </div>
-                  <div className='w-3/5'>
-                    {values.experience.length > 0 ? (
-                      values.experience.map((data, idx) => (
+                  <div className='w-3/5  border border-indigo-400 p-2 rounded space-y-2'>
+                    {values.experience?.length > 0 ? (
+                      values.experience?.map((data, idx) => (
                         <div key={idx} className='mb-2'>
                           <MyTextField
                             type='text'
@@ -322,7 +426,7 @@ const DevProfileEditScreen = ({ user }) => {
                               type='button'
                               onClick={() => arrayHelpers.remove(idx)}
                             >
-                              <i className='fas fa-trash'></i>
+                              <i className='far fa-trash-alt'></i>
                             </button>
                             <button
                               className='py-1.5 rounded-full text-gray-400 focus:outline-none px-3 border border-gray-300'
@@ -356,9 +460,9 @@ const DevProfileEditScreen = ({ user }) => {
                       Social links
                     </label>
                   </div>
-                  <div className='w-3/5'>
-                    {values.social.length > 0 ? (
-                      values.social.map((data, idx) => (
+                  <div className='w-3/5  border border-yellow-400 p-2 rounded space-y-2'>
+                    {values.social?.length > 0 ? (
+                      values.social?.map((data, idx) => (
                         <div key={idx} className='mb-2  '>
                           <div className='flex items-center space-x-4 '>
                             <div>
@@ -373,7 +477,7 @@ const DevProfileEditScreen = ({ user }) => {
                                 as='select'
                                 label='Platform'
                                 name={`social.${idx}.platform`}
-                                className='border rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'
+                                className='border text-sm rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'
                               >
                                 <option value='facebook'>Facebook</option>
                                 <option value='instagram'>Instagram</option>
@@ -404,7 +508,7 @@ const DevProfileEditScreen = ({ user }) => {
                               type='button'
                               onClick={() => arrayHelpers.remove(idx)}
                             >
-                              <i className='fas fa-trash'></i>
+                              <i className='far fa-trash-alt'></i>
                             </button>
                             <button
                               className='py-1.5 rounded-full text-gray-400 focus:outline-none px-3 border border-gray-300'

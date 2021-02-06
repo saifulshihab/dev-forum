@@ -6,7 +6,6 @@ const Article = ({ article }) => {
   const [showComment, setshowComment] = useState(false);
   const [showMore, setshowMore] = useState(false);
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <>
       <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>

@@ -34,7 +34,7 @@ const AskQuestionsScreen = () => {
                             questionOn && 'bg-white'
                           } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
-                          <span className='h-full w-4 mr-1'>
+                          <span className='h-full text-red-600 w-4 mr-1'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               fill='none'
@@ -65,7 +65,7 @@ const AskQuestionsScreen = () => {
                             articleOn && 'bg-white'
                           }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
-                          <span className='h-full w-4 mr-1'>
+                          <span className='h-full text-blue-600 w-4 mr-1'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               fill='none'
@@ -96,7 +96,7 @@ const AskQuestionsScreen = () => {
                             topArticleOn && 'bg-white'
                           }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
-                          <span className='h-full w-4 mr-1'>
+                          <span className='h-full text-green-600 w-4 mr-1'>
                             <svg
                               xmlns='http://www.w3.org/2000/svg'
                               fill='none'

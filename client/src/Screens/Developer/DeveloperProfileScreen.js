@@ -30,7 +30,7 @@ const DeveloperProfileScreen = ({ location }) => {
   const { loading, error, user } = devProfile;
   const currentPath = location.pathname.split('/')[3];
   useEffect(() => {
-    if (!user) {
+    if (!user || Object.keys(user).length === 0) {
       dispatch(fetchDevProfile(devInfo.username));
     }
     if (currentPath === undefined || currentPath === 'about') {

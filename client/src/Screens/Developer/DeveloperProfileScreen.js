@@ -294,7 +294,9 @@ const DeveloperProfileScreen = ({ location }) => {
               />
               <Route
                 path={`${path}/about`}
-                component={() => <DevAboutScreen profile={user && user} />}
+                component={() => (
+                  <DevAboutScreen profile={user && user} loading={loading} />
+                )}
               />
               <Route
                 path={`${path}/gh-profile`}

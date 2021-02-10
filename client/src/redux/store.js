@@ -11,6 +11,11 @@ import {
   devProfileDpEditReducer,
   devProfileCoverEditReducer,
 } from './reducer/DeveloperReducer';
+import {
+  createArticelReducer,
+  fetchAllArticelReducer,
+  fetchSingleArticelReducer,
+} from './reducer/ArticleReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -20,6 +25,9 @@ const reducer = combineReducers({
   devProfileEdit: devProfileEditReducer,
   devDpEdit: devProfileDpEditReducer,
   devCoverEdit: devProfileCoverEditReducer,
+  createArticle: createArticelReducer,
+  fetchAllArticle: fetchAllArticelReducer,
+  fetchSingleArticle: fetchSingleArticelReducer,
 });
 
 const initialState = {

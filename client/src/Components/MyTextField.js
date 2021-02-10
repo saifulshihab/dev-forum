@@ -22,7 +22,7 @@ const MyTextField = ({ label, flex_content, ref, ...props }) => {
         ref={ref}
       />
       {meta.touched && meta.error ? (
-        <div style={{ color: 'red' }}>{meta.error}</div>
+        <div className='text-red-500 text-sm'>{meta.error}</div>
       ) : null}
     </div>
   );

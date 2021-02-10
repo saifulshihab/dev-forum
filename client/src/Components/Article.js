@@ -9,8 +9,8 @@ const Article = ({ article }) => {
   return (
     <>
       <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>
-        <div className='flex h-12 items-center pb-3 my-1.5 border-b'>
-          <div className='mr-3 w-6'>
+        <div className='flex h-16 items-center pb-2 my-1.5 border-b'>
+          <div className='mr-3 w-6 h-full'>
             <div className='w-full cursor-pointer hover:bg-gray-300 bg-gray-200 mb-1 rounded-full text-gray-500'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -42,12 +42,14 @@ const Article = ({ article }) => {
               </svg>
             </div>
           </div>
-          <div className=''>
-            <Link to={`${url}/${article && article._id}`}>
-              <div className='text-gray-500 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
-                {article.title}
-              </div>
-            </Link>
+          <div className='h-full w-9/12'>
+            <div className='h-8 w-auto overflow-hidden '>
+              <Link to={`${url}/${article && article._id}`}>
+                <div className='text-gray-500 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
+                  {article.title}
+                </div>
+              </Link>
+            </div>
             <div className='text-gray-400 text-xs'>
               <span className='mr-2'>{article.upvote} upvotes</span>
               <span className='mr-4'>{article.downvote} downvotes</span>
@@ -65,7 +67,7 @@ const Article = ({ article }) => {
           } max-h-50 overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
         >
           <div className='text-gray-600 text-sm text-justify'>
-            {article.body}
+            {article.description}
           </div>
         </div>
         <span

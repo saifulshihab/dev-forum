@@ -5,7 +5,7 @@ const ArticleDetails = ({ article }) => {
   return (
     <>
       <div className='w-full bg-white rounded-md border my-2 px-5 py-2'>
-        <div className='flex h-12 items-center pb-3 my-1.5 border-b'>
+        <div className='flex items-center pb-3 my-1.5 border-b'>
           <div className='mr-3 w-6'>
             <div className='w-full cursor-pointer hover:bg-gray-300 bg-gray-200 mb-1 rounded-full text-gray-500'>
               <svg
@@ -39,15 +39,15 @@ const ArticleDetails = ({ article }) => {
             </div>
           </div>
           <div className=''>
-            <div className='text-gray-500 text-xl font-semibold'>
-              {article.title}
+            <div className='text-gray-500  text-xl font-semibold'>
+              {article?.title}
             </div>
             <div className='text-gray-400 text-xs'>
-              <span className='mr-2'>{article.upvote} upvotes</span>
-              <span className='mr-4'>{article.downvote} downvotes</span>
+              <span className='mr-2'>{article?.upvote} upvotes</span>
+              <span className='mr-4'>{article?.downvote} downvotes</span>
               written by- @
               <span className='cursor-pointer hover:text-indigo-600 '>
-                {article.user.username}
+                {article.user?.username}
               </span>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ArticleDetails = ({ article }) => {
 
         <div className={`mt-3 h-full max-h-50 overflow-ellipsis`}>
           <div className='text-gray-600 text-sm text-justify'>
-            {article.body}
+            {article?.description}
           </div>
         </div>
 

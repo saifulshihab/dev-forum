@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarSVG from '../Components/SidebarSVG';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
@@ -200,7 +200,6 @@ const HomeScreen = ({ location }) => {
         <div className='col-span-4 h-screen'>
           <div className='relative feed_right_content bg-gray-50 h-full'>
             <Switch>
-              <Route exact path={path} component={AskQuestionsScreen} />
               <Route path={`${path}/forum`} component={AskQuestionsScreen} />
               <Route path={`${path}/freelance`} component={FreelanceScreen} />
               <Route path={`${path}/jobs`} component={JobsScreen} />
@@ -215,6 +214,7 @@ const HomeScreen = ({ location }) => {
                 component={DeveloperProfileScreen}
               />
               <Route path={`${path}/more`} component={MoreScreen} />
+              <Redirect to={`${path}/forum`} />
             </Switch>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import developerRoutes from './routes/DevloperRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import articleRoutes from './routes/ArticleRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/dev', developerRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/api/article', articleRoutes);
 
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, 'public')));

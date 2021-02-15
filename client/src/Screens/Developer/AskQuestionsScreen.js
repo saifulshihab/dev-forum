@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import QuestionScreen from './QuestionScreen';
@@ -6,15 +6,26 @@ import ArticleScreen from './ArticleScreen';
 import SingleArticleContainer from '../../Container/SingleArticleContainer';
 import ArticleContainer from '../../Container/ArticleContainer';
 
-const AskQuestionsScreen = () => {
-  const [questionOn, setQuestionOn] = useState(true);
+const AskQuestionsScreen = ({ location }) => {
+  const [questionOn, setQuestionOn] = useState(false);
   const [articleOn, setArticleOn] = useState(false);
-  const [topArticleOn, setTopArticleOn] = useState(false);
 
   const { path, url } = useRouteMatch();
+  const currentPath = location.pathname.split('/')[3];
+  
+  useEffect(() => {
+    if (currentPath === 'questions' || currentPath === undefined) {
+      setQuestionOn(true);
+      setArticleOn(false);
+    } else if (currentPath === 'articles') {
+      setQuestionOn(false);
+      setArticleOn(true);
+    }
+    return () => {};
+  }, [currentPath]);
   return (
     <div className='grid grid-cols-4 h-full'>
-      <div className='col-span-3 border-r-2'>
+      <div className='col-span-3'>
         <div className='heading'>
           <nav className='bg-gray-100 text-dark'>
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -22,14 +33,7 @@ const AskQuestionsScreen = () => {
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
                     <div className='flex items-baseline space-x-4'>
-                      <Link
-                        onClick={() => {
-                          setQuestionOn(true);
-                          setArticleOn(false);
-                          setTopArticleOn(false);
-                        }}
-                        to={`${url}/questions`}
-                      >
+                      <Link to={`${url}/questions`}>
                         <div
                           className={`flex items-center cursor-pointer ${
                             questionOn && 'bg-white'
@@ -53,14 +57,7 @@ const AskQuestionsScreen = () => {
                           <span className='h-full'>Ask Question</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setArticleOn(true);
-                          setQuestionOn(false);
-                          setTopArticleOn(false);
-                        }}
-                        to={`${url}/articles`}
-                      >
+                      <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
                             articleOn && 'bg-white'
@@ -84,37 +81,6 @@ const AskQuestionsScreen = () => {
                           <span className='h-full'>Article</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setTopArticleOn(true);
-                          setArticleOn(false);
-                          setQuestionOn(false);
-                        }}
-                        to={`${url}/topArticles`}
-                      >
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            topArticleOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <span className='h-full text-green-600 w-4 mr-1'>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              fill='none'
-                              viewBox='0 0 24 24'
-                              stroke='currentColor'
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth={2}
-                                d='M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'
-                              />
-                            </svg>
-                          </span>
-                          <span className='h-full'>Top Article</span>
-                        </div>
-                      </Link>
                     </div>
                   </div>
                 </div>
@@ -132,14 +98,15 @@ const AskQuestionsScreen = () => {
               path={`${path}/topArticles/:articleId`}
               component={SingleArticleContainer}
             />
-            <Route
-              path={`${path}/topArticles`}
-              component={() => <ArticleContainer topArticle />}
-            />
           </Switch>
         </div>
       </div>
-      <div>Sidebar</div>
+      <div className='p-1'>
+        <p className='text-md text-gray-500 p-1 bg-gray-50 font-semibold border-b pb-2 mb-1'>
+          Top Articles
+        </p>
+        <ArticleContainer topArticle />
+      </div>
     </div>
   );
 };

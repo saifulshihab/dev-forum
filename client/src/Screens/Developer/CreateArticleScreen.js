@@ -26,7 +26,7 @@ const CreateArticleScreen = () => {
   return (
     <div className='bg-white px-3 py-2 rounded shadow'>
       <div>
-        <h2 className='font-semibold text-xl'>Write an Article</h2>
+        <h2 className='font-semibold text-gray-600 text-xl'>Write an Article</h2>
       </div>
       <Formik
         initialValues={{ title: '', description: '' }}

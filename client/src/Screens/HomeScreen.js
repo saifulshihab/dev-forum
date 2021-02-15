@@ -103,7 +103,7 @@ const HomeScreen = ({ location }) => {
   return (
     <div className='border-t-2'>
       <div className='grid grid-cols-5'>
-        <div className='col-span-1 border-r-2 h-screen'>
+        <div className='col-span-1 h-screen'>
           <ul className='text-gray-600'>
             <Link
               to={`${url}/forum`}
@@ -197,7 +197,7 @@ const HomeScreen = ({ location }) => {
             </Link>
           </ul>
         </div>
-        <div className='col-span-4 h-screen'>
+        <div className='col-span-4 h-full'>
           <div className='relative feed_right_content bg-gray-50 h-full'>
             <Switch>
               <Route path={`${path}/forum`} component={AskQuestionsScreen} />

@@ -8,7 +8,7 @@ const JobsScreen = () => {
   return (
     <div>
       <div className='grid grid-cols-4 h-full'>
-        <div className='col-span-3 border-r-2'>
+        <div className='col-span-3'>
           <div className='mb-2 text-lg text-gray-600 bg-gray-100 flex items-center h-10 shadow font-semibold p-2'>
             Job Circular
           </div>

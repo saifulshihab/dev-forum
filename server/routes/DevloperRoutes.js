@@ -19,9 +19,9 @@ router.route('/signin').post(signinDeveloper);
 router.route('/updateDp').put(protect, updateDevDp);
 router.route('/updateCover').put(protect, updateDevCover);
 router
-  .route('/:username')
+  .route('/:userId')
   .get(protect, getDevprofile)
   .put(protect, editDevProfile);
-router.route('/:username/deleteAccount').delete(protect, delDevprofile);
+router.route('/:userId/deleteAccount').delete(protect, delDevprofile);
 
 export default router;

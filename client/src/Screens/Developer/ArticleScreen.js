@@ -14,7 +14,11 @@ const ArticleScreen = () => {
         </Link>
       </div>
       <Switch>
-        <Route exact path={path} component={() => <ArticleContainer />} />
+        <Route
+          exact
+          path={path}
+          component={() => <ArticleContainer topArticle={false} />}
+        />
         <Route path={`${path}/write`} component={CreateArticleScreen} />
         <Route path={`${path}/:articleId`} component={SingleArticleContainer} />
       </Switch>

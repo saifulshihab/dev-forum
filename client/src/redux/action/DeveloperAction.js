@@ -94,7 +94,7 @@ export const devSignout = () => async (dispatch) => {
 };
 
 // Fetch developer profile
-export const fetchDevProfile = (username) => async (dispatch, getState) => {
+export const fetchDevProfile = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_DEV_PROFILE_REQUEST,
@@ -107,7 +107,7 @@ export const fetchDevProfile = (username) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseURL}/api/dev/${username}`, config);
+    const { data } = await axios.get(`${baseURL}/api/dev/${id}`, config);
     dispatch({
       type: GET_DEV_PROFILE_SUCCESS,
       payload: data,
@@ -124,7 +124,7 @@ export const fetchDevProfile = (username) => async (dispatch, getState) => {
 };
 
 // Permanantly delete developer profile
-export const deleteDevAccount = (username) => async (dispatch, getState) => {
+export const deleteDevAccount = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: DEV_PROFILE_DELETE_REQUEST,
@@ -137,7 +137,7 @@ export const deleteDevAccount = (username) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.delete(`${baseURL}/api/dev/${username}/deleteAccount`, config);
+    await axios.delete(`${baseURL}/api/dev/${id}/deleteAccount`, config);
     dispatch({
       type: DEV_PROFILE_DELETE_SUCCESS,
     });
@@ -155,7 +155,7 @@ export const deleteDevAccount = (username) => async (dispatch, getState) => {
   }
 };
 // Edit developer profile
-export const editDevAccount = (username, updateUser) => async (
+export const editDevAccount = (id, updateUser) => async (
   dispatch,
   getState
 ) => {
@@ -172,7 +172,7 @@ export const editDevAccount = (username, updateUser) => async (
       },
     };
     const { data } = await axios.put(
-      `${baseURL}/api/dev/${username}`,
+      `${baseURL}/api/dev/${id}`,
       updateUser.data,
       config
     );
@@ -261,4 +261,3 @@ export const editDevCover = (cover) => async (dispatch, getState) => {
     });
   }
 };
-

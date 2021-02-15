@@ -55,7 +55,7 @@ const signinDeveloper = asyncHandler(async (req, res) => {
 // routes: api/dev/:username
 // access: private
 const getDevprofile = asyncHandler(async (req, res) => {
-  const user = await Developer.findOne({ username: req.params.username })
+  const user = await Developer.findById(req.params.userId)
     .populate('education')
     .populate('social')
     .populate('experience');
@@ -71,7 +71,7 @@ const getDevprofile = asyncHandler(async (req, res) => {
 // routes: api/dev/:username
 // access: private
 const delDevprofile = asyncHandler(async (req, res) => {
-  const user = await Developer.findOne({ username: req.params.username });
+  const user = await Developer.findById(req.params.userId);
   if (user) {
     if (user._id.equals(req.user._id)) {
       await user.remove();
@@ -91,25 +91,33 @@ const delDevprofile = asyncHandler(async (req, res) => {
 // routes: api/dev/:username
 // access: private
 const editDevProfile = asyncHandler(async (req, res) => {
-  const user = await Developer.findOne({ username: req.params.username });
-
+  const user = await Developer.findById(req.params.userId);
   if (user) {
     if (user._id.equals(req.user._id)) {
-      const { email } = req.body;
-      const devExist = await Developer.findOne({ email: email });
-      if (!devExist || devExist._id.equals(user._id)) {
-        const updateProfile = await Developer.findByIdAndUpdate(
-          user._id,
-          { $set: req.body },
-          { new: true }
-        );
-        if (updateProfile) {
-          res.status(200).json({
-            status: 'Profile updated!',
-            data: updateProfile,
-          });
+      const { email, username } = req.body;
+      const devExistwEmail = await Developer.findOne({ email: email });
+      if (!devExistwEmail || devExistwEmail._id.equals(user._id)) {
+        const devExistwUsername = await Developer.findOne({
+          username: username,
+        });
+        if (!devExistwUsername || devExistwUsername._id.equals(user._id)) {
+          const updateProfile = await Developer.findByIdAndUpdate(
+            user._id,
+            { $set: req.body },
+            { new: true }
+          );
+          if (updateProfile) {
+            res.status(200).json({
+              status: 'Profile updated!',
+              data: updateProfile,
+            });
+          } else {
+            res.status(500);
+            throw new Error();
+          }
         } else {
-          throw new Error();
+          res.status(500);
+          throw new Error('This username is already taken!');
         }
       } else {
         res.status(400);

@@ -65,10 +65,17 @@ const GithubScreen = ({ username }) => {
               )}
             </div>
           </div>
-          <div className='w-full mt-2 pt-5 border-t'>
-            {repo.map((data) => (
-              <GithubRepo key={data.id} repo={data} />
-            ))}
+          <div className='w-full mt-2 pt-3 border-t'>
+            <p className='text-gray-600 text-lg mb-2  font-semibold'>
+              Repositories ({gh.public_repos})
+            </p>
+            {repo
+              .sort((a, b) =>
+                a.stargazers_count < b.stargazers_count ? 1 : -1
+              )
+              .map((data) => (
+                <GithubRepo key={data.id} repo={data} />
+              ))}
           </div>
         </div>
       )}

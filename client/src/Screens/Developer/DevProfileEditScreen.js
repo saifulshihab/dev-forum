@@ -24,9 +24,9 @@ const DevProfileEditScreen = ({ user }) => {
 
   useEffect(() => {
     if (editSuccess) {
-      dispatch(fetchDevProfile(devInfo.username));
+      dispatch(fetchDevProfile(devInfo._id));
     }
-  }, [dispatch, editSuccess, devInfo.username, user]);
+  }, [dispatch, editSuccess, devInfo?._id, user]);
 
   const fieldValidationSchema = yup.object().shape({
     full_name: yup
@@ -109,7 +109,7 @@ const DevProfileEditScreen = ({ user }) => {
         }}
         validationSchema={fieldValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
-          dispatch(editDevAccount(devInfo.username, { data }));
+          dispatch(editDevAccount(devInfo?._id, { data }));
 
           setSubmitting(false);
         }}

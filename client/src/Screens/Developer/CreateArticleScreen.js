@@ -26,7 +26,9 @@ const CreateArticleScreen = () => {
   return (
     <div className='bg-white px-3 py-2 rounded shadow'>
       <div>
-        <h2 className='font-semibold text-gray-600 text-xl'>Write an Article</h2>
+        <h2 className='font-semibold text-gray-600 text-xl'>
+          Write an Article
+        </h2>
       </div>
       <Formik
         initialValues={{ title: '', description: '' }}
@@ -55,6 +57,7 @@ const CreateArticleScreen = () => {
                 <div>
                   <textarea
                     type='text'
+                    rows='15'
                     className='mt-2 w-full border rounded text-sm focus:outline-none focus:border-indigo-500 p-2'
                     placeholder='Write description...'
                     {...field}

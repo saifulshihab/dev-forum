@@ -24,7 +24,7 @@ const SettingsScreen = () => {
 
   const profileDeleteHandler = () => {
     setModalOpen(false);
-    dispatch(deleteDevAccount(devInfo.username));
+    dispatch(deleteDevAccount(devInfo._id));
   };
   return (
     <div className='p-1'>

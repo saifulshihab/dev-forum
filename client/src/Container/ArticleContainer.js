@@ -28,8 +28,8 @@ const ArticleContainer = ({ topArticle }) => {
           ?.sort((a, b) => (a.upvote < b.upvote ? 1 : -1))
           .map((art) => <TopArticle key={art._id} article={art} />)
       ) : (
-        !topArticle &&
-        articles.map((art) => <Article key={art._id} article={art} />)
+        topArticle === false &&
+        articles?.map((art) => <Article key={art._id} article={art} />)
       )}
     </div>
   );

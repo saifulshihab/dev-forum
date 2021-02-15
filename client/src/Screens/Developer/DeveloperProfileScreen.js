@@ -31,7 +31,7 @@ const DeveloperProfileScreen = ({ location }) => {
   const currentPath = location.pathname.split('/')[3];
   useEffect(() => {
     if (!user || Object.keys(user).length === 0) {
-      dispatch(fetchDevProfile(devInfo.username));
+      dispatch(fetchDevProfile(devInfo._id));
     }
     if (currentPath === undefined || currentPath === 'about') {
       setAbout(true);
@@ -91,7 +91,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setQues(false);
     }
     return () => {};
-  }, [dispatch, devInfo.username, currentPath, user]);
+  }, [dispatch, devInfo._id, currentPath, user]);
 
   return (
     <div className='profile p-1'>
@@ -132,21 +132,19 @@ const DeveloperProfileScreen = ({ location }) => {
               <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
             </div>
           ) : (
-            <div className='name_address_location'>
+            <div className='name_address_location text-gray-600 text-md'>
               <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
               <span className='text-gray-400'>@{user?.username}</span>
-              <div className='h-5'>{user?.bio}</div>
-              <div className='text-gray-600'>
-                <span className='mr-4'>
-                  <i className='mr-2 fas fa-envelope-open-text'></i>
-                  {user?.email}
-                </span>
-                <span>
-                  <i className='mr-2 fas fa-globe'></i>
-                  {user?.website}
-                </span>
-              </div>
-              <div className='flex items-center text-gray-600'>
+              <div className='h-5 mb-1'>{user?.bio}</div>
+              <span className='mr-4'>
+                <i className='mr-2 fas fa-envelope-open-text'></i>
+                {user?.email}
+              </span>
+              <span>
+                <i className='mr-2 fas fa-globe'></i>
+                {user?.website}
+              </span>
+              <div className='flex items-center '>
                 <span className='mr-4'>
                   <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
                   {new Date(user?.createdAt).toLocaleDateString('en-gb', {

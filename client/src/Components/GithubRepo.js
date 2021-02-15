@@ -3,7 +3,7 @@ import RepoLangDot from './RepoLangDot';
 
 const GithubRepo = ({ repo }) => {
   return (
-    <div className='w-80 lg:w-96 h-36 border border-indigo-500 inline-block rounded p-4 shadow mr-2 mb-2 text-gray-600 overflow-ellipsis overflow-hidden'>
+    <div className='w-80 lg:w-96 h-32 border inline-block rounded p-3 shadow mr-2 mb-2 text-gray-600 overflow-ellipsis overflow-hidden'>
       <a href={repo.svn_url}>
         <p className='text-sm h-6 font-semibold mb-1'>
           <i className='fas fa-book mr-2'></i>
@@ -11,7 +11,7 @@ const GithubRepo = ({ repo }) => {
         </p>
       </a>
       <p className='h-14 text-xs'>{repo.description}</p>
-      <div className='flex mt-2 h-6 items-center mt-auto'>
+      <div className='flex mt-2 h-6 items-center text-xs mt-auto'>
         <div className='mr-4'>
           <RepoLangDot lang={repo.language} />
           {repo.language}

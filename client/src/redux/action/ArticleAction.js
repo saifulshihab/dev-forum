@@ -13,6 +13,9 @@ import {
   FETCH_USER_ARTICLES_REQUEST,
   FETCH_USER_ARTICLES_SUCCESS,
   FETCH_USER_ARTICLES_FAIL,
+  DELETE_SINGLE_ARTICLE_REQUEST,
+  DELETE_SINGLE_ARTICLE_SUCCESS,
+  DELETE_SINGLE_ARTICLE_FAIL,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -120,7 +123,38 @@ export const getSingleArticle = (id) => async (dispatch, getState) => {
   }
 };
 
-// create article
+// delete article
+export const deleteArticle = (articleId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DELETE_SINGLE_ARTICLE_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.delete(`${baseURL}/api/article/${articleId}`, config);
+    dispatch({
+      type: DELETE_SINGLE_ARTICLE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_SINGLE_ARTICLE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// fetch user articles
 export const getUserArticles = (userId) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -136,12 +170,14 @@ export const getUserArticles = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseURL}/api/article/${userId}/articles`, config);
+    const { data } = await axios.get(
+      `${baseURL}/api/article/${userId}/articles`,
+      config
+    );
     dispatch({
       type: FETCH_USER_ARTICLES_SUCCESS,
       payload: data,
     });
- 
   } catch (error) {
     dispatch({
       type: FETCH_USER_ARTICLES_FAIL,

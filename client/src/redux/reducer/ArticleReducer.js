@@ -3,6 +3,10 @@ import {
   CREATE_ARTICLE_REQUEST,
   CREATE_ARTICLE_RESET,
   CREATE_ARTICLE_SUCCESS,
+  DELETE_SINGLE_ARTICLE_FAIL,
+  DELETE_SINGLE_ARTICLE_REQUEST,
+  DELETE_SINGLE_ARTICLE_RESET,
+  DELETE_SINGLE_ARTICLE_SUCCESS,
   FETCH_ALL_ARTICLE_FAIL,
   FETCH_ALL_ARTICLE_REQUEST,
   FETCH_ALL_ARTICLE_SUCCESS,
@@ -63,6 +67,21 @@ export const fetchUserArticlesReducer = (state = { articles: [] }, action) => {
       return { loading: false, articles: action.payload };
     case FETCH_USER_ARTICLES_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const delSingleArticelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_SINGLE_ARTICLE_REQUEST:
+      return { loading: true };
+    case DELETE_SINGLE_ARTICLE_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_SINGLE_ARTICLE_FAIL:
+      return { loading: false, error: action.payload };
+    case DELETE_SINGLE_ARTICLE_RESET:
+      return {};
     default:
       return state;
   }

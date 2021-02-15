@@ -1,11 +1,48 @@
-import React, { useState } from 'react';
+import { Transition } from '@headlessui/react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Comment from './Comment';
+import Loader from '../Components/Loader';
+import Alert from '../Components/Alert';
+import { deleteArticle, getAllArticles } from '../redux/action/ArticleAction';
+import { DELETE_SINGLE_ARTICLE_RESET } from '../redux/ActionTypes';
 
 const Article = ({ article, routeFromProfile }) => {
+  const { url } = useRouteMatch();
+  const dispatch = useDispatch();
   const [showComment, setshowComment] = useState(false);
   const [showMore, setshowMore] = useState(false);
-  const { url } = useRouteMatch();
+  const [shoeArtileOption, serArticleOption] = useState(false);
+
+  const signInDev = useSelector((state) => state.signInDev);
+  const { devInfo: currentUser } = signInDev;
+
+  const deleteSingleArticle = useSelector((state) => state.deleteSingleArticle);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    success: deleteSuccess,
+  } = deleteSingleArticle;
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      dispatch(getAllArticles());
+      dispatch({
+        type: DELETE_SINGLE_ARTICLE_RESET,
+      });
+    }
+  }, [dispatch, deleteSuccess]);
+
+  const closeDD = () => {
+    serArticleOption(false);
+  };
+
+  const deleteArticleHandler = (id) => {
+    closeDD();
+    dispatch(deleteArticle(id));
+  };
+
   return (
     <>
       <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>
@@ -83,10 +120,10 @@ const Article = ({ article, routeFromProfile }) => {
           Show{showMore ? ' less' : ' more'}...
         </span>
 
-        <div className='flex   mt-3 border-t cursor-pointer pt-1 text-center'>
+        <div className='flex mt-3 border-t cursor-pointer pt-1 text-center space-x-2'>
           <div
             onClick={() => setshowComment(!showComment)}
-            className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'
+            className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 text-gray-500'
           >
             <span className='w-4 mr-2'>
               <svg
@@ -107,7 +144,7 @@ const Article = ({ article, routeFromProfile }) => {
               Comment
             </span>
           </div>
-          <div className='w-1/2 flex items-center justify-center hover:text-indigo-600 mr-2 text-gray-500'>
+          <div className='w-1/2 flex items-center justify-center hover:text-indigo-600 border-r text-gray-500'>
             <span className='w-4 mr-2'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -127,6 +164,97 @@ const Article = ({ article, routeFromProfile }) => {
               Share
             </span>
           </div>
+          <div className='w-1/2 flex items-center justify-center hover:text-indigo-600 text-gray-500'>
+            <span className='w-4 mr-2'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z'
+                />
+              </svg>
+            </span>
+            <span
+              onClick={() => serArticleOption(true)}
+              className='text-gray-500 hover:text-indigo-600 text-sm'
+            >
+              More
+            </span>
+            {shoeArtileOption && (
+              <div
+                onClick={() => serArticleOption(false)}
+                className='fixed top-0 left-0 right-0 bottom-0 w-full'
+              ></div>
+            )}
+            <Transition
+              show={shoeArtileOption}
+              enter='transition ease-out duration-100 transform'
+              enterFrom='opacity-0 scale-95'
+              enterTo='opacity-100 scale-100'
+              leave='transition ease-in duration-75 transform'
+              leaveFrom='opacity-100 scale-100'
+              leaveTo='opacity-0 scale-95'
+            >
+              {(ref) => (
+                <div
+                  ref={ref}
+                  className='flex flex-col space-y-1 absolute right-25 text-sm text-gray-500 text-left mt-10 w-40 rounded-md shadow-lg p-2 bg-white ring-1 ring-black ring-opacity-5'
+                  role='menu'
+                  aria-orientation='vertical'
+                  aria-labelledby='user-menu'
+                >
+                  {currentUser._id === article?.user?._id && (
+                    <p className='p-1 hover:bg-gray-50'>
+                      <i className='mr-2 far fa-edit'></i>Edit
+                    </p>
+                  )}
+                  {currentUser._id === article?.user?._id && (
+                    <p
+                      onClick={() => deleteArticleHandler(article?._id)}
+                      className='p-1 hover:bg-gray-50'
+                    >
+                      <i className='mr-2 far fa-trash-alt'></i>Delete
+                    </p>
+                  )}
+
+                  <p className='p-1 hover:bg-gray-50'>
+                    <i className='mr-2 far fa-save'></i>Save
+                  </p>
+                  <p className='p-1 hover:bg-gray-50'>
+                    <Link
+                      onClick={() => closeDD()}
+                      to={
+                        !routeFromProfile
+                          ? `${url}/${article && article._id}`
+                          : `/h/forum/articles/${article && article._id}`
+                      }
+                    >
+                      <i className='mr-2 fas fa-info'></i>Details
+                    </Link>
+                  </p>
+                  <p className='p-1 hover:bg-gray-50'>
+                    <i className='mr-2 fas fa-arrow-up'></i>Upvote
+                  </p>
+                  <p className='p-1 hover:bg-gray-50'>
+                    <i className='mr-2 fas fa-arrow-down'></i>Downvote
+                  </p>
+                </div>
+              )}
+            </Transition>
+          </div>
+        </div>
+        <div>
+          {deleteLoading ? (
+            <Loader />
+          ) : (
+            deleteError && <Alert fail msg={deleteError} />
+          )}
         </div>
       </div>
       {showComment && (

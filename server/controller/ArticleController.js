@@ -48,7 +48,9 @@ const fetchSingleArticle = asyncHandler(async (req, res) => {
 // method: GET
 // access: private
 const getUserArticles = asyncHandler(async (req, res) => {
-  const articles = await Article.find({ user: req.params.userId }).populate('user');
+  const articles = await Article.find({ user: req.params.userId }).populate(
+    'user'
+  );
   if (articles) {
     res.status(200).json(articles);
   } else {
@@ -56,5 +58,35 @@ const getUserArticles = asyncHandler(async (req, res) => {
     throw new Error('Failed to fetch user articles!');
   }
 });
+// desc: delete single article by authentic user
+// routes: api/article/:articleId
+// method: DEL
+// access: private
+const deleteArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId).populate('user');
+  if (article) {
+    if (article.user._id.toString() === req.user._id.toString()) {
+      const deleteArticle = await article.remove();
+      if (deleteArticle) {
+        res.status(200).json({ status: 'Article deleted!' });
+      } else {
+        res.status(500);
+        throw new Error();
+      }
+    } else {
+      res.status(400);
+      throw new Error('You are not authorized to delete this article!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
 
-export { createArticle, fetchAllArticle, fetchSingleArticle, getUserArticles };
+export {
+  createArticle,
+  fetchAllArticle,
+  fetchSingleArticle,
+  getUserArticles,
+  deleteArticle,
+};

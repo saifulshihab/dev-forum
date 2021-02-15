@@ -9,6 +9,9 @@ import {
   FETCH_SINGLE_ARTICLE_FAIL,
   FETCH_SINGLE_ARTICLE_REQUEST,
   FETCH_SINGLE_ARTICLE_SUCCESS,
+  FETCH_USER_ARTICLES_FAIL,
+  FETCH_USER_ARTICLES_REQUEST,
+  FETCH_USER_ARTICLES_SUCCESS,
 } from '../ActionTypes';
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
@@ -46,6 +49,19 @@ export const fetchSingleArticelReducer = (state = { article: {} }, action) => {
     case FETCH_SINGLE_ARTICLE_SUCCESS:
       return { loading: false, article: action.payload };
     case FETCH_SINGLE_ARTICLE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const fetchUserArticlesReducer = (state = { articles: [] }, action) => {
+  switch (action.type) {
+    case FETCH_USER_ARTICLES_REQUEST:
+      return { loading: true };
+    case FETCH_USER_ARTICLES_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case FETCH_USER_ARTICLES_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

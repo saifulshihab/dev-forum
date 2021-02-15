@@ -301,7 +301,10 @@ const DeveloperProfileScreen = ({ location }) => {
                 component={() => <GithubScreen username={user?.github} />}
               />
               <Route path={`${path}/projects`} component={DevProjectsScreen} />
-              <Route path={`${path}/articles`} component={DevArticleScreen} />
+              <Route
+                path={`${path}/articles`}
+                component={() => <DevArticleScreen user={user} />}
+              />
               <Route path={`${path}/ques`} component={DevQuesAskScreen} />
               <Route
                 path={`${path}/edit`}

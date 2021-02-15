@@ -10,6 +10,9 @@ import {
   FETCH_SINGLE_ARTICLE_REQUEST,
   FETCH_SINGLE_ARTICLE_SUCCESS,
   FETCH_SINGLE_ARTICLE_FAIL,
+  FETCH_USER_ARTICLES_REQUEST,
+  FETCH_USER_ARTICLES_SUCCESS,
+  FETCH_USER_ARTICLES_FAIL,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -87,7 +90,7 @@ export const getSingleArticle = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: FETCH_SINGLE_ARTICLE_REQUEST,
-    });   
+    });
 
     const {
       signInDev: { devInfo },
@@ -109,6 +112,39 @@ export const getSingleArticle = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: FETCH_SINGLE_ARTICLE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// create article
+export const getUserArticles = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FETCH_USER_ARTICLES_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`${baseURL}/api/article/${userId}/articles`, config);
+    dispatch({
+      type: FETCH_USER_ARTICLES_SUCCESS,
+      payload: data,
+    });
+ 
+  } catch (error) {
+    dispatch({
+      type: FETCH_USER_ARTICLES_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

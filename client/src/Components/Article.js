@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Comment from './Comment';
 
-const Article = ({ article }) => {
+const Article = ({ article, routeFromProfile }) => {
   const [showComment, setshowComment] = useState(false);
   const [showMore, setshowMore] = useState(false);
   const { url } = useRouteMatch();
@@ -44,7 +44,13 @@ const Article = ({ article }) => {
           </div>
           <div className='h-full w-9/12'>
             <div className='h-8 w-auto overflow-hidden '>
-              <Link to={`${url}/${article && article._id}`}>
+              <Link
+                to={
+                  !routeFromProfile
+                    ? `${url}/${article && article._id}`
+                    : `/h/forum/articles/${article && article._id}`
+                }
+              >
                 <div className='text-gray-500 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
                   {article.title}
                 </div>
@@ -63,7 +69,7 @@ const Article = ({ article }) => {
 
         <div
           className={`mt-3 ${
-            showMore ? 'h-full' : 'h-24'
+            showMore ? 'h-full' : 'h-16'
           } max-h-50 overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
         >
           <div className='text-gray-600 text-sm text-justify'>

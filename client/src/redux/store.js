@@ -15,6 +15,7 @@ import {
   createArticelReducer,
   fetchAllArticelReducer,
   fetchSingleArticelReducer,
+  fetchUserArticlesReducer,
 } from './reducer/ArticleReducer';
 
 const reducer = combineReducers({
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   createArticle: createArticelReducer,
   fetchAllArticle: fetchAllArticelReducer,
   fetchSingleArticle: fetchSingleArticelReducer,
+  fetchUserArticles: fetchUserArticlesReducer,
 });
 
 const initialState = {

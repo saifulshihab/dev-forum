@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../Components/Alert';
 import { articleCreate } from '../../redux/action/ArticleAction';
+import { Editor } from '@tinymce/tinymce-react';
 
 const CreateArticleScreen = () => {
   const dispatch = useDispatch();
@@ -35,10 +36,11 @@ const CreateArticleScreen = () => {
         validationSchema={formValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
           dispatch(articleCreate(data));
+          console.log(data);
           setSubmitting(false);
         }}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting, values }) => (
           <form onSubmit={handleSubmit}>
             <MyTextField
               label='Title'
@@ -47,7 +49,7 @@ const CreateArticleScreen = () => {
               placeholder='Article Title'
             />
             <label
-              htmlFor='img'
+              htmlFor='article_body'
               className='block mt-2 mb-1 font-semibold text-xs text-gray-600 uppercase'
             >
               Description
@@ -55,31 +57,39 @@ const CreateArticleScreen = () => {
             <Field name='description'>
               {({ field, meta }) => (
                 <div>
-                  <textarea
-                    type='text'
-                    rows='15'
-                    className='mt-2 w-full border rounded text-sm focus:outline-none focus:border-indigo-500 p-2'
-                    placeholder='Write description...'
+                  <Editor
+                    id='article_body'
+                    apiKey='luwkgwnx411qqfromu0gg9acfvqm2dc21fci2xw1hi9gajok'
+                    initialValue='Write...'
+                    init={{
+                      height: 500,
+                      menubar: true,
+                      plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount',
+                      ],
+                      toolbar:
+                        'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |  bullist numlist outdent indent | removeformat | help',
+                    }}
+                    onEditorChange={(content) => {
+                      values.description = content;
+                    }}
+                    outputFormat='text' /// will be fix later for input rich text
                     {...field}
-                  ></textarea>
+                  />
                   {meta.touched && meta.error ? (
                     <div className='text-red-500 text-sm'>{meta.error}</div>
                   ) : null}
                 </div>
               )}
             </Field>
-            <label
-              htmlFor='img'
-              className='block mt-2 mb-1 font-semibold text-xs text-gray-600 uppercase'
-            >
-              Add image
-            </label>
-            <input id='img' type='file' className='text-sm mt-2 mb-2' />
+
             <button
+              type='submit'
               className={`text-white bg-indigo-600 ${
                 loading && 'bg-indigo-300'
-              } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2'
-              type='submit`}
+              } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2`}
               disabled={isSubmitting}
             >
               {loading ? 'Posting...' : 'Post'}

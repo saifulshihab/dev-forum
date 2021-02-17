@@ -82,6 +82,34 @@ const deleteArticle = asyncHandler(async (req, res) => {
     throw new Error('Article not found!');
   }
 });
+// desc: edit article by authentic user
+// routes: api/article/:articleId
+// method: PUT
+// access: private
+const editArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId).populate('user');
+  if (article) {
+    if (article.user._id.toString() === req.user._id.toString()) {
+      const updateArticle = await Article.findByIdAndUpdate(
+        req.params.articleId,
+        { $set: req.body },
+        { new: true }
+      );
+      if (updateArticle) {
+        res.status(200).json(updateArticle);
+      } else {
+        res.status(500);
+        throw new Error('Failed to update Article!');
+      }
+    } else {
+      res.status(400);
+      throw new Error('You are not authorized to delete this article!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
 
 export {
   createArticle,
@@ -89,4 +117,5 @@ export {
   fetchSingleArticle,
   getUserArticles,
   deleteArticle,
+  editArticle,
 };

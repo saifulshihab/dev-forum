@@ -16,6 +16,9 @@ import {
   DELETE_SINGLE_ARTICLE_REQUEST,
   DELETE_SINGLE_ARTICLE_SUCCESS,
   DELETE_SINGLE_ARTICLE_FAIL,
+  ARTICLE_EDIT_REQUEST,
+  ARTICLE_EDIT_SUCCESS,
+  ARTICLE_EDIT_FAIL,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -88,6 +91,40 @@ export const articleCreate = (article) => async (dispatch, getState) => {
   }
 };
 
+// fetch user articles
+export const getUserArticles = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FETCH_USER_ARTICLES_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/article/${userId}/articles`,
+      config
+    );
+    dispatch({
+      type: FETCH_USER_ARTICLES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_USER_ARTICLES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 // create article
 export const getSingleArticle = (id) => async (dispatch, getState) => {
   try {
@@ -154,11 +191,14 @@ export const deleteArticle = (articleId) => async (dispatch, getState) => {
   }
 };
 
-// fetch user articles
-export const getUserArticles = (userId) => async (dispatch, getState) => {
+// edit article
+export const articleEdit = (articleId, updatedArticle) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({
-      type: FETCH_USER_ARTICLES_REQUEST,
+      type: ARTICLE_EDIT_REQUEST,
     });
 
     const {
@@ -170,17 +210,17 @@ export const getUserArticles = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/article/${userId}/articles`,
+    await axios.put(
+      `${baseURL}/api/article/${articleId}`,
+      updatedArticle,
       config
     );
     dispatch({
-      type: FETCH_USER_ARTICLES_SUCCESS,
-      payload: data,
+      type: ARTICLE_EDIT_SUCCESS,
     });
   } catch (error) {
     dispatch({
-      type: FETCH_USER_ARTICLES_FAIL,
+      type: ARTICLE_EDIT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

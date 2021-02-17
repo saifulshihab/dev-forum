@@ -1,4 +1,8 @@
 import {
+  ARTICLE_EDIT_FAIL,
+  ARTICLE_EDIT_REQUEST,
+  ARTICLE_EDIT_RESET,
+  ARTICLE_EDIT_SUCCESS,
   CREATE_ARTICLE_FAIL,
   CREATE_ARTICLE_REQUEST,
   CREATE_ARTICLE_RESET,
@@ -81,6 +85,21 @@ export const delSingleArticelReducer = (state = {}, action) => {
     case DELETE_SINGLE_ARTICLE_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_SINGLE_ARTICLE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const editArticelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ARTICLE_EDIT_REQUEST:
+      return { loading: true };
+    case ARTICLE_EDIT_SUCCESS:
+      return { loading: false, success: true };
+    case ARTICLE_EDIT_FAIL:
+      return { loading: false, error: action.payload };
+    case ARTICLE_EDIT_RESET:
       return {};
     default:
       return state;

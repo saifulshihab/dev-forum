@@ -3,6 +3,7 @@ import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import ArticleContainer from '../../Container/ArticleContainer';
 import SingleArticleContainer from '../../Container/SingleArticleContainer';
 import CreateArticleScreen from './CreateArticleScreen';
+import UpdateArticleScreen from './UpdateArticleScreen';
 
 const ArticleScreen = () => {
   const { path, url } = useRouteMatch();
@@ -20,7 +21,15 @@ const ArticleScreen = () => {
           component={() => <ArticleContainer topArticle={false} />}
         />
         <Route path={`${path}/write`} component={CreateArticleScreen} />
-        <Route path={`${path}/:articleId`} component={SingleArticleContainer} />
+        <Route
+          exact
+          path={`${path}/:articleId`}
+          component={SingleArticleContainer}
+        />
+        <Route
+          path={`${path}/:articleId/edit`}
+          component={UpdateArticleScreen}
+        />
       </Switch>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   fetchSingleArticle,
   getUserArticles,
   deleteArticle,
+  editArticle,
 } from '../controller/ArticleController.js';
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.route('/:userId/articles').get(protect, getUserArticles);
 router
   .route('/:articleId')
   .get(protect, fetchSingleArticle)
-  .delete(protect, deleteArticle);
+  .delete(protect, deleteArticle)
+  .put(protect, editArticle);
 
 export default router;

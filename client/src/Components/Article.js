@@ -210,9 +210,17 @@ const Article = ({ article, routeFromProfile }) => {
                   aria-labelledby='user-menu'
                 >
                   {currentUser._id === article?.user?._id && (
-                    <p className='p-1 hover:bg-gray-50'>
-                      <i className='mr-2 far fa-edit'></i>Edit
-                    </p>
+                    <Link
+                      to={
+                        !routeFromProfile
+                          ? `${url}/${article?._id}/edit`
+                          : `/h/forum/articles/${article?._id}/edit`
+                      }
+                    >
+                      <p className='p-1 hover:bg-gray-50'>
+                        <i className='mr-2 far fa-edit'></i>Edit
+                      </p>
+                    </Link>
                   )}
                   {currentUser._id === article?.user?._id && (
                     <p

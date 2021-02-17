@@ -13,28 +13,8 @@
   margin-top: -90px;
 }
 
-/* Laoder CSS */
-.lds-dual-ring {
-  display: inline-block;
+/* Loder CSS */
+.loader {
   width: 35px;
   height: 35px;
-}
-.lds-dual-ring:after {
-  content: ' ';
-  display: block;
-  width: 25px;
-  height: 25px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 3px solid#4f46e5;
-  border-color: #4f46e5 transparent #4f46e5 transparent;
-  animation: lds-dual-ring .7s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }

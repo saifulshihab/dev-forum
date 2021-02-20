@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import { deleteArticle } from '../redux/action/ArticleAction';
+import ReactHtmlParser from 'react-html-parser';
 
 const ArticleDetails = ({ article }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const ArticleDetails = ({ article }) => {
             </div>
           </div>
           <div className=''>
-            <div className='text-gray-500  text-xl font-semibold'>
+            <div className='text-gray-600  text-xl font-semibold'>
               {article?.title}
             </div>
             <div className='text-gray-400 text-xs'>
@@ -72,9 +73,7 @@ const ArticleDetails = ({ article }) => {
         </div>
 
         <div className={`mt-3 h-full max-h-50 overflow-ellipsis`}>
-          <div className='text-gray-600 text-sm text-justify'>
-            {article?.description}
-          </div>
+          <div>{ReactHtmlParser(article?.description)}</div>
         </div>
 
         <div className='flex   mt-3 border-t cursor-pointer pt-1 text-center'>

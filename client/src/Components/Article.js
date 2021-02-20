@@ -7,6 +7,7 @@ import Loader from '../Components/Loader';
 import Alert from '../Components/Alert';
 import { deleteArticle, getAllArticles } from '../redux/action/ArticleAction';
 import { DELETE_SINGLE_ARTICLE_RESET } from '../redux/ActionTypes';
+import ReactHtmlParser from 'react-html-parser';
 
 const Article = ({ article, routeFromProfile }) => {
   const { url } = useRouteMatch();
@@ -88,7 +89,7 @@ const Article = ({ article, routeFromProfile }) => {
                     : `/h/forum/articles/${article && article._id}`
                 }
               >
-                <div className='text-gray-500 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
+                <div className='text-gray-600 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
                   {article.title}
                 </div>
               </Link>
@@ -106,12 +107,10 @@ const Article = ({ article, routeFromProfile }) => {
 
         <div
           className={`mt-3 ${
-            showMore ? 'h-full' : 'h-16'
-          } max-h-50 overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
+            showMore ? 'h-full' : 'h-64'
+          } max-h-full overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
         >
-          <div className='text-gray-600 text-sm text-justify'>
-            {article.description}
-          </div>
+          <div>{ReactHtmlParser(article?.description)}</div>
         </div>
         <span
           onClick={() => setshowMore(!showMore)}

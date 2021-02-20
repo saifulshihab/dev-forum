@@ -21,7 +21,7 @@ const CreateArticleScreen = () => {
     description: yup
       .string()
       .min(50, 'Minimum 50 character!')
-      .max(2000, 'Maximum 2000 character!')
+      .max(10000, 'Maximum 10000 character!')
       .required('Description Required!'),
   });
   return (
@@ -75,7 +75,7 @@ const CreateArticleScreen = () => {
                     onEditorChange={(content) => {
                       values.description = content;
                     }}
-                    outputFormat='text' /// will be fix later for input rich text
+                    outputFormat='html' /// will be fix later for input rich text
                     {...field}
                   />
                   {meta.touched && meta.error ? (

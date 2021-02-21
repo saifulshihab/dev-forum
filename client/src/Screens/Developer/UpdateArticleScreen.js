@@ -10,7 +10,6 @@ import {
   getSingleArticle,
 } from '../../redux/action/ArticleAction';
 import * as yup from 'yup';
-import { ARTICLE_EDIT_RESET } from '../../redux/ActionTypes';
 
 const UpdateArticleScreen = () => {
   const { articleId } = useParams();
@@ -23,14 +22,7 @@ const UpdateArticleScreen = () => {
 
   useEffect(() => {
     dispatch(getSingleArticle(articleId));
-    if (success) {
-      setTimeout(() => {
-        dispatch({
-          type: ARTICLE_EDIT_RESET,
-        });
-      }, 3000);
-    }
-  }, [dispatch, success, articleId]);
+  }, [dispatch, articleId]);
 
   const formValidationSchema = yup.object().shape({
     title: yup

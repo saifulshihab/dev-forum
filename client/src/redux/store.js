@@ -10,6 +10,7 @@ import {
   devProfileEditReducer,
   devProfileDpEditReducer,
   devProfileCoverEditReducer,
+  devPublicViewReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -34,6 +35,7 @@ const reducer = combineReducers({
   fetchUserArticles: fetchUserArticlesReducer,
   deleteSingleArticle: delSingleArticelReducer,
   editArticle: editArticelReducer,
+  devPublicView: devPublicViewReducer,
 });
 
 const initialState = {

@@ -185,6 +185,19 @@ const updateDevCover = asyncHandler(async (req, res) => {
   }
 });
 
+// desc: get developer public profile
+// routes: /api/dev/username/:username
+// access: private
+const getDevPublicProfile = asyncHandler(async (req, res) => {
+  const user = await Developer.findOne({ username: req.params.username }).select('-password');
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+
 export {
   signupDeveloper,
   signinDeveloper,
@@ -193,4 +206,5 @@ export {
   editDevProfile,
   updateDevDp,
   updateDevCover,
+  getDevPublicProfile,
 };

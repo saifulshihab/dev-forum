@@ -94,7 +94,9 @@ const DevAboutScreen = ({ profile, loading }) => {
               <p className='text-lg font-semibold inline-block mr-2'>
                 {d.institute}
               </p>
-              (<span className='text-md font-semibold'>{d.type}</span>)
+              {d.type && (
+                <span className='text-md font-semibold'>{d.type}</span>
+              )}
               <p className='text-gray-400 text-sm italic'>
                 {d.from} - {d.present ? 'Present' : d.to && d.to}
               </p>

@@ -26,6 +26,10 @@ import {
   DEV_COVER_EDIT_SUCCESS,
   DEV_COVER_EDIT_FAIL,
   DEV_COVER_EDIT_RESET,
+  DEV_PUBLIC_VIEW_REQUEST,
+  DEV_PUBLIC_VIEW_SUCCESS,
+  DEV_PUBLIC_VIEW_FAIL,
+  DEV_PUBLIC_VIEW_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -132,6 +136,21 @@ export const devProfileCoverEditReducer = (state = {}, action) => {
     case DEV_COVER_EDIT_FAIL:
       return { loading: false, error: action.payload };
     case DEV_COVER_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const devPublicViewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_PUBLIC_VIEW_REQUEST:
+      return { loading: true };
+    case DEV_PUBLIC_VIEW_SUCCESS:
+      return { loading: false, user: action.payload };
+    case DEV_PUBLIC_VIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case DEV_PUBLIC_VIEW_RESET:
       return {};
     default:
       return state;

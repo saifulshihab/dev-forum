@@ -19,6 +19,7 @@ import {
   ARTICLE_EDIT_REQUEST,
   ARTICLE_EDIT_SUCCESS,
   ARTICLE_EDIT_FAIL,
+  ARTICLE_EDIT_RESET,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -218,6 +219,12 @@ export const articleEdit = (articleId, updatedArticle) => async (
     dispatch({
       type: ARTICLE_EDIT_SUCCESS,
     });
+
+    setTimeout(() => {
+      dispatch({
+        type: ARTICLE_EDIT_RESET,
+      });
+    }, 2000);
   } catch (error) {
     dispatch({
       type: ARTICLE_EDIT_FAIL,

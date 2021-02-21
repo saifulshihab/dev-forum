@@ -65,9 +65,11 @@ const ArticleDetails = ({ article }) => {
               <span className='mr-2'>{article?.upvote} upvotes</span>
               <span className='mr-4'>{article?.downvote} downvotes</span>
               written by- @
-              <span className='cursor-pointer hover:text-indigo-600 '>
-                {article.user?.username}
-              </span>
+              <Link to={`/h/user/${article?.user?.username}`}>
+                <span className='cursor-pointer hover:text-indigo-600 '>
+                  {article.user.username}
+                </span>
+              </Link>
             </div>
           </div>
         </div>

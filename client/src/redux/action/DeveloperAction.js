@@ -27,6 +27,10 @@ import {
   GET_DEV_PROFILE_FAIL,
   GET_DEV_PROFILE_REQUEST,
   GET_DEV_PROFILE_SUCCESS,
+  DEV_PUBLIC_VIEW_REQUEST,
+  DEV_PUBLIC_VIEW_SUCCESS,
+  DEV_PUBLIC_VIEW_FAIL,
+ 
 } from '../ActionTypes';
 
 // Developer signup
@@ -254,6 +258,42 @@ export const editDevCover = (cover) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DEV_COVER_EDIT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Developer profile publiv view
+export const getDevPublicProfile = (username) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DEV_PUBLIC_VIEW_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/username/${username}`,
+      config
+    );
+    dispatch({
+      type: DEV_PUBLIC_VIEW_SUCCESS,
+      payload: data,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: DEV_PUBLIC_VIEW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

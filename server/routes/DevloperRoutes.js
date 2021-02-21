@@ -12,6 +12,7 @@ import {
   editDevProfile,
   updateDevDp,
   updateDevCover,
+  getDevPublicProfile,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -23,5 +24,6 @@ router
   .get(protect, getDevprofile)
   .put(protect, editDevProfile);
 router.route('/:userId/deleteAccount').delete(protect, delDevprofile);
+router.route('/username/:username').get(protect, getDevPublicProfile);
 
 export default router;

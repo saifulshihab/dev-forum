@@ -1,102 +1,72 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
-import DevAboutScreen from './DevAboutScreen';
-import GithubScreen from './GithubScreen';
-import DevProjectsScreen from './DevProjectsScreen';
-import DevArticleScreen from './DevArticleScreen';
-import DevQuesAskScreen from './DevQuesAskScreen';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDevProfile } from '../../redux/action/DeveloperAction';
-import Alert from '../../Components/Alert';
-import DevProfileEditScreen from './DevProfileEditScreen';
+import { Route, Switch, useParams, useRouteMatch } from 'react-router';
+import { Link } from 'react-router-dom';
 import { baseURL } from '../../baseURL';
-import DevPhotos from './DevPhotos';
+import { getDevPublicProfile } from '../../redux/action/DeveloperAction';
+import DevAboutScreen from './DevAboutScreen';
+import DevArticleScreen from './DevArticleScreen';
+import DevProjectsScreen from './DevProjectsScreen';
+import DevQuesAskScreen from './DevQuesAskScreen';
+import GithubScreen from './GithubScreen';
 
-const DeveloperProfileScreen = ({ location }) => {
-  const { url, path } = useRouteMatch();
+const DevProfilePublicView = ({ location }) => {
+  const { username } = useParams();
   const dispatch = useDispatch();
+  const { url, path } = useRouteMatch();
+
+  const devPublicView = useSelector((state) => state.devPublicView);
+  const { loading, error, user } = devPublicView;
 
   const [aboutOn, setAbout] = useState(false);
   const [githubOn, setGithub] = useState(false);
   const [projectsOn, setProjects] = useState(false);
   const [articleOn, setArticle] = useState(false);
   const [ques, setQues] = useState(false);
-  const [editOn, setEdit] = useState(false);
-  const [photoOn, setPhotos] = useState(false);
+  const currentPath = location.pathname.split('/')[4];
 
-  const signInDev = useSelector((state) => state.signInDev);
-  const { devInfo } = signInDev;
-  const devProfile = useSelector((state) => state.devProfile);
-  const { loading, error, user } = devProfile;
-  const currentPath = location.pathname.split('/')[3];
   useEffect(() => {
-    if (!user || Object.keys(user).length === 0) {
-      dispatch(fetchDevProfile(devInfo._id));
-    }
+    let prev_username = '';
+    let current_username = username;
+    dispatch(getDevPublicProfile(username));
+
     if (currentPath === undefined || currentPath === 'about') {
       setAbout(true);
       setGithub(false);
       setProjects(false);
       setArticle(false);
       setQues(false);
-      setEdit(false);
-      setPhotos(false);
     } else if (currentPath === 'gh-profile') {
       setGithub(true);
       setAbout(false);
       setProjects(false);
       setArticle(false);
       setQues(false);
-      setEdit(false);
-      setPhotos(false);
     } else if (currentPath === 'projects') {
       setProjects(true);
       setAbout(false);
       setGithub(false);
       setArticle(false);
       setQues(false);
-      setEdit(false);
-      setPhotos(false);
     } else if (currentPath === 'articles') {
       setArticle(true);
       setAbout(false);
       setGithub(false);
       setProjects(false);
       setQues(false);
-      setEdit(false);
-      setPhotos(false);
     } else if (currentPath === 'ques') {
       setQues(true);
       setAbout(false);
       setGithub(false);
       setProjects(false);
       setArticle(false);
-      setEdit(false);
-      setPhotos(false);
-    } else if (currentPath === 'edit') {
-      setEdit(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setPhotos(false);
-      setQues(false);
-    } else if (currentPath === 'photos') {
-      setPhotos(true);
-      setEdit(false);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setQues(false);
     }
-    return () => {};
-  }, [dispatch, devInfo._id, currentPath, user]);
+  }, [dispatch, username, currentPath]);
 
   return (
-    <div className='profile p-1'>
-      {error && <Alert fail msg={error} />}
-      <>
+    <>
+      {error && error}
+      <div className='p-1'>
         <div className='dev_dp_cover w-full'>
           <div className='cover w-full'>
             {loading ? (
@@ -259,28 +229,6 @@ const DeveloperProfileScreen = ({ location }) => {
                           <span className='h-full'>Question Asked</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/edit`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            editOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-edit mr-2 text-yellow-400'></i>
-
-                          <span className='h-full'>Edit Profile</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/photos`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            photoOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-image mr-2 text-green-500'></i>
-
-                          <span className='h-full'>Dp/Cover</span>
-                        </div>
-                      </Link>
                     </div>
                   </div>
                 </div>
@@ -310,20 +258,12 @@ const DeveloperProfileScreen = ({ location }) => {
                 component={() => <DevArticleScreen user={user} />}
               />
               <Route path={`${path}/ques`} component={DevQuesAskScreen} />
-              <Route
-                path={`${path}/edit`}
-                component={() => <DevProfileEditScreen user={user && user} />}
-              />
-              <Route
-                path={`${path}/photos`}
-                component={() => <DevPhotos user={user && user} />}
-              />
             </Switch>
           </div>
         </div>
-      </>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default DeveloperProfileScreen;
+export default DevProfilePublicView;

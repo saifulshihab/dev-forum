@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SidebarSVG from '../Components/SidebarSVG';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
 import DeveloperProfileScreen from './Developer/DeveloperProfileScreen';
+import DevProfilePublicView from './Developer/DevProfilePublicView';
 import FindPeopleScreen from './Developer/FindPeopleScreen';
 import FreelanceScreen from './Developer/FreelanceScreen';
 import JobsScreen from './Developer/JobsScreen';
@@ -214,6 +215,10 @@ const HomeScreen = ({ location }) => {
                 component={DeveloperProfileScreen}
               />
               <Route path={`${path}/more`} component={MoreScreen} />
+              <Route
+                path={`${path}/user/:username`}
+                component={DevProfilePublicView}
+              />
               <Redirect to={`${path}/forum`} />
             </Switch>
           </div>

@@ -59,7 +59,7 @@ const CreateArticleScreen = () => {
                 <div>
                   <Editor
                     id='article_body'
-                    apiKey='luwkgwnx411qqfromu0gg9acfvqm2dc21fci2xw1hi9gajok'
+                    apiKey={process.env.TINY_MCE_KEY}
                     initialValue='Write...'
                     init={{
                       height: 500,

@@ -96,76 +96,77 @@ const DeveloperProfileScreen = ({ location }) => {
   return (
     <div className='profile p-1'>
       {error && <Alert fail msg={error} />}
-      <>
-        <div className='dev_dp_cover w-full'>
-          <div className='cover w-full'>
-            {loading ? (
-              <div className='animate-pulse w-full h-48 bg-gray-200'></div>
-            ) : (
-              <img
-                className='image_center w-full h-48'
-                src={baseURL + user?.cover}
-                alt='cover'
-              />
-            )}
-          </div>
-          <div className='dp w-40'>
-            {loading ? (
-              <div className='animate-pulse relative border-2 border-indigo-400 rounded-full w-full h-40 bg-gray-200'></div>
-            ) : (
-              <img
-                className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
-                src={baseURL + user?.dp}
-                alt='dp'
-              />
-            )}
-          </div>
-        </div>
-        <div className='name_others rounded mt-1 p-3 bg-white'>
-          {loading ? (
-            <div className='name_address_location animate-pulse'>
-              <span className='bg-gray-200 p-3 mb-1 px-28 w-40 block'></span>
-              <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
-              <div className='h-5 mb-1 w-44 bg-gray-200'></div>
-              <span className='bg-gray-200 h-3 mb-1 w-28 block'></span>
-              <span className='bg-gray-200 h-3 mb-1 w-40 block'></span>
-              <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
+      <div className='bg-white'>
+        <div className='shadow rounded mb-4'>
+          <div className='dev_dp_cover w-full'>
+            <div className='cover w-full'>
+              {loading ? (
+                <div className='animate-pulse w-full h-48 bg-gray-200'></div>
+              ) : (
+                <img
+                  className='image_center w-full h-48'
+                  src={baseURL + user?.cover}
+                  alt='cover'
+                />
+              )}
             </div>
-          ) : (
-            <div className='name_address_location text-gray-600 text-md'>
-              <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
-              <span className='text-gray-400'>@{user?.username}</span>
-              <div className='h-5 mb-1'>{user?.bio}</div>
-              <span className='mr-4'>
-                {user?.email && (
-                  <i className='mr-2 fas fa-envelope-open-text'></i>
-                )}
-                {user?.email}
-              </span>
-              <span>
-                {user?.website && <i className='mr-2 fas fa-globe'></i>}
-                {user?.website}
-              </span>
-              <div className='flex items-center '>
-                <span className='mr-4'>
-                  <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
-                  {new Date(user?.createdAt).toLocaleDateString('en-gb', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </span>
-                <span className=''>
-                  {user?.location && (
-                    <i className='fas mr-2 fa-map-marker-alt'></i>
-                  )}
-                  {user?.location}
-                </span>
+            <div className='dp w-40'>
+              {loading ? (
+                <div className='animate-pulse relative border-2 border-indigo-400 rounded-full w-full h-40 bg-gray-200'></div>
+              ) : (
+                <img
+                  className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
+                  src={baseURL + user?.dp}
+                  alt='dp'
+                />
+              )}
+            </div>
+          </div>
+          <div className='name_others mt-1 px-3 mb-1 bg-white'>
+            {loading ? (
+              <div className='name_address_location animate-pulse'>
+                <span className='bg-gray-200 p-3 mb-1 px-28 w-40 block'></span>
+                <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
+                <div className='h-5 mb-1 w-44 bg-gray-200'></div>
+                <span className='bg-gray-200 h-3 mb-1 w-28 block'></span>
+                <span className='bg-gray-200 h-3 mb-1 w-40 block'></span>
+                <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
               </div>
-            </div>
-          )}
-
-          <div className='social_links cursor-pointer mt-1 text-xl flex items-center space-x-2'>
+            ) : (
+              <div className='name_address_location text-gray-600 text-md'>
+                <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
+                <span className='text-gray-400'>@{user?.username}</span>
+                <div className='h-5 mb-1'>{user?.bio}</div>
+                <span className='mr-4'>
+                  {user?.email && (
+                    <i className='mr-2 fas fa-envelope-open-text'></i>
+                  )}
+                  {user?.email}
+                </span>
+                <span>
+                  {user?.website && <i className='mr-2 fas fa-globe'></i>}
+                  {user?.website}
+                </span>
+                <div className='flex items-center '>
+                  <span className='mr-4'>
+                    <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
+                    {new Date(user?.createdAt).toLocaleDateString('en-gb', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </span>
+                  <span className=''>
+                    {user?.location && (
+                      <i className='fas mr-2 fa-map-marker-alt'></i>
+                    )}
+                    {user?.location}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className='social_links cursor-pointer px-3 pb-2 text-xl flex items-center space-x-2'>
             {loading ? (
               <div className='h-5 bg-gray-200 w-full'></div>
             ) : (
@@ -211,8 +212,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/about`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            aboutOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            aboutOn && 'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
@@ -221,8 +222,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/gh-profile`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            githubOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            githubOn && 'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
@@ -231,8 +232,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/projects`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            projectsOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            projectsOn && 'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
@@ -241,8 +242,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            articleOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            articleOn && 'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
@@ -251,8 +252,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/ques`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            ques && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            ques && 'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
 
@@ -262,8 +263,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/edit`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            editOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            editOn && 'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-edit mr-2 text-yellow-400'></i>
 
@@ -273,8 +274,8 @@ const DeveloperProfileScreen = ({ location }) => {
                       <Link to={`${url}/photos`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            photoOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            photoOn && 'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-image mr-2 text-green-500'></i>
 
@@ -321,7 +322,7 @@ const DeveloperProfileScreen = ({ location }) => {
             </Switch>
           </div>
         </div>
-      </>
+      </div>
     </div>
   );
 };

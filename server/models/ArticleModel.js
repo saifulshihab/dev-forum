@@ -19,6 +19,7 @@ const ShareSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'Developer',
     },
   },
   {
@@ -26,6 +27,28 @@ const ShareSchema = new mongoose.Schema(
   }
 );
 
+const UpvoteSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Developer',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+const DownvoteSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Developer',
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 const ArticleSchema = new mongoose.Schema(
   {
     title: {
@@ -40,14 +63,8 @@ const ArticleSchema = new mongoose.Schema(
       type: String,
     },
     comments: [ArticleCommentSchema],
-    upvote: {
-      type: Number,
-      default: 0,
-    },
-    downvote: {
-      type: Number,
-      default: 0,
-    },
+    upvote: [UpvoteSchema],
+    downvote: [DownvoteSchema],
     shares: [ShareSchema],
     user: {
       type: mongoose.Schema.Types.ObjectId,

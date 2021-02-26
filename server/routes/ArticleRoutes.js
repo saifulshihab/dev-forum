@@ -7,6 +7,7 @@ import {
   getUserArticles,
   deleteArticle,
   editArticle,
+  upvoteArticle, downvoteArticle
 } from '../controller/ArticleController.js';
 const router = express.Router();
 
@@ -17,5 +18,7 @@ router
   .get(protect, fetchSingleArticle)
   .delete(protect, deleteArticle)
   .put(protect, editArticle);
+router.route('/:articleId/upvote').put(protect, upvoteArticle);
+router.route('/:articleId/downvote').put(protect, downvoteArticle);
 
 export default router;

@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Article from '../models/ArticleModel.js';
+import _ from 'lodash';
 
 // desc: create a article
 // routes: api/article
@@ -110,6 +111,81 @@ const editArticle = asyncHandler(async (req, res) => {
     throw new Error('Article not found!');
   }
 });
+// desc: upvote article
+// routes: api/article/:articleId/
+// method: PUT
+// access: private
+const upvoteArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId).populate(
+    'upvote'
+  );
+  if (article) {
+    let alreadyUpVoted = _.findIndex(article.upvote, function (data) {
+      return data.user.toString() === req.user._id.toString();
+    });
+    if (alreadyUpVoted > -1) {
+      res.status(400);
+      throw new Error('You already upvoted!');
+    } else {
+      let alreadyDownVoted = _.findIndex(article.downvote, function (data) {
+        return data.user.toString() === req.user._id.toString();
+      });
+
+      if (alreadyDownVoted > -1) {
+        article.downvote.splice(alreadyDownVoted, 1);
+      }
+      const vote = article.upvote.push({ user: req.user._id });
+      if (vote) {
+        await article.save();
+        res.status(200).json(article);
+      } else {
+        res.status(400);
+        throw new Error('Somthing wrong!');
+      }
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
+// desc: downvote article
+// routes: api/article/:articleId/downvote
+// method: PUT
+// access: private
+const downvoteArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId).populate(
+    'downvote'
+  );
+  if (article) {
+    let alreadydownVoted = _.findIndex(article.downvote, function (data) {
+      return data.user.toString() === req.user._id.toString();
+    });
+
+    if (alreadydownVoted > -1) {
+      res.status(400);
+      throw new Error('You already upvoted!');
+    } else {
+      let alreadyUpVoted = _.findIndex(article.upvote, function (data) {
+        return data.user.toString() === req.user._id.toString();
+      });
+
+      if (alreadyUpVoted > -1) {
+        article.upvote.splice(alreadyUpVoted, 1);
+      }
+      const vote = article.downvote.push({ user: req.user._id });
+      if (vote) {
+        await article.save();
+        res.status(200).json(article);
+      } else {
+        res.status(400);
+        throw new Error('Somthing wrong!');
+      }
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
 
 export {
   createArticle,
@@ -118,4 +194,6 @@ export {
   getUserArticles,
   deleteArticle,
   editArticle,
+  upvoteArticle,
+  downvoteArticle,
 };

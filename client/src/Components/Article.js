@@ -5,6 +5,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import Comment from './Comment';
 import Loader from '../Components/Loader';
 import Alert from '../Components/Alert';
+import moment from 'moment';
 import {
   deleteArticle,
   getAllArticles,
@@ -140,16 +141,24 @@ const Article = ({
               </Link>
             </div>
             <div className='text-gray-400 text-xs'>
-              <span className='mr-2'>{article?.upvote?.length} upvotes</span>
-              <span className='mr-4'>
+              <span className='mr-3'>
+                <i className='fas fa-arrow-up mr-1'></i>
+                {article?.upvote?.length} upvotes
+              </span>
+              <span className='mr-5'>
+                <i className='fas fa-arrow-down mr-1'></i>
                 {article?.downvote?.length} downvotes
               </span>
-              written by- @
+              <i className='fas fa-marker mr-1'></i>written by- @
               <Link to={`/h/user/${article?.user?.username}`}>
                 <span className='cursor-pointer hover:text-indigo-600 '>
                   {article.user.username}
                 </span>
               </Link>
+              <span className='ml-4'>
+                <i className='far fa-clock mr-1'></i>
+                {moment(article?.createdAt).startOf('hour').fromNow()}
+              </span>
             </div>
           </div>
         </div>

@@ -26,8 +26,6 @@ const DevProfilePublicView = ({ location }) => {
   const currentPath = location.pathname.split('/')[4];
 
   useEffect(() => {
-    let prev_username = '';
-    let current_username = username;
     dispatch(getDevPublicProfile(username));
 
     if (currentPath === undefined || currentPath === 'about') {

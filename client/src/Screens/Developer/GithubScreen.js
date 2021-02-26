@@ -9,16 +9,16 @@ const GithubScreen = ({ username }) => {
 
   useEffect(() => {
     const fetchGhData = async () => {
-      const res = await axios.get(`https://api.github.com/users/${username}`);
+      const res = await axios.get(
+        `https://api.github.com/users/${username || undefined}`
+      );
       const repoData = await axios.get(
         `https://api.github.com/users/${username}/repos`
       );
       setGithubData(res.data);
       setRepo(repoData.data);
     };
-    if (username !== '') {
-      fetchGhData();
-    }
+    fetchGhData();
   }, [username]);
   return (
     <div>

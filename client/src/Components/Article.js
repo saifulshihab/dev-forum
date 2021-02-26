@@ -5,11 +5,28 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import Comment from './Comment';
 import Loader from '../Components/Loader';
 import Alert from '../Components/Alert';
-import { deleteArticle, getAllArticles } from '../redux/action/ArticleAction';
+import {
+  deleteArticle,
+  getAllArticles,
+  upvoteArticle,
+  downvoteArticle,
+  getSingleArticle,
+  getUserArticles,
+} from '../redux/action/ArticleAction';
 import { DELETE_SINGLE_ARTICLE_RESET } from '../redux/ActionTypes';
 import ReactHtmlParser from 'react-html-parser';
+import UpvoteIcon from './UpvoteIcon';
+import DownvoteIcon from './DownvoteIcon';
+import _ from 'lodash';
 
-const Article = ({ article, routeFromProfile }) => {
+const Article = ({
+  article,
+  routeFromProfile,
+  details,
+  fromSingleContainer,
+  fromProfile,
+  userId,
+}) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const [showComment, setshowComment] = useState(false);
@@ -18,6 +35,12 @@ const Article = ({ article, routeFromProfile }) => {
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
+
+  const articleUpvote = useSelector((state) => state.articleUpvote);
+  const { success: upvoteSuccess } = articleUpvote;
+
+  const articleDownvote = useSelector((state) => state.articleDownvote);
+  const { success: downvoteSuccess } = articleDownvote;
 
   const deleteSingleArticle = useSelector((state) => state.deleteSingleArticle);
   const {
@@ -33,7 +56,25 @@ const Article = ({ article, routeFromProfile }) => {
         type: DELETE_SINGLE_ARTICLE_RESET,
       });
     }
-  }, [dispatch, deleteSuccess]);
+    if (upvoteSuccess || downvoteSuccess) {
+      if (fromSingleContainer) {
+        dispatch(getSingleArticle(article?._id));
+      } else if (fromProfile) {
+        dispatch(getUserArticles(userId));
+      } else {
+        dispatch(getAllArticles());
+      }
+    }
+  }, [
+    dispatch,
+    deleteSuccess,
+    upvoteSuccess,
+    downvoteSuccess,
+    article?._id,
+    fromSingleContainer,
+    fromProfile,
+    userId,
+  ]);
 
   const closeDD = () => {
     serArticleOption(false);
@@ -49,42 +90,46 @@ const Article = ({ article, routeFromProfile }) => {
       <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>
         <div className='flex h-16 items-center pb-2 my-1.5 border-b'>
           <div className='mr-3 w-6 h-full'>
-            <div className='w-full cursor-pointer hover:bg-gray-300 bg-gray-200 mb-1 rounded-full text-gray-500'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
+            {_.findIndex(
+              article?.upvote,
+              (o) => o.user.toString() === currentUser._id.toString()
+            ) > -1 ? (
+              <button className='w-full outline-none focus:outline-none'>
+                <UpvoteIcon color={true} />
+              </button>
+            ) : (
+              <button
+                className='w-full outline-none focus:outline-none'
+                onClick={() => {
+                  dispatch(upvoteArticle(article?._id));
+                }}
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M5 15l7-7 7 7'
-                />
-              </svg>
-            </div>
-            <div className='w-full cursor-pointer hover:bg-gray-300 bg-gray-200 rounded-full text-gray-500'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
+                <UpvoteIcon />
+              </button>
+            )}
+            {_.findIndex(
+              article?.downvote,
+              (o) => o.user.toString() === currentUser._id.toString()
+            ) > -1 ? (
+              <button className='w-full outline-none focus:outline-none'>
+                <DownvoteIcon color={true} />
+              </button>
+            ) : (
+              <button
+                className='w-full outline-none focus:outline-none'
+                onClick={() => {
+                  dispatch(downvoteArticle(article?._id));
+                }}
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M19 9l-7 7-7-7'
-                />
-              </svg>
-            </div>
+                <DownvoteIcon />
+              </button>
+            )}
           </div>
           <div className='h-full w-9/12'>
             <div className='h-8 w-auto overflow-hidden '>
               <Link
                 to={
-                  !routeFromProfile
+                  !details && !routeFromProfile
                     ? `${url}/${article && article._id}`
                     : `/h/forum/articles/${article && article._id}`
                 }
@@ -95,8 +140,10 @@ const Article = ({ article, routeFromProfile }) => {
               </Link>
             </div>
             <div className='text-gray-400 text-xs'>
-              <span className='mr-2'>{article.upvote} upvotes</span>
-              <span className='mr-4'>{article.downvote} downvotes</span>
+              <span className='mr-2'>{article?.upvote?.length} upvotes</span>
+              <span className='mr-4'>
+                {article?.downvote?.length} downvotes
+              </span>
               written by- @
               <Link to={`/h/user/${article?.user?.username}`}>
                 <span className='cursor-pointer hover:text-indigo-600 '>
@@ -107,13 +154,20 @@ const Article = ({ article, routeFromProfile }) => {
           </div>
         </div>
 
-        <div
-          className={`mt-3 ${
-            showMore ? 'h-full' : 'h-64'
-          } max-h-full overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
-        >
-          <div>{ReactHtmlParser(article?.description)}</div>
-        </div>
+        {!details ? (
+          <div
+            className={`mt-3 ${
+              showMore ? 'h-full' : 'h-64'
+            } max-h-full overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
+          >
+            <div>{ReactHtmlParser(article?.description)}</div>
+          </div>
+        ) : (
+          <div className={`mt-3 h-full max-h-50 overflow-ellipsis`}>
+            <div>{ReactHtmlParser(article?.description)}</div>
+          </div>
+        )}
+
         <span
           onClick={() => setshowMore(!showMore)}
           className='text-xs text-indigo-600 hover:text-indigo-800 cursor-pointer'
@@ -266,7 +320,7 @@ const Article = ({ article, routeFromProfile }) => {
           )}
         </div>
       </div>
-      {showComment && (
+      {details ? (
         <div className='py-2 ml-6'>
           <div className='text-gray-500 text-sm border-b pb-1'>
             <span className='mr-3'>{article.comments.length} Comments</span>
@@ -276,6 +330,18 @@ const Article = ({ article, routeFromProfile }) => {
             <Comment cmnt={comment} />
           ))}
         </div>
+      ) : (
+        showComment && (
+          <div className='py-2 ml-6'>
+            <div className='text-gray-500 text-sm border-b pb-1'>
+              <span className='mr-3'>{article.comments.length} Comments</span>
+              <span>{article.share} Shares</span>
+            </div>
+            {article.comments.map((comment) => (
+              <Comment cmnt={comment} />
+            ))}
+          </div>
+        )
       )}
     </>
   );

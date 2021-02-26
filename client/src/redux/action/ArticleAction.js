@@ -20,6 +20,14 @@ import {
   ARTICLE_EDIT_SUCCESS,
   ARTICLE_EDIT_FAIL,
   ARTICLE_EDIT_RESET,
+  UPVOTE_REQUEST,
+  UPVOTE_SUCCESS,
+  UPVOTE_FAIL,
+  UPVOTE_RESET,
+  DOWNVOTE_REQUEST,
+  DOWNVOTE_SUCCESS,
+  DOWNVOTE_RESET,
+  DOWNVOTE_FAIL,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -228,6 +236,74 @@ export const articleEdit = (articleId, updatedArticle) => async (
   } catch (error) {
     dispatch({
       type: ARTICLE_EDIT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// upvote article
+export const upvoteArticle = (articleId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UPVOTE_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.put(`${baseURL}/api/article/${articleId}/upvote`, {}, config);
+    dispatch({
+      type: UPVOTE_SUCCESS,
+    });
+    dispatch({
+      type: UPVOTE_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPVOTE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// upvote article
+export const downvoteArticle = (articleId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DOWNVOTE_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.put(`${baseURL}/api/article/${articleId}/downvote`, {}, config);
+    dispatch({
+      type: DOWNVOTE_SUCCESS,
+    });
+    dispatch({
+      type: DOWNVOTE_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: DOWNVOTE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

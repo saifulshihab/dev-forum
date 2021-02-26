@@ -22,7 +22,13 @@ const DevArticleScreen = ({ user }) => {
         <Alert fail msg={error} />
       ) : articles?.length > 0 ? (
         articles.map((article) => (
-          <Article article={article} key={article?._id} routeFromProfile />
+          <Article
+            article={article}
+            key={article?._id}
+            routeFromProfile
+            fromProfile={true}
+            userId={user?._id}
+          />
         ))
       ) : (
         'No articles posted yet!'

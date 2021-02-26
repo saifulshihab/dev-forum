@@ -25,7 +25,7 @@ const ArticleContainer = ({ topArticle }) => {
         <Alert fail msg={error} />
       ) : articles?.length > 0 && topArticle === true ? (
         articles
-          ?.sort((a, b) => (a.upvote < b.upvote ? 1 : -1))
+          ?.sort((a, b) => (a.upvote.length < b.upvote.length ? 1 : -1))
           .map((art) => <TopArticle key={art._id} article={art} />)
       ) : (
         topArticle === false &&

@@ -36,7 +36,6 @@ const CreateArticleScreen = () => {
         validationSchema={formValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
           dispatch(articleCreate(data));
-          console.log(data);
           setSubmitting(false);
         }}
       >

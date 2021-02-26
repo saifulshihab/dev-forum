@@ -19,6 +19,8 @@ import {
   fetchUserArticlesReducer,
   delSingleArticelReducer,
   editArticelReducer,
+  articleUpvotelReducer,
+  articleDownvotelReducer,
 } from './reducer/ArticleReducer';
 
 const reducer = combineReducers({
@@ -36,6 +38,8 @@ const reducer = combineReducers({
   deleteSingleArticle: delSingleArticelReducer,
   editArticle: editArticelReducer,
   devPublicView: devPublicViewReducer,
+  articleUpvote: articleUpvotelReducer,
+  articleDownvote: articleDownvotelReducer,
 });
 
 const initialState = {

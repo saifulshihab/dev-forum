@@ -11,6 +11,10 @@ import {
   DELETE_SINGLE_ARTICLE_REQUEST,
   DELETE_SINGLE_ARTICLE_RESET,
   DELETE_SINGLE_ARTICLE_SUCCESS,
+  DOWNVOTE_FAIL,
+  DOWNVOTE_REQUEST,
+  DOWNVOTE_RESET,
+  DOWNVOTE_SUCCESS,
   FETCH_ALL_ARTICLE_FAIL,
   FETCH_ALL_ARTICLE_REQUEST,
   FETCH_ALL_ARTICLE_SUCCESS,
@@ -20,6 +24,10 @@ import {
   FETCH_USER_ARTICLES_FAIL,
   FETCH_USER_ARTICLES_REQUEST,
   FETCH_USER_ARTICLES_SUCCESS,
+  UPVOTE_FAIL,
+  UPVOTE_REQUEST,
+  UPVOTE_RESET,
+  UPVOTE_SUCCESS,
 } from '../ActionTypes';
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
@@ -100,6 +108,36 @@ export const editArticelReducer = (state = {}, action) => {
     case ARTICLE_EDIT_FAIL:
       return { loading: false, error: action.payload };
     case ARTICLE_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const articleUpvotelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPVOTE_REQUEST:
+      return { loading: true };
+    case UPVOTE_SUCCESS:
+      return { loading: false, success: true };
+    case UPVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case UPVOTE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const articleDownvotelReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DOWNVOTE_REQUEST:
+      return { loading: true };
+    case DOWNVOTE_SUCCESS:
+      return { loading: false, success: true };
+    case DOWNVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case DOWNVOTE_RESET:
       return {};
     default:
       return state;

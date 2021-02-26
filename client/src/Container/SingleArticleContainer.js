@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Alert from '../Components/Alert';
-import ArticleDetails from '../Components/ArticleDetails';
+import Article from '../Components/Article';
 import Loader from '../Components/Loader';
 import { getSingleArticle } from '../redux/action/ArticleAction';
 
@@ -24,7 +24,12 @@ const SingleArticleContainer = () => {
         <Alert fail msg={error} />
       ) : (
         Object.keys(article).length > 0 && (
-          <ArticleDetails key={articleId} article={article} />
+          <Article
+            key={articleId}
+            article={article}
+            details={true}
+            fromSingleContainer={true}
+          />
         )
       )}
     </>

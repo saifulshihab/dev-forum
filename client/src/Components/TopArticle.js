@@ -9,8 +9,8 @@ const TopArticle = ({ article }) => {
         <Link to={`${url}/topArticles/${article?._id}`}>{article?.title}</Link>
       </p>
       <div className='flex space-x-2 text-xs text-gray-400'>
-        <span>{article?.upvote} upvotes</span>
-        <span>{article?.downvote} downvotes</span>
+        <span>{article?.upvote?.length} upvotes</span>
+        <span>{article?.downvote?.length} downvotes</span>
       </div>
     </div>
   );

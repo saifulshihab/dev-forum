@@ -136,8 +136,8 @@ const Article = ({
         {!details ? (
           <div
             className={`mt-3 ${
-              showMore ? 'h-full' : 'max-h-64'
-            } max-h-full overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
+              showMore ? 'h-full' : 'max-h-60'
+            } overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
           >
             <div>{ReactHtmlParser(article?.description)}</div>
           </div>

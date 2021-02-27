@@ -18,10 +18,8 @@ const ArticleCommentsContainer = ({ article }) => {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    if (comments?.length === 0) {
-      dispatch(fetchCommentArticle(article?._id));
-    }
-  }, [dispatch, comments, article?._id]);
+    dispatch(fetchCommentArticle(article?._id));
+  }, [dispatch, article?._id]);
 
   const commentHandler = () => {
     dispatch(commentOnArticle(article?._id, comment));
@@ -36,43 +34,43 @@ const ArticleCommentsContainer = ({ article }) => {
         <span className='mr-3'>{comments?.length} Comments</span>
         <span>{article?.shares?.length} Shares</span>
       </div>
+      <div className='my-2'>
+        <div className='flex items-center'>
+          <input
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder='Write your comment...'
+            className='ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
+          />
+          <span
+            className='cursor-pointer'
+            onClick={() => setEmoji(!emojiOn)}
+            style={{ position: 'absolute', left: '59%' }}
+          >
+            <i className='text-gray-400 far fa-grin'></i>
+          </span>
+          {emojiOn && (
+            <Picker
+              style={{ position: 'absolute', right: 0, bottom: 0 }}
+              onSelect={(emoji) => {
+                setComment(comment + emoji.native);
+              }}
+            />
+          )}
+          <button
+            onClick={commentHandler}
+            className='rounded-full border hover:bg-indigo-500 hover:text-white p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500'
+          >
+            Send
+          </button>
+        </div>
+      </div>
       {loading ? (
         <CommentLoader />
       ) : error ? (
         <Alert fail msg={error} />
       ) : (
         <>
-          <div className='my-2'>
-            <div className='flex items-center'>
-              <input
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder='Write your comment...'
-                className='ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
-              />
-              <span
-                className='cursor-pointer'
-                onClick={() => setEmoji(!emojiOn)}
-                style={{ position: 'absolute', left: '59%' }}
-              >
-                <i className='text-gray-400 far fa-grin'></i>
-              </span>
-              {emojiOn && (
-                <Picker
-                  style={{ position: 'absolute', left: '35%', top: '63%' }}
-                  onSelect={(emoji) => {
-                    setComment(comment + emoji.native);
-                  }}
-                />
-              )}
-              <button
-                onClick={commentHandler}
-                className='rounded-full border hover:bg-indigo-500 hover:text-white p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500'
-              >
-                Send
-              </button>
-            </div>
-          </div>
           {comments.length > 0 &&
             comments?.map((comment) => (
               <Comment key={comment?._id} cmnt={comment} />

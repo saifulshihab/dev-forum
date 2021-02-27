@@ -186,6 +186,30 @@ const downvoteArticle = asyncHandler(async (req, res) => {
     throw new Error('Article not found!');
   }
 });
+// desc: comment on article
+// routes: api/article/:articleId/comment
+// method: PUT
+// access: private
+const commentonArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId);
+  if (article) {
+    const comment = {
+      user: req.user._id,
+      comment: req.body.comment,
+    };
+    const newComment = await article.comments.push(comment);
+    if (newComment) {
+      await article.save();
+      res.status(200).json(comment);
+    } else {
+      res.status(500);
+      throw new Error('Comment Failed!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
 
 export {
   createArticle,
@@ -196,4 +220,5 @@ export {
   editArticle,
   upvoteArticle,
   downvoteArticle,
+  commentonArticle,
 };

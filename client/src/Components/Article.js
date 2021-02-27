@@ -2,7 +2,6 @@ import { Transition } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
-import Comment from './Comment';
 import Loader from '../Components/Loader';
 import Alert from '../Components/Alert';
 import moment from 'moment';
@@ -14,11 +13,11 @@ import {
   getSingleArticle,
   getUserArticles,
 } from '../redux/action/ArticleAction';
-import { DELETE_SINGLE_ARTICLE_RESET } from '../redux/ActionTypes';
 import ReactHtmlParser from 'react-html-parser';
 import UpvoteIcon from './UpvoteIcon';
 import DownvoteIcon from './DownvoteIcon';
 import _ from 'lodash';
+import ArticleCommentsContainer from '../Container/ArticleCommentsContainer';
 
 const Article = ({
   article,
@@ -37,40 +36,11 @@ const Article = ({
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
 
-  const articleUpvote = useSelector((state) => state.articleUpvote);
-  const { success: upvoteSuccess } = articleUpvote;
-
-  const articleDownvote = useSelector((state) => state.articleDownvote);
-  const { success: downvoteSuccess } = articleDownvote;
-
   const deleteSingleArticle = useSelector((state) => state.deleteSingleArticle);
-  const {
-    loading: deleteLoading,
-    error: deleteError,
-    success: deleteSuccess,
-  } = deleteSingleArticle;
+  const { loading: deleteLoading, error: deleteError } = deleteSingleArticle;
 
-  useEffect(() => {
-    if (deleteSuccess) {
-      dispatch(getAllArticles());
-      dispatch({
-        type: DELETE_SINGLE_ARTICLE_RESET,
-      });
-    }
-    if (upvoteSuccess || downvoteSuccess) {
-      if (fromSingleContainer) {
-        dispatch(getSingleArticle(article?._id));
-      } else if (fromProfile) {
-        dispatch(getUserArticles(userId));
-      } else {
-        dispatch(getAllArticles());
-      }
-    }
-  }, [
+  useEffect(() => {}, [
     dispatch,
-    deleteSuccess,
-    upvoteSuccess,
-    downvoteSuccess,
     article?._id,
     fromSingleContainer,
     fromProfile,
@@ -166,7 +136,7 @@ const Article = ({
         {!details ? (
           <div
             className={`mt-3 ${
-              showMore ? 'h-full' : 'h-64'
+              showMore ? 'h-full' : 'max-h-64'
             } max-h-full overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
           >
             <div>{ReactHtmlParser(article?.description)}</div>
@@ -321,36 +291,11 @@ const Article = ({
             </Transition>
           </div>
         </div>
-        <div>
-          {deleteLoading ? (
-            <Loader />
-          ) : (
-            deleteError && <Alert fail msg={deleteError} />
-          )}
-        </div>
       </div>
       {details ? (
-        <div className='py-2 ml-6'>
-          <div className='text-gray-500 text-sm border-b pb-1'>
-            <span className='mr-3'>{article.comments.length} Comments</span>
-            <span>{article.share} Shares</span>
-          </div>
-          {article.comments.map((comment) => (
-            <Comment cmnt={comment} />
-          ))}
-        </div>
+        <ArticleCommentsContainer article={article} />
       ) : (
-        showComment && (
-          <div className='py-2 ml-6'>
-            <div className='text-gray-500 text-sm border-b pb-1'>
-              <span className='mr-3'>{article.comments.length} Comments</span>
-              <span>{article.share} Shares</span>
-            </div>
-            {article.comments.map((comment) => (
-              <Comment cmnt={comment} />
-            ))}
-          </div>
-        )
+        showComment && <ArticleCommentsContainer article={article} />
       )}
     </>
   );

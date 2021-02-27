@@ -1,17 +1,21 @@
 import React from 'react';
+import moment from 'moment';
+import ReactEmoji from 'react-emoji';
 
 const Comment = ({ cmnt }) => {
   return (
     <>
-      <div className='w-full flex bg-white rounded py-2 items-center rounded-md my-2 px-5'>
+      <div className='w-full flex items-center my-2 px-3 mx-3'>
         <div className='w-full'>
-          <div className='text-gray-500 text-sm'>{cmnt.comment}</div>
+          <div className='h-5 overflow-hidden text-gray-500 text-sm flex'>
+            {ReactEmoji.emojify(cmnt?.comment)}
+          </div>
           <div className='flex text-gray-400 text-xs w-full'>
-            <span>2h</span>
-            <div className='mx-auto'>
-              comment by- @
+            <span>{moment(cmnt.createdAt).startOf('m').fromNow(true)}</span>
+            <div className='ml-3'>
+              @
               <span className='cursor-pointer hover:text-indigo-600 '>
-                {cmnt.user.username}
+                {cmnt?.user?.username}
               </span>
             </div>
           </div>

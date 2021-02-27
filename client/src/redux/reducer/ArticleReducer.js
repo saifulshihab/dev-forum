@@ -1,4 +1,5 @@
 import {
+  ADD_COMMENT,
   ARTICLE_EDIT_FAIL,
   ARTICLE_EDIT_REQUEST,
   ARTICLE_EDIT_RESET,
@@ -12,12 +13,13 @@ import {
   DELETE_SINGLE_ARTICLE_RESET,
   DELETE_SINGLE_ARTICLE_SUCCESS,
   DOWNVOTE_FAIL,
-  DOWNVOTE_REQUEST,
-  DOWNVOTE_RESET,
   DOWNVOTE_SUCCESS,
   FETCH_ALL_ARTICLE_FAIL,
   FETCH_ALL_ARTICLE_REQUEST,
   FETCH_ALL_ARTICLE_SUCCESS,
+  FETCH_COMMENT_FAIL,
+  FETCH_COMMENT_REQUEST,
+  FETCH_COMMENT_SUCCESS,
   FETCH_SINGLE_ARTICLE_FAIL,
   FETCH_SINGLE_ARTICLE_REQUEST,
   FETCH_SINGLE_ARTICLE_SUCCESS,
@@ -25,8 +27,6 @@ import {
   FETCH_USER_ARTICLES_REQUEST,
   FETCH_USER_ARTICLES_SUCCESS,
   UPVOTE_FAIL,
-  UPVOTE_REQUEST,
-  UPVOTE_RESET,
   UPVOTE_SUCCESS,
 } from '../ActionTypes';
 
@@ -36,7 +36,17 @@ export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
       return { loading: true };
     case FETCH_ALL_ARTICLE_SUCCESS:
       return { loading: false, articles: action.payload };
+    case UPVOTE_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case DOWNVOTE_SUCCESS:
+      return { loading: false, articles: action.payload };
     case FETCH_ALL_ARTICLE_FAIL:
+      return { loading: false, error: action.payload };
+    case UPVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case DELETE_SINGLE_ARTICLE_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case DOWNVOTE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -114,31 +124,16 @@ export const editArticelReducer = (state = {}, action) => {
   }
 };
 
-export const articleUpvotelReducer = (state = {}, action) => {
+export const articleCommentsReducer = (state = { comments: [] }, action) => {
   switch (action.type) {
-    case UPVOTE_REQUEST:
+    case FETCH_COMMENT_REQUEST:
       return { loading: true };
-    case UPVOTE_SUCCESS:
-      return { loading: false, success: true };
-    case UPVOTE_FAIL:
+    case FETCH_COMMENT_SUCCESS:
+      return { loading: false, comments: action.payload };
+    case FETCH_COMMENT_FAIL:
       return { loading: false, error: action.payload };
-    case UPVOTE_RESET:
-      return {};
-    default:
-      return state;
-  }
-};
-
-export const articleDownvotelReducer = (state = {}, action) => {
-  switch (action.type) {
-    case DOWNVOTE_REQUEST:
-      return { loading: true };
-    case DOWNVOTE_SUCCESS:
-      return { loading: false, success: true };
-    case DOWNVOTE_FAIL:
-      return { loading: false, error: action.payload };
-    case DOWNVOTE_RESET:
-      return {};
+    case ADD_COMMENT:
+      return { loading: false, comments: action.payload };
     default:
       return state;
   }

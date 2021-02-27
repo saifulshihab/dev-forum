@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import Article from '../models/ArticleModel.js';
 import _ from 'lodash';
+import ArticleComment from '../models/ArticleCommentModels.js';
 
 // desc: create a article
 // routes: api/article
@@ -37,6 +38,7 @@ const fetchAllArticle = asyncHandler(async (req, res) => {
 // access: private
 const fetchSingleArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId).populate('user');
+
   if (article) {
     res.status(200).json(article);
   } else {
@@ -69,7 +71,10 @@ const deleteArticle = asyncHandler(async (req, res) => {
     if (article.user._id.toString() === req.user._id.toString()) {
       const deleteArticle = await article.remove();
       if (deleteArticle) {
-        res.status(200).json({ status: 'Article deleted!' });
+        const articles = await Article.find({})
+          .sort({ createdAt: '-1' })
+          .populate('user');
+        res.status(200).json(articles);
       } else {
         res.status(500);
         throw new Error();
@@ -137,7 +142,10 @@ const upvoteArticle = asyncHandler(async (req, res) => {
       const vote = article.upvote.push({ user: req.user._id });
       if (vote) {
         await article.save();
-        res.status(200).json(article);
+        const articles = await Article.find({})
+          .sort({ createdAt: '-1' })
+          .populate('user');
+        res.status(200).json(articles);
       } else {
         res.status(400);
         throw new Error('Somthing wrong!');
@@ -175,11 +183,37 @@ const downvoteArticle = asyncHandler(async (req, res) => {
       const vote = article.downvote.push({ user: req.user._id });
       if (vote) {
         await article.save();
-        res.status(200).json(article);
+        const articles = await Article.find({})
+          .sort({ createdAt: '-1' })
+          .populate('user');
+        res.status(200).json(articles);
       } else {
         res.status(400);
         throw new Error('Somthing wrong!');
       }
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
+// desc: fetch article comment
+// routes: api/article/:articleId/comment
+// method: PUT
+// access: private
+const fetchCommentArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId);
+  if (article) {
+    const comments = await ArticleComment.find({
+      article: article._id,
+    })
+      .sort({ createdAt: '-1' })
+      .populate('user');
+    if (comments) {
+      res.status(200).json(comments);
+    } else {
+      res.status(500);
+      throw new Error('Failed to fetch comments!');
     }
   } else {
     res.status(404);
@@ -194,13 +228,18 @@ const commentonArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId);
   if (article) {
     const comment = {
+      article: req.params.articleId,
       user: req.user._id,
       comment: req.body.comment,
     };
-    const newComment = await article.comments.push(comment);
+    const newComment = await ArticleComment.create(comment);
     if (newComment) {
-      await article.save();
-      res.status(200).json(comment);
+      const comments = await ArticleComment.find({
+        article: newComment.article,
+      })
+        .sort({ createdAt: '-1' })
+        .populate('user');
+      res.status(200).json(comments);
     } else {
       res.status(500);
       throw new Error('Comment Failed!');
@@ -221,4 +260,5 @@ export {
   upvoteArticle,
   downvoteArticle,
   commentonArticle,
+  fetchCommentArticle,
 };

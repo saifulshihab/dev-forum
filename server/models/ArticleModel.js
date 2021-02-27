@@ -1,20 +1,5 @@
 import mongoose from 'mongoose';
 
-const ArticleCommentSchema = new mongoose.Schema(
-  {
-    comment: {
-      type: String,
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-
 const ShareSchema = new mongoose.Schema(
   {
     user: {
@@ -62,7 +47,6 @@ const ArticleSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    comments: [ArticleCommentSchema],
     upvote: [UpvoteSchema],
     downvote: [DownvoteSchema],
     shares: [ShareSchema],

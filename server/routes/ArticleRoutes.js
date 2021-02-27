@@ -10,6 +10,7 @@ import {
   upvoteArticle,
   downvoteArticle,
   commentonArticle,
+  fetchCommentArticle,
 } from '../controller/ArticleController.js';
 const router = express.Router();
 
@@ -22,6 +23,9 @@ router
   .put(protect, editArticle);
 router.route('/:articleId/upvote').put(protect, upvoteArticle);
 router.route('/:articleId/downvote').put(protect, downvoteArticle);
-router.route('/:articleId/comment').put(protect, commentonArticle);
+router
+  .route('/:articleId/comment')
+  .get(protect, fetchCommentArticle)
+  .post(protect, commentonArticle);
 
 export default router;

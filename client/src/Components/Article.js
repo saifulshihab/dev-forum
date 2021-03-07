@@ -2,16 +2,11 @@ import { Transition } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
 import moment from 'moment';
 import {
   deleteArticle,
-  getAllArticles,
   upvoteArticle,
   downvoteArticle,
-  getSingleArticle,
-  getUserArticles,
 } from '../redux/action/ArticleAction';
 import ReactHtmlParser from 'react-html-parser';
 import UpvoteIcon from './UpvoteIcon';
@@ -19,14 +14,7 @@ import DownvoteIcon from './DownvoteIcon';
 import _ from 'lodash';
 import ArticleCommentsContainer from '../Container/ArticleCommentsContainer';
 
-const Article = ({
-  article,
-  routeFromProfile,
-  details,
-  fromSingleContainer,
-  fromProfile,
-  userId,
-}) => {
+const Article = ({ article, routeFromProfile, details, userId }) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const [showComment, setshowComment] = useState(false);
@@ -37,15 +25,9 @@ const Article = ({
   const { devInfo: currentUser } = signInDev;
 
   const deleteSingleArticle = useSelector((state) => state.deleteSingleArticle);
-  const { loading: deleteLoading, error: deleteError } = deleteSingleArticle;
+  const { loading: deleteLoading } = deleteSingleArticle;
 
-  useEffect(() => {}, [
-    dispatch,
-    article?._id,
-    fromSingleContainer,
-    fromProfile,
-    userId,
-  ]);
+  useEffect(() => {}, [dispatch, article?._id, userId]);
 
   const closeDD = () => {
     serArticleOption(false);

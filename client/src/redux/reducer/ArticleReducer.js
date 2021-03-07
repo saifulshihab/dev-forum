@@ -36,18 +36,18 @@ export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
       return { loading: true };
     case FETCH_ALL_ARTICLE_SUCCESS:
       return { loading: false, articles: action.payload };
+    case FETCH_ALL_ARTICLE_FAIL:
+      return { loading: false, error: action.payload };
     case UPVOTE_SUCCESS:
       return { loading: false, articles: action.payload };
     case DOWNVOTE_SUCCESS:
       return { loading: false, articles: action.payload };
-    case FETCH_ALL_ARTICLE_FAIL:
-      return { loading: false, error: action.payload };
     case UPVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case DOWNVOTE_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_SINGLE_ARTICLE_SUCCESS:
       return { loading: false, articles: action.payload };
-    case DOWNVOTE_FAIL:
-      return { loading: false, error: action.payload };
     default:
       return state;
   }
@@ -74,6 +74,14 @@ export const fetchSingleArticelReducer = (state = { article: {} }, action) => {
       return { loading: true };
     case FETCH_SINGLE_ARTICLE_SUCCESS:
       return { loading: false, article: action.payload };
+    case UPVOTE_SUCCESS:
+      return { loading: false, article: action.payload };
+    case DOWNVOTE_SUCCESS:
+      return { loading: false, article: action.payload };
+    case UPVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case DOWNVOTE_FAIL:
+      return { loading: false, error: action.payload };
     case FETCH_SINGLE_ARTICLE_FAIL:
       return { loading: false, error: action.payload };
     default:

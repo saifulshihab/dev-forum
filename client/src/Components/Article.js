@@ -24,9 +24,6 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
 
-  const deleteSingleArticle = useSelector((state) => state.deleteSingleArticle);
-  const { loading: deleteLoading } = deleteSingleArticle;
-
   useEffect(() => {}, [dispatch, article?._id, userId]);
 
   const closeDD = () => {
@@ -54,7 +51,7 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
               <button
                 className='w-full outline-none focus:outline-none'
                 onClick={() => {
-                  dispatch(upvoteArticle(article?._id));
+                  dispatch(upvoteArticle(article?._id, details ? true : false));
                 }}
               >
                 <UpvoteIcon />
@@ -71,7 +68,7 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
               <button
                 className='w-full outline-none focus:outline-none'
                 onClick={() => {
-                  dispatch(downvoteArticle(article?._id));
+                  dispatch(downvoteArticle(article?._id, details ? true : false));
                 }}
               >
                 <DownvoteIcon />
@@ -104,7 +101,7 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
               <i className='fas fa-marker mr-1'></i>written by- @
               <Link to={`/h/user/${article?.user?.username}`}>
                 <span className='cursor-pointer hover:text-indigo-600 '>
-                  {article.user.username}
+                  {article?.user?.username}
                 </span>
               </Link>
               <span className='ml-4'>

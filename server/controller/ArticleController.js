@@ -165,9 +165,10 @@ const upvoteArticle = asyncHandler(async (req, res) => {
 // method: PUT
 // access: private
 const downvoteArticle = asyncHandler(async (req, res) => {
-  const article = await Article.findById(req.params.articleId).populate(
-    'downvote'
-  );
+  const article = await Article.findById(req.params.articleId).populate([
+    { path: 'downvote' },
+    { path: 'user' },
+  ]);
   if (article) {
     let alreadydownVoted = _.findIndex(article.downvote, function (data) {
       return data.user.toString() === req.user._id.toString();
@@ -187,10 +188,12 @@ const downvoteArticle = asyncHandler(async (req, res) => {
       const vote = article.downvote.push({ user: req.user._id });
       if (vote) {
         await article.save();
-        const articles = await Article.find({})
-          .sort({ createdAt: '-1' })
-          .populate('user');
-        res.status(200).json(articles);
+        if (req.query.singleArticle === 'true') {
+          res.status(200).json(article);
+        } else if (req.query.singleArticle === 'false') {
+          const articles = await Article.find({}).sort({ createdAt: '-1' });
+          res.status(200).json(articles);
+        }
       } else {
         res.status(400);
         throw new Error('Somthing wrong!');

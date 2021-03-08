@@ -28,6 +28,8 @@ import {
   FETCH_USER_ARTICLES_SUCCESS,
   UPVOTE_FAIL,
   UPVOTE_SUCCESS,
+  UPVOTE_fDETAILS_SUCCESS,
+  DOWNVOTE_fDETAILS_SUCCESS,
 } from '../ActionTypes';
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
@@ -74,9 +76,9 @@ export const fetchSingleArticelReducer = (state = { article: {} }, action) => {
       return { loading: true };
     case FETCH_SINGLE_ARTICLE_SUCCESS:
       return { loading: false, article: action.payload };
-    case UPVOTE_SUCCESS:
+    case UPVOTE_fDETAILS_SUCCESS:
       return { loading: false, article: action.payload };
-    case DOWNVOTE_SUCCESS:
+    case DOWNVOTE_fDETAILS_SUCCESS:
       return { loading: false, article: action.payload };
     case UPVOTE_FAIL:
       return { loading: false, error: action.payload };

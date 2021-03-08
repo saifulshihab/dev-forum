@@ -22,14 +22,14 @@ import {
   ARTICLE_EDIT_RESET,
   UPVOTE_SUCCESS,
   UPVOTE_FAIL,
-  UPVOTE_RESET,
   DOWNVOTE_SUCCESS,
-  DOWNVOTE_RESET,
   DOWNVOTE_FAIL,
   FETCH_COMMENT_REQUEST,
   FETCH_COMMENT_SUCCESS,
   FETCH_COMMENT_FAIL,
   ADD_COMMENT,
+  UPVOTE_fDETAILS_SUCCESS,
+  DOWNVOTE_fDETAILS_SUCCESS,
   //   CREATE_ARTICLE_RESET,
 } from '../ActionTypes';
 
@@ -251,7 +251,10 @@ export const articleEdit = (articleId, updatedArticle) => async (
 };
 
 // upvote article
-export const upvoteArticle = (articleId) => async (dispatch, getState) => {
+export const upvoteArticle = (articleId, singleArticle) => async (
+  dispatch,
+  getState
+) => {
   try {
     const {
       signInDev: { devInfo },
@@ -263,17 +266,23 @@ export const upvoteArticle = (articleId) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.put(
-      `${baseURL}/api/article/${articleId}/upvote`,
+      `${baseURL}/api/article/${articleId}/upvote?singleArticle=${
+        singleArticle ? 'true' : 'false'
+      }`,
       {},
       config
     );
-    dispatch({
-      type: UPVOTE_SUCCESS,
-      payload: data,
-    });
-    dispatch({
-      type: UPVOTE_RESET,
-    });
+    if (singleArticle) {
+      dispatch({
+        type: UPVOTE_fDETAILS_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPVOTE_SUCCESS,
+        payload: data,
+      });
+    }
   } catch (error) {
     dispatch({
       type: UPVOTE_FAIL,
@@ -286,7 +295,10 @@ export const upvoteArticle = (articleId) => async (dispatch, getState) => {
 };
 
 // upvote article
-export const downvoteArticle = (articleId) => async (dispatch, getState) => {
+export const downvoteArticle = (articleId, singleArticle) => async (
+  dispatch,
+  getState
+) => {
   try {
     const {
       signInDev: { devInfo },
@@ -298,17 +310,23 @@ export const downvoteArticle = (articleId) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.put(
-      `${baseURL}/api/article/${articleId}/downvote`,
+      `${baseURL}/api/article/${articleId}/downvote?singleArticle=${
+        singleArticle ? 'true' : 'false'
+      }`,
       {},
       config
     );
-    dispatch({
-      type: DOWNVOTE_SUCCESS,
-      payload: data,
-    });
-    dispatch({
-      type: DOWNVOTE_RESET,
-    });
+    if (singleArticle) {
+      dispatch({
+        type: DOWNVOTE_fDETAILS_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: DOWNVOTE_SUCCESS,
+        payload: data,
+      });
+    }
   } catch (error) {
     dispatch({
       type: DOWNVOTE_FAIL,

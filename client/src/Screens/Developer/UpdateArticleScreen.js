@@ -43,79 +43,83 @@ const UpdateArticleScreen = () => {
           Write an Article
         </h2>
       </div>
-      <Formik
-        initialValues={{
-          title: article ? article.title : 'Loading...',
-          description: article ? article.description : 'Loading...',
-        }}
-        validationSchema={formValidationSchema}
-        onSubmit={(data, { setSubmitting }) => {
-          dispatch(articleEdit(articleId, data));
-          setSubmitting(false);
-        }}
-      >
-        {({ handleSubmit, isSubmitting, values }) => (
-          <form onSubmit={handleSubmit}>
-            <MyTextField
-              label='Title'
-              name='title'
-              type='text'
-              placeholder='Article Title'
-            />
-            <label
-              htmlFor='article_body'
-              className='block mt-2 mb-1 font-semibold text-xs text-gray-600 uppercase'
-            >
-              Description
-            </label>
-            <Field name='description'>
-              {({ field, meta }) => (
-                <div>
-                  <Editor
-                    id='article_body'
-                    apiKey='luwkgwnx411qqfromu0gg9acfvqm2dc21fci2xw1hi9gajok'
-                    initialValue='Write...'
-                    init={{
-                      height: 500,
-                      menubar: true,
-                      plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount',
-                      ],
-                      toolbar:
-                        'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |  bullist numlist outdent indent | removeformat | help',
-                    }}
-                    onEditorChange={(content) => {
-                      values.description = content;
-                    }}
-                    outputFormat='html' /// will be fix later for input rich text
-                    {...field}
-                  />
-                  {meta.touched && meta.error ? (
-                    <div className='text-red-500 text-sm'>{meta.error}</div>
-                  ) : null}
-                </div>
-              )}
-            </Field>
+      {article && (
+        <Formik
+          initialValues={{
+            title: article?.title ? article.title : 'Loading...',
+            description: article?.description
+              ? article?.description
+              : 'Loading...',
+          }}
+          validationSchema={formValidationSchema}
+          onSubmit={(data, { setSubmitting }) => {
+            dispatch(articleEdit(articleId, data));
+            setSubmitting(false);
+          }}
+        >
+          {({ handleSubmit, isSubmitting, values }) => (
+            <form onSubmit={handleSubmit}>
+              <MyTextField
+                label='Title'
+                name='title'
+                type='text'
+                placeholder='Article Title'
+              />
+              <label
+                htmlFor='article_body'
+                className='block mt-2 mb-1 font-semibold text-xs text-gray-600 uppercase'
+              >
+                Description
+              </label>
+              <Field name='description'>
+                {({ field, meta }) => (
+                  <div>
+                    <Editor
+                      id='article_body'
+                      apiKey='luwkgwnx411qqfromu0gg9acfvqm2dc21fci2xw1hi9gajok'
+                      initialValue='Write...'
+                      init={{
+                        height: 500,
+                        menubar: true,
+                        plugins: [
+                          'advlist autolink lists link image charmap print preview anchor',
+                          'searchreplace visualblocks code fullscreen',
+                          'insertdatetime media table paste code help wordcount',
+                        ],
+                        toolbar:
+                          'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |  bullist numlist outdent indent | removeformat | help',
+                      }}
+                      onEditorChange={(content) => {
+                        values.description = content;
+                      }}
+                      outputFormat='html' /// will be fix later for input rich text
+                      {...field}
+                    />
+                    {meta.touched && meta.error ? (
+                      <div className='text-red-500 text-sm'>{meta.error}</div>
+                    ) : null}
+                  </div>
+                )}
+              </Field>
 
-            <button
-              type='submit'
-              className={`text-white bg-indigo-600 ${
-                loading && 'bg-indigo-300'
-              } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2`}
-              disabled={isSubmitting}
-            >
-              {loading ? 'Posting...' : 'Post'}
-            </button>
-            {success ? (
-              <Alert success msg={'Article Updated!'} />
-            ) : (
-              error && <Alert fail msg={error} />
-            )}
-          </form>
-        )}
-      </Formik>
+              <button
+                type='submit'
+                className={`text-white bg-indigo-600 ${
+                  loading && 'bg-indigo-300'
+                } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2`}
+                disabled={isSubmitting}
+              >
+                {loading ? 'Posting...' : 'Post'}
+              </button>
+              {success ? (
+                <Alert success msg={'Article Updated!'} />
+              ) : (
+                error && <Alert fail msg={error} />
+              )}
+            </form>
+          )}
+        </Formik>
+      )}
     </div>
   );
 };

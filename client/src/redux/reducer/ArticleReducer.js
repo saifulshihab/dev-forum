@@ -30,6 +30,8 @@ import {
   UPVOTE_SUCCESS,
   UPVOTE_fDETAILS_SUCCESS,
   DOWNVOTE_fDETAILS_SUCCESS,
+  UPVOTE_fUSERPROFILE_SUCCESS,
+  DOWNVOTE_fUSERPROFILE_SUCCESS,
 } from '../ActionTypes';
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
@@ -97,6 +99,14 @@ export const fetchUserArticlesReducer = (state = { articles: [] }, action) => {
       return { loading: true };
     case FETCH_USER_ARTICLES_SUCCESS:
       return { loading: false, articles: action.payload };
+    case UPVOTE_fUSERPROFILE_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case DOWNVOTE_fUSERPROFILE_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case UPVOTE_FAIL:
+      return { loading: false, error: action.payload };
+    case DOWNVOTE_FAIL:
+      return { loading: false, error: action.payload };
     case FETCH_USER_ARTICLES_FAIL:
       return { loading: false, error: action.payload };
     default:

@@ -147,7 +147,9 @@ const upvoteArticle = asyncHandler(async (req, res) => {
         if (req.query.singleArticle === 'true') {
           res.status(200).json(article);
         } else if (req.query.singleArticle === 'false') {
-          const articles = await Article.find({}).sort({ createdAt: '-1' });
+          const articles = await Article.find({})
+            .sort({ createdAt: '-1' })
+            .populate('user');
           res.status(200).json(articles);
         }
       } else {
@@ -191,7 +193,9 @@ const downvoteArticle = asyncHandler(async (req, res) => {
         if (req.query.singleArticle === 'true') {
           res.status(200).json(article);
         } else if (req.query.singleArticle === 'false') {
-          const articles = await Article.find({}).sort({ createdAt: '-1' });
+          const articles = await Article.find({})
+            .sort({ createdAt: '-1' })
+            .populate('user');
           res.status(200).json(articles);
         }
       } else {

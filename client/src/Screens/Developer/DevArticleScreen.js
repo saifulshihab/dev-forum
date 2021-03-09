@@ -14,19 +14,24 @@ const DevArticleScreen = ({ user }) => {
     return () => {};
   }, [dispatch, user?._id]);
 
+  const userArticles =
+    articles &&
+    articles?.filter(
+      (article) => article?.user?._id.toString() === user?._id.toString()
+    );
+
   return (
     <div>
       {loading ? (
         <Loader />
       ) : error ? (
         <Alert fail msg={error} />
-      ) : articles?.length > 0 ? (
-        articles.map((article) => (
+      ) : userArticles?.length > 0 ? (
+        userArticles.map((article) => (
           <Article
             article={article}
             key={article?._id}
             routeFromProfile
-            fromProfile={true}
             userId={user?._id}
           />
         ))

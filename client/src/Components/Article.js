@@ -51,7 +51,13 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
               <button
                 className='w-full outline-none focus:outline-none'
                 onClick={() => {
-                  dispatch(upvoteArticle(article?._id, details ? true : false));
+                  dispatch(
+                    upvoteArticle(
+                      article?._id,
+                      details ? true : false,
+                      routeFromProfile ? true : false
+                    )
+                  );
                 }}
               >
                 <UpvoteIcon />
@@ -68,7 +74,13 @@ const Article = ({ article, routeFromProfile, details, userId }) => {
               <button
                 className='w-full outline-none focus:outline-none'
                 onClick={() => {
-                  dispatch(downvoteArticle(article?._id, details ? true : false));
+                  dispatch(
+                    downvoteArticle(
+                      article?._id,
+                      details ? true : false,
+                      routeFromProfile ? true : false
+                    )
+                  );
                 }}
               >
                 <DownvoteIcon />

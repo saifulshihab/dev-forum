@@ -30,7 +30,8 @@ import {
   ADD_COMMENT,
   UPVOTE_fDETAILS_SUCCESS,
   DOWNVOTE_fDETAILS_SUCCESS,
-  //   CREATE_ARTICLE_RESET,
+  DOWNVOTE_fUSERPROFILE_SUCCESS,
+  UPVOTE_fUSERPROFILE_SUCCESS,
 } from '../ActionTypes';
 
 // fetch all articles
@@ -251,10 +252,11 @@ export const articleEdit = (articleId, updatedArticle) => async (
 };
 
 // upvote article
-export const upvoteArticle = (articleId, singleArticle) => async (
-  dispatch,
-  getState
-) => {
+export const upvoteArticle = (
+  articleId,
+  singleArticle,
+  fromUserProfile
+) => async (dispatch, getState) => {
   try {
     const {
       signInDev: { devInfo },
@@ -277,7 +279,12 @@ export const upvoteArticle = (articleId, singleArticle) => async (
         type: UPVOTE_fDETAILS_SUCCESS,
         payload: data,
       });
-    } else {
+    } else if (!singleArticle && fromUserProfile) {
+      dispatch({
+        type: UPVOTE_fUSERPROFILE_SUCCESS,
+        payload: data,
+      });
+    } else if (!singleArticle) {
       dispatch({
         type: UPVOTE_SUCCESS,
         payload: data,
@@ -295,10 +302,11 @@ export const upvoteArticle = (articleId, singleArticle) => async (
 };
 
 // upvote article
-export const downvoteArticle = (articleId, singleArticle) => async (
-  dispatch,
-  getState
-) => {
+export const downvoteArticle = (
+  articleId,
+  singleArticle,
+  fromUserProfile
+) => async (dispatch, getState) => {
   try {
     const {
       signInDev: { devInfo },
@@ -321,7 +329,12 @@ export const downvoteArticle = (articleId, singleArticle) => async (
         type: DOWNVOTE_fDETAILS_SUCCESS,
         payload: data,
       });
-    } else {
+    } else if (!singleArticle && fromUserProfile) {
+      dispatch({
+        type: DOWNVOTE_fUSERPROFILE_SUCCESS,
+        payload: data,
+      });
+    } else if (!singleArticle) {
       dispatch({
         type: DOWNVOTE_SUCCESS,
         payload: data,

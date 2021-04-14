@@ -1,7 +1,8 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import jwt from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode';
+
 import {
   devSigninReducer,
   devSignupReducer,
@@ -40,20 +41,21 @@ const reducer = combineReducers({
   articleComments: articleCommentsReducer,
 });
 
+const verifyToken = (token, lsItem) => {
+  const currentDate = new Date();
+  const decodeToken = jwtDecode(token);
+  if (currentDate.getTime() > decodeToken.exp * 1000) {
+    localStorage.removeItem(lsItem);
+    return false;
+  } else return true;
+};
+
 const initialState = {
   signInDev: {
     isAuthenticated: localStorage.getItem('devInfo')
-      ? jwt.verify(
+      ? verifyToken(
           JSON.parse(localStorage.getItem('devInfo')).token,
-          `dev12@#4545fo655dfo55drum`, // will be hidden in prod mode
-          (err, dec) => {
-            if (err) {
-              localStorage.removeItem('devInfo');
-              return false;
-            } else {
-              return true;
-            }
-          }
+          'devInfo'
         )
       : false,
     devInfo: localStorage.getItem('devInfo')

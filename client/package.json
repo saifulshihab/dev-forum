@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "formik": "^2.2.6",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "postcss": "^8.2.4",

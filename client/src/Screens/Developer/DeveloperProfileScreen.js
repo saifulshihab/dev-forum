@@ -11,6 +11,7 @@ import Alert from '../../Components/Alert';
 import DevProfileEditScreen from './DevProfileEditScreen';
 import { baseURL } from '../../baseURL';
 import DevPhotos from './DevPhotos';
+import DevTimelineScreen from './DevTimelineScreen';
 
 const DeveloperProfileScreen = ({ location }) => {
   const { url, path } = useRouteMatch();
@@ -23,6 +24,7 @@ const DeveloperProfileScreen = ({ location }) => {
   const [ques, setQues] = useState(false);
   const [editOn, setEdit] = useState(false);
   const [photoOn, setPhotos] = useState(false);
+  const [timelineOn, setTimeline] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -39,6 +41,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setProjects(false);
       setArticle(false);
       setQues(false);
+      setTimeline(false);
       setEdit(false);
       setPhotos(false);
     } else if (currentPath === 'gh-profile') {
@@ -48,6 +51,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setArticle(false);
       setQues(false);
       setEdit(false);
+      setTimeline(false);
       setPhotos(false);
     } else if (currentPath === 'projects') {
       setProjects(true);
@@ -56,6 +60,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setArticle(false);
       setQues(false);
       setEdit(false);
+      setTimeline(false);
       setPhotos(false);
     } else if (currentPath === 'articles') {
       setArticle(true);
@@ -63,6 +68,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setGithub(false);
       setProjects(false);
       setQues(false);
+      setTimeline(false);
       setEdit(false);
       setPhotos(false);
     } else if (currentPath === 'ques') {
@@ -71,6 +77,7 @@ const DeveloperProfileScreen = ({ location }) => {
       setGithub(false);
       setProjects(false);
       setArticle(false);
+      setTimeline(false);
       setEdit(false);
       setPhotos(false);
     } else if (currentPath === 'edit') {
@@ -80,9 +87,21 @@ const DeveloperProfileScreen = ({ location }) => {
       setProjects(false);
       setArticle(false);
       setPhotos(false);
+      setTimeline(false);
+
       setQues(false);
     } else if (currentPath === 'photos') {
       setPhotos(true);
+      setEdit(false);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setArticle(false);
+      setTimeline(false);
+      setQues(false);
+    } else if (currentPath === 'timeline') {
+      setTimeline(true);
+      setPhotos(false);
       setEdit(false);
       setAbout(false);
       setGithub(false);
@@ -219,6 +238,16 @@ const DeveloperProfileScreen = ({ location }) => {
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
+                      <Link to={`${url}/timeline`}>
+                        <div
+                          className={`flex items-center cursor-pointer ${
+                            timelineOn && 'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                        >
+                          <i className='fas fa-stream mr-2 text-yellow-700'></i>
+                          <span className='h-full'>Timeline</span>
+                        </div>
+                      </Link>
                       <Link to={`${url}/gh-profile`}>
                         <div
                           className={`flex items-center cursor-pointer ${
@@ -306,6 +335,10 @@ const DeveloperProfileScreen = ({ location }) => {
                 component={() => <GithubScreen username={user?.github} />}
               />
               <Route path={`${path}/projects`} component={DevProjectsScreen} />
+              <Route
+                path={`${path}/timeline`}
+                component={() => <DevTimelineScreen user={user} />}
+              />
               <Route
                 path={`${path}/articles`}
                 component={() => <DevArticleScreen user={user} />}

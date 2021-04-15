@@ -32,6 +32,14 @@ import {
   DOWNVOTE_fDETAILS_SUCCESS,
   DOWNVOTE_fUSERPROFILE_SUCCESS,
   UPVOTE_fUSERPROFILE_SUCCESS,
+  SHARE_ARTICLE_REQUEST,
+  SHARE_ARTICLE_SUCCESS,
+  SHARE_ARTICLE_FAILED,
+  GET_SHARED_ARTICLE_REQUEST,
+  GET_SHARED_ARTICLE_SUCCESS,
+  GET_SHARED_ARTICLE_FAILED,
+  DELETE_SHARED_ARTICLE_REQUEST,
+  DELETE_SHARED_ARTICLE_FALIED,
 } from '../ActionTypes';
 
 // fetch all articles
@@ -415,6 +423,113 @@ export const commentOnArticle = (articleId, comment) => async (
   } catch (error) {
     dispatch({
       type: FETCH_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// share an article
+export const shareArticle = (articleId, caption) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: SHARE_ARTICLE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.post(
+      `${baseURL}/api/article/${articleId}/share`,
+      { caption },
+      config
+    );
+    dispatch({
+      type: SHARE_ARTICLE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: SHARE_ARTICLE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// get Shared articles
+export const getSharedArticle = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_SHARED_ARTICLE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/article/getSharedArticle/${userId}`,
+      config
+    );
+    dispatch({
+      type: GET_SHARED_ARTICLE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SHARED_ARTICLE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// delete Shared article
+export const deleteSharedArticle = (sharedArticleId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: DELETE_SHARED_ARTICLE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.delete(
+      `${baseURL}/api/article/deleteSharedArticle/${sharedArticleId}`,
+      config
+    );
+    dispatch({
+      type: DELETE_SINGLE_ARTICLE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_SHARED_ARTICLE_FALIED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Article from '../models/ArticleModel.js';
 import _ from 'lodash';
 import ArticleComment from '../models/ArticleCommentModels.js';
+import SharedArticle from '../models/ArticleShareModel.js';
 
 // desc: create a article
 // routes: api/article
@@ -260,6 +261,75 @@ const commentonArticle = asyncHandler(async (req, res) => {
     throw new Error('Article not found!');
   }
 });
+// desc: share an article
+// routes: api/article/:articleId/share
+// method: POST
+// access: private
+const shareArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.articleId).populate(
+    'shares'
+  );
+  if (article) {
+    const newShare = await SharedArticle.create({
+      article: article?._id,
+      user: req.user._id,
+      ...req.body,
+    });
+    if (newShare) {
+      res.status(201).json(newShare);
+    } else {
+      res.status(500);
+      throw new Error('Failed to share!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
+// desc: comment on article
+// routes: api/article/getSharedArticle/:userId
+// method: GET
+// access: private
+const getSharedArticle = asyncHandler(async (req, res) => {
+  const articles = await SharedArticle.find({
+    user: req.params.userId,
+  })
+    .populate('article')
+    .sort({ createdAt: '-1' });
+  if (articles) {
+    res.status(200).json(articles);
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
+// desc: delete a shared article
+// routes: api/article/deleteSharedArticle/:sharedId
+// method: DELETE
+// access: private
+const deleteSharedArticle = asyncHandler(async (req, res) => {
+  const article = await SharedArticle.findById(req.params.sharedId);
+  if (article) {
+    if (article?.user.equals(req.user._id)) {
+      const deleteSharedArticle = await article.remove();
+      if (deleteSharedArticle) {
+        const articles = await SharedArticle.find({
+          user: req.user._id,
+        }).populate('article');
+        res.status(200).json(articles);
+      } else {
+        res.status(500);
+        throw new Error('Failed to delete shared article!');
+      }
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to perform this action!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Article not found!');
+  }
+});
 
 export {
   createArticle,
@@ -272,4 +342,7 @@ export {
   downvoteArticle,
   commentonArticle,
   fetchCommentArticle,
+  shareArticle,
+  getSharedArticle,
+  deleteSharedArticle,
 };

@@ -21,6 +21,8 @@ import {
   delSingleArticelReducer,
   editArticelReducer,
   articleCommentsReducer,
+  articleShareReducer,
+  sharedArticleGetReducer,
 } from './reducer/ArticleReducer';
 
 const reducer = combineReducers({
@@ -39,6 +41,8 @@ const reducer = combineReducers({
   editArticle: editArticelReducer,
   devPublicView: devPublicViewReducer,
   articleComments: articleCommentsReducer,
+  articleShare: articleShareReducer,
+  sharedArticleGet: sharedArticleGetReducer,
 });
 
 const verifyToken = (token, lsItem) => {

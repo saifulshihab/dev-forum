@@ -32,6 +32,12 @@ import {
   DOWNVOTE_fDETAILS_SUCCESS,
   UPVOTE_fUSERPROFILE_SUCCESS,
   DOWNVOTE_fUSERPROFILE_SUCCESS,
+  SHARE_ARTICLE_REQUEST,
+  SHARE_ARTICLE_SUCCESS,
+  SHARE_ARTICLE_FAILED,
+  GET_SHARED_ARTICLE_REQUEST,
+  GET_SHARED_ARTICLE_SUCCESS,
+  GET_SHARED_ARTICLE_FAILED,
 } from '../ActionTypes';
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
@@ -154,6 +160,34 @@ export const articleCommentsReducer = (state = { comments: [] }, action) => {
       return { loading: false, error: action.payload };
     case ADD_COMMENT:
       return { loading: false, comments: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const articleShareReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SHARE_ARTICLE_REQUEST:
+      return { loading: true };
+    case SHARE_ARTICLE_SUCCESS:
+      return { loading: false, success: true };
+    case SHARE_ARTICLE_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const sharedArticleGetReducer = (state = { articles: [] }, action) => {
+  switch (action.type) {
+    case GET_SHARED_ARTICLE_REQUEST:
+      return { loading: true };
+    case GET_SHARED_ARTICLE_SUCCESS:
+      return { loading: false, articles: action.payload };
+    case DELETE_SINGLE_ARTICLE_SUCCESS:
+      return { articles: action.payload };
+    case GET_SHARED_ARTICLE_FAILED:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

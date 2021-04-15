@@ -11,6 +11,9 @@ import {
   downvoteArticle,
   commentonArticle,
   fetchCommentArticle,
+  shareArticle,
+  getSharedArticle,
+  deleteSharedArticle,
 } from '../controller/ArticleController.js';
 const router = express.Router();
 
@@ -27,5 +30,13 @@ router
   .route('/:articleId/comment')
   .get(protect, fetchCommentArticle)
   .post(protect, commentonArticle);
+// share a article
+router.route('/:articleId/share').post(protect, shareArticle);
+// get shared articles
+router.route('/getSharedArticle/:userId').get(protect, getSharedArticle);
+// delete a shared article
+router
+  .route('/deleteSharedArticle/:sharedId')
+  .delete(protect, deleteSharedArticle);
 
 export default router;

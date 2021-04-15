@@ -8,6 +8,7 @@ import DevAboutScreen from './DevAboutScreen';
 import DevArticleScreen from './DevArticleScreen';
 import DevProjectsScreen from './DevProjectsScreen';
 import DevQuesAskScreen from './DevQuesAskScreen';
+import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
 
 const DevProfilePublicView = ({ location }) => {
@@ -23,6 +24,8 @@ const DevProfilePublicView = ({ location }) => {
   const [projectsOn, setProjects] = useState(false);
   const [articleOn, setArticle] = useState(false);
   const [ques, setQues] = useState(false);
+  const [timelineOn, setTimeline] = useState(false);
+
   const currentPath = location.pathname.split('/')[4];
 
   useEffect(() => {
@@ -34,29 +37,41 @@ const DevProfilePublicView = ({ location }) => {
       setProjects(false);
       setArticle(false);
       setQues(false);
+      setTimeline(false);
     } else if (currentPath === 'gh-profile') {
       setGithub(true);
       setAbout(false);
       setProjects(false);
       setArticle(false);
+      setTimeline(false);
       setQues(false);
     } else if (currentPath === 'projects') {
       setProjects(true);
       setAbout(false);
       setGithub(false);
       setArticle(false);
+      setTimeline(false);
       setQues(false);
     } else if (currentPath === 'articles') {
       setArticle(true);
       setAbout(false);
       setGithub(false);
       setProjects(false);
+      setTimeline(false);
       setQues(false);
     } else if (currentPath === 'ques') {
       setQues(true);
       setAbout(false);
       setGithub(false);
       setProjects(false);
+      setTimeline(false);
+      setArticle(false);
+    } else if (currentPath === 'timeline') {
+      setQues(false);
+      setAbout(false);
+      setGithub(false);
+      setProjects(false);
+      setTimeline(true);
       setArticle(false);
     }
   }, [dispatch, username, currentPath]);
@@ -186,6 +201,16 @@ const DevProfilePublicView = ({ location }) => {
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
+                      <Link to={`${url}/timeline`}>
+                        <div
+                          className={`flex items-center cursor-pointer ${
+                            timelineOn && 'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                        >
+                          <i className='fas fa-stream mr-2 text-yellow-700'></i>
+                          <span className='h-full'>Timeline</span>
+                        </div>
+                      </Link>
                       <Link to={`${url}/gh-profile`}>
                         <div
                           className={`flex items-center cursor-pointer ${
@@ -249,6 +274,10 @@ const DevProfilePublicView = ({ location }) => {
               <Route
                 path={`${path}/gh-profile`}
                 component={() => <GithubScreen username={user?.github} />}
+              />
+              <Route
+                path={`${path}/timeline`}
+                component={() => <DevTimelineScreen user={user} />}
               />
               <Route path={`${path}/projects`} component={DevProjectsScreen} />
               <Route

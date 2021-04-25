@@ -13,104 +13,24 @@ import { baseURL } from '../../baseURL';
 import DevPhotos from './DevPhotos';
 import DevTimelineScreen from './DevTimelineScreen';
 
-const DeveloperProfileScreen = ({ location }) => {
+const DeveloperProfileScreen = ({ location, history }) => {
   const { url, path } = useRouteMatch();
   const dispatch = useDispatch();
 
-  const [aboutOn, setAbout] = useState(false);
-  const [githubOn, setGithub] = useState(false);
-  const [projectsOn, setProjects] = useState(false);
-  const [articleOn, setArticle] = useState(false);
-  const [ques, setQues] = useState(false);
-  const [editOn, setEdit] = useState(false);
-  const [photoOn, setPhotos] = useState(false);
-  const [timelineOn, setTimeline] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState('about');
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
   const devProfile = useSelector((state) => state.devProfile);
   const { loading, error, user } = devProfile;
-  const currentPath = location.pathname.split('/')[3];
+
   useEffect(() => {
     if (!user || Object.keys(user).length === 0) {
       dispatch(fetchDevProfile(devInfo._id));
     }
-    if (currentPath === undefined || currentPath === 'about') {
-      setAbout(true);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setQues(false);
-      setTimeline(false);
-      setEdit(false);
-      setPhotos(false);
-    } else if (currentPath === 'gh-profile') {
-      setGithub(true);
-      setAbout(false);
-      setProjects(false);
-      setArticle(false);
-      setQues(false);
-      setEdit(false);
-      setTimeline(false);
-      setPhotos(false);
-    } else if (currentPath === 'projects') {
-      setProjects(true);
-      setAbout(false);
-      setGithub(false);
-      setArticle(false);
-      setQues(false);
-      setEdit(false);
-      setTimeline(false);
-      setPhotos(false);
-    } else if (currentPath === 'articles') {
-      setArticle(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setQues(false);
-      setTimeline(false);
-      setEdit(false);
-      setPhotos(false);
-    } else if (currentPath === 'ques') {
-      setQues(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setTimeline(false);
-      setEdit(false);
-      setPhotos(false);
-    } else if (currentPath === 'edit') {
-      setEdit(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setPhotos(false);
-      setTimeline(false);
 
-      setQues(false);
-    } else if (currentPath === 'photos') {
-      setPhotos(true);
-      setEdit(false);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setTimeline(false);
-      setQues(false);
-    } else if (currentPath === 'timeline') {
-      setTimeline(true);
-      setPhotos(false);
-      setEdit(false);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setQues(false);
-    }
     return () => {};
-  }, [dispatch, devInfo._id, currentPath, user]);
+  }, [dispatch, devInfo._id, user]);
 
   return (
     <div className='profile p-1'>
@@ -228,60 +148,96 @@ const DeveloperProfileScreen = ({ location }) => {
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
                     <div className='flex items-baseline space-x-4'>
-                      <Link to={`${url}/about`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('about');
+                          history.push(`${url}/about`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            aboutOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'about' &&
+                            'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/timeline`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('timeline');
+                          history.push(`${url}/timeline`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            timelineOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'timeline' &&
+                            'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-stream mr-2 text-yellow-700'></i>
                           <span className='h-full'>Timeline</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/gh-profile`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('gh');
+                          history.push(`${url}/gh-profile`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            githubOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'gh' &&
+                            'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/projects`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('projects');
+                          history.push(`${url}/projects`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            projectsOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'projects' &&
+                            'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/articles`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('articles');
+                          history.push(`${url}/articles`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            articleOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'articles' &&
+                            'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/ques`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('ques');
+                          history.push(`${url}/ques`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            ques && 'bg-white border-indigo-500'
+                            selectedMenu === 'ques' &&
+                            'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
@@ -289,10 +245,16 @@ const DeveloperProfileScreen = ({ location }) => {
                           <span className='h-full'>Question Asked</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/edit`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('pedit');
+                          history.push(`${url}/edit`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            editOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'pedit' &&
+                            'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-edit mr-2 text-yellow-400'></i>
@@ -300,10 +262,16 @@ const DeveloperProfileScreen = ({ location }) => {
                           <span className='h-full'>Edit Profile</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/photos`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('photos');
+                          history.push(`${url}/photos`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            photoOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'photos' &&
+                            'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-image mr-2 text-green-500'></i>

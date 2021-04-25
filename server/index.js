@@ -9,6 +9,7 @@ import connectDB from './config/db.js';
 import developerRoutes from './routes/DevloperRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import articleRoutes from './routes/ArticleRoutes.js';
+import questionRoutes from './routes/QuestionRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/dev', developerRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/api/article', articleRoutes);
+app.use('/api/question', questionRoutes);
 
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, 'public')));

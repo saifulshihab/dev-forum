@@ -9,9 +9,14 @@ const ArticleScreen = () => {
   const { path, url } = useRouteMatch();
   return (
     <div>
-      <div className='create_article_form mt-1 bg-white flex items-center cursor-pointer hover:text-gray-800 rounded p-3 px-6 text-gray-500 font-semibold shadow mb-2'>
-        <Link to={`${url}/write`}>
-          <i className='fas text-blue-500 fa-edit mr-2'></i>Write an Article
+      <div className='h-12 items-center bg-white flex rounded shadow p-2 mt-2'>
+        <div className='mx-auto h-full flex-shrink-0 flex items-center justify-center w-12 rounded-full bg-indigo-100 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
+          <i className='far text-blue-500 fa-newspaper'></i>
+        </div>
+        <Link className='w-full' to={`${url}/write`}>
+          <div className='flex items-center text-sm text-gray-400 rounded cursor-pointer ml-2 bg-gray-100 p-2 h-full'>
+            Write an Article...
+          </div>
         </Link>
       </div>
       <Switch>

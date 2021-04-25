@@ -11,70 +11,18 @@ import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
 
-const DevProfilePublicView = ({ location }) => {
+const DevProfilePublicView = ({ history }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
 
   const devPublicView = useSelector((state) => state.devPublicView);
   const { loading, error, user } = devPublicView;
-
-  const [aboutOn, setAbout] = useState(false);
-  const [githubOn, setGithub] = useState(false);
-  const [projectsOn, setProjects] = useState(false);
-  const [articleOn, setArticle] = useState(false);
-  const [ques, setQues] = useState(false);
-  const [timelineOn, setTimeline] = useState(false);
-
-  const currentPath = location.pathname.split('/')[4];
+  const [selectedMenu, setSelectedMenu] = useState('about');
 
   useEffect(() => {
     dispatch(getDevPublicProfile(username));
-
-    if (currentPath === undefined || currentPath === 'about') {
-      setAbout(true);
-      setGithub(false);
-      setProjects(false);
-      setArticle(false);
-      setQues(false);
-      setTimeline(false);
-    } else if (currentPath === 'gh-profile') {
-      setGithub(true);
-      setAbout(false);
-      setProjects(false);
-      setArticle(false);
-      setTimeline(false);
-      setQues(false);
-    } else if (currentPath === 'projects') {
-      setProjects(true);
-      setAbout(false);
-      setGithub(false);
-      setArticle(false);
-      setTimeline(false);
-      setQues(false);
-    } else if (currentPath === 'articles') {
-      setArticle(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setTimeline(false);
-      setQues(false);
-    } else if (currentPath === 'ques') {
-      setQues(true);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setTimeline(false);
-      setArticle(false);
-    } else if (currentPath === 'timeline') {
-      setQues(false);
-      setAbout(false);
-      setGithub(false);
-      setProjects(false);
-      setTimeline(true);
-      setArticle(false);
-    }
-  }, [dispatch, username, currentPath]);
+  }, [dispatch, username]);
 
   return (
     <>
@@ -191,61 +139,97 @@ const DevProfilePublicView = ({ location }) => {
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
                     <div className='flex items-baseline space-x-4'>
-                      <Link to={`${url}/about`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('about');
+                          history.push(`${url}/about`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            aboutOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            selectedMenu === 'about' &&
+                            'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/timeline`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('timeline');
+                          history.push(`${url}/timeline`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            timelineOn && 'bg-white border-indigo-500'
+                            selectedMenu === 'timeline' &&
+                            'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-stream mr-2 text-yellow-700'></i>
                           <span className='h-full'>Timeline</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/gh-profile`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('gh');
+                          history.push(`${url}/gh-profile`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            githubOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            selectedMenu === 'gh' &&
+                            'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/projects`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('projects');
+                          history.push(`${url}/projects`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            projectsOn && 'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            selectedMenu === 'projects' &&
+                            'bg-white border-indigo-500'
+                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/articles`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('articles');
+                          history.push(`${url}/articles`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            articleOn && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            selectedMenu === 'articles' &&
+                            'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
                         </div>
                       </Link>
-                      <Link to={`${url}/ques`}>
+                      <Link
+                        onClick={() => {
+                          setSelectedMenu('ques');
+                          history.push(`${url}/ques`);
+                        }}
+                      >
                         <div
                           className={`flex items-center cursor-pointer ${
-                            ques && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            selectedMenu === 'ques' &&
+                            'bg-white border-indigo-500'
+                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
 

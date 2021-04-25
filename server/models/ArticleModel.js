@@ -1,17 +1,5 @@
 import mongoose from 'mongoose';
 
-const ShareSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-
 const UpvoteSchema = new mongoose.Schema(
   {
     user: {
@@ -49,7 +37,6 @@ const ArticleSchema = new mongoose.Schema(
     },
     upvote: [UpvoteSchema],
     downvote: [DownvoteSchema],
-    shares: [ShareSchema],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Developer',

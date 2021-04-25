@@ -25,7 +25,7 @@ const CreateArticleScreen = () => {
       .required('Description Required!'),
   });
   return (
-    <div className='bg-white px-3 py-2 rounded shadow'>
+    <div className='bg-white px-3 py-2 mt-2 rounded shadow'>
       <div>
         <h2 className='font-semibold text-gray-600 text-xl'>
           Write an Article

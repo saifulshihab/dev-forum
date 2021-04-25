@@ -12,7 +12,7 @@ const AskQuestionsScreen = ({ location }) => {
 
   const { path, url } = useRouteMatch();
   const currentPath = location.pathname.split('/')[3];
-  
+
   useEffect(() => {
     if (currentPath === 'questions' || currentPath === undefined) {
       setQuestionOn(true);

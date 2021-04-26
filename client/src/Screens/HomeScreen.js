@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarSVG from '../Components/SidebarSVG';
@@ -14,92 +14,8 @@ import SettingsScreen from './Developer/SettingsScreen';
 
 const HomeScreen = ({ location }) => {
   const { path, url } = useRouteMatch();
-  const [forumOn, setForum] = useState(true);
-  const [freelanceOn, setFreelance] = useState(false);
-  const [jobsOn, setJobs] = useState(false);
-  const [peopleOn, setPeople] = useState(false);
-  const [notiOn, setNotification] = useState(false);
-  const [settingsOn, setSettings] = useState(false);
-  const [profileOn, setProfile] = useState(false);
-  const [moreOn, setMore] = useState(false);
 
   const pathName = location.pathname.split('/')[2];
-
-  useEffect(() => {
-    if (pathName === 'forum' || pathName === undefined) {
-      setForum(true);
-      setFreelance(false);
-      setJobs(false);
-      setPeople(false);
-      setNotification(false);
-      setSettings(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'freelance') {
-      setFreelance(true);
-      setForum(false);
-      setJobs(false);
-      setPeople(false);
-      setNotification(false);
-      setSettings(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'jobs') {
-      setJobs(true);
-      setForum(false);
-      setFreelance(false);
-      setPeople(false);
-      setNotification(false);
-      setSettings(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'people') {
-      setPeople(true);
-      setForum(false);
-      setFreelance(false);
-      setJobs(false);
-      setNotification(false);
-      setSettings(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'notification') {
-      setNotification(true);
-      setForum(false);
-      setFreelance(false);
-      setJobs(false);
-      setPeople(false);
-      setSettings(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'settings') {
-      setSettings(true);
-      setForum(false);
-      setFreelance(false);
-      setJobs(false);
-      setPeople(false);
-      setNotification(false);
-      setProfile(false);
-      setMore(false);
-    } else if (pathName === 'profile') {
-      setProfile(true);
-      setForum(false);
-      setFreelance(false);
-      setJobs(false);
-      setPeople(false);
-      setNotification(false);
-      setSettings(false);
-      setMore(false);
-    } else if (pathName === 'more') {
-      setMore(true);
-      setForum(false);
-      setFreelance(false);
-      setJobs(false);
-      setPeople(false);
-      setNotification(false);
-      setSettings(false);
-      setProfile(false);
-    }
-  }, [pathName]);
 
   return (
     <div className='border-t-2'>
@@ -108,7 +24,9 @@ const HomeScreen = ({ location }) => {
           <ul className='text-gray-600'>
             <Link
               to={`${url}/forum`}
-              className={forumOn ? 'text-indigo-600' : ''}
+              className={
+                pathName === 'forum' || undefined ? 'text-indigo-600' : ''
+              }
             >
               <SidebarSVG
                 d={
@@ -119,7 +37,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/freelance`}
-              className={freelanceOn ? 'text-indigo-600' : ''}
+              className={pathName === 'freelance' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -130,7 +48,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/jobs`}
-              className={jobsOn ? 'text-indigo-600' : ''}
+              className={pathName === 'jobs' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -141,7 +59,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/people`}
-              className={peopleOn ? 'text-indigo-600' : ''}
+              className={pathName === 'people' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -152,7 +70,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/notification`}
-              className={notiOn ? 'text-indigo-600' : ''}
+              className={pathName === 'notification' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -163,7 +81,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/settings`}
-              className={settingsOn ? 'text-indigo-600' : ''}
+              className={pathName === 'settings' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -175,7 +93,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/profile`}
-              className={profileOn ? 'text-indigo-600' : ''}
+              className={pathName === 'profile' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={
@@ -187,7 +105,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/more`}
-              className={moreOn ? 'text-indigo-600' : ''}
+              className={pathName === 'more' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={

@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useParams, useRouteMatch } from 'react-router';
+import {
+  Redirect,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+} from 'react-router';
 import { Link } from 'react-router-dom';
 import { baseURL } from '../../baseURL';
 import { getDevPublicProfile } from '../../redux/action/DeveloperAction';
@@ -11,14 +17,16 @@ import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
 
-const DevProfilePublicView = ({ history }) => {
+const DevProfilePublicView = ({ location }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
+  const currentPath = location.pathname.split('/')[4];
+
+  console.log(currentPath);
 
   const devPublicView = useSelector((state) => state.devPublicView);
   const { loading, error, user } = devPublicView;
-  const [selectedMenu, setSelectedMenu] = useState('about');
 
   useEffect(() => {
     dispatch(getDevPublicProfile(username));
@@ -139,15 +147,10 @@ const DevProfilePublicView = ({ history }) => {
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
                     <div className='flex items-baseline space-x-4'>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('about');
-                          history.push(`${url}/about`);
-                        }}
-                      >
+                      <Link to={`${url}/about`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'about' &&
+                            (currentPath === 'about' || undefined) &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -155,15 +158,10 @@ const DevProfilePublicView = ({ history }) => {
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('timeline');
-                          history.push(`${url}/timeline`);
-                        }}
-                      >
+                      <Link to={`${url}/timeline`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'timeline' &&
+                            currentPath === 'timeline' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -171,15 +169,10 @@ const DevProfilePublicView = ({ history }) => {
                           <span className='h-full'>Timeline</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('gh');
-                          history.push(`${url}/gh-profile`);
-                        }}
-                      >
+                      <Link to={`${url}/gh-profile`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'gh' &&
+                            currentPath === 'gh-profile' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -187,15 +180,10 @@ const DevProfilePublicView = ({ history }) => {
                           <span className='h-full'>GitHub</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('projects');
-                          history.push(`${url}/projects`);
-                        }}
-                      >
+                      <Link to={`${url}/projects`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'projects' &&
+                            currentPath === 'projects' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -203,15 +191,10 @@ const DevProfilePublicView = ({ history }) => {
                           <span className='h-full'>Projects</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('articles');
-                          history.push(`${url}/articles`);
-                        }}
-                      >
+                      <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'articles' &&
+                            currentPath === 'articles' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -219,15 +202,10 @@ const DevProfilePublicView = ({ history }) => {
                           <span className='h-full'>Article</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('ques');
-                          history.push(`${url}/ques`);
-                        }}
-                      >
+                      <Link to={`${url}/ques`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'ques' &&
+                            currentPath === 'ques' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -244,11 +222,11 @@ const DevProfilePublicView = ({ history }) => {
           </nav>
           <div className='question_article_feed p-2 bg-white w-full'>
             <Switch>
-              <Route
+              {/* <Route
                 exact
                 path={path}
                 component={() => <DevAboutScreen profile={user && user} />}
-              />
+              /> */}
               <Route
                 path={`${path}/about`}
                 component={() => (
@@ -269,6 +247,7 @@ const DevProfilePublicView = ({ history }) => {
                 component={() => <DevArticleScreen user={user} />}
               />
               <Route path={`${path}/ques`} component={DevQuesAskScreen} />
+              <Redirect to={`${path}/about`} />
             </Switch>
           </div>
         </div>

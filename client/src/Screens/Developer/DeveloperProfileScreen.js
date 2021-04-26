@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import DevAboutScreen from './DevAboutScreen';
 import GithubScreen from './GithubScreen';
 import DevProjectsScreen from './DevProjectsScreen';
@@ -13,22 +13,22 @@ import { baseURL } from '../../baseURL';
 import DevPhotos from './DevPhotos';
 import DevTimelineScreen from './DevTimelineScreen';
 
-const DeveloperProfileScreen = ({ location, history }) => {
+const DeveloperProfileScreen = ({ location }) => {
   const { url, path } = useRouteMatch();
   const dispatch = useDispatch();
 
-  const [selectedMenu, setSelectedMenu] = useState('about');
-
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
+
   const devProfile = useSelector((state) => state.devProfile);
   const { loading, error, user } = devProfile;
+
+  const currentPath = location.pathname.split('/')[3];
 
   useEffect(() => {
     if (!user || Object.keys(user).length === 0) {
       dispatch(fetchDevProfile(devInfo._id));
     }
-
     return () => {};
   }, [dispatch, devInfo._id, user]);
 
@@ -148,15 +148,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
                     <div className='flex items-baseline space-x-4'>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('about');
-                          history.push(`${url}/about`);
-                        }}
-                      >
+                      <Link to={`${url}/about`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'about' &&
+                            (currentPath === 'about' || undefined) &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -164,15 +159,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>About</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('timeline');
-                          history.push(`${url}/timeline`);
-                        }}
-                      >
+                      <Link to={`${url}/timeline`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'timeline' &&
+                            currentPath === 'timeline' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -180,15 +170,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>Timeline</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('gh');
-                          history.push(`${url}/gh-profile`);
-                        }}
-                      >
+                      <Link to={`${url}/gh-profile`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'gh' &&
+                            currentPath === 'gh-profile' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -196,15 +181,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>GitHub</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('projects');
-                          history.push(`${url}/projects`);
-                        }}
-                      >
+                      <Link to={`${url}/projects`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'projects' &&
+                            currentPath === 'projects' &&
                             'bg-white border-indigo-500'
                           } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -212,15 +192,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>Projects</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('articles');
-                          history.push(`${url}/articles`);
-                        }}
-                      >
+                      <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'articles' &&
+                            currentPath === 'articles' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -228,15 +203,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>Article</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('ques');
-                          history.push(`${url}/ques`);
-                        }}
-                      >
+                      <Link to={`${url}/ques`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'ques' &&
+                            currentPath === 'ques' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -245,15 +215,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>Question Asked</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('pedit');
-                          history.push(`${url}/edit`);
-                        }}
-                      >
+                      <Link to={`${url}/edit`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'pedit' &&
+                            currentPath === 'edit' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -262,15 +227,10 @@ const DeveloperProfileScreen = ({ location, history }) => {
                           <span className='h-full'>Edit Profile</span>
                         </div>
                       </Link>
-                      <Link
-                        onClick={() => {
-                          setSelectedMenu('photos');
-                          history.push(`${url}/photos`);
-                        }}
-                      >
+                      <Link to={`${url}/photos`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            selectedMenu === 'photos' &&
+                            currentPath === 'photos' &&
                             'bg-white border-indigo-500'
                           }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
@@ -287,11 +247,11 @@ const DeveloperProfileScreen = ({ location, history }) => {
           </nav>
           <div className='question_article_feed p-2 bg-white w-full'>
             <Switch>
-              <Route
+              {/* <Route
                 exact
                 path={path}
                 component={() => <DevAboutScreen profile={user && user} />}
-              />
+              /> */}
               <Route
                 path={`${path}/about`}
                 component={() => (
@@ -320,6 +280,7 @@ const DeveloperProfileScreen = ({ location, history }) => {
                 path={`${path}/photos`}
                 component={() => <DevPhotos user={user && user} />}
               />
+              <Redirect to={`${path}/about`} />
             </Switch>
           </div>
         </div>

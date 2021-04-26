@@ -153,7 +153,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             (currentPath === 'about' || undefined) &&
                             'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
@@ -164,7 +164,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'timeline' &&
                             'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-stream mr-2 text-yellow-700'></i>
                           <span className='h-full'>Timeline</span>
@@ -175,7 +175,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'gh-profile' &&
                             'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
@@ -186,7 +186,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'projects' &&
                             'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
@@ -197,7 +197,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'articles' &&
                             'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
@@ -208,7 +208,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'ques' &&
                             'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
 
@@ -220,7 +220,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'edit' &&
                             'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-edit mr-2 text-yellow-400'></i>
 
@@ -232,7 +232,7 @@ const DeveloperProfileScreen = ({ location }) => {
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'photos' &&
                             'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-image mr-2 text-green-500'></i>
 

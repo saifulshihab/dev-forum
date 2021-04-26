@@ -17,3 +17,18 @@ export const createQuestion = asyncHandler(async (req, res) => {
     throw new Error('Failed to create question!');
   }
 });
+// desc: fetch all questions
+// routes: api/question/getAllQuestions
+// method: GET
+// access: private
+export const getQuestions = asyncHandler(async (req, res) => {
+  const questions = await Question.find({})
+    .populate('user')
+    .sort({ createdAt: '-1' });
+  if (questions) {
+    res.status(200).json(questions);
+  } else {
+    res.status(404);
+    throw new Error('Failed to fetch questions!');
+  }
+});

@@ -1,12 +1,15 @@
 import React, { useState, Fragment, useRef } from 'react';
 import { Transition, Dialog } from '@headlessui/react';
-import QuestionPost from '../../Components/QuestionPost';
-import { Question } from '../../Data';
+import QuestionContainer from '../../Container/QuestionContainer';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import SingleQuestionContainer from '../../Container/SingleQuestionContainer';
 
 const QuestionScreen = () => {
   const cancelButtonRef = useRef();
+  const { path } = useRouteMatch();
 
   const [askQestion, setAskQuestion] = useState(false);
+
   return (
     <div>
       <div className='h-12 items-center bg-white flex rounded shadow p-2 mt-2'>
@@ -20,9 +23,6 @@ const QuestionScreen = () => {
           Ask a Question...
         </div>
       </div>
-      {Question.map((qu) => (
-        <QuestionPost key={qu._id} question={qu} />
-      ))}
       <Transition.Root show={askQestion} as={Fragment}>
         <Dialog
           as='div'
@@ -74,17 +74,7 @@ const QuestionScreen = () => {
                       >
                         Ask Question
                       </Dialog.Title>
-                      <div className='mt-2'>
-                        <div className='w-full text-sm'>
-                          <textarea
-                            placeholder='Write here...'
-                            className='border-b border-indigo-300 focus:border-indigo-600 w-96 focus:outline-none'
-                          ></textarea>
-                        </div>
-                        <div>
-                          <p className='font-semibold text-md'>Tags</p>
-                        </div>
-                      </div>
+                      <div className='mt-2'>{/* form submission */}</div>
                     </div>
                   </div>
                 </div>
@@ -112,6 +102,14 @@ const QuestionScreen = () => {
           </div>
         </Dialog>
       </Transition.Root>
+      <Switch>
+        <Route exact path={path} component={QuestionContainer} />
+        <Route path={`${path}/questions`} component={QuestionContainer} />
+        <Route
+          path={`${path}/:questionId`}
+          component={SingleQuestionContainer}
+        />
+      </Switch>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import React from 'react';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import QuestionScreen from './QuestionScreen';
 import ArticleScreen from './ArticleScreen';
@@ -7,28 +7,15 @@ import SingleArticleContainer from '../../Container/SingleArticleContainer';
 import ArticleContainer from '../../Container/ArticleContainer';
 
 const AskQuestionsScreen = ({ location }) => {
-  const [questionOn, setQuestionOn] = useState(false);
-  const [articleOn, setArticleOn] = useState(false);
-
   const { path, url } = useRouteMatch();
   const currentPath = location.pathname.split('/')[3];
 
-  useEffect(() => {
-    if (currentPath === 'questions' || currentPath === undefined) {
-      setQuestionOn(true);
-      setArticleOn(false);
-    } else if (currentPath === 'articles') {
-      setQuestionOn(false);
-      setArticleOn(true);
-    }
-    return () => {};
-  }, [currentPath]);
   return (
     <div className='grid grid-cols-4 h-full'>
       <div className='col-span-3'>
         <div className='heading'>
           <nav className='bg-gray-100 text-dark'>
-            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+            <div className='max-w-7xl border-b-4 border-white mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
                   <div className='hidden md:block'>
@@ -36,7 +23,8 @@ const AskQuestionsScreen = ({ location }) => {
                       <Link to={`${url}/questions`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            questionOn && 'bg-white'
+                            (currentPath === 'questions' || undefined) &&
+                            'bg-white'
                           } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <span className='h-full text-red-600 w-4 mr-1'>
@@ -60,7 +48,7 @@ const AskQuestionsScreen = ({ location }) => {
                       <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            articleOn && 'bg-white'
+                            currentPath === 'articles' && 'bg-white'
                           }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
                         >
                           <span className='h-full text-blue-600 w-4 mr-1'>
@@ -91,18 +79,18 @@ const AskQuestionsScreen = ({ location }) => {
 
         <div className='question_article_feed px-2'>
           <Switch>
-            <Route exact path={path} component={QuestionScreen} />
             <Route path={`${path}/questions`} component={QuestionScreen} />
             <Route path={`${path}/articles`} component={ArticleScreen} />{' '}
             <Route
               path={`${path}/topArticles/:articleId`}
               component={SingleArticleContainer}
             />
+            <Redirect to={`${path}/questions`} />
           </Switch>
         </div>
       </div>
       <div className='p-1'>
-        <p className='text-md text-gray-500 p-1 bg-gray-50 font-semibold border-b pb-2 mb-1'>
+        <p className='text-md text-gray-500 p-1 bg-gray-100 font-semibold border-b-4 border-white pb-2 mb-1'>
           Top Articles
         </p>
         <ArticleContainer topArticle />

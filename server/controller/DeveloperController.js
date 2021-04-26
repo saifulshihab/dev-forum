@@ -38,7 +38,7 @@ const signupDeveloper = asyncHandler(async (req, res) => {
 // access: public
 const signinDeveloper = asyncHandler(async (req, res) => {
   const { username, password } = req.body.credentials;
-  const dev = await Developer.findOne({ username });
+  const dev = await Developer.findOne({ username }).select('password');
   if (dev && (await dev.verifyPassword(password))) {
     res.status(200).json({
       _id: dev._id,
@@ -189,7 +189,9 @@ const updateDevCover = asyncHandler(async (req, res) => {
 // routes: /api/dev/username/:username
 // access: private
 const getDevPublicProfile = asyncHandler(async (req, res) => {
-  const user = await Developer.findOne({ username: req.params.username }).select('-password');
+  const user = await Developer.findOne({
+    username: req.params.username,
+  }).select('-password');
   if (user) {
     res.status(200).json(user);
   } else {

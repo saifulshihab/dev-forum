@@ -72,6 +72,7 @@ const DeveloperSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     dp: {
       type: String,

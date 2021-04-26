@@ -24,6 +24,7 @@ import {
   articleShareReducer,
   sharedArticleGetReducer,
 } from './reducer/ArticleReducer';
+import { getQuestionReducer } from './reducer/QuestionReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   articleComments: articleCommentsReducer,
   articleShare: articleShareReducer,
   sharedArticleGet: sharedArticleGetReducer,
+  questionsGet: getQuestionReducer,
 });
 
 const verifyToken = (token, lsItem) => {

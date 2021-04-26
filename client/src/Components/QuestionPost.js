@@ -1,8 +1,12 @@
+import moment from 'moment';
 import React, { useState } from 'react';
-import Answer from './Answer';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { baseURL } from '../baseURL';
 
 const QuestionPost = ({ question }) => {
   const [ansOpen, setAnsOpen] = useState(false);
+  const { url } = useRouteMatch();
+
   return (
     <>
       <div className='w-full bg-white shadow rounded-md my-2 px-5 py-2 '>
@@ -10,18 +14,24 @@ const QuestionPost = ({ question }) => {
           <div className='w-10 h-10'>
             <img
               className='border w-full h-full rounded-full'
-              src={'https://picsum.photos/seed/picsum/200/300'}
-              alt={question.user.username}
+              src={baseURL + question?.user?.dp}
+              alt={question?.user?.username}
             />
           </div>
           <div className='ml-2 w-40 h-10'>
             <h4 className='text-gray-700 font-medium cursor-pointer hover:text-gray-800'>
-              {question.user.fullname}
+              <Link to={`/h/user/${question?.user?.username}`}>
+                {question?.user?.full_name}
+              </Link>
             </h4>
-            <p className='-mt-0.5 text-gray-400 text-xs'>{question.createdAt}</p>
+            <p className='-mt-0.5 text-gray-400 text-xs'>
+              {moment(question?.createdAt).startOf('hour').fromNow(true)}
+            </p>
           </div>
         </div>
-        <div className='text-gray-600 text-2xl'>{question.title}</div>
+        <div className='text-gray-600 hover:text-indigo-700 cursor-pointer text-xl'>
+          <Link to={`${url}/${question?._id}`}>{question?.title}</Link>
+        </div>
         <div
           onClick={() => setAnsOpen(!ansOpen)}
           className='flex items-center justify-center mt-3 border-t cursor-pointer pt-1 text-center'
@@ -42,12 +52,12 @@ const QuestionPost = ({ question }) => {
             </svg>
           </span>
           <span className='text-gray-500 hover:text-indigo-600 text-sm'>
-            {`${question.answers.length} Answers`}
+            {/* {`${question.answers.length} Answers`} */}
           </span>
         </div>
       </div>
       <div>
-        {ansOpen && question.answers.map((ans) => <Answer ans={ans} />)}
+        {/* {ansOpen && question.answers.map((ans) => <Answer ans={ans} />)} */}
       </div>
     </>
   );

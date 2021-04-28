@@ -22,7 +22,7 @@ const QuestionContainer = () => {
       ) : error ? (
         <Alert fail msg={error} />
       ) : questions && questions?.length > 0 ? (
-        questions?.map((qu) => <QuestionPost question={qu} />)
+        questions?.map((qu) => <QuestionPost key={qu?._id} question={qu} />)
       ) : (
         'No questions available!'
       )}

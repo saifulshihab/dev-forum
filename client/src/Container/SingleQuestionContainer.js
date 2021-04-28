@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import QuestionPost from '../Components/QuestionPost';
+import { getQuestions } from '../redux/action/QuestionAction';
 
-const SingleQuestionContainer = ({ questions }) => {
-  const questionId = useParams();
-  const qu = questions?.filter((data) => data?._id === questionId);
-  console.log(qu);
+const SingleQuestionContainer = () => {
+  const dispatch = useDispatch();
+  const { questionId } = useParams();
+
+  const questionsGet = useSelector((state) => state.questionsGet);
+  const { questions } = questionsGet;
+
+  useEffect(() => {
+    dispatch(getQuestions());
+  }, [dispatch]);
+
+  const qu = questions?.find(
+    (data) => data?._id.toString() === questionId.toString()
+  );
+
   return (
     <div>
-      <QuestionPost question={qu} />
+      <QuestionPost key={qu?._id} details question={qu} />
     </div>
   );
 };

@@ -22,3 +22,7 @@
   width: 30px;
   height: 30px;
 }
+.react-tag-input {
+  font-size: 13px;
+  margin-top: 5px;
+}

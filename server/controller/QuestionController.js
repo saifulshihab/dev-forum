@@ -7,6 +7,7 @@ import Question from '../models/QuestionModel.js';
 export const createQuestion = asyncHandler(async (req, res) => {
   const newQuestion = await Question.create({
     user: req.user?._id,
+    tags: req.body.tags.reverse(),
     ...req.body,
   });
   if (newQuestion) {

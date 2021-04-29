@@ -11,6 +11,7 @@ import Welcome from './Screens/Welcome';
 import WelComeHeader from './Screens/WelComeHeader';
 import PrivateRoute from './Components/PrivateRoute';
 import './styles/main.css';
+import '@pathofdev/react-tag-input/build/index.css';
 import './App.css';
 
 function App() {

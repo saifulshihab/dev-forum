@@ -5,7 +5,6 @@ import { getQuestions } from '../redux/action/QuestionAction';
 import { useDispatch, useSelector } from 'react-redux';
 import QuestionPost from '../Components/QuestionPost';
 import ReactTagInput from '@pathofdev/react-tag-input';
-import '@pathofdev/react-tag-input/build/index.css';
 
 const QuestionContainer = () => {
   const dispatch = useDispatch();
@@ -39,17 +38,20 @@ const QuestionContainer = () => {
       }
     }
   });
- 
+
   return (
     <>
       <div className='rounded bg-white mt-2 p-2 border'>
-        <span className='text-sm text-gray-500'><i className='fas fa-filter text-gray-500 mr-1'></i>Filter Question</span>
+        <span className='text-sm text-gray-500 font-semibold'>
+          <i className='fas fa-filter text-gray-500 mr-1'></i>Filter Question
+        </span>
         <div>
           <ReactTagInput
             placeholder='Add a Tag'
             maxTags='10'
             editable='true'
             tags={tags}
+            removeOnBackspace={true}
             onChange={(newTag) => setTags(newTag)}
           />
         </div>

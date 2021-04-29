@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Field } from 'formik';
+import { Formik, Field, FieldArray } from 'formik';
 import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const CreateArticleScreen = () => {
         </h2>
       </div>
       <Formik
-        initialValues={{ title: '', description: '' }}
+        initialValues={{ title: '', description: '', tags: [] }}
         validationSchema={formValidationSchema}
         onSubmit={(data, { setSubmitting }) => {
           dispatch(articleCreate(data));
@@ -83,7 +83,57 @@ const CreateArticleScreen = () => {
                 </div>
               )}
             </Field>
-
+            <FieldArray
+              name='tags'
+              render={(arrayHelpers) => (
+                <div className='flex items-center mt-2'>
+                  <div className='w-2/5'>
+                    <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      Tags
+                    </label>
+                  </div>
+                  <div className='w-3/5 border border-blue-300 p-2 rounded'>
+                    {values.tags?.length > 0 ? (
+                      values.tags?.map((data, idx) => (
+                        <div
+                          key={idx}
+                          className='float-left mr-2 flex items-center'
+                        >
+                          <Field
+                            type='text'
+                            name={`tags.${idx}`}
+                            value={data}
+                            className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                          />
+                          <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.remove(idx)}
+                            >
+                              <i className='far fa-trash-alt'></i>
+                            </button>
+                            <button
+                              type='button'
+                              onClick={() => arrayHelpers.insert(idx, '')}
+                            >
+                              <i className='fas fa-plus'></i>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <button
+                        className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        type='button'
+                        onClick={() => arrayHelpers.push('')}
+                      >
+                        Add Tag
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            />
             <button
               type='submit'
               className={`text-white bg-indigo-600 ${

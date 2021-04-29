@@ -37,6 +37,7 @@ const ArticleSchema = new mongoose.Schema(
     },
     upvote: [UpvoteSchema],
     downvote: [DownvoteSchema],
+    tags: [],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Developer',

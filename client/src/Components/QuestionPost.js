@@ -98,10 +98,15 @@ const QuestionPost = ({ question, details }) => {
           )}
         </div>
         <div className={`flex mt-2 items-center text-xs`}>
+          {/* {question?.tags?.length > 0 && (
+            <span className='bg-gray-200 mr-2 mb-2 font-semibold text-xs text-gray-500 py-.5 px-1 rounded mb-1'>
+              Tags :
+            </span>
+          )} */}
           {question?.tags?.map((tag, idx) => (
             <span
               key={idx}
-              className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-2 rounded-full mb-1'
+              className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
             >
               {tag}
             </span>

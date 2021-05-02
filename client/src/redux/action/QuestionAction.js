@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { baseURL } from '../../baseURL';
 import {
+  ADD_ANSWER,
   CREATE_QUESTION_FAILED,
   CREATE_QUESTION_REQUEST,
   CREATE_QUESTION_RESET,
@@ -8,6 +9,9 @@ import {
   GET_ALL_QUESTIONS_FAILED,
   GET_ALL_QUESTIONS_REQUEST,
   GET_ALL_QUESTIONS_SUCCESS,
+  GET_Q_ANSWERS_FAILED,
+  GET_Q_ANSWERS_REQUEST,
+  GET_Q_ANSWERS_SUCCESS,
   QUESTION_DELETE_FAILED,
   QUESTION_DELETE_REQUEST,
   QUESTION_DELETE_RESET,
@@ -16,6 +20,7 @@ import {
   QUESTION_EDIT_REQUEST,
   QUESTION_EDIT_RESET,
   QUESTION_EDIT_SUCCESS,
+  ADD_ANSWER_FAILED,
 } from '../ActionTypes';
 
 // get all questions
@@ -164,6 +169,73 @@ export const editQuestion = (questionId, updateQuestion) => async (
   } catch (error) {
     dispatch({
       type: QUESTION_EDIT_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// get question answers
+export const getQuestionAnswers = (questionId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: GET_Q_ANSWERS_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/question/getAnswers/${questionId}`,
+      config
+    );
+    dispatch({
+      type: GET_Q_ANSWERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_Q_ANSWERS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// add new answer
+export const addAnswer = (questionId, answer) => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `${baseURL}/api/question/${questionId}/createAnswer`,
+      { answer },
+      config
+    );
+    dispatch({
+      type: ADD_ANSWER,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_ANSWER_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

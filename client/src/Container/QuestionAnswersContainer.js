@@ -1,50 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Comment from '../Components/Comment';
-import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
-import CommentLoader from '../Components/CommentLoader';
 import Alert from '../Components/Alert';
-import {
-  fetchCommentArticle,
-  commentOnArticle,
-} from '../redux/action/ArticleAction';
+import Loader from '../Components/Loader';
+import { addAnswer, getQuestionAnswers } from '../redux/action/QuestionAction';
+import Answer from '../Components/Answer';
+import { Picker } from 'emoji-mart';
 
-const ArticleCommentsContainer = ({ article }) => {
+const QuestionAnswersContainer = ({ question }) => {
   const dispatch = useDispatch();
-  const articleComments = useSelector((state) => state.articleComments);
-  const { loading, comments, error } = articleComments;
+  const [answer, setAnswer] = useState('');
   const [emojiOn, setEmoji] = useState(false);
-  const [comment, setComment] = useState('');
+
+  const answersQuestion = useSelector((state) => state.answersQuestion);
+  const { loading, answers, error } = answersQuestion;
 
   useEffect(() => {
-    dispatch(fetchCommentArticle(article?._id));
-  }, [dispatch, article?._id]);
+    dispatch(getQuestionAnswers(question?._id));
+  }, [dispatch, question?._id]);
 
   const keyHandler = (event) => {
-    if (event.key === 'Enter' && comment !== '') {
-      commentHandler();
+    if (event.key === 'Enter' && answer !== '') {
+      answerHandler();
     }
   };
 
-  const commentHandler = () => {
-    dispatch(commentOnArticle(article?._id, comment));
-    setComment('');
+  const answerHandler = () => {
+    dispatch(addAnswer(question?._id, answer));
+    setAnswer('');
   };
+
   return (
     <div
       className='py-2 bg-white max-h-96 overflow-hidden rounded shadow'
       style={{ overflowY: 'scroll' }}
     >
-      <div className='px-5 text-gray-500 text-sm border-b pb-1'>
-        <span className='mr-3'>{comments?.length} Comments</span>
-        <span>{article?.shares?.length} Shares</span>
+      <div className='pb-1 border-b text-sm text-gray-500 px-5'>
+        {answers?.length} Answers
       </div>
       <div className='my-2'>
         <div className='flex items-center'>
           <input
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
             onKeyPress={keyHandler}
             placeholder='Write your comment...'
             className='ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
@@ -61,18 +58,18 @@ const ArticleCommentsContainer = ({ article }) => {
               <Picker
                 style={{ position: 'absolute' }}
                 onSelect={(emoji) => {
-                  setComment(comment + emoji.native);
+                  setAnswer(answer + emoji.native);
                 }}
               />
             )}
           </div>
           <button
-            onClick={commentHandler}
-            disabled={comment === ''}
+            onClick={answerHandler}
+            disabled={answer === ''}
             className={`rounded-full border ${
-              comment !== '' && 'hover:text-white hover:bg-indigo-500'
+              answer !== '' && 'hover:text-white hover:bg-indigo-500'
             }
-            ${comment === '' && 'opacity-30'}
+            ${answer === '' && 'opacity-30'}
             p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500`}
           >
             Send
@@ -80,19 +77,16 @@ const ArticleCommentsContainer = ({ article }) => {
         </div>
       </div>
       {loading ? (
-        <CommentLoader />
+        <Loader />
       ) : error ? (
         <Alert fail msg={error} />
+      ) : answers && answers?.length > 0 ? (
+        answers?.map((ans) => <Answer ans={ans} />)
       ) : (
-        <>
-          {comments.length > 0 &&
-            comments?.map((comment) => (
-              <Comment key={comment?._id} cmnt={comment} />
-            ))}
-        </>
+        <Alert msg='No answers yet!' />
       )}
     </div>
   );
 };
 
-export default ArticleCommentsContainer;
+export default QuestionAnswersContainer;

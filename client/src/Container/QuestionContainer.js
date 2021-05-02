@@ -65,7 +65,7 @@ const QuestionContainer = () => {
           <QuestionPost key={qu?._id} question={qu} />
         ))
       ) : (
-        'No questions available!'
+        <Alert warning msg='No questions available!' />
       )}
     </>
   );

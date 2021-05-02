@@ -125,14 +125,7 @@ const QuestionScreen = () => {
                             name='title'
                             label='Title'
                             placeholder='Question title'
-                          />
-                          {/* <MyTextField
-                            id='description'
-                            type='text'
-                            name='description'
-                            label='Description'
-                            placeholder='Question description'
-                          /> */}
+                          />                     
                           <Field name='description'>
                             {({ field, meta }) => (
                               <div>

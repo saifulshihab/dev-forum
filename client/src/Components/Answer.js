@@ -37,13 +37,13 @@ const Answer = ({ ans }) => {
           </div>
         </div>
         <div className=''>
-          <div className='text-gray-500 text-sm'>{ans.answer}</div>
+          <div className='text-gray-500 text-sm'>{ans?.answer}</div>
           <div className='text-gray-400 text-xs'>
-            <span className='mr-2'>{ans.upvote} upvotes</span>
-            <span className='mr-4'>{ans.downvote} downvotes</span>
+            <span className='mr-2'>{ans?.upvote?.length} upvotes</span>
+            <span className='mr-4'>{ans?.downvote?.length} downvotes</span>
             answered by- @
             <span className='cursor-pointer hover:text-indigo-600 '>
-              {ans.user.username}
+              {ans?.user?.username}
             </span>
           </div>
         </div>

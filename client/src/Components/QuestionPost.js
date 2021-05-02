@@ -10,6 +10,7 @@ import Alert from './Alert';
 import Loader from './Loader';
 import MyTextField from './MyTextField';
 import * as yup from 'yup';
+import QuestionAnswersContainer from '../Container/QuestionAnswersContainer';
 
 const QuestionPost = ({ question, details }) => {
   const dispatch = useDispatch();
@@ -138,7 +139,7 @@ const QuestionPost = ({ question, details }) => {
                 />
               </svg>
             </span>
-            <span>{`2 Answers`}</span>
+            <span className='text-sm'>Answers</span>
           </div>
           {details &&
             devInfo?._id.toString() === question?.user?._id.toString() && (
@@ -240,13 +241,6 @@ const QuestionPost = ({ question, details }) => {
                                 label='Title'
                                 placeholder='Question title'
                               />
-                              {/* <MyTextField
-                            id='description'
-                            type='text'
-                            name='description'
-                            label='Description'
-                            placeholder='Question description'
-                          /> */}
                               <Field name='description'>
                                 {({ field, meta }) => (
                                   <div>
@@ -357,7 +351,7 @@ const QuestionPost = ({ question, details }) => {
             </Dialog>
           </Transition.Root>
         </div>
-        <div className='mt-2'>
+        <div className=''>
           {deleteLoading ? (
             <Loader />
           ) : (
@@ -372,9 +366,7 @@ const QuestionPost = ({ question, details }) => {
           )}
         </div>
       </div>
-      <div>
-        {/* {ansOpen && question.answers.map((ans) => <Answer ans={ans} />)} */}
-      </div>
+      <div>{ansOpen && <QuestionAnswersContainer question={question} />}</div>
     </>
   );
 };

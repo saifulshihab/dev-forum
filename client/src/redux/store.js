@@ -28,6 +28,7 @@ import {
   deleteQuestionReducer,
   editQuestionReducer,
   getQuestionReducer,
+  getUserQuestionsReducer,
   questionAnswersReducer,
 } from './reducer/QuestionReducer';
 
@@ -53,6 +54,7 @@ const reducer = combineReducers({
   questionDelete: deleteQuestionReducer,
   questionEdit: editQuestionReducer,
   answersQuestion: questionAnswersReducer,
+  userQuestions: getUserQuestionsReducer,
 });
 
 const verifyToken = (token, lsItem) => {

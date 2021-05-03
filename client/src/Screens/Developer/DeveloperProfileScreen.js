@@ -271,7 +271,10 @@ const DeveloperProfileScreen = ({ location }) => {
                 path={`${path}/articles`}
                 component={() => <DevArticleScreen user={user} />}
               />
-              <Route path={`${path}/ques`} component={DevQuesAskScreen} />
+              <Route
+                path={`${path}/ques`}
+                component={() => <DevQuesAskScreen user={user} />}
+              />
               <Route
                 path={`${path}/edit`}
                 component={() => <DevProfileEditScreen user={user && user} />}

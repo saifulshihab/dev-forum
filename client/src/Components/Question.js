@@ -12,7 +12,7 @@ import MyTextField from './MyTextField';
 import * as yup from 'yup';
 import QuestionAnswersContainer from '../Container/QuestionAnswersContainer';
 
-const QuestionPost = ({ question, details }) => {
+const Question = ({ question, details }) => {
   const dispatch = useDispatch();
 
   const [ansOpen, setAnsOpen] = useState(false);
@@ -83,7 +83,7 @@ const QuestionPost = ({ question, details }) => {
               </Link>
             </h4>
             <p className='-mt-0.5 text-gray-400 text-xs'>
-              {moment(question?.createdAt).startOf('hour').fromNow(true)}
+              {moment(question?.createdAt).startOf('hour').fromNow()}
             </p>
           </div>
         </div>
@@ -366,9 +366,11 @@ const QuestionPost = ({ question, details }) => {
           )}
         </div>
       </div>
-      <div>{ansOpen && <QuestionAnswersContainer question={question} />}</div>
+      <div>
+        {ansOpen && <QuestionAnswersContainer question={question} details />}
+      </div>
     </>
   );
 };
 
-export default QuestionPost;
+export default Question;

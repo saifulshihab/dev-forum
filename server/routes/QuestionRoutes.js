@@ -7,6 +7,9 @@ import {
   editQuestion,
   answerQuestion,
   getQuestionAnswers,
+  upvoteAnswer,
+  downvoteAnswer,
+  getUserQuestions,
 } from '../controller/QuestionController.js';
 
 const router = express.Router();
@@ -23,5 +26,11 @@ router.route('/editQuestion/:questionId').put(protect, editQuestion);
 router.route('/:questionId/createAnswer').post(protect, answerQuestion);
 // answer on question
 router.route('/getAnswers/:questionId').get(protect, getQuestionAnswers);
+// upvote answer
+router.route('/upvoteAnswer/:answerId').put(protect, upvoteAnswer);
+// downvote answer
+router.route('/downvoteAnswer/:answerId').put(protect, downvoteAnswer);
+// get user questions
+router.route('/getUserQuestions/:userId').get(protect, getUserQuestions);
 
 export default router;

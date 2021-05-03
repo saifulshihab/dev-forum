@@ -244,7 +244,10 @@ const DevProfilePublicView = ({ location }) => {
                 path={`${path}/articles`}
                 component={() => <DevArticleScreen user={user} />}
               />
-              <Route path={`${path}/ques`} component={DevQuesAskScreen} />
+              <Route
+                path={`${path}/ques`}
+                component={() => <DevQuesAskScreen user={user} />}
+              />
               <Redirect to={`${path}/about`} />
             </Switch>
           </div>

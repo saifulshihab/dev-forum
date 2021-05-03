@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import QuestionAnswer from '../models/QuestionAnswerModel.js';
 import Question from '../models/QuestionModel.js';
+import _ from 'lodash';
+import Developer from '../models/DeveloperModel.js';
 
 // desc: ask/create a quesion
 // routes: api/question/createQuestion
@@ -108,5 +110,110 @@ export const getQuestionAnswers = asyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error('No answers!');
+  }
+});
+// desc: upvote answer
+// routes: api/question/upvoteAnswer/:answerId
+// method: PUT
+// access: private
+export const upvoteAnswer = asyncHandler(async (req, res) => {
+  const answer = await QuestionAnswer.findById(req.params.answerId).populate([
+    { path: 'upvote' },
+    { path: 'user' },
+  ]);
+  if (answer) {
+    let alreadyUpVoted = _.findIndex(answer.upvote, function (data) {
+      return data.user.toString() === req.user._id.toString();
+    });
+    if (alreadyUpVoted > -1) {
+      res.status(403);
+      throw new Error('You already upvoted!');
+    } else {
+      let alreadyDownVoted = _.findIndex(answer.downvote, function (data) {
+        return data.user.toString() === req.user._id.toString();
+      });
+      if (alreadyDownVoted > -1) {
+        answer.downvote.splice(alreadyDownVoted, 1);
+      }
+      const vote = answer.upvote.push({ user: req.user._id });
+      if (vote) {
+        await answer.save();
+        const answers = await QuestionAnswer.find({
+          question: answer?.question,
+        })
+          .sort({ createdAt: '-1' })
+          .populate('user');
+        res.status(200).json(answers);
+      } else {
+        res.status(500);
+        throw new Error('Somthing wrong! Failed to upvote!');
+      }
+    }
+  } else {
+    res.status(404);
+    throw new Error('Answer not found!');
+  }
+});
+// desc: downvote article
+// routes: api/question/downvoteAnswer/:answerId
+// method: PUT
+// access: private
+export const downvoteAnswer = asyncHandler(async (req, res) => {
+  const answer = await QuestionAnswer.findById(req.params.answerId).populate([
+    { path: 'downvote' },
+    { path: 'user' },
+  ]);
+  if (answer) {
+    let alreadydownVoted = _.findIndex(answer.downvote, function (data) {
+      return data.user.toString() === req.user._id.toString();
+    });
+
+    if (alreadydownVoted > -1) {
+      res.status(403);
+      throw new Error('You already downvoted!');
+    } else {
+      let alreadyUpVoted = _.findIndex(answer.upvote, function (data) {
+        return data.user.toString() === req.user._id.toString();
+      });
+
+      if (alreadyUpVoted > -1) {
+        answer.upvote.splice(alreadyUpVoted, 1);
+      }
+      const vote = answer.downvote.push({ user: req.user._id });
+      if (vote) {
+        await answer.save();
+        const answers = await QuestionAnswer.find({
+          question: answer?.question,
+        })
+          .sort({ createdAt: '-1' })
+          .populate('user');
+        res.status(200).json(answers);
+      } else {
+        res.status(500);
+        throw new Error('Somthing wrong! Failed to upvote!');
+      }
+    }
+  } else {
+    res.status(404);
+    throw new Error('Answer not found!');
+  }
+});
+// desc: get user questions
+// routes: api/question/getUserQuestions/:userId
+// method: GET
+// access: private
+export const getUserQuestions = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    const questions = await Question.find({ user: user?._id }).populate('user');
+    if (questions) {
+      res.status(200).json(questions);
+    } else {
+      res.status(500);
+      throw new Error('Failed to fetch user questions!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
   }
 });

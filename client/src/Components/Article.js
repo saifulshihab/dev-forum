@@ -15,7 +15,7 @@ import DownvoteIcon from './DownvoteIcon';
 import _ from 'lodash';
 import ArticleCommentsContainer from '../Container/ArticleCommentsContainer';
 
-const Article = ({ article, routeFromProfile, details, userId }) => {
+const Article = ({ article, routeFromProfile, details }) => {
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const [showComment, setshowComment] = useState(false);

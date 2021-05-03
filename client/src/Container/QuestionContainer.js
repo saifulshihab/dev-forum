@@ -3,7 +3,7 @@ import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
 import { getQuestions } from '../redux/action/QuestionAction';
 import { useDispatch, useSelector } from 'react-redux';
-import QuestionPost from '../Components/QuestionPost';
+import Question from '../Components/Question';
 import ReactTagInput from '@pathofdev/react-tag-input';
 
 const QuestionContainer = () => {
@@ -61,9 +61,7 @@ const QuestionContainer = () => {
       ) : error ? (
         <Alert fail msg={error} />
       ) : filterQuestions && filterQuestions?.length > 0 ? (
-        filterQuestions?.map((qu) => (
-          <QuestionPost key={qu?._id} question={qu} />
-        ))
+        filterQuestions?.map((qu) => <Question key={qu?._id} question={qu} />)
       ) : (
         <Alert warning msg='No questions available!' />
       )}

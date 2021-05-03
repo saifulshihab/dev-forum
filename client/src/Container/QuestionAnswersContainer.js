@@ -6,7 +6,7 @@ import { addAnswer, getQuestionAnswers } from '../redux/action/QuestionAction';
 import Answer from '../Components/Answer';
 import { Picker } from 'emoji-mart';
 
-const QuestionAnswersContainer = ({ question }) => {
+const QuestionAnswersContainer = ({ question, details }) => {
   const dispatch = useDispatch();
   const [answer, setAnswer] = useState('');
   const [emojiOn, setEmoji] = useState(false);
@@ -43,7 +43,7 @@ const QuestionAnswersContainer = ({ question }) => {
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             onKeyPress={keyHandler}
-            placeholder='Write your comment...'
+            placeholder='Write your answer...'
             className='ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
           />
           <span
@@ -81,7 +81,7 @@ const QuestionAnswersContainer = ({ question }) => {
       ) : error ? (
         <Alert fail msg={error} />
       ) : answers && answers?.length > 0 ? (
-        answers?.map((ans) => <Answer ans={ans} />)
+        answers?.map((ans) => <Answer key={ans?._id} ans={ans} />)
       ) : (
         <Alert msg='No answers yet!' />
       )}

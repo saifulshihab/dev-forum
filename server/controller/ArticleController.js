@@ -125,8 +125,7 @@ const upvoteArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId).populate([
     { path: 'upvote' },
     { path: 'user' },
-  ]);
-  console.log(req.query.singleArticle);
+  ]);  
   if (article) {
     let alreadyUpVoted = _.findIndex(article.upvote, function (data) {
       return data.user.toString() === req.user._id.toString();

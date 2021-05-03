@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import QuestionPost from '../Components/QuestionPost';
+import Question from '../Components/Question';
 import { getQuestions } from '../redux/action/QuestionAction';
 
 const SingleQuestionContainer = () => {
@@ -21,7 +21,7 @@ const SingleQuestionContainer = () => {
 
   return (
     <div>
-      <QuestionPost key={qu?._id} details question={qu} />
+      <Question key={qu?._id} details question={qu} />
     </div>
   );
 };

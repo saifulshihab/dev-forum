@@ -21,6 +21,13 @@ import {
   QUESTION_EDIT_RESET,
   QUESTION_EDIT_SUCCESS,
   ADD_ANSWER_FAILED,
+  UPVOTE_ANSWER_FAIL,
+  UPVOTE_ANSWER_SUCCESS,
+  DOWNVOTE_ANSWER_SUCCESS,
+  DOWNVOTE_ANSWER_FAIL,
+  GET_USER_QUESTIONS_REQUEST,
+  GET_USER_QUESTIONS_SUCCESS,
+  GET_USER_QUESTIONS_FAILED,
 } from '../ActionTypes';
 
 // get all questions
@@ -236,6 +243,105 @@ export const addAnswer = (questionId, answer) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADD_ANSWER_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// upvote article
+export const upvoteAnswer = (answerId) => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${baseURL}/api/question/upvoteAnswer/${answerId}`,
+      {},
+      config
+    );
+    dispatch({
+      type: UPVOTE_ANSWER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPVOTE_ANSWER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// upvote article
+export const downvoteAnswer = (answerId) => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${baseURL}/api/question/downvoteAnswer/${answerId}`,
+      {},
+      config
+    );
+    dispatch({
+      type: DOWNVOTE_ANSWER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DOWNVOTE_ANSWER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// get user questions
+export const getUserQuestions = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_QUESTIONS_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/question/getUserQuestions/${userId}`,
+      config
+    );
+
+    dispatch({
+      type: GET_USER_QUESTIONS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_QUESTIONS_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -17,6 +17,13 @@ import {
   QUESTION_EDIT_RESET,
   QUESTION_EDIT_SUCCESS,
   ADD_ANSWER_FAILED,
+  UPVOTE_ANSWER_SUCCESS,
+  DOWNVOTE_ANSWER_SUCCESS,
+  UPVOTE_ANSWER_FAIL,
+  DOWNVOTE_ANSWER_FAIL,
+  GET_USER_QUESTIONS_REQUEST,
+  GET_USER_QUESTIONS_SUCCESS,
+  GET_USER_QUESTIONS_FAILED,
 } from '../ActionTypes';
 
 export const getQuestionReducer = (state = { questions: [] }, action) => {
@@ -79,9 +86,29 @@ export const questionAnswersReducer = (state = { answers: [] }, action) => {
       return { loading: false, answers: action.payload };
     case ADD_ANSWER:
       return { loading: false, answers: [action.payload, ...state.answers] };
+    case UPVOTE_ANSWER_SUCCESS:
+      return { loading: false, answers: action.payload };
+    case DOWNVOTE_ANSWER_SUCCESS:
+      return { loading: false, answers: action.payload };
     case ADD_ANSWER_FAILED:
       return { loading: false, error: action.payload };
     case GET_Q_ANSWERS_FAILED:
+      return { loading: false, error: action.payload };
+    case UPVOTE_ANSWER_FAIL:
+      return { loading: false, error: action.payload };
+    case DOWNVOTE_ANSWER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const getUserQuestionsReducer = (state = { questions: [] }, action) => {
+  switch (action.type) {
+    case GET_USER_QUESTIONS_REQUEST:
+      return { loading: true };
+    case GET_USER_QUESTIONS_SUCCESS:
+      return { loading: false, questions: action.payload };
+    case GET_USER_QUESTIONS_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

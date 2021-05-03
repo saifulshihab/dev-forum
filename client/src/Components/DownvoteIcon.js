@@ -1,9 +1,11 @@
 import React from 'react';
 
-const DownvoteIcon = ({ color }) => {
+const DownvoteIcon = ({ color, fromAnswer }) => {
   return (
     <div
-      className={`w-full cursor-pointer   rounded-full ${
+      className={`${
+        fromAnswer ? 'w-5' : 'w-full'
+      } cursor-pointer   rounded-full ${
         color
           ? 'bg-indigo-500 text-white '
           : 'bg-gray-200 text-gray-500 hover:bg-gray-300 '

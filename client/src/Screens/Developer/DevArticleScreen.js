@@ -14,26 +14,15 @@ const DevArticleScreen = ({ user }) => {
     return () => {};
   }, [dispatch, user?._id]);
 
-  const userArticles =
-    articles &&
-    articles?.filter(
-      (article) => article?.user?._id.toString() === user?._id.toString()
-    );
-
   return (
     <div>
       {loading ? (
         <Loader />
       ) : error ? (
         <Alert fail msg={error} />
-      ) : userArticles?.length > 0 ? (
-        userArticles.map((article) => (
-          <Article
-            article={article}
-            key={article?._id}
-            routeFromProfile
-            userId={user?._id}
-          />
+      ) : articles?.length > 0 ? (
+        articles.map((article) => (
+          <Article article={article} key={article?._id} routeFromProfile />
         ))
       ) : (
         'No articles posted yet!'

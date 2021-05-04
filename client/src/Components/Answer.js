@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import DownvoteIcon from './DownvoteIcon';
 import UpvoteIcon from './UpvoteIcon';
 import _ from 'lodash';
-import { upvoteAnswer, downvoteAnswer } from '../redux/action/QuestionAction';
+import {
+  upvoteAnswer,
+  downvoteAnswer,
+  deleteAnswer,
+} from '../redux/action/QuestionAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Answer = ({ ans }) => {
@@ -11,6 +15,10 @@ const Answer = ({ ans }) => {
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
+
+  const deleteHandler = () => {
+    dispatch(deleteAnswer(ans?._id));
+  };
 
   return (
     <>
@@ -60,16 +68,24 @@ const Answer = ({ ans }) => {
               <i className='fas fa-arrow-up mr-1'></i>
               {ans?.upvote?.length}
             </span>
-            <span className='mr-5'>
+            <span className='mr-3'>
               <i className='fas fa-arrow-down mr-1'></i>
               {ans?.downvote?.length}
             </span>
             <Link to={`/h/user/${ans?.user?.username}`}>
-              answered by- @
-              <span className='cursor-pointer hover:text-indigo-600 '>
+              answered by - @
+              <span className='cursor-pointer hover:text-indigo-600 mr-5'>
                 {ans?.user?.username}
               </span>
             </Link>
+            {currentUser?._id.toString() === ans?.user?._id?.toString() && (
+              <button
+                onClick={deleteHandler}
+                className='focus:outline-none hover:text-gray-600'
+              >
+                <i className='fas fa-trash-alt'></i>
+              </button>
+            )}
           </div>
         </div>
       </div>

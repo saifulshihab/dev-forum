@@ -24,6 +24,8 @@ import {
   GET_USER_QUESTIONS_REQUEST,
   GET_USER_QUESTIONS_SUCCESS,
   GET_USER_QUESTIONS_FAILED,
+  DELETE_ANS_SUCCESS,
+  DELETE_ANS_FAILED,
 } from '../ActionTypes';
 
 export const getQuestionReducer = (state = { questions: [] }, action) => {
@@ -90,6 +92,8 @@ export const questionAnswersReducer = (state = { answers: [] }, action) => {
       return { loading: false, answers: action.payload };
     case DOWNVOTE_ANSWER_SUCCESS:
       return { loading: false, answers: action.payload };
+    case DELETE_ANS_SUCCESS:
+      return { loading: false, answers: action.payload };
     case ADD_ANSWER_FAILED:
       return { loading: false, error: action.payload };
     case GET_Q_ANSWERS_FAILED:
@@ -97,6 +101,8 @@ export const questionAnswersReducer = (state = { answers: [] }, action) => {
     case UPVOTE_ANSWER_FAIL:
       return { loading: false, error: action.payload };
     case DOWNVOTE_ANSWER_FAIL:
+      return { loading: false, error: action.payload };
+    case DELETE_ANS_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -30,6 +30,16 @@ import {
   DEV_PUBLIC_VIEW_SUCCESS,
   DEV_PUBLIC_VIEW_FAIL,
   DEV_PUBLIC_VIEW_RESET,
+  GET_USER_PROJECT_REQUEST,
+  GET_USER_PROJECT_SUCCESS,
+  GET_USER_PROJECT_FAILED,
+  ADD_USER_PROJECT_REQUEST,
+  ADD_USER_PROJECT_SUCCESS,
+  DELETE_USER_PROJECT_SUCCESS,
+  ADD_USER_PROJECT_FAILED,
+  DELETE_USER_PROJECT_FAILED,
+  EDIT_USER_PROJECT_SUCCESS,
+  EDIT_USER_PROJECT_FAILED,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -152,6 +162,33 @@ export const devPublicViewReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case DEV_PUBLIC_VIEW_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const getUserProjectsReducer = (state = { projects: [] }, action) => {
+  switch (action.type) {
+    case GET_USER_PROJECT_REQUEST:
+      return { loading: true };
+    case ADD_USER_PROJECT_REQUEST:
+      return { loading: true };
+    case GET_USER_PROJECT_SUCCESS:
+      return { loading: false, projects: action.payload };
+    case ADD_USER_PROJECT_SUCCESS:
+      return { loading: false, success: true };
+    case EDIT_USER_PROJECT_SUCCESS:
+      return { loading: false, projects: action.payload, success: true };
+    case DELETE_USER_PROJECT_SUCCESS:
+      return { loading: false, projects: action.payload };
+    case GET_USER_PROJECT_FAILED:
+      return { loading: false, error: action.payload };
+    case ADD_USER_PROJECT_FAILED:
+      return { loading: false, error: action.payload };
+    case DELETE_USER_PROJECT_FAILED:
+      return { loading: false, error: action.payload };
+    case EDIT_USER_PROJECT_FAILED:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

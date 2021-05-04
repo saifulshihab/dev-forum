@@ -28,6 +28,8 @@ import {
   GET_USER_QUESTIONS_REQUEST,
   GET_USER_QUESTIONS_SUCCESS,
   GET_USER_QUESTIONS_FAILED,
+  DELETE_ANS_FAILED,
+  DELETE_ANS_SUCCESS,
 } from '../ActionTypes';
 
 // get all questions
@@ -342,6 +344,38 @@ export const getUserQuestions = (userId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_USER_QUESTIONS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// get user questions
+export const deleteAnswer = (answerId) => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.delete(
+      `${baseURL}/api/question/deleteAnswer/${answerId}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_ANS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ANS_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -10,6 +10,7 @@ import {
   upvoteAnswer,
   downvoteAnswer,
   getUserQuestions,
+  deleteAnswer,
 } from '../controller/QuestionController.js';
 
 const router = express.Router();
@@ -32,5 +33,7 @@ router.route('/upvoteAnswer/:answerId').put(protect, upvoteAnswer);
 router.route('/downvoteAnswer/:answerId').put(protect, downvoteAnswer);
 // get user questions
 router.route('/getUserQuestions/:userId').get(protect, getUserQuestions);
+// get user questions
+router.route('/deleteAnswer/:answerId').delete(protect, deleteAnswer);
 
 export default router;

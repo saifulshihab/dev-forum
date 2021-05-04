@@ -262,7 +262,10 @@ const DeveloperProfileScreen = ({ location }) => {
                 path={`${path}/gh-profile`}
                 component={() => <GithubScreen username={user?.github} />}
               />
-              <Route path={`${path}/projects`} component={DevProjectsScreen} />
+              <Route
+                path={`${path}/projects`}
+                component={() => <DevProjectsScreen user={user} />}
+              />
               <Route
                 path={`${path}/timeline`}
                 component={() => <DevTimelineScreen user={user} />}

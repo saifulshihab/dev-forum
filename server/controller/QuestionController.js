@@ -217,3 +217,27 @@ export const getUserQuestions = asyncHandler(async (req, res) => {
     throw new Error('User not found!');
   }
 });
+// desc: delete answer
+// routes: api/question/deleteAnswer/:answerId
+// method: DELETE
+// access: private
+export const deleteAnswer = asyncHandler(async (req, res) => {
+  const answer = await QuestionAnswer.findById(req.params.answerId);
+  if (answer) {
+    if (answer?.user?.toString() === req?.user?._id.toString()) {
+      await answer.remove();
+      const answers = await QuestionAnswer.find({
+        question: answer?.question,
+      })
+        .populate('user')
+        .sort({ createdAt: '-1' });
+      res.status(200).json(answers);
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to perform this action!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Answer not found!');
+  }
+});

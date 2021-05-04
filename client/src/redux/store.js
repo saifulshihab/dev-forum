@@ -12,6 +12,7 @@ import {
   devProfileDpEditReducer,
   devProfileCoverEditReducer,
   devPublicViewReducer,
+  getUserProjectsReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   questionEdit: editQuestionReducer,
   answersQuestion: questionAnswersReducer,
   userQuestions: getUserQuestionsReducer,
+  userProjects: getUserProjectsReducer,
 });
 
 const verifyToken = (token, lsItem) => {

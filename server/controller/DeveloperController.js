@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler';
 import { generateToken } from '../utils/generateToken.js';
 import Developer from '../models/DeveloperModel.js';
 import _ from 'lodash';
+import DevProject from '../models/DevProjectModel.js';
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -199,6 +200,89 @@ const getDevPublicProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found!');
   }
 });
+// desc: add project
+// routes: /api/dev/addProject
+// access: private
+const addProject = asyncHandler(async (req, res) => {
+  const newProject = await DevProject.create({
+    user: req.user._id,
+    ...req.body,
+  });
+  if (newProject) {
+    const populated = await DevProject.findById(newProject._id).populate(
+      'user'
+    );
+    res.status(201).json(populated);
+  } else {
+    res.status(500);
+    throw new Error('Faild to add project!');
+  }
+});
+// desc: get user projects
+// routes: /api/dev/getUserProjects/:userId
+// access: private
+const getUserProjects = asyncHandler(async (req, res) => {
+  const projects = await DevProject.find({ user: req.params.userId }).populate(
+    'user'
+  );
+  if (projects) {
+    res.status(200).json(projects);
+  } else {
+    res.status(404);
+    throw new Error('Projects not found!');
+  }
+});
+// desc: delete project
+// routes: /api/dev/deleteProject/:projectId
+// access: private
+const deleteProject = asyncHandler(async (req, res) => {
+  const project = await DevProject.findById(req.params.projectId);
+  if (project) {
+    if (project.user.toString() === req.user._id.toString()) {
+      await project.remove();
+      const projects = await DevProject.find({ user: req.user._id }).populate(
+        'user'
+      );
+      res.status(200).json(projects);
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to delete this!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Project not found!');
+  }
+});
+// desc: edit project
+// routes: /api/dev/editProject/:projectId
+// access: private
+const editProject = asyncHandler(async (req, res) => {
+  const project = await DevProject.findById(req.params.projectId);
+  if (project) {
+    if (project.user.toString() === req.user._id.toString()) {
+      const update = await DevProject.findOneAndUpdate(
+        { _id: project?._id },
+        { $set: req.body },
+        { new: true }
+      );
+      if (update) {
+        const projects = await DevProject.find({ user: req.user._id }).populate(
+          'user'
+        );
+        res.status(200).json(projects);
+      } else {
+        res.status(500);
+        throw new Error('Failed to updtae project!');
+      }
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to edit this!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Project not found!');
+  }
+});
 
 export {
   signupDeveloper,
@@ -209,4 +293,8 @@ export {
   updateDevDp,
   updateDevCover,
   getDevPublicProfile,
+  addProject,
+  getUserProjects,
+  deleteProject,
+  editProject,
 };

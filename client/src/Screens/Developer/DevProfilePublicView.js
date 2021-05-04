@@ -239,7 +239,10 @@ const DevProfilePublicView = ({ location }) => {
                 path={`${path}/timeline`}
                 component={() => <DevTimelineScreen user={user} />}
               />
-              <Route path={`${path}/projects`} component={DevProjectsScreen} />
+              <Route
+                path={`${path}/projects`}
+                component={() => <DevProjectsScreen user={user} />}
+              />
               <Route
                 path={`${path}/articles`}
                 component={() => <DevArticleScreen user={user} />}

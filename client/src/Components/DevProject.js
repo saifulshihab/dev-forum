@@ -1,22 +1,20 @@
-import React, { useEffect, useState, Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from '../../Components/Alert';
-import Loader from '../../Components/Loader';
-import DevProjectContainer from '../../Container/DevProjectContainer';
-import {
-  getUserProjects,
-  addProject,
-} from '../../redux/action/DeveloperAction';
+import { deleteProject, editProject } from '../redux/action/DeveloperAction';
 import { Transition, Dialog } from '@headlessui/react';
 import { Field, FieldArray, Formik } from 'formik';
-import MyTextField from '../../Components/MyTextField';
+import MyTextField from '../Components/MyTextField';
 import * as yup from 'yup';
 
-const DevProjectsScreen = ({ user }) => {
+const DevProject = ({ project }) => {
   const dispatch = useDispatch();
+
   const cancelButtonRef = useRef();
 
-  const [addProjectModal, setAddProjectModal] = useState(false);
+  const [editProjectModal, setEditProjectModal] = useState(false);
+
+  const userProjects = useSelector((state) => state.userProjects);
+  const { success: editSuccess } = userProjects;
 
   const fieldValidationSchema = yup.object().shape({
     title: yup
@@ -32,43 +30,70 @@ const DevProjectsScreen = ({ user }) => {
     link: yup.string().min(5, 'At least 5 charecter!').url(),
   });
 
-  const userProjects = useSelector((state) => state.userProjects);
-  const { loading, projects, success: addSuccess, error } = userProjects;
-
   useEffect(() => {
-    if (addSuccess) {
-      setAddProjectModal(false);
+    if (editSuccess) {
+      setEditProjectModal(false);
     }
-    dispatch(getUserProjects(user?._id));
-  }, [dispatch, user?._id, addSuccess]);
+  }, [editSuccess]);
 
+  const deleteHandler = () => {
+    dispatch(deleteProject(project?._id));
+  };
   return (
-    <>
-      <div className='text-xl flex items-center justify-between font-semibold text-gray-600'>
-        <p>
-          <i className='fas mr-2 fa-tasks'></i>Projects ({projects?.length})
-        </p>
-        <button
-          onClick={() => setAddProjectModal(true)}
-          className='border text-sm text-gray-500 hover:text-white focus:outline-none hover:border-indigo-500 p-1 rounded px-2 font-semibold hover:bg-indigo-500'
-        >
-          <i className='mr-2 far fa-plus-square'></i>
-          Add Project
-        </button>
+    <div className='p-3 mb-3 bg-white rounded shadow'>
+      <div className='border-b flex justify-between items-center pb-1'>
+        <div>
+          <div className='text-lg font-semibold text-gray-600'>
+            <p>{project?.title}</p>
+          </div>
+          <div className={`flex mt-1 items-center text-xs`}>
+            {project?.technologies?.map((tech, idx) => (
+              <span
+                key={idx}
+                className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className='text-gray-500'>
+          <button
+            onClick={deleteHandler}
+            className='w-8 h-8 text-sm focus:outline-none hover:text-indigo-600 hover:border-indigo-500 mr-1 border rounded-full'
+          >
+            <i className='fas fa-trash-alt'></i>
+          </button>
+          <button
+            onClick={() => setEditProjectModal(true)}
+            className='w-8 h-8 text-sm focus:outline-none hover:text-indigo-600 hover:border-indigo-500 border rounded-full'
+          >
+            <i className='fas fa-edit'></i>
+          </button>
+        </div>
       </div>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Alert fail msg={error} />
-      ) : projects && projects?.length > 0 ? (
-        <DevProjectContainer projects={projects && projects} />
-      ) : (
-        <Alert msg={'No projects!'} />
+      <div className='mt-2'>
+        <p className='text-justify text-gray-400'>{project?.description}</p>
+      </div>
+      {project?.link && (
+        <div className='mt-1 text-xs text-gray-400'>
+          <p>
+            <span className='font-semibold mr-1'>Visit:</span>
+            <a
+              className='hover:text-indigo-500'
+              rel='noreferrer'
+              target='_blank'
+              href={project?.link}
+            >
+              {project?.link}
+            </a>
+          </p>
+        </div>
       )}
       <div>
         <Transition.Root
           style={{ zIndex: 1000 }}
-          show={addProjectModal}
+          show={editProjectModal}
           as={Fragment}
         >
           <Dialog
@@ -76,8 +101,8 @@ const DevProjectsScreen = ({ user }) => {
             static
             className='fixed z-10 inset-0 overflow-y-auto'
             initialFocus={cancelButtonRef}
-            open={addProjectModal}
-            onClose={setAddProjectModal}
+            open={editProjectModal}
+            onClose={setEditProjectModal}
           >
             <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
               <Transition.Child
@@ -127,14 +152,14 @@ const DevProjectsScreen = ({ user }) => {
                       {/* form submission */}
                       <Formik
                         initialValues={{
-                          title: '',
-                          description: '',
-                          technologies: [],
-                          link: '',
+                          title: project?.title,
+                          description: project?.description,
+                          technologies: project?.technologies,
+                          link: project?.link,
                         }}
                         validationSchema={fieldValidationSchema}
                         onSubmit={(data, { setSubmitting }) => {
-                          dispatch(addProject(data));
+                          dispatch(editProject(project?._id, data));
                           setSubmitting(false);
                         }}
                       >
@@ -241,7 +266,7 @@ const DevProjectsScreen = ({ user }) => {
                               disabled={isSubmitting}
                               className='w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
                             >
-                              Add
+                              Update
                             </button>
                           </form>
                         )}
@@ -249,19 +274,10 @@ const DevProjectsScreen = ({ user }) => {
                     </div>
                   </div>
                   <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                    {/* <button
-                    type='button'
-                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm'
-                    onClick={() => {
-                      setAskQuestionModal(false);
-                    }}
-                  >
-                    Post
-                  </button> */}
                     <button
                       type='button'
                       className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
-                      onClick={() => setAddProjectModal(false)}
+                      onClick={() => setEditProjectModal(false)}
                       ref={cancelButtonRef}
                     >
                       Close
@@ -273,8 +289,8 @@ const DevProjectsScreen = ({ user }) => {
           </Dialog>
         </Transition.Root>
       </div>
-    </>
+    </div>
   );
 };
 
-export default DevProjectsScreen;
+export default DevProject;

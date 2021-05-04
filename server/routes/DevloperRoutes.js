@@ -13,6 +13,10 @@ import {
   updateDevDp,
   updateDevCover,
   getDevPublicProfile,
+  addProject,
+  deleteProject,
+  getUserProjects,
+  editProject,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -25,5 +29,15 @@ router
   .put(protect, editDevProfile);
 router.route('/:userId/deleteAccount').delete(protect, delDevprofile);
 router.route('/username/:username').get(protect, getDevPublicProfile);
+// add project
+router.route('/addProject').post(protect, addProject);
+// get user projects
+router.route('/getProjects/:userId').get(protect, getUserProjects);
+// add project
+router.route('/addProject').post(protect, addProject);
+// delete projectId
+router.route('/deleteProject/:projectId').delete(protect, deleteProject);
+// delete projectId
+router.route('/editProject/:projectId').put(protect, editProject);
 
 export default router;

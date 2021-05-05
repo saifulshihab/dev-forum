@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
-import logo from '../logo.svg';
-import MyTextField from '../Components/MyTextField';
+import logo from '../../logo.svg';
+import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
-import { devSignin } from '../redux/action/DeveloperAction';
+import { devSignin } from '../../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from '../Components/Alert';
+import Alert from '../../Components/Alert';
 
-const LoginPage = ({ history }) => {
+const RLoginScreen = ({ history }) => {
   const dispatch = useDispatch();
   const signInDev = useSelector((state) => state.signInDev);
   const { loading, isAuthenticated, error } = signInDev;
@@ -37,19 +37,10 @@ const LoginPage = ({ history }) => {
             <p className='mt-2 text-center text-sm text-gray-600'>
               Or
               <Link
-                to='/registration'
+                to='/re-registration'
                 className='ml-1 font-medium text-indigo-600 hover:text-indigo-500'
               >
                 Not registered yet?
-              </Link>
-            </p>
-            <p className='mt-2 text-center text-sm text-gray-600'>
-              Or
-              <Link
-                to='/re-login'
-                className='ml-1 font-medium text-indigo-600 hover:text-indigo-500'
-              >
-                Recruiter Login
               </Link>
             </p>
           </div>
@@ -98,7 +89,7 @@ const LoginPage = ({ history }) => {
 
                   <div className='text-sm'>
                     <Link
-                      to='/forgot-password'
+                      to='/re-forgot-password'
                       className='font-medium text-indigo-600 hover:text-indigo-500'
                     >
                       Forgot password?
@@ -149,4 +140,4 @@ const LoginPage = ({ history }) => {
   );
 };
 
-export default LoginPage;
+export default RLoginScreen;

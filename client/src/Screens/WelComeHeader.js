@@ -195,62 +195,9 @@ const WelComeHeader = () => {
                 className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
               >
                 <span className='sr-only'>Close main menu</span>
-                {/* <svg
-                  class='h-6 w-6'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                  aria-hidden='true'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M6 18L18 6M6 6l12 12'
-                  />
-                </svg> */}
               </button>
             </div>
           </div>
-          {/* <div
-            role='menu'
-            aria-orientation='vertical'
-            aria-labelledby='main-menu'
-          >
-            <div className='px-2 pt-2 pb-3 space-y-1' role='none'>
-              <Link
-                to='/about'
-                className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
-                role='menuitem'
-              >
-                About
-              </Link>
-              <Link
-                to='/'
-                className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
-                role='menuitem'
-              >
-                Features
-              </Link>
-              <Link
-                to='/'
-                className='block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50'
-                role='menuitem'
-              >
-                FAQ
-              </Link>
-            </div>
-            <div role='none'>
-              <Link
-                to='/login'
-                className='block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100'
-                role='menuitem'
-              >
-                Log in
-              </Link>
-            </div>
-          </div> */}
         </div>
       </div>
     </>

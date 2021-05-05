@@ -13,6 +13,9 @@ import PrivateRoute from './Components/PrivateRoute';
 import './styles/main.css';
 import '@pathofdev/react-tag-input/build/index.css';
 import './App.css';
+import RLoginScreen from './Screens/Recruiter/RLoginScreen';
+import RRegistrationScreen from './Screens/Recruiter/RRegistrationScreen';
+import RForgetPassword from './Screens/Recruiter/RForgetPassword';
 
 function App() {
   return (
@@ -24,7 +27,10 @@ function App() {
           <Route path='/regfirststep' component={RegFirstStep} />
           <Route path='/registration' component={RegPage} />
           <Route path='/login' component={LoginPage} />
+          <Route path='/re-login' component={RLoginScreen} />
+          <Route path='/re-registration' component={RRegistrationScreen} />
           <Route path='/forgot-password' component={ForgotPassword} />
+          <Route path='/re-forgot-password' component={RForgetPassword} />
           <Route path='/about' component={AboutUs} />
           <PrivateRoute path='/h' component={HomeScreen} />
         </div>

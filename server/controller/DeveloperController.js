@@ -30,7 +30,11 @@ const signupDeveloper = asyncHandler(async (req, res) => {
       email,
       password,
     });
-    res.status(201).json(newDeveloper);
+    res.status(201).json({
+      _id: newDeveloper._id,
+      username: newDeveloper.username,
+      token: generateToken(newDeveloper._id),
+    });
   }
 });
 

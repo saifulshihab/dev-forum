@@ -26,7 +26,7 @@ const DevProjectsScreen = ({ user }) => {
       .required('Required!'),
     description: yup
       .string()
-      .max(500, 'Must be 500 charecter or less!')
+      .max(1500, 'Must be 1500 charecter or less!')
       .min(10, 'At least 10 charecter!')
       .required('Required!'),
     link: yup.string().min(5, 'At least 5 charecter!').url(),

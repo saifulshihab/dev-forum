@@ -53,10 +53,19 @@ export const devSignup = (dev) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post(`${baseURL}/api/dev/signup`, { dev }, config);
+    const { data } = await axios.post(
+      `${baseURL}/api/dev/signup`,
+      { dev },
+      config
+    );
     dispatch({
       type: DEV_SIGNUP_SUCCESS,
     });
+    dispatch({
+      type: DEV_SIGNIN_SUCCESS,
+      payload: data,
+    });
+    localStorage.setItem('devInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: DEV_SIGNUP_FAIL,

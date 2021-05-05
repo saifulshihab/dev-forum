@@ -24,7 +24,7 @@ const DevProject = ({ project }) => {
       .required('Required!'),
     description: yup
       .string()
-      .max(500, 'Must be 500 charecter or less!')
+      .max(1500, 'Must be 1500 charecter or less!')
       .min(10, 'At least 10 charecter!')
       .required('Required!'),
     link: yup.string().min(5, 'At least 5 charecter!').url(),
@@ -73,7 +73,7 @@ const DevProject = ({ project }) => {
         </div>
       </div>
       <div className='mt-2'>
-        <p className='text-justify text-gray-400'>{project?.description}</p>
+        <p className='text-justify text-gray-400 text-sm'>{project?.description}</p>
       </div>
       {project?.link && (
         <div className='mt-1 text-xs text-gray-400'>
@@ -144,7 +144,7 @@ const DevProject = ({ project }) => {
                           as='h3'
                           className='text-lg leading-6 font-medium text-gray-900'
                         >
-                          Add New Project
+                          Edit Project
                         </Dialog.Title>
                       </div>
                     </div>

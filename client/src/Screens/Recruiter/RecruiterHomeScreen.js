@@ -1,18 +1,13 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
-import SidebarSVG from '../Components/SidebarSVG';
-import AskQuestionsScreen from './Developer/AskQuestionsScreen';
-import DeveloperProfileScreen from './Developer/DeveloperProfileScreen';
-import DevProfilePublicView from './Developer/DevProfilePublicView';
-import FindPeopleScreen from './Developer/FindPeopleScreen';
-import FreelanceScreen from './Developer/FreelanceScreen';
-import JobsScreen from './Developer/JobsScreen';
-import MoreScreen from './Developer/MoreScreen';
-import NotificationScreen from './Developer/NotificationScreen';
-import SettingsScreen from './Developer/SettingsScreen';
+import SidebarSVG from '../../Components/SidebarSVG';
+import RJobScreen from './RJobScreen';
+import RNotificationScreen from './RNotificationScreen';
+import RProfileScreen from './RProfileScreen';
+import RProjectScreen from './RProjectScreen';
 
-const HomeScreen = ({ location }) => {
+const RecruiterHomeScreen = ({ location }) => {
   const { path, url } = useRouteMatch();
 
   const pathName = location.pathname.split('/')[2];
@@ -23,21 +18,8 @@ const HomeScreen = ({ location }) => {
         <div className='col-span-1 h-screen'>
           <ul className='text-gray-600'>
             <Link
-              to={`${url}/forum`}
-              className={
-                pathName === 'forum' || undefined ? 'text-indigo-600' : ''
-              }
-            >
-              <SidebarSVG
-                d={
-                  'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z'
-                }
-                text={'Forum'}
-              />
-            </Link>
-            <Link
               to={`${url}/projects`}
-              className={pathName === 'freelance' ? 'text-indigo-600' : ''}
+              className={pathName === 'projects' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'}
@@ -55,17 +37,7 @@ const HomeScreen = ({ location }) => {
                 text={'Jobs'}
               />
             </Link>
-            <Link
-              to={`${url}/people`}
-              className={pathName === 'people' ? 'text-indigo-600' : ''}
-            >
-              <SidebarSVG
-                d={
-                  'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
-                }
-                text={'Find People'}
-              />
-            </Link>
+
             <Link
               to={`${url}/notification`}
               className={pathName === 'notification' ? 'text-indigo-600' : ''}
@@ -101,41 +73,25 @@ const HomeScreen = ({ location }) => {
                 text={'Profile'}
               />
             </Link>
-            <Link
-              to={`${url}/more`}
-              className={pathName === 'more' ? 'text-indigo-600' : ''}
-            >
-              <SidebarSVG
-                d={
-                  'M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z'
-                }
-                text={'More'}
-              />
-            </Link>
           </ul>
         </div>
         <div className='col-span-4 h-full'>
           <div className='relative feed_right_content bg-gray-50 h-full'>
             <Switch>
-              <Route path={`${path}/forum`} component={AskQuestionsScreen} />
-              <Route path={`${path}/projects`} component={FreelanceScreen} />
-              <Route path={`${path}/jobs`} component={JobsScreen} />
-              <Route path={`${path}/people`} component={FindPeopleScreen} />
+              <Route path={`${path}/projects`} component={RProjectScreen} />
               <Route
-                path={`${path}/notification`}
-                component={NotificationScreen}
+                path={`${path}/jobs`}
+                component={({ location }) => <RJobScreen location={location} />}
               />
-              <Route path={`${path}/settings`} component={SettingsScreen} />
               <Route
                 path={`${path}/profile`}
-                component={DeveloperProfileScreen}
+                component={() => <RProfileScreen />}
               />
-              <Route path={`${path}/more`} component={MoreScreen} />
               <Route
-                path={`${path}/user/:username`}
-                component={DevProfilePublicView}
+                path={`${path}/notification`}
+                component={() => <RNotificationScreen />}
               />
-              <Redirect to={`${path}/forum`} />
+              <Redirect to={`${path}/projects`} />
             </Switch>
           </div>
         </div>
@@ -144,4 +100,4 @@ const HomeScreen = ({ location }) => {
   );
 };
 
-export default HomeScreen;
+export default RecruiterHomeScreen;

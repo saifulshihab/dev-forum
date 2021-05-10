@@ -37,7 +37,6 @@ const signupDeveloper = asyncHandler(async (req, res) => {
     });
   }
 });
-
 // desc: signin developer
 // routes: api/dev/signin
 // access: public

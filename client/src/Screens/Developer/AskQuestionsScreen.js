@@ -91,7 +91,7 @@ const AskQuestionsScreen = ({ location }) => {
       </div>
       <div className='p-1'>
         <p className='text-md text-gray-500 p-1 bg-gray-100 font-semibold border-b-4 border-white pb-2 mb-1'>
-          Top Articles
+        <i className="fas fa-newspaper mr-2"></i>Top Articles
         </p>
         <ArticleContainer topArticle />
       </div>

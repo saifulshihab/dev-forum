@@ -15,7 +15,7 @@ const CreateProjectScreen = () => {
       .required('Required!'),
     description: yup
       .string()
-      .max(1000, 'Must be 500 charecter or less!')
+      .max(3000, 'Must be 3000 charecter or less!')
       .min(10, 'At least 10 charecter!'),
     duration: yup
       .number()
@@ -29,8 +29,8 @@ const CreateProjectScreen = () => {
   });
 
   return (
-    <div className='bg-white rounded p-2 mt-2'>
-      <div> 
+    <div className='bg-white rounded p-2 mt-2 px-2'>
+      <div>
         {/* form submission */}
         <Formik
           initialValues={{

@@ -9,7 +9,7 @@ import RegFirstStep from './Screens/RegFirstStep';
 import RegPage from './Screens/RegPage';
 import Welcome from './Screens/Welcome';
 import WelComeHeader from './Screens/WelComeHeader';
-import PrivateRoute from './Components/PrivateRoute';
+import PrivateRoute, { PrivateRoute2 } from './Components/PrivateRoute';
 import './styles/main.css';
 import '@pathofdev/react-tag-input/build/index.css';
 import './App.css';
@@ -34,7 +34,7 @@ function App() {
           <Route path='/re-forgot-password' component={RForgetPassword} />
           <Route path='/about' component={AboutUs} />
           <PrivateRoute path='/h' component={HomeScreen} />
-          <Route path='/r' component={RecruiterHomeScreen} />
+          <PrivateRoute2 path='/r' component={RecruiterHomeScreen} />
         </div>
       </div>
     </div>

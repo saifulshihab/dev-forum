@@ -32,6 +32,10 @@ import {
   getUserQuestionsReducer,
   questionAnswersReducer,
 } from './reducer/QuestionReducer';
+import {
+  recrSignupReducer,
+  recrSigninReducer,
+} from './reducer/RecruiterReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -57,6 +61,8 @@ const reducer = combineReducers({
   answersQuestion: questionAnswersReducer,
   userQuestions: getUserQuestionsReducer,
   userProjects: getUserProjectsReducer,
+  signInRec: recrSigninReducer,
+  signUpRec: recrSignupReducer,
 });
 
 const verifyToken = (token, lsItem) => {
@@ -78,6 +84,17 @@ const initialState = {
       : false,
     devInfo: localStorage.getItem('devInfo')
       ? JSON.parse(localStorage.getItem('devInfo'))
+      : {},
+  },
+  signInRec: {
+    isAuthenticated: localStorage.getItem('recInfo')
+      ? verifyToken(
+          JSON.parse(localStorage.getItem('recInfo')).token,
+          'recInfo'
+        )
+      : false,
+    recInfo: localStorage.getItem('recInfo')
+      ? JSON.parse(localStorage.getItem('recInfo'))
       : {},
   },
 };

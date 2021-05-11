@@ -4,24 +4,27 @@ import { Formik } from 'formik';
 import logo from '../../logo.svg';
 import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
-import { devSignin } from '../../redux/action/DeveloperAction';
+import { recSignin } from '../../redux/action/RecruiterAction';
+import { devSignout } from '../../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../Components/Alert';
 
 const RLoginScreen = ({ history }) => {
   const dispatch = useDispatch();
-  const signInDev = useSelector((state) => state.signInDev);
-  const { loading, isAuthenticated, error } = signInDev;
+
+  const signInRec = useSelector((state) => state.signInRec);
+  const { loading, isAuthenticated, error } = signInRec;
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/h');
+      history.push('/r');
+      dispatch(devSignout());
     }
     return () => {};
-  }, [history, isAuthenticated]);
+  }, [history, isAuthenticated, dispatch]);
 
   const fieldValidationSchema = yup.object({
-    username: yup.string().required('Required!'),
+    email: yup.string().email().required('Required!'),
     password: yup.string().required('Required!'),
   });
 
@@ -45,9 +48,9 @@ const RLoginScreen = ({ history }) => {
             </p>
           </div>
           <Formik
-            initialValues={{ username: '', password: '' }}
+            initialValues={{ email: '', password: '' }}
             onSubmit={(data, { setSubmitting }) => {
-              dispatch(devSignin(data));
+              dispatch(recSignin(data));
               setSubmitting(false);
             }}
             validationSchema={fieldValidationSchema}
@@ -57,10 +60,10 @@ const RLoginScreen = ({ history }) => {
                 <input type='hidden' name='remember' value='true' />
                 <div className='rounded-md -space-y-px'>
                   <MyTextField
-                    id='username'
-                    name='username'
+                    id='email'
+                    name='email'
                     type='text'
-                    placeholder='Email or username'
+                    placeholder='Your email'
                   />
 
                   <MyTextField

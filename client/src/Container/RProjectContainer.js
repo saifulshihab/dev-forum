@@ -11,7 +11,7 @@ const RProjectContainer = () => {
       </div>
       <div className='p-1'>
         {FreelanceProjectData?.map((project) => (
-          <Project project={project} recruiter />
+          <Project key={project?._id} project={project} recruiter />
         ))}
       </div>
     </div>

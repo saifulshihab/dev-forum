@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { devSignin } from '../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Components/Alert';
+import { recSignout } from '../redux/action/RecruiterAction';
 
 const LoginPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -16,9 +17,10 @@ const LoginPage = ({ history }) => {
   useEffect(() => {
     if (isAuthenticated) {
       history.push('/h');
+      dispatch(recSignout())
     }
     return () => {};
-  }, [history, isAuthenticated]);
+  }, [history, isAuthenticated, dispatch]);
 
   const fieldValidationSchema = yup.object({
     username: yup.string().required('Required!'),

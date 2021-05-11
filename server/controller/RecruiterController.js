@@ -30,7 +30,6 @@ export const recSignUp = asyncHandler(async (req, res) => {
 // method: POST
 export const recSignin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
   const user = await Recruiter.findOne({ email }).select('password');
   if (user && (await user.verifyPassword(password))) {
     res.status(200).json({

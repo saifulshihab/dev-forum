@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import RSingleProjectContainer from '../../Container/RSingleProjectContainer';
 import CreateProjectScreen from './CreateProjectScreen';
 import RBrowseProjectScreen from './RBrowseProjectScreen';
 
@@ -53,6 +54,10 @@ const RProjectScreen = ({ location }) => {
 
         <div className='question_article_feed'>
           <Switch>
+            <Route
+              path={`${path}/browse/:projectId`}
+              component={() => <RSingleProjectContainer />}
+            />
             <Route
               path={`${path}/browse`}
               component={() => <RBrowseProjectScreen />}

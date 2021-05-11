@@ -4,35 +4,30 @@ import logo from '../../logo.svg';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import MyTextField from '../../Components/MyTextField';
-import { devSignup } from '../../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../Components/Alert';
 import Loader from '../../Components/Loader';
+import { recSignup } from '../../redux/action/RecruiterAction';
 
 const RRegistrationScreen = ({ history }) => {
   const dispatch = useDispatch();
-  const signUpDev = useSelector((state) => state.signUpDev);
-  const { loading, success, error } = signUpDev;
+  const signUpRec = useSelector((state) => state.signUpRec);
+  const { loading, success, error } = signUpRec;
 
-  const signInDev = useSelector((state) => state.signInDev);
-  const { isAuthenticated } = signInDev;
+  const signInRec = useSelector((state) => state.signInRec);
+  const { isAuthenticated } = signInRec;
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/h');
+      history.push('/r');
     }
     return () => {};
   }, [history, isAuthenticated]);
 
   const fieldValidationSchema = yup.object({
-    full_name: yup
+    fullname: yup
       .string()
       .max(20, 'Must be 20 charecters or less!')
-      .min(4, 'At least 4 charecter!')
-      .required('Required!'),
-    username: yup
-      .string()
-      .max(15, 'Must be 15 charecter or less!')
       .min(4, 'At least 4 charecter!')
       .required('Required!'),
     email: yup.string().email().required('Required!'),
@@ -57,15 +52,14 @@ const RRegistrationScreen = ({ history }) => {
         </div>
         <Formik
           initialValues={{
-            full_name: '',
-            username: '',
+            fullname: '',
             email: '',
             password: '',
             c_password: '',
           }}
           validationSchema={fieldValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
-            dispatch(devSignup(data));
+            dispatch(recSignup(data));
             setSubmitting(false);
           }}
         >
@@ -74,19 +68,10 @@ const RRegistrationScreen = ({ history }) => {
               <MyTextField
                 id='fname'
                 type='text'
-                name='full_name'
+                name='fullname'
                 label='Full name'
                 placeholder='Your full name'
               />
-
-              <MyTextField
-                id='username'
-                type='text'
-                name='username'
-                placeholder='Choose a username'
-                label='Username'
-              />
-
               <MyTextField
                 id='email'
                 type='email'
@@ -94,7 +79,6 @@ const RRegistrationScreen = ({ history }) => {
                 label='Email'
                 placeholder='john.doe@company.com'
               />
-
               <MyTextField
                 id='password'
                 type='password'

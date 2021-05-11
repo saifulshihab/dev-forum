@@ -11,6 +11,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import articleRoutes from './routes/ArticleRoutes.js';
 import questionRoutes from './routes/QuestionRoutes.js';
 import recruiterRoutes from './routes/RecruiterRoutes.js';
+import projectRoutes from './routes/ProjectRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -33,6 +34,7 @@ app.use('/upload', uploadRoutes);
 app.use('/api/article', articleRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/recruiter', recruiterRoutes);
+app.use('/api/project', projectRoutes);
 
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, 'public')));

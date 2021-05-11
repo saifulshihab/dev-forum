@@ -62,7 +62,9 @@ export const deleteProject = asyncHandler(async (req, res) => {
 // routes: api/project/getRecruiterProjects
 // method: GET
 export const getRecruiterProjects = asyncHandler(async (req, res) => {
-  const projects = await Project.find({ user: req.user?._id });
+  const projects = await Project.find({ user: req.user?._id }).sort({
+    createdAt: '-1',
+  });
   if (projects) {
     res.status(200).json(projects);
   } else {

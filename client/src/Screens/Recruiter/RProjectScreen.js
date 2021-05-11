@@ -55,6 +55,7 @@ const RProjectScreen = ({ location }) => {
         <div className='question_article_feed'>
           <Switch>
             <Route
+              exact
               path={`${path}/browse/:projectId`}
               component={() => <RSingleProjectContainer />}
             />

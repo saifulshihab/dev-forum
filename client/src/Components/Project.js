@@ -4,8 +4,9 @@ import Modal from './Modal';
 import MyTextField from './MyTextField';
 import * as yup from 'yup';
 import { Link, useRouteMatch } from 'react-router-dom';
+import moment from 'moment';
 
-const Project = ({ project, recruiter }) => {
+const Project = ({ project, recruiter, noRoute }) => {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const { url } = useRouteMatch();
@@ -33,16 +34,26 @@ const Project = ({ project, recruiter }) => {
   return (
     <div className='bg-white p-3 text-gray-500 rounded shadow mb-2 text-justify'>
       <div className='w-full h-auto'>
-        <Link to={`${url}/${project?._id}`}>
+        {!noRoute ? (
+          <Link to={`${url}/${project?._id}`}>
+            <p className='text-lg cursor-pointer hover:text-indigo-500 font-semibold'>
+              {project?.title}
+            </p>
+          </Link>
+        ) : (
           <p className='text-lg cursor-pointer hover:text-indigo-500 font-semibold'>
             {project?.title}
           </p>
-        </Link>
+        )}
       </div>
       <div className='w-full text-sm  mt-2 h-auto'>
         <p>{project?.description}</p>
       </div>
       <div className='text-xs flex mt-2 items-center justify-between italic'>
+        <span>
+          <i className='far fa-clock mr-1'></i>
+          <strong>Posted:</strong> {moment(project?.createdAt).fromNow(false)}
+        </span>
         <span>
           <i className='far fa-clock mr-1'></i>
           <strong>Duration:</strong> {project?.duration} days

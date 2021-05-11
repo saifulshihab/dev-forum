@@ -8,6 +8,9 @@ import { recSignout } from '../redux/action/RecruiterAction';
 
 const WelComeHeader = () => {
   const dispatch = useDispatch();
+
+  // const ref = React.createRef();
+
   const [dpDropdown, setdpDropdown] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
@@ -60,22 +63,6 @@ const WelComeHeader = () => {
                   aria-haspopup='true'
                 >
                   <span className='sr-only'>Open main menu</span>
-
-                  {/* <svg
-                    class='h-6 w-6'
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                    aria-hidden='true'
-                  >
-                    <path
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      strokeWidth='2'
-                      d='M4 6h16M4 12h16M4 18h16'
-                    />
-                  </svg> */}
                 </button>
               </div>
             </div>
@@ -134,7 +121,7 @@ const WelComeHeader = () => {
                   leaveFrom='opacity-100 scale-100'
                   leaveTo='opacity-0 scale-95'
                 >
-                  {(ref) => (
+                  {({ ref }) => (
                     <div
                       ref={ref}
                       className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'
@@ -212,7 +199,7 @@ const WelComeHeader = () => {
                   leaveFrom='opacity-100 scale-100'
                   leaveTo='opacity-0 scale-95'
                 >
-                  {(ref) => (
+                  {({ ref }) => (
                     <div
                       ref={ref}
                       className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'

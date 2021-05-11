@@ -35,6 +35,8 @@ import {
 import {
   recrSignupReducer,
   recrSigninReducer,
+  getRecProjectsReducer,
+  postProjectReducer,
 } from './reducer/RecruiterReducer';
 
 const reducer = combineReducers({
@@ -63,6 +65,8 @@ const reducer = combineReducers({
   userProjects: getUserProjectsReducer,
   signInRec: recrSigninReducer,
   signUpRec: recrSignupReducer,
+  recProjects: getRecProjectsReducer,
+  postProject: postProjectReducer,
 });
 
 const verifyToken = (token, lsItem) => {

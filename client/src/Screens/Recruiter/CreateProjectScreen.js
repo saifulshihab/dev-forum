@@ -1,11 +1,17 @@
 import React from 'react';
 import { Field, Formik, FieldArray } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
+import Loader from '../../Components/Loader';
+import Alert from '../../Components/Alert';
+import { postAProject } from '../../redux/action/RecruiterAction';
 
 const CreateProjectScreen = () => {
   const dispatch = useDispatch();
+
+  const postProject = useSelector((state) => state.postProject);
+  const { loading, success, error } = postProject;
 
   const fieldValidationSchema = yup.object().shape({
     title: yup
@@ -16,7 +22,8 @@ const CreateProjectScreen = () => {
     description: yup
       .string()
       .max(3000, 'Must be 3000 charecter or less!')
-      .min(10, 'At least 10 charecter!'),
+      .min(10, 'At least 10 charecter!')
+      .required('Recuired!'),
     duration: yup
       .number()
       .typeError('Number type!')
@@ -25,7 +32,8 @@ const CreateProjectScreen = () => {
     budget: yup
       .number()
       .typeError('Number type!')
-      .positive('Must be greater than 0'),
+      .positive('Must be greater than 0')
+      .required('Recuired!'),
   });
 
   return (
@@ -42,8 +50,7 @@ const CreateProjectScreen = () => {
           }}
           validationSchema={fieldValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
-            // dispatch(createQuestion(data));
-            console.log(data);
+            dispatch(postAProject(data));
             setSubmitting(false);
           }}
         >
@@ -156,6 +163,15 @@ const CreateProjectScreen = () => {
             </form>
           )}
         </Formik>
+        <div className='mt-2'>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Alert fail msg={error} />
+          ) : (
+            success && <Alert success msg='Project posted!' />
+          )}
+        </div>
       </div>
     </div>
   );

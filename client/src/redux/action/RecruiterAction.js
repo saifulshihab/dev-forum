@@ -15,6 +15,12 @@ import {
   PROJECT_POST_SUCCESS,
   PROJECT_POST_FAILED,
   PROJECT_POST_RESET,
+  PROJECT_EDIT_REQUEST,
+  PROJECT_EDIT_SUCCESS,
+  PROJECT_EDIT_FAILED,
+  PROJECT_DELETE_SUCCESS,
+  PROJECT_DELETE_FAILED,
+  PROJECT_DELETE_RESET,
 } from '../ActionTypes';
 
 // Recruiter signin
@@ -151,6 +157,75 @@ export const postAProject = (project) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PROJECT_POST_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Edit a freelace project by recruiter
+export const editRecProject =
+  (projectId, updateProject) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PROJECT_EDIT_REQUEST,
+      });
+      const {
+        signInRec: { recInfo },
+      } = getState();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${recInfo?.token}`,
+        },
+      };
+      await axios.put(
+        `${baseURL}/api/project/${projectId}`,
+        updateProject,
+        config
+      );
+      dispatch({
+        type: PROJECT_EDIT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: PROJECT_EDIT_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+// Delete a freelace project by recruiter
+export const deleteRecProject = (projectId) => async (dispatch, getState) => {
+  try {
+    const {
+      signInRec: { recInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recInfo?.token}`,
+      },
+    };
+    const { data } = await axios.delete(
+      `${baseURL}/api/project/${projectId}`,
+      config
+    );
+    dispatch({
+      type: PROJECT_DELETE_SUCCESS,
+      payload: data,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: PROJECT_DELETE_RESET,
+      });
+    }, 2000);
+  } catch (error) {
+    dispatch({
+      type: PROJECT_DELETE_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

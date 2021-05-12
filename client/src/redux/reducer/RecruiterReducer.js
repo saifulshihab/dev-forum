@@ -13,6 +13,12 @@ import {
   PROJECT_POST_SUCCESS,
   PROJECT_POST_FAILED,
   PROJECT_POST_RESET,
+  PROJECT_EDIT_REQUEST,
+  PROJECT_EDIT_SUCCESS,
+  PROJECT_EDIT_FAILED,
+  PROJECT_DELETE_SUCCESS,
+  PROJECT_DELETE_FAILED,
+  PROJECT_DELETE_RESET,
 } from '../ActionTypes';
 
 export const recrSignupReducer = (state = {}, action) => {
@@ -66,6 +72,15 @@ export const getRecProjectsReducer = (state = { projects: [] }, action) => {
       return { loading: true };
     case GET_RECRUITER_PROJECTS_SUCCESS:
       return { loading: false, projects: action.payload };
+    case PROJECT_DELETE_SUCCESS:
+      const id = action.payload._id;
+      const newProjects = state.projects.filter(
+        (project) => project?._id !== id
+      );
+      return {
+        loading: false,
+        projects: newProjects,
+      };
     case GET_RECRUITER_PROJECTS_FAILED:
       return { loading: false, error: action.payload };
     default:
@@ -82,6 +97,31 @@ export const postProjectReducer = (state = {}, action) => {
     case PROJECT_POST_FAILED:
       return { loading: false, error: action.payload };
     case PROJECT_POST_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const projectEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PROJECT_EDIT_REQUEST:
+      return { loading: true };
+    case PROJECT_EDIT_SUCCESS:
+      return { loading: false, success: true };
+    case PROJECT_EDIT_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const projectDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PROJECT_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case PROJECT_DELETE_FAILED:
+      return { loading: false, error: action.payload };
+    case PROJECT_DELETE_RESET:
       return {};
     default:
       return state;

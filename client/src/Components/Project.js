@@ -1,15 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Field, FieldArray } from 'formik';
 import Modal from './Modal';
+import Alert from './Alert';
 import MyTextField from './MyTextField';
 import * as yup from 'yup';
 import { Link, useRouteMatch } from 'react-router-dom';
 import moment from 'moment';
+import {
+  deleteRecProject,
+  editRecProject,
+} from '../redux/action/RecruiterAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Project = ({ project, recruiter, noRoute }) => {
+  const dispatch = useDispatch();
+  const { url } = useRouteMatch();
+
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { url } = useRouteMatch();
+
+  const projectEdit = useSelector((state) => state.projectEdit);
+  const {
+    loading: editLoading,
+    success: editSuccess,
+    error: editError,
+  } = projectEdit;
+
+  const projectDelete = useSelector((state) => state.projectDelete);
+  const { success: deleteSuccess, error: deleteError } = projectDelete;
+
+  useEffect(() => {
+    if (editSuccess) {
+      setEditModal(false);
+    }
+    if (deleteSuccess) {
+      setDeleteModal(false);
+    }
+    return () => {};
+  }, [editSuccess, deleteSuccess]);
 
   const fieldValidationSchema = yup.object().shape({
     title: yup
@@ -31,6 +59,9 @@ const Project = ({ project, recruiter, noRoute }) => {
       .typeError('Number type!')
       .positive('Must be greater than 0'),
   });
+  const projectdeleteHandler = () => {
+    dispatch(deleteRecProject(project?._id));
+  };
   return (
     <div className='bg-white p-3 text-gray-500 rounded shadow mb-2 text-justify'>
       <div className='w-full h-auto'>
@@ -119,8 +150,7 @@ const Project = ({ project, recruiter, noRoute }) => {
           }}
           validationSchema={fieldValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
-            // dispatch(createQuestion(data));
-            console.log(data);
+            dispatch(editRecProject(project?._id, data));
             setSubmitting(false);
           }}
         >
@@ -228,22 +258,25 @@ const Project = ({ project, recruiter, noRoute }) => {
                 disabled={isSubmitting}
                 className='w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
               >
-                Update
+                {editLoading ? 'Updating...' : 'Update'}
               </button>
             </form>
           )}
         </Formik>
       </Modal>
+      {editError && <Alert fail msg={editError} />}
       <Modal
         title='Delete Project'
         titleIcon='fas fa-trash-alt'
         modalOpen={deleteModal}
         setModalOpen={setDeleteModal}
         footerYesButton
+        yesBtnAction={projectdeleteHandler}
       >
         <p className='text-md text-gray-500 font-semibold'>
           Are you sure you want to delete this project?
         </p>
+        {deleteError && <Alert fail msg={deleteError} />}
       </Modal>
     </div>
   );

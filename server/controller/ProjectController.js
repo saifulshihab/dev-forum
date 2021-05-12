@@ -48,7 +48,7 @@ export const deleteProject = asyncHandler(async (req, res) => {
   if (project) {
     if (project?.user?.toString() === req.user?._id.toString()) {
       await project.remove();
-      res.status(200).json({ message: 'Project deleted!' });
+      res.status(200).json(project);
     } else {
       res.status(403);
       throw new Error('You are not authorized to delete this!');

@@ -112,7 +112,11 @@ const Project = ({ project, recruiter, noRoute }) => {
           </div>
         </div>
       </div>
-      <div className='mt-1 border-t pt-1 text-xs text-center cursor-pointer flex items-center'>
+      <div
+        className={`mt-1 ${
+          recruiter && 'border-t pt-1'
+        }text-xs text-center cursor-pointer flex items-center`}
+      >
         {recruiter && (
           <div className='w-1/2  hover:text-indigo-600'>
             <button

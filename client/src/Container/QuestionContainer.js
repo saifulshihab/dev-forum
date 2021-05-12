@@ -41,7 +41,7 @@ const QuestionContainer = () => {
 
   return (
     <>
-      <div className='rounded bg-white mt-2 p-2 border'>
+      <div className='rounded bg-white mt-2 p-2 shadow'>
         <span className='text-sm text-gray-500 font-semibold'>
           <i className='fas fa-filter text-gray-500 mr-1'></i>Filter Question
         </span>

@@ -72,3 +72,15 @@ export const getRecruiterProjects = asyncHandler(async (req, res) => {
     throw new Error('Projects not found!');
   }
 });
+// desc: Get freelance projects by developer
+// routes: api/project/getFreelanceProjects
+// method: GET
+export const getFreelanceProjects = asyncHandler(async (req, res) => {
+  const projects = await Project.find({}).sort({ createdAt: '-1' });
+  if (projects) {
+    res.status(200).json(projects);
+  } else {
+    res.status(404);
+    throw new Error('Projects not found!');
+  }
+});

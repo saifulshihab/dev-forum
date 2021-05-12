@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import FProjectDetails from '../Components/FProjectDetails';
-import { FreelanceProjectData } from '../Data';
+import Project from '../Components/Project';
 
 const SingleFreelanceProjectContainer = () => {
   const { projectId } = useParams();
+  const [project, setProject] = useState({});
+
+  const freelanceProjectsGet = useSelector(
+    (state) => state.freelanceProjectsGet
+  );
+  const { projects } = freelanceProjectsGet;
+
+  useEffect(() => {
+    const pro = projects?.find(
+      (project) => project?._id.toString() === projectId.toString()
+    );
+    setProject(pro);
+  }, [projectId, projects]);
+
   return (
-    <>
-      {FreelanceProjectData.map(
-        (pro) =>
-          pro._id.toString() === projectId.toString() && (
-            <FProjectDetails key={projectId} project={pro} />
-          )
-      )}
+    <>      
+      <div className='p-1'>
+        <Project project={project} noRoute />
+      </div>
     </>
   );
 };

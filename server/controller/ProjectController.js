@@ -94,8 +94,8 @@ export const sendProjectProposal = asyncHandler(async (req, res) => {
     const alreadySent = await ProjectProposal.find({
       user: req.user._id,
       project: project._id,
-    });
-    if (!alreadySent) {
+    });    
+    if (alreadySent?.length <= 0) {
       const newProposal = await ProjectProposal.create({
         user: req.user?._id,
         project: project?._id,
@@ -109,7 +109,7 @@ export const sendProjectProposal = asyncHandler(async (req, res) => {
       }
     } else {
       res.status(403);
-      throw new Error('You already sent a proposal for this project!');
+      throw new Error('You already sent a proposal for this project!' + project?.title + project?._id);
     }
   } else {
     res.status(404);
@@ -152,7 +152,7 @@ export const getProjectProposals = asyncHandler(async (req, res) => {
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorixed to dot this!');
+      throw new Error('You are not authorized to dot this!');
     }
   } else {
     res.status(404);

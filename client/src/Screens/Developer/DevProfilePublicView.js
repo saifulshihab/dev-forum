@@ -17,7 +17,7 @@ import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
 
-const DevProfilePublicView = ({ location }) => {
+const DevProfilePublicView = ({ location, recruiterView }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
@@ -27,8 +27,8 @@ const DevProfilePublicView = ({ location }) => {
   const { loading, error, user } = devPublicView;
 
   useEffect(() => {
-    dispatch(getDevPublicProfile(username));
-  }, [dispatch, username]);
+    dispatch(getDevPublicProfile(username, recruiterView));
+  }, [dispatch, username, recruiterView]);
 
   return (
     <>

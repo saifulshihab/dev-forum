@@ -63,7 +63,7 @@ const Project = ({ project, recruiter, noRoute }) => {
     dispatch(deleteRecProject(project?._id));
   };
   return (
-    <div className='bg-white p-3 text-gray-500 rounded shadow mb-2 text-justify'>
+    <div className='bg-white p-2 px-3 text-gray-500 rounded shadow mb-2 text-justify'>
       <div className='w-full h-auto'>
         {!noRoute ? (
           <Link to={`${url}/${project?._id}`}>
@@ -120,7 +120,7 @@ const Project = ({ project, recruiter, noRoute }) => {
         {recruiter && (
           <div className='w-1/2  hover:text-indigo-600'>
             <button
-              className='focus:outline-none'
+              className='focus:outline-none text-xs'
               onClick={() => setEditModal(!editModal)}
             >
               <i className='mr-1 far fa-edit'></i>Edit
@@ -131,7 +131,7 @@ const Project = ({ project, recruiter, noRoute }) => {
           <div className='w-1/2  hover:text-indigo-600'>
             <button
               onClick={() => setDeleteModal(!deleteModal)}
-              className='focus:outline-none'
+              className='focus:outline-none text-xs'
             >
               <i className='mr-1 far fa-trash-alt'></i> Delete
             </button>

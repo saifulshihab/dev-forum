@@ -177,44 +177,42 @@ export const deleteDevAccount = (id) => async (dispatch, getState) => {
   }
 };
 // Edit developer profile
-export const editDevAccount = (id, updateUser) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: DEV_PROFILE_EDIT_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.put(
-      `${baseURL}/api/dev/${id}`,
-      updateUser.data,
-      config
-    );
-    dispatch({
-      type: DEV_PROFILE_EDIT_SUCCESS,
-      payload: data,
-    });
-    dispatch({
-      type: DEV_PROFILE_EDIT_RESET,
-    });
-  } catch (error) {
-    dispatch({
-      type: DEV_PROFILE_EDIT_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const editDevAccount =
+  (id, updateUser) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: DEV_PROFILE_EDIT_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+      } = getState();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${devInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${baseURL}/api/dev/${id}`,
+        updateUser.data,
+        config
+      );
+      dispatch({
+        type: DEV_PROFILE_EDIT_SUCCESS,
+        payload: data,
+      });
+      dispatch({
+        type: DEV_PROFILE_EDIT_RESET,
+      });
+    } catch (error) {
+      dispatch({
+        type: DEV_PROFILE_EDIT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 // Edit developer profile picture
 export const editDevDp = (dp) => async (dispatch, getState) => {
@@ -285,39 +283,47 @@ export const editDevCover = (cover) => async (dispatch, getState) => {
 };
 
 // Developer profile publiv view
-export const getDevPublicProfile = (username) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: DEV_PUBLIC_VIEW_REQUEST,
-    });
+export const getDevPublicProfile =
+  (username, recruiterView) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: DEV_PUBLIC_VIEW_REQUEST,
+      });
 
-    const {
-      signInDev: { devInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/username/${username}`,
-      config
-    );
-    dispatch({
-      type: DEV_PUBLIC_VIEW_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DEV_PUBLIC_VIEW_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const {
+        signInDev: { devInfo },
+        signInRec: { recInfo },
+      } = getState();
+      console.log(recInfo.token)
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            recruiterView ? recInfo.token : devInfo.token
+          }`,
+        },
+      };
+      const { data } = await axios.get(
+        `${
+          !recruiterView
+            ? `${baseURL}/api/dev/user/${username}`
+            : `${baseURL}/api/dev/user/${username}/recruiterView`
+        }`,
+        config
+      );
+      dispatch({
+        type: DEV_PUBLIC_VIEW_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DEV_PUBLIC_VIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 // Get developer projects
 export const getUserProjects = (userId) => async (dispatch, getState) => {
   try {
@@ -418,36 +424,34 @@ export const deleteProject = (projectId) => async (dispatch, getState) => {
   }
 };
 // Delete project
-export const editProject = (projectId, project) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    const {
-      signInDev: { devInfo },
-    } = getState();
+export const editProject =
+  (projectId, project) => async (dispatch, getState) => {
+    try {
+      const {
+        signInDev: { devInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.put(
-      `${baseURL}/api/dev/editProject/${projectId}`,
-      project,
-      config
-    );
-    dispatch({
-      type: EDIT_USER_PROJECT_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: EDIT_USER_PROJECT_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${devInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${baseURL}/api/dev/editProject/${projectId}`,
+        project,
+        config
+      );
+      dispatch({
+        type: EDIT_USER_PROJECT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: EDIT_USER_PROJECT_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarSVG from '../../Components/SidebarSVG';
+import DevProfilePublicView from '../Developer/DevProfilePublicView';
 import RJobScreen from './RJobScreen';
 import RNotificationScreen from './RNotificationScreen';
 import RProfileScreen from './RProfileScreen';
@@ -86,6 +87,10 @@ const RecruiterHomeScreen = ({ location }) => {
               <Route
                 path={`${path}/profile`}
                 component={() => <RProfileScreen />}
+              />
+              <Route
+                path={`${path}/user/:username`}
+                component={() => <DevProfilePublicView location={location} recruiterView />}
               />
               <Route
                 path={`${path}/notification`}

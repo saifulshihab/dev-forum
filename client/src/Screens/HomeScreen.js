@@ -37,7 +37,7 @@ const HomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/projects`}
-              className={pathName === 'freelance' ? 'text-indigo-600' : ''}
+              className={pathName === 'projects' ? 'text-indigo-600' : ''}
             >
               <SidebarSVG
                 d={'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'}

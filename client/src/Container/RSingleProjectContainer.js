@@ -39,7 +39,7 @@ const RSingleProjectContainer = () => {
         <Project project={project} recruiter noRoute />
       </div>
       <div className='bg-white p-1 rounded shadow'>
-        <div className='mb-1 px-2'>
+        <div className='mb-1 px-2 border-b pb-1'>
           <p className='font-semibold text-gray-500'>Proposal ({proposals ? proposals?.length : '0'})</p>
         </div>
         {getProposalLoading ? (

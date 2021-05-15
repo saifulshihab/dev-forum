@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { corsWithOptions } from './cors.js';
 import cors from 'cors';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, protect2 } from '../middleware/authMiddleware.js';
 
 import {
   signupDeveloper,
@@ -28,7 +28,9 @@ router
   .get(protect, getDevprofile)
   .put(protect, editDevProfile);
 router.route('/:userId/deleteAccount').delete(protect, delDevprofile);
-router.route('/username/:username').get(protect, getDevPublicProfile);
+// developer profile public view
+router.route('/user/:username/recruiterView').get(protect2, getDevPublicProfile);
+router.route('/user/:username').get(protect, getDevPublicProfile);
 // add project
 router.route('/addProject').post(protect, addProject);
 // get user projects

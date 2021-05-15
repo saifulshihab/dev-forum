@@ -73,10 +73,12 @@ const DevProject = ({ project }) => {
         </div>
       </div>
       <div className='mt-2'>
-        <p className='text-justify text-gray-400 text-sm'>{project?.description}</p>
+        <p className='text-justify text-gray-500 text-sm'>
+          {project?.description}
+        </p>
       </div>
       {project?.link && (
-        <div className='mt-1 text-xs text-gray-400'>
+        <div className='mt-1 text-xs text-gray-500'>
           <p>
             <span className='font-semibold mr-1'>Visit:</span>
             <a
@@ -228,7 +230,7 @@ const DevProject = ({ project }) => {
                                             value={data}
                                             className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                                           />
-                                          <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
+                                          <div className='ml-2 flex text-gray-500 items-center space-x-2 justify-center'>
                                             <button
                                               type='button'
                                               onClick={() =>

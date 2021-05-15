@@ -40,7 +40,7 @@ import {
   projectEditReducer,
   projectDeleteReducer,
 } from './reducer/RecruiterReducer';
-import { getFreelanceProjectsReducer } from './reducer/ProjectReducer';
+import { getFreelanceProjectsReducer, getProjectProposalReducer, sendProposalReducer } from './reducer/ProjectReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -73,6 +73,8 @@ const reducer = combineReducers({
   projectEdit: projectEditReducer,
   projectDelete: projectDeleteReducer,
   freelanceProjectsGet: getFreelanceProjectsReducer,
+  proposalSend: sendProposalReducer,
+  proposalGet: getProjectProposalReducer,
 });
 
 const verifyToken = (token, lsItem) => {

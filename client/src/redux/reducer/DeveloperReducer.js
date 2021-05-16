@@ -40,6 +40,9 @@ import {
   DELETE_USER_PROJECT_FAILED,
   EDIT_USER_PROJECT_SUCCESS,
   EDIT_USER_PROJECT_FAILED,
+  GET_DEVELOPERS_REQUEST,
+  GET_DEVELOPERS_SUCCESS,
+  GET_DEVELOPERS_FAILED,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -188,6 +191,19 @@ export const getUserProjectsReducer = (state = { projects: [] }, action) => {
     case DELETE_USER_PROJECT_FAILED:
       return { loading: false, error: action.payload };
     case EDIT_USER_PROJECT_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getDevelopersReducer = (state = { developers: [] }, action) => {
+  switch (action.type) {
+    case GET_DEVELOPERS_REQUEST:
+      return { loading: true };
+    case GET_DEVELOPERS_SUCCESS:
+      return { loading: false, developers: action.payload };
+    case GET_DEVELOPERS_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -13,6 +13,7 @@ import {
   devProfileCoverEditReducer,
   devPublicViewReducer,
   getUserProjectsReducer,
+  getDevelopersReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -75,6 +76,7 @@ const reducer = combineReducers({
   freelanceProjectsGet: getFreelanceProjectsReducer,
   proposalSend: sendProposalReducer,
   proposalGet: getProjectProposalReducer,
+  developersGet: getDevelopersReducer,
 });
 
 const verifyToken = (token, lsItem) => {

@@ -40,6 +40,9 @@ import {
   DELETE_USER_PROJECT_FAILED,
   EDIT_USER_PROJECT_SUCCESS,
   EDIT_USER_PROJECT_FAILED,
+  GET_DEVELOPERS_REQUEST,
+  GET_DEVELOPERS_SUCCESS,
+  GET_DEVELOPERS_FAILED,
 } from '../ActionTypes';
 
 // Developer signup
@@ -294,7 +297,7 @@ export const getDevPublicProfile =
         signInDev: { devInfo },
         signInRec: { recInfo },
       } = getState();
-      console.log(recInfo.token)
+      console.log(recInfo.token);
       const config = {
         headers: {
           Authorization: `Bearer ${
@@ -455,3 +458,36 @@ export const editProject =
       });
     }
   };
+// Delete project
+export const getDevelopers = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_DEVELOPERS_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/developers/list`,
+      config
+    );
+    dispatch({
+      type: GET_DEVELOPERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_DEVELOPERS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

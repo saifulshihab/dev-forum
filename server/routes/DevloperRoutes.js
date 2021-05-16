@@ -17,6 +17,7 @@ import {
   deleteProject,
   getUserProjects,
   editProject,
+  getDevelopers
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -36,10 +37,12 @@ router.route('/addProject').post(protect, addProject);
 // get user projects
 router.route('/getProjects/:userId').get(protect, getUserProjects);
 // add project
-router.route('/addProject').post(protect, addProject);
+// router.route('/addProject').post(protect, addProject);
 // delete projectId
 router.route('/deleteProject/:projectId').delete(protect, deleteProject);
 // delete projectId
 router.route('/editProject/:projectId').put(protect, editProject);
+// get developer list
+router.route('/developers/list').get(protect, getDevelopers)
 
 export default router;

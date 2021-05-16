@@ -287,6 +287,19 @@ const editProject = asyncHandler(async (req, res) => {
   }
 });
 
+// desc: get developers
+// routes: /api/dev/developers
+// method: GET
+const getDevelopers = asyncHandler(async (req, res) => {  
+  const developers = await Developer.find({});
+  if (developers) {
+    res.status(200).json(developers);
+  } else {
+    res.status(404);
+    throw new Error('Developers not found!');
+  }
+});
+
 export {
   signupDeveloper,
   signinDeveloper,
@@ -300,4 +313,5 @@ export {
   getUserProjects,
   deleteProject,
   editProject,
+  getDevelopers,
 };

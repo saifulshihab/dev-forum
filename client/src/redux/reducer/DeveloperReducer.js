@@ -55,6 +55,9 @@ import {
   GET_FOLLOWING_REQUEST,
   GET_FOLLOWING_SUCCESS,
   GET_FOLLOWING_FAILED,
+  GET_CIRCULAR_REQUEST,
+  GET_CIRCULAR_SUCCESS,
+  GET_CIRCULAR_FAILED,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -268,6 +271,19 @@ export const getFollowersReducer = (state = { followers: [] }, action) => {
     case GET_FOLLOWERS_SUCCESS:
       return { loading: false, followers: action.payload };
     case GET_FOLLOWERS_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getCircularReducer = (state = { circulars: [] }, action) => {
+  switch (action.type) {
+    case GET_CIRCULAR_REQUEST:
+      return { loading: true };
+    case GET_CIRCULAR_SUCCESS:
+      return { loading: false, circulars: action.payload };
+    case GET_CIRCULAR_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

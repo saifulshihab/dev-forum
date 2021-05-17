@@ -22,6 +22,7 @@ import {
   unfollowOther,
   getFollowers,
   getFollowing,
+  getJobCirculars,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -61,5 +62,7 @@ router.route('/unfollow/:userId').delete(protect, unfollowOther);
 router.route('/following/:userId').get(protect, getFollowing);
 // get followers
 router.route('/followers/:userId').get(protect, getFollowers);
+// get job circulars
+router.route('/getJobCirculars/list').get(protect, getJobCirculars);
 
 export default router;

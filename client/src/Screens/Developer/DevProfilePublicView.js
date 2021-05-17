@@ -9,7 +9,14 @@ import {
 } from 'react-router';
 import { Link } from 'react-router-dom';
 import { baseURL } from '../../baseURL';
-import { getDevPublicProfile } from '../../redux/action/DeveloperAction';
+import Spinner from '../../Components/Spinner';
+import {
+  followOther,
+  getDevPublicProfile,
+  getFollowers,
+  getFollowing,
+  unfollowOther,
+} from '../../redux/action/DeveloperAction';
 import DevAboutScreen from './DevAboutScreen';
 import DevArticleScreen from './DevArticleScreen';
 import DevProjectsScreen from './DevProjectsScreen';
@@ -17,18 +24,74 @@ import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
 
-const DevProfilePublicView = ({ location, recruiterView }) => {
+const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
   const currentPath = location.pathname.split('/')[4];
 
+  const signInDev = useSelector((state) => state.signInDev);
+  const { devInfo: currentUser } = signInDev;
+
   const devPublicView = useSelector((state) => state.devPublicView);
   const { loading, error, user } = devPublicView;
 
+  const followersGet = useSelector((state) => state.followersGet);
+  const { followers } = followersGet;
+
+  const followingGet = useSelector((state) => state.followingGet);
+  const { following } = followingGet;
+
+  const followGet = useSelector((state) => state.followGet);
+  const {
+    loading: followLoading,
+    success: followSuccess,
+    // error: followError,
+  } = followGet;
+
+  const unfollowGet = useSelector((state) => state.unfollowGet);
+  const {
+    loading: unfollowLoading,
+    success: unfollowSuccess,
+    // error: unfollowError,
+  } = unfollowGet;
+
   useEffect(() => {
     dispatch(getDevPublicProfile(username, recruiterView));
-  }, [dispatch, username, recruiterView]);
+    dispatch(getFollowing(currentUser?._id));
+    if (followSuccess || unfollowSuccess) {
+      dispatch(getFollowing(currentUser?._id));
+    }
+    return () => {};
+  }, [
+    dispatch,
+    username,
+    recruiterView,
+    currentUser?._id,
+    followSuccess,
+    unfollowSuccess,
+  ]);
+
+  useEffect(() => {
+ 
+      dispatch(getFollowers(user?._id));
+      dispatch(getFollowing(user?._id));
+    
+    return () => {};
+  }, [dispatch, user]);
+
+  const currentUserFollowers = followers?.map(
+    (data) => data?.follower?._id?.toString() === currentUser?._id?.toString()
+  );
+  const isFollowed = currentUserFollowers?.includes(true) ? true : false;  
+
+  const followHandler = () => {
+    dispatch(followOther(user?._id));
+  };
+
+  const unfollowHandler = () => {
+    dispatch(unfollowOther(user?._id));
+  };
 
   return (
     <>
@@ -69,12 +132,40 @@ const DevProfilePublicView = ({ location, recruiterView }) => {
               <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
             </div>
           ) : (
-            <div className='name_address_location text-gray-600 text-md'>
+            <div className='name_address_location text-gray-600 text-sm'>
               <div className='flex items-center justify-between'>
                 <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
-                <button className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'>
-                  <i className='fas fa-paper-plane mr-1'></i>Send Message
-                </button>
+                <div className='flex items-center'>
+                  <button className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'>
+                    <i className='fas fa-paper-plane mr-1'></i>Send Message
+                  </button>
+                  {followButton &&
+                    (isFollowed ? (
+                      <button
+                        onClick={unfollowHandler}
+                        className='ml-2 border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
+                      >
+                        {unfollowLoading ? (
+                          <Spinner small />
+                        ) : (
+                          <i className='fas fa-user-minus mr-1'></i>
+                        )}
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        onClick={followHandler}
+                        className='ml-2 border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
+                      >
+                        {followLoading ? (
+                          <Spinner small />
+                        ) : (
+                          <i className='fas fa-user-plus mr-1'></i>
+                        )}
+                        Follow
+                      </button>
+                    ))}
+                </div>
               </div>
               <span className='text-gray-400'>@{user?.username}</span>
               <div className='h-5 mb-1'>{user?.bio}</div>
@@ -88,6 +179,12 @@ const DevProfilePublicView = ({ location, recruiterView }) => {
                 {user?.website && <i className='mr-2 fas fa-globe'></i>}
                 {user?.website}
               </span>
+              {!recruiterView && (
+                <div>
+                  <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
+                  Followers {following?.length} Following
+                </div>
+              )}
               <div className='flex items-center '>
                 <span className='mr-4'>
                   <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}

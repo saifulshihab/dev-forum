@@ -3,26 +3,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import JobCircular from '../Components/JobCircular';
 
-const SingleJobContainer = () => {
+const RSingleJobContainer = () => {
   const dispatch = useDispatch();
   const { circularId } = useParams();
   const [circular, setCircular] = useState({});
 
-  const circularsGet = useSelector((state) => state.circularsGet);
-  const { circulars } = circularsGet;
+  const rcircularsGet = useSelector((state) => state.rcircularsGet);
+  const { circulars } = rcircularsGet;
 
   useEffect(() => {
     const cir = circulars?.find(
-      (circular) => circular?._id?.toString() === circularId?.toString()
+      (circular) => circular?._id.toString() === circularId.toString()
     );
     setCircular(cir);
   }, [dispatch, circularId, circulars]);
 
   return (
     <div className='p-1'>
-      <JobCircular circular={circular} noRoute details developer />
+      <JobCircular circular={circular} recruiter noRoute details />
     </div>
   );
 };
 
-export default SingleJobContainer;
+export default RSingleJobContainer;

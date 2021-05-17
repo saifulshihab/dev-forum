@@ -72,10 +72,10 @@ const DeveloperProfileScreen = ({ location }) => {
     if (!user || Object.keys(user).length === 0 || editSuccess) {
       dispatch(fetchDevProfile(devInfo._id));
     }
-    if (!user || Object.keys(user).length === 0) {
-      dispatch(getFollowers(user?._id));
-      dispatch(getFollowing(user?._id));
-    }
+
+    dispatch(getFollowers(user?._id));
+    dispatch(getFollowing(user?._id));
+
     if (editSuccess) {
       setEditModal(false);
     }
@@ -232,7 +232,7 @@ const DeveloperProfileScreen = ({ location }) => {
                 <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
               </div>
             ) : (
-              <div className='name_address_location text-gray-600 text-md'>
+              <div className='name_address_location text-gray-600 text-sm'>
                 <div className='flex items-center justify-between'>
                   <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
                   <button
@@ -256,7 +256,7 @@ const DeveloperProfileScreen = ({ location }) => {
                 </span>
                 <div>
                   <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
-                  followers {following?.length} following
+                  Followers {following?.length} Following
                 </div>
                 <div className='flex items-center '>
                   <span className='mr-4'>

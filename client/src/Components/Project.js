@@ -91,7 +91,7 @@ const Project = ({ project, recruiter, noRoute }) => {
         </span>
         <span>
           <i className='fas fa-money-check-alt mr-1'></i>
-          <strong>Budget:</strong> ${project?.budget}
+          <strong>Budget:</strong> {project?.budget} BDT
         </span>
       </div>
       <div className='mt-1 text-xs '>

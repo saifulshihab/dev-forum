@@ -6,6 +6,7 @@ import Developer from '../models/DeveloperModel.js';
 import _ from 'lodash';
 import DevProject from '../models/DevProjectModel.js';
 import Follower from '../models/FollowerModel.js';
+import Circular from '../models/CircularModel.js';
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -393,6 +394,18 @@ const getFollowers = asyncHandler(async (req, res) => {
     throw new Error('User not found!');
   }
 });
+// desc:  get job circulars
+// routes: /api/dev/getJobCirculars
+// method: GET
+const getJobCirculars = asyncHandler(async (req, res) => {
+  const circulars = await Circular.find({}).sort({ createdAt: '-1' });
+  if (circulars) {
+    res.status(200).json(circulars);
+  } else {
+    res.status(404);
+    throw new Error('Circilars not found!');
+  }
+});
 
 export {
   signupDeveloper,
@@ -412,4 +425,5 @@ export {
   unfollowOther,
   getFollowers,
   getFollowing,
+  getJobCirculars,
 };

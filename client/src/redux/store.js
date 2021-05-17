@@ -18,6 +18,7 @@ import {
   getFollowingReducer,
   getFollowersReducer,
   unfollowReducer,
+  getCircularReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -45,7 +46,17 @@ import {
   projectEditReducer,
   projectDeleteReducer,
 } from './reducer/RecruiterReducer';
-import { getFreelanceProjectsReducer, getProjectProposalReducer, sendProposalReducer } from './reducer/ProjectReducer';
+import {
+  getFreelanceProjectsReducer,
+  getProjectProposalReducer,
+  sendProposalReducer,
+} from './reducer/ProjectReducer';
+import {
+  circularDeleteReducer,
+  circularEditReducer,
+  getRCircularReducer,
+  postCircularReducer,
+} from './reducer/CircularReducer';
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -85,6 +96,11 @@ const reducer = combineReducers({
   followersGet: getFollowersReducer,
   followGet: followReducer,
   unfollowGet: unfollowReducer,
+  rcircularsGet: getRCircularReducer,
+  circlarPost: postCircularReducer,
+  circularDel: circularDeleteReducer,
+  circularEdit: circularEditReducer,
+  circularsGet: getCircularReducer,
 });
 
 const verifyToken = (token, lsItem) => {

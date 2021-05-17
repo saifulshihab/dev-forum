@@ -57,6 +57,9 @@ import {
   UNFOLLOW_SUCCESS,
   UNFOLLOW_RESET,
   UNFOLLOW_FAILED,
+  GET_CIRCULAR_REQUEST,
+  GET_CIRCULAR_SUCCESS,
+  GET_CIRCULAR_FAILED,
 } from '../ActionTypes';
 
 // Developer signup
@@ -640,6 +643,39 @@ export const unfollowOther = (userId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UNFOLLOW_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Get circulars
+export const getJobCirculars = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_CIRCULAR_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/getJobCirculars/list`,
+      config
+    );
+    dispatch({
+      type: GET_CIRCULAR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CIRCULAR_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

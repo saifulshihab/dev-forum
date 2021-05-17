@@ -137,6 +137,7 @@ const HomeScreen = ({ location }) => {
                   <DevProfilePublicView
                     location={location}
                     recruiterView={false}
+                    followButton
                   />
                 )}
               />

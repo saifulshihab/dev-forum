@@ -52,7 +52,7 @@ const FreelanceProjectContainer = () => {
         </div>
         <div>
           <ReactTagInput
-            placeholder='Add a Tag'
+            placeholder='Add a Tag e.g (react, node.js, php)'
             maxTags='10'
             editable='true'
             tags={tags}

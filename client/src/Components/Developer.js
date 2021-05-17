@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { baseURL } from '../baseURL';
 import Spinner from './Spinner';
-import { followOther, getFollowing, unfollowOther } from '../redux/action/DeveloperAction';
+import {
+  followOther,
+  getFollowing,
+  unfollowOther,
+} from '../redux/action/DeveloperAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from './Alert';
 
@@ -18,7 +22,7 @@ const Developer = ({ user }) => {
     success: followSuccess,
     error: followError,
   } = followGet;
-  
+
   const unfollowGet = useSelector((state) => state.unfollowGet);
   const {
     loading: unfollowLoading,
@@ -26,8 +30,8 @@ const Developer = ({ user }) => {
     error: unfollowError,
   } = unfollowGet;
 
-  const followersGet = useSelector((state) => state.followersGet);
-  const { followers } = followersGet;
+  const followingGet = useSelector((state) => state.followingGet);
+  const { following } = followingGet;
 
   useEffect(() => {
     dispatch(getFollowing(currentUser?._id));
@@ -39,12 +43,12 @@ const Developer = ({ user }) => {
   const followHandler = () => {
     dispatch(followOther(user?._id));
   };
-  
+
   const unfollowHandler = () => {
     dispatch(unfollowOther(user?._id));
   };
 
-  const currentUserFollowings = followers?.map(
+  const currentUserFollowings = following?.map(
     (data) => data?.user?._id?.toString() === user?._id?.toString()
   );
   const isFollowed = currentUserFollowings?.includes(true) ? true : false;
@@ -80,32 +84,33 @@ const Developer = ({ user }) => {
           </div>
         </div>
       </div>
-      <div className=''>
-        {isFollowed ? (
-          <button
-            onClick={unfollowHandler}
-            className='text-sm bg-indigo-500 text-white font-semibold py-1 px-3 rounded-md focus:outline-none hover:bg-indigo-600'
-          >
-            {unfollowLoading ? (
-              <Spinner small />
-            ) : (
-              <i className='fas fa-user-minus mr-1'></i>
-            )}
-            Unfollow
-          </button>
-        ) : (
-          <button
-            onClick={followHandler}
-            className='text-sm bg-indigo-500 text-white font-semibold py-1 px-3 rounded-md focus:outline-none hover:bg-indigo-600'
-          >
-            {followLoading ? (
-              <Spinner small />
-            ) : (
-              <i className='fas fa-user-plus mr-1'></i>
-            )}
-            Follow
-          </button>
-        )}
+      <div>
+        {currentUser?._id !== user?._id &&
+          (isFollowed ? (
+            <button
+              onClick={unfollowHandler}
+              className='text-sm bg-indigo-500 text-white font-semibold py-1 px-3 rounded-md focus:outline-none hover:bg-indigo-600'
+            >
+              {unfollowLoading ? (
+                <Spinner small />
+              ) : (
+                <i className='fas fa-user-minus mr-1'></i>
+              )}
+              Unfollow
+            </button>
+          ) : (
+            <button
+              onClick={followHandler}
+              className='text-sm bg-indigo-500 text-white font-semibold py-1 px-3 rounded-md focus:outline-none hover:bg-indigo-600'
+            >
+              {followLoading ? (
+                <Spinner small />
+              ) : (
+                <i className='fas fa-user-plus mr-1'></i>
+              )}
+              Follow
+            </button>
+          ))}
         {followError && <Alert msg={followError} fail />}
         {unfollowError && <Alert msg={unfollowError} fail />}
       </div>

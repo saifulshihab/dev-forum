@@ -19,7 +19,9 @@ import {
   editProject,
   getDevelopers,
   followOther,
-  unfollowOther, getFollowers
+  unfollowOther,
+  getFollowers,
+  getFollowing,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -56,6 +58,8 @@ router.route('/follow/:userId').post(protect, followOther);
 // unfollow a person
 router.route('/unfollow/:userId').delete(protect, unfollowOther);
 // get following users
-router.route('/following/:userId').get(protect, getFollowers);
+router.route('/following/:userId').get(protect, getFollowing);
+// get followers
+router.route('/followers/:userId').get(protect, getFollowers);
 
 export default router;

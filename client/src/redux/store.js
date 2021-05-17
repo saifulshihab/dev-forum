@@ -15,6 +15,7 @@ import {
   getUserProjectsReducer,
   getDevelopersReducer,
   followReducer,
+  getFollowingReducer,
   getFollowersReducer,
   unfollowReducer,
 } from './reducer/DeveloperReducer';
@@ -80,6 +81,7 @@ const reducer = combineReducers({
   proposalSend: sendProposalReducer,
   proposalGet: getProjectProposalReducer,
   developersGet: getDevelopersReducer,
+  followingGet: getFollowingReducer,
   followersGet: getFollowersReducer,
   followGet: followReducer,
   unfollowGet: unfollowReducer,

@@ -52,6 +52,9 @@ import {
   UNFOLLOW_REQUEST,
   UNFOLLOW_SUCCESS,
   UNFOLLOW_FAILED,
+  GET_FOLLOWING_REQUEST,
+  GET_FOLLOWING_SUCCESS,
+  GET_FOLLOWING_FAILED,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -239,6 +242,19 @@ export const unfollowReducer = (state = {}, action) => {
     case UNFOLLOW_SUCCESS:
       return { loading: false, success: true };
     case UNFOLLOW_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getFollowingReducer = (state = { following: [] }, action) => {
+  switch (action.type) {
+    case GET_FOLLOWING_REQUEST:
+      return { loading: true };
+    case GET_FOLLOWING_SUCCESS:
+      return { loading: false, following: action.payload };
+    case GET_FOLLOWING_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

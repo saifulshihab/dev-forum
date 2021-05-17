@@ -11,6 +11,8 @@ import {
   editDevAccount,
   editDevDp,
   editDevCover,
+  getFollowers,
+  getFollowing,
 } from '../../redux/action/DeveloperAction';
 import axios from 'axios';
 import Alert from '../../Components/Alert';
@@ -39,6 +41,12 @@ const DeveloperProfileScreen = ({ location }) => {
   const [dp, setDp] = useState(user?.dp);
   const [cover, setCover] = useState(user?.cover);
 
+  const followersGet = useSelector((state) => state.followersGet);
+  const { followers } = followersGet;
+
+  const followingGet = useSelector((state) => state.followingGet);
+  const { following } = followingGet;
+
   const devProfileEdit = useSelector((state) => state.devProfileEdit);
   const {
     loading: editLoading,
@@ -52,6 +60,7 @@ const DeveloperProfileScreen = ({ location }) => {
     success: dpEditSucccess,
     error: dpEditError,
   } = devDpEdit;
+
   const devCoverEdit = useSelector((state) => state.devCoverEdit);
   const {
     loading: coverEditLoading,
@@ -63,9 +72,14 @@ const DeveloperProfileScreen = ({ location }) => {
     if (!user || Object.keys(user).length === 0 || editSuccess) {
       dispatch(fetchDevProfile(devInfo._id));
     }
+    if (!user || Object.keys(user).length === 0) {
+      dispatch(getFollowers(user?._id));
+      dispatch(getFollowing(user?._id));
+    }
     if (editSuccess) {
       setEditModal(false);
     }
+
     return () => {};
   }, [dispatch, devInfo._id, user, editSuccess]);
 
@@ -240,6 +254,10 @@ const DeveloperProfileScreen = ({ location }) => {
                   {user?.website && <i className='mr-2 fas fa-globe'></i>}
                   {user?.website}
                 </span>
+                <div>
+                  <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
+                  followers {following?.length} following
+                </div>
                 <div className='flex items-center '>
                   <span className='mr-4'>
                     <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
@@ -933,7 +951,7 @@ const DeveloperProfileScreen = ({ location }) => {
               <Route
                 path={`${path}/ques`}
                 component={() => <DevQuesAskScreen user={user} />}
-              />           
+              />
               <Redirect to={`${path}/about`} />
             </Switch>
           </div>

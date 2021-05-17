@@ -46,6 +46,9 @@ import {
   FOLLOW_REQUEST,
   FOLLOW_SUCCESS,
   FOLLOW_FAILED,
+  GET_FOLLOWING_REQUEST,
+  GET_FOLLOWING_SUCCESS,
+  GET_FOLLOWING_FAILED,
   GET_FOLLOWERS_REQUEST,
   GET_FOLLOWERS_SUCCESS,
   GET_FOLLOWERS_FAILED,
@@ -510,8 +513,41 @@ export const getDevelopers = () => async (dispatch, getState) => {
     });
   }
 };
-// Get followers of specific user
+// Get following  users
 export const getFollowing = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_FOLLOWING_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/following/${userId}`,
+      config
+    );
+    dispatch({
+      type: GET_FOLLOWING_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_FOLLOWING_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Get followers of specific user
+export const getFollowers = (userId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_FOLLOWERS_REQUEST,
@@ -526,7 +562,7 @@ export const getFollowing = (userId) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `${baseURL}/api/dev/following/${userId}`,
+      `${baseURL}/api/dev/followers/${userId}`,
       config
     );
     dispatch({

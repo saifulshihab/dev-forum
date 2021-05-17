@@ -354,13 +354,34 @@ const unfollowOther = asyncHandler(async (req, res) => {
   }
 });
 // desc: get followers
+// routes: /api/dev/getFollowing/:userId
+// method: GET
+const getFollowing = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    const following = await Follower.find({ follower: user?._id }).populate(
+      'user'
+    );
+    if (following) {
+      res.status(200).json(following);
+    } else {
+      res.status(404);
+      throw new Error('Follower not found!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: get followers
 // routes: /api/dev/getFollowers/:userId
 // method: GET
 const getFollowers = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.params.userId);
   if (user) {
-    const followers = await Follower.find({ follower: user?._id }).populate('user');
-    console.log(req.params.userId)
+    const followers = await Follower.find({ user: user?._id }).populate(
+      'follower'
+    );
     if (followers) {
       res.status(200).json(followers);
     } else {
@@ -390,4 +411,5 @@ export {
   followOther,
   unfollowOther,
   getFollowers,
+  getFollowing,
 };

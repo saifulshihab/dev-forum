@@ -43,6 +43,15 @@ import {
   GET_DEVELOPERS_REQUEST,
   GET_DEVELOPERS_SUCCESS,
   GET_DEVELOPERS_FAILED,
+  FOLLOW_REQUEST,
+  FOLLOW_SUCCESS,
+  FOLLOW_FAILED,
+  GET_FOLLOWERS_REQUEST,
+  GET_FOLLOWERS_SUCCESS,
+  GET_FOLLOWERS_FAILED,
+  UNFOLLOW_REQUEST,
+  UNFOLLOW_SUCCESS,
+  UNFOLLOW_FAILED,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -204,6 +213,45 @@ export const getDevelopersReducer = (state = { developers: [] }, action) => {
     case GET_DEVELOPERS_SUCCESS:
       return { loading: false, developers: action.payload };
     case GET_DEVELOPERS_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const followReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FOLLOW_REQUEST:
+      return { loading: true };
+    case FOLLOW_SUCCESS:
+      return { loading: false, success: true };
+    case FOLLOW_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const unfollowReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UNFOLLOW_REQUEST:
+      return { loading: true };
+    case UNFOLLOW_SUCCESS:
+      return { loading: false, success: true };
+    case UNFOLLOW_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getFollowersReducer = (state = { followers: [] }, action) => {
+  switch (action.type) {
+    case GET_FOLLOWERS_REQUEST:
+      return { loading: true };
+    case GET_FOLLOWERS_SUCCESS:
+      return { loading: false, followers: action.payload };
+    case GET_FOLLOWERS_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

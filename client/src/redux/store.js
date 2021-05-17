@@ -14,6 +14,9 @@ import {
   devPublicViewReducer,
   getUserProjectsReducer,
   getDevelopersReducer,
+  followReducer,
+  getFollowersReducer,
+  unfollowReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -77,6 +80,9 @@ const reducer = combineReducers({
   proposalSend: sendProposalReducer,
   proposalGet: getProjectProposalReducer,
   developersGet: getDevelopersReducer,
+  followersGet: getFollowersReducer,
+  followGet: followReducer,
+  unfollowGet: unfollowReducer,
 });
 
 const verifyToken = (token, lsItem) => {

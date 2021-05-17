@@ -5,6 +5,7 @@ import { generateToken } from '../utils/generateToken.js';
 import Developer from '../models/DeveloperModel.js';
 import _ from 'lodash';
 import DevProject from '../models/DevProjectModel.js';
+import Follower from '../models/FollowerModel.js';
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -290,13 +291,85 @@ const editProject = asyncHandler(async (req, res) => {
 // desc: get developers
 // routes: /api/dev/developers
 // method: GET
-const getDevelopers = asyncHandler(async (req, res) => {  
+const getDevelopers = asyncHandler(async (req, res) => {
   const developers = await Developer.find({});
   if (developers) {
     res.status(200).json(developers);
   } else {
     res.status(404);
     throw new Error('Developers not found!');
+  }
+});
+
+// desc: follow others
+// routes: /api/dev/follow/:userId
+// method: POST
+const followOther = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    const alreadyFollowed = await Follower.find({
+      user: user?._id,
+      follower: req.user._id,
+    });
+    if (alreadyFollowed.length <= 0) {
+      const newFollower = await Follower.create({
+        user: user?._id,
+        follower: req.user?._id,
+      });
+      if (newFollower) {
+        res.status(200).json(newFollower);
+      } else {
+        res.status(500);
+        throw new Error('Failed to follow!');
+      }
+    } else {
+      res.status(403);
+      throw new Error('You already followed this person!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: unfollow others
+// routes: /api/dev/unfollow/:userId
+// method: POST
+const unfollowOther = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    const follower = await Follower.findOne({
+      user: user?._id,
+      follower: req.user._id,
+    });
+    if (follower) {
+      await follower.remove();
+      res.status(200).json(follower);
+    } else {
+      res.status(404);
+      throw new Error('Follower not found!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: get followers
+// routes: /api/dev/getFollowers/:userId
+// method: GET
+const getFollowers = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    const followers = await Follower.find({ follower: user?._id }).populate('user');
+    console.log(req.params.userId)
+    if (followers) {
+      res.status(200).json(followers);
+    } else {
+      res.status(404);
+      throw new Error('Follower not found!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
   }
 });
 
@@ -314,4 +387,7 @@ export {
   deleteProject,
   editProject,
   getDevelopers,
+  followOther,
+  unfollowOther,
+  getFollowers,
 };

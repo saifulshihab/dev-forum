@@ -43,6 +43,17 @@ import {
   GET_DEVELOPERS_REQUEST,
   GET_DEVELOPERS_SUCCESS,
   GET_DEVELOPERS_FAILED,
+  FOLLOW_REQUEST,
+  FOLLOW_SUCCESS,
+  FOLLOW_FAILED,
+  GET_FOLLOWERS_REQUEST,
+  GET_FOLLOWERS_SUCCESS,
+  GET_FOLLOWERS_FAILED,
+  FOLLOW_RESET,
+  UNFOLLOW_REQUEST,
+  UNFOLLOW_SUCCESS,
+  UNFOLLOW_RESET,
+  UNFOLLOW_FAILED,
 } from '../ActionTypes';
 
 // Developer signup
@@ -492,6 +503,107 @@ export const getDevelopers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_DEVELOPERS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Get followers of specific user
+export const getFollowing = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_FOLLOWERS_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/following/${userId}`,
+      config
+    );
+    dispatch({
+      type: GET_FOLLOWERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_FOLLOWERS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Follow other
+export const followOther = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FOLLOW_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.post(`${baseURL}/api/dev/follow/${userId}`, {}, config);
+    dispatch({
+      type: FOLLOW_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: FOLLOW_RESET,
+      });
+    }, 1000);
+  } catch (error) {
+    dispatch({
+      type: FOLLOW_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// UNfollow other
+export const unfollowOther = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UNFOLLOW_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.delete(`${baseURL}/api/dev/unfollow/${userId}`, config);
+    dispatch({
+      type: UNFOLLOW_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: UNFOLLOW_RESET,
+      });
+    }, 1000);
+  } catch (error) {
+    dispatch({
+      type: UNFOLLOW_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

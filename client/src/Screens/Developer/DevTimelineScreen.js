@@ -9,7 +9,7 @@ import {
   getSharedArticle,
 } from '../../redux/action/ArticleAction';
 
-const DevTimelineScreen = ({ user }) => {
+const DevTimelineScreen = ({ user, recruiterView }) => {
   const dispatch = useDispatch();
 
   const sharedArticleGet = useSelector((state) => state.sharedArticleGet);
@@ -17,9 +17,10 @@ const DevTimelineScreen = ({ user }) => {
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
+  
   useEffect(() => {
-    dispatch(getSharedArticle(user?._id));
-  }, [dispatch, user?._id]);
+    dispatch(getSharedArticle(user?._id, recruiterView));
+  }, [dispatch, user?._id, recruiterView]);
 
   const deleteShareArticleHandler = (articleId) => {
     dispatch(deleteSharedArticle(articleId));

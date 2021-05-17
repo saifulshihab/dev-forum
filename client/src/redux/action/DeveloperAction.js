@@ -297,7 +297,7 @@ export const getDevPublicProfile =
         signInDev: { devInfo },
         signInRec: { recInfo },
       } = getState();
-      console.log(recInfo.token);
+
       const config = {
         headers: {
           Authorization: `Bearer ${
@@ -307,9 +307,9 @@ export const getDevPublicProfile =
       };
       const { data } = await axios.get(
         `${
-          !recruiterView
-            ? `${baseURL}/api/dev/user/${username}`
-            : `${baseURL}/api/dev/user/${username}/recruiterView`
+          recruiterView
+            ? `${baseURL}/api/dev/user/${username}/recruiterView`
+            : `${baseURL}/api/dev/user/${username}`
         }`,
         config
       );
@@ -328,39 +328,47 @@ export const getDevPublicProfile =
     }
   };
 // Get developer projects
-export const getUserProjects = (userId) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: GET_USER_PROJECT_REQUEST,
-    });
+export const getUserProjects =
+  (userId, recruiterView) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_USER_PROJECT_REQUEST,
+      });
 
-    const {
-      signInDev: { devInfo },
-    } = getState();
+      const {
+        signInDev: { devInfo },
+        signInRec: { recInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/getProjects/${userId}`,
-      config
-    );
-    dispatch({
-      type: GET_USER_PROJECT_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_USER_PROJECT_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            recruiterView ? recInfo.token : devInfo.token
+          }`,
+        },
+      };
+      const { data } = await axios.get(
+        `${
+          recruiterView
+            ? `${baseURL}/api/dev/getProjects/${userId}/recruiterView`
+            : `${baseURL}/api/dev/getProjects/${userId}`
+        }`,
+        config
+      );
+      dispatch({
+        type: GET_USER_PROJECT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_USER_PROJECT_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 // Add project
 export const addProject = (project) => async (dispatch, getState) => {
   try {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, protect2 } from '../middleware/authMiddleware.js';
 import {
   createArticle,
   fetchAllArticle,
@@ -18,6 +18,7 @@ import {
 const router = express.Router();
 
 router.route('/').post(protect, createArticle).get(protect, fetchAllArticle);
+router.route('/:userId/articles/recruiterView').get(protect2, getUserArticles);
 router.route('/:userId/articles').get(protect, getUserArticles);
 router
   .route('/:articleId')
@@ -33,6 +34,7 @@ router
 // share a article
 router.route('/:articleId/share').post(protect, shareArticle);
 // get shared articles
+router.route('/getSharedArticle/:userId/recruiterView').get(protect2, getSharedArticle);
 router.route('/getSharedArticle/:userId').get(protect, getSharedArticle);
 // delete a shared article
 router

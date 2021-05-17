@@ -70,7 +70,12 @@ const DevProfilePublicView = ({ location, recruiterView }) => {
             </div>
           ) : (
             <div className='name_address_location text-gray-600 text-md'>
-              <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
+              <div className='flex items-center justify-between'>
+                <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
+                <button className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'>
+                  <i className='fas fa-paper-plane mr-1'></i>Send Message
+                </button>
+              </div>
               <span className='text-gray-400'>@{user?.username}</span>
               <div className='h-5 mb-1'>{user?.bio}</div>
               <span className='mr-4'>
@@ -237,19 +242,33 @@ const DevProfilePublicView = ({ location, recruiterView }) => {
               />
               <Route
                 path={`${path}/timeline`}
-                component={() => <DevTimelineScreen user={user} />}
+                component={() => (
+                  <DevTimelineScreen
+                    user={user}
+                    recruiterView={recruiterView}
+                  />
+                )}
               />
               <Route
                 path={`${path}/projects`}
-                component={() => <DevProjectsScreen user={user} />}
+                component={() => (
+                  <DevProjectsScreen
+                    user={user}
+                    recruiterView={recruiterView}
+                  />
+                )}
               />
               <Route
                 path={`${path}/articles`}
-                component={() => <DevArticleScreen user={user} />}
+                component={() => (
+                  <DevArticleScreen user={user} recruiterView={recruiterView} />
+                )}
               />
               <Route
                 path={`${path}/ques`}
-                component={() => <DevQuesAskScreen user={user} />}
+                component={() => (
+                  <DevQuesAskScreen user={user} recruiterView={recruiterView} />
+                )}
               />
               <Redirect to={`${path}/about`} />
             </Switch>

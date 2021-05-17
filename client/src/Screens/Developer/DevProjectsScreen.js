@@ -12,7 +12,8 @@ import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
 import Modal from '../../Components/Modal';
 
-const DevProjectsScreen = ({ user }) => {
+const DevProjectsScreen = ({ user, recruiterView }) => {
+  console.log(recruiterView)
   const dispatch = useDispatch();
 
   const [addProjectModal, setAddProjectModal] = useState(false);
@@ -34,12 +35,15 @@ const DevProjectsScreen = ({ user }) => {
   const userProjects = useSelector((state) => state.userProjects);
   const { loading, projects, success: addSuccess, error } = userProjects;
 
+  const signInDev = useSelector((state) => state.signInDev);
+  const { devInfo: currentUser } = signInDev;
+
   useEffect(() => {
     if (addSuccess) {
       setAddProjectModal(false);
     }
-    dispatch(getUserProjects(user?._id));
-  }, [dispatch, user?._id, addSuccess]);
+    dispatch(getUserProjects(user?._id, recruiterView));
+  }, [dispatch, user?._id, addSuccess, recruiterView]);
 
   return (
     <>
@@ -47,13 +51,15 @@ const DevProjectsScreen = ({ user }) => {
         <p>
           <i className='fas mr-2 fa-tasks'></i>Projects ({projects?.length})
         </p>
-        <button
-          onClick={() => setAddProjectModal(true)}
-          className='border text-sm text-gray-500 hover:text-white focus:outline-none hover:border-indigo-500 p-1 rounded px-2 font-semibold hover:bg-indigo-500'
-        >
-          <i className='mr-2 far fa-plus-square'></i>
-          Add Project
-        </button>
+        {user?._id?.toString() === currentUser?._id?.toString() && (
+          <button
+            onClick={() => setAddProjectModal(true)}
+            className='border text-sm text-gray-500 hover:text-white focus:outline-none hover:border-indigo-500 p-1 rounded px-2 font-semibold hover:bg-indigo-500'
+          >
+            <i className='mr-2 far fa-plus-square'></i>
+            Add Project
+          </button>
+        )}
       </div>
       {loading ? (
         <Loader />

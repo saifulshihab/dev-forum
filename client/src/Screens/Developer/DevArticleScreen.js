@@ -5,14 +5,14 @@ import Article from '../../Components/Article';
 import Loader from '../../Components/Loader';
 import { getUserArticles } from '../../redux/action/ArticleAction';
 
-const DevArticleScreen = ({ user }) => {
+const DevArticleScreen = ({ user, recruiterView }) => {
   const dispatch = useDispatch();
   const fetchUserArticles = useSelector((state) => state.fetchUserArticles);
   const { loading, error, articles } = fetchUserArticles;
   useEffect(() => {
-    dispatch(getUserArticles(user?._id));
+    dispatch(getUserArticles(user?._id, recruiterView));
     return () => {};
-  }, [dispatch, user?._id]);
+  }, [dispatch, user?._id, recruiterView]);
 
   return (
     <div>

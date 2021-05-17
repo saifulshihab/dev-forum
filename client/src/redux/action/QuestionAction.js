@@ -145,82 +145,78 @@ export const deleteQuestion = (questionId) => async (dispatch, getState) => {
 };
 
 // edit question
-export const editQuestion = (questionId, updateQuestion) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: QUESTION_EDIT_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    await axios.put(
-      `${baseURL}/api/question/editQuestion/${questionId}`,
-      updateQuestion,
-      config
-    );
-    dispatch({
-      type: QUESTION_EDIT_SUCCESS,
-    });
-    setTimeout(() => {
+export const editQuestion =
+  (questionId, updateQuestion) => async (dispatch, getState) => {
+    try {
       dispatch({
-        type: QUESTION_EDIT_RESET,
+        type: QUESTION_EDIT_REQUEST,
       });
-    }, 2000);
-  } catch (error) {
-    dispatch({
-      type: QUESTION_EDIT_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
-// get question answers
-export const getQuestionAnswers = (questionId) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: GET_Q_ANSWERS_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
+      const {
+        signInDev: { devInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      `${baseURL}/api/question/getAnswers/${questionId}`,
-      config
-    );
-    dispatch({
-      type: GET_Q_ANSWERS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_Q_ANSWERS_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${devInfo.token}`,
+        },
+      };
+      await axios.put(
+        `${baseURL}/api/question/editQuestion/${questionId}`,
+        updateQuestion,
+        config
+      );
+      dispatch({
+        type: QUESTION_EDIT_SUCCESS,
+      });
+      setTimeout(() => {
+        dispatch({
+          type: QUESTION_EDIT_RESET,
+        });
+      }, 2000);
+    } catch (error) {
+      dispatch({
+        type: QUESTION_EDIT_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+// get question answers
+export const getQuestionAnswers =
+  (questionId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_Q_ANSWERS_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${devInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${baseURL}/api/question/getAnswers/${questionId}`,
+        config
+      );
+      dispatch({
+        type: GET_Q_ANSWERS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_Q_ANSWERS_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 // add new answer
 export const addAnswer = (questionId, answer) => async (dispatch, getState) => {
   try {
@@ -318,39 +314,45 @@ export const downvoteAnswer = (answerId) => async (dispatch, getState) => {
 };
 
 // get user questions
-export const getUserQuestions = (userId) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: GET_USER_QUESTIONS_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
+export const getUserQuestions =
+  (userId, recruiterView) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_USER_QUESTIONS_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+        signInRec: { recInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      `${baseURL}/api/question/getUserQuestions/${userId}`,
-      config
-    );
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            recruiterView ? recInfo.token : devInfo.token
+          }`,
+        },
+      };
+      const { data } = await axios.get(
+        recruiterView
+          ? `${baseURL}/api/question/getUserQuestions/${userId}/recruiterView`
+          : `${baseURL}/api/question/getUserQuestions/${userId}`,
+        config
+      );
 
-    dispatch({
-      type: GET_USER_QUESTIONS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_USER_QUESTIONS_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_USER_QUESTIONS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_USER_QUESTIONS_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 // get user questions
 export const deleteAnswer = (answerId) => async (dispatch, getState) => {

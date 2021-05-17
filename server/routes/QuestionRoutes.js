@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, protect2 } from '../middleware/authMiddleware.js';
 import {
   createQuestion,
   getQuestions,
@@ -32,6 +32,7 @@ router.route('/upvoteAnswer/:answerId').put(protect, upvoteAnswer);
 // downvote answer
 router.route('/downvoteAnswer/:answerId').put(protect, downvoteAnswer);
 // get user questions
+router.route('/getUserQuestions/:userId/recruiterView').get(protect2, getUserQuestions);
 router.route('/getUserQuestions/:userId').get(protect, getUserQuestions);
 // get user questions
 router.route('/deleteAnswer/:answerId').delete(protect, deleteAnswer);

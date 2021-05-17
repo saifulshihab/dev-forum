@@ -35,6 +35,7 @@ router.route('/user/:username').get(protect, getDevPublicProfile);
 // add project
 router.route('/addProject').post(protect, addProject);
 // get user projects
+router.route('/getProjects/:userId/recruiterView').get(protect2, getUserProjects);
 router.route('/getProjects/:userId').get(protect, getUserProjects);
 // add project
 // router.route('/addProject').post(protect, addProject);

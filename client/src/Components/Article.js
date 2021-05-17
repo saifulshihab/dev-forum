@@ -52,7 +52,7 @@ const Article = ({ article, routeFromProfile, details }) => {
           <div className='mr-3 w-6 h-full'>
             {_.findIndex(
               article?.upvote,
-              (o) => o.user.toString() === currentUser._id.toString()
+              (o) => o.user.toString() === currentUser?._id?.toString()
             ) > -1 ? (
               <button className='w-full outline-none focus:outline-none'>
                 <UpvoteIcon color={true} />
@@ -75,7 +75,7 @@ const Article = ({ article, routeFromProfile, details }) => {
             )}
             {_.findIndex(
               article?.downvote,
-              (o) => o.user.toString() === currentUser._id.toString()
+              (o) => o.user.toString() === currentUser?._id?.toString()
             ) > -1 ? (
               <button className='w-full outline-none focus:outline-none'>
                 <DownvoteIcon color={true} />

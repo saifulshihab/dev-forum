@@ -5,14 +5,14 @@ import Question from '../../Components/Question';
 import Loader from '../../Components/Loader';
 import { getUserQuestions } from '../../redux/action/QuestionAction';
 
-const DevQuesAskScreen = ({ user }) => {
+const DevQuesAskScreen = ({ user, recruiterView }) => {
   const dispatch = useDispatch();
   const userQuestions = useSelector((state) => state.userQuestions);
   const { loading, error, questions } = userQuestions;
   useEffect(() => {
-    dispatch(getUserQuestions(user?._id));
+    dispatch(getUserQuestions(user?._id, recruiterView));
     return () => {};
-  }, [dispatch, user?._id]);
+  }, [dispatch, user?._id, recruiterView]);
 
   return (
     <div>

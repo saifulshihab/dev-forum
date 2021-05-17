@@ -133,7 +133,12 @@ const HomeScreen = ({ location }) => {
               <Route path={`${path}/more`} component={MoreScreen} />
               <Route
                 path={`${path}/user/:username`}
-                component={DevProfilePublicView}
+                component={() => (
+                  <DevProfilePublicView
+                    location={location}
+                    recruiterView={false}
+                  />
+                )}
               />
               <Redirect to={`${path}/forum`} />
             </Switch>

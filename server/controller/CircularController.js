@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Circular from '../models/CircularModel.js';
+import JobApplication from '../models/JobApplicationModel.js';
 import Recruiter from '../models/RecruiterModel.js';
 
 // desc: post circular by recruiter
@@ -75,6 +76,51 @@ export const getRecruiterCirculars = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error('Circular not found!');
     }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: apply for job by developer
+// routes: api/circular/sendApplication/:circularId
+// method: POST
+export const applyForJob = asyncHandler(async (req, res) => {
+  const circular = await Circular.findById(req.params.circularId);
+  if (circular) {
+    const alreadyApplied = await JobApplication.find({
+      circular: circular._id,
+      user: req.user._id,
+    });
+    if (alreadyApplied.length < 1) {
+      const newApplication = await JobApplication.create({
+        circular: circular._id,
+        user: req.user._id,
+      });
+      if (newApplication) {
+        res.status(200).json(newApplication);
+      } else {
+        res.status(500);
+        throw new Error('Failed to send application!');
+      }
+    } else {
+      res.status(403);
+      throw new Error('You already applied for this job!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: get job applicant for a circular
+// routes: api/circular/getApplicants/:circularId
+// method: GET
+export const getApplicant = asyncHandler(async (req, res) => {
+  const circular = await Circular.findById(req.params.circularId);
+  if (circular) {
+    const applicants = await JobApplication.find({
+      circular: circular._id,
+    }).populate('user');
+    res.status(200).json(applicants);
   } else {
     res.status(404);
     throw new Error('User not found!');

@@ -14,6 +14,13 @@ import {
   CIRCULAR_EDIT_SUCCESS,
   CIRCULAR_EDIT_FAILED,
   CIRCULAR_EDIT_RESET,
+  JOB_APPLY_REQUEST,
+  JOB_APPLY_SUCCESS,
+  JOB_APPLY_FAILED,
+  JOB_APPLY_RESET,
+  GET_JOB_APPLICANT_REQUEST,
+  GET_JOB_APPLICANT_SUCCESS,
+  GET_JOB_APPLICANT_FAILED,
 } from '../ActionTypes';
 
 export const getRCircularReducer = (state = { circulars: [] }, action) => {
@@ -66,6 +73,32 @@ export const circularEditReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case CIRCULAR_EDIT_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+export const jobApplyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case JOB_APPLY_REQUEST:
+      return { loading: true };
+    case JOB_APPLY_SUCCESS:
+      return { loading: false, success: true };
+    case JOB_APPLY_FAILED:
+      return { loading: false, error: action.payload };
+    case JOB_APPLY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+export const jobApplicantReducer = (state = { applicants: [] }, action) => {
+  switch (action.type) {
+    case GET_JOB_APPLICANT_REQUEST:
+      return { loading: true };
+    case GET_JOB_APPLICANT_SUCCESS:
+      return { loading: false, applicants: action.payload };
+    case GET_JOB_APPLICANT_FAILED:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import Spinner from './Spinner';
 import MyTextField from './MyTextField';
 import * as yup from 'yup';
 import {
+  applyForJob,
   deleteCircular,
   editCircular,
   getRecruiterCirculars,
@@ -32,6 +33,13 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
     success: editSuccess,
     error: editError,
   } = circularEdit;
+
+  const jobApply = useSelector((state) => state.jobApply);
+  const {
+    loading: applyLoading,
+    success: applySuccess,
+    error: applyError,
+  } = jobApply;
 
   useEffect(() => {
     if (deleteSuccess) {
@@ -77,6 +85,9 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
 
   const deleteCircularHandler = () => {
     dispatch(deleteCircular(circular?._id));
+  };
+  const applyJobHandler = () => {
+    dispatch(applyForJob(circular?._id));
   };
 
   return (
@@ -167,9 +178,16 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
       </div>
       {developer && (
         <div className='mt-1 w-full'>
-          <button className='w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-sm text-white p-2 font-semibold rounded'>
-            Apply Now
+          <button
+            onClick={applyJobHandler}
+            className='w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-sm text-white p-2 font-semibold rounded'
+          >
+            {applyLoading ? <Spinner /> : 'Apply Now'}
           </button>
+          <div className='mt-1'>
+            {applyError && <Alert fail msg={applyError} />}
+            {applySuccess && <Alert success msg={'Application sent!'} />}
+          </div>
         </div>
       )}
       <Modal

@@ -55,6 +55,8 @@ import {
   circularDeleteReducer,
   circularEditReducer,
   getRCircularReducer,
+  jobApplicantReducer,
+  jobApplyReducer,
   postCircularReducer,
 } from './reducer/CircularReducer';
 
@@ -101,6 +103,8 @@ const reducer = combineReducers({
   circularDel: circularDeleteReducer,
   circularEdit: circularEditReducer,
   circularsGet: getCircularReducer,
+  jobApply: jobApplyReducer,
+  jobApplicantsGet: jobApplicantReducer,
 });
 
 const verifyToken = (token, lsItem) => {

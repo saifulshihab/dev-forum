@@ -9,9 +9,16 @@ import {
   CIRCULAR_EDIT_REQUEST,
   CIRCULAR_EDIT_RESET,
   CIRCULAR_EDIT_SUCCESS,
+  GET_JOB_APPLICANT_FAILED,
+  GET_JOB_APPLICANT_REQUEST,
+  GET_JOB_APPLICANT_SUCCESS,
   GET_RCIRCULAR_FAILED,
   GET_RCIRCULAR_REQUEST,
   GET_RCIRCULAR_SUCCESS,
+  JOB_APPLY_FAILED,
+  JOB_APPLY_REQUEST,
+  JOB_APPLY_RESET,
+  JOB_APPLY_SUCCESS,
   POST_CIRCULAR_FAILED,
   POST_CIRCULAR_REQUEST,
   POST_CIRCULAR_RESET,
@@ -172,3 +179,81 @@ export const editCircular =
       });
     }
   };
+// Apply for job (developer)
+export const applyForJob = (circularId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: JOB_APPLY_REQUEST,
+    });
+
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.post(
+      `${baseURL}/api/circular/sendApplication/${circularId}`,
+      {},
+      config
+    );
+    dispatch({
+      type: JOB_APPLY_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: JOB_APPLY_RESET,
+      });
+    }, 2000);
+  } catch (error) {
+    dispatch({
+      type: JOB_APPLY_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: JOB_APPLY_RESET,
+      });
+    }, 2000);
+  }
+};
+// Get job applicants
+export const getJobApplicants = (circularId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_JOB_APPLICANT_REQUEST,
+    });
+
+    const {
+      signInRec: { recInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/circular/getApplicants/${circularId}`,
+      config
+    );
+    dispatch({
+      type: GET_JOB_APPLICANT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_JOB_APPLICANT_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

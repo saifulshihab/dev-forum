@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from './Alert';
 
-const Developer = ({ user }) => {
+const Developer = ({ user, recruiterView }) => {
   const dispatch = useDispatch();
 
   const signInDev = useSelector((state) => state.signInDev);
@@ -57,7 +57,13 @@ const Developer = ({ user }) => {
     <div className='bg-white rounded p-2 shadow mb-2 flex items-center justify-between'>
       <div className='flex items-center'>
         <div className='w-10 h-10 mr-2'>
-          <Link to={`/h/user/${user?.username}`}>
+          <Link
+            to={`${
+              recruiterView
+                ? `/r/user/${user?.username}`
+                : `/h/user/${user?.username}`
+            }`}
+          >
             <img
               className='w-full h-full rounded-full'
               src={baseURL + user?.dp}
@@ -66,7 +72,13 @@ const Developer = ({ user }) => {
           </Link>
         </div>
         <div className='text-gray-500'>
-          <Link to={`/h/user/${user?.username}`}>
+          <Link
+            to={`${
+              recruiterView
+                ? `/r/user/${user?.username}`
+                : `/h/user/${user?.username}`
+            }`}
+          >
             <p className='hover:text-indigo-500 font-semibold'>
               {user?.full_name}
             </p>
@@ -85,7 +97,8 @@ const Developer = ({ user }) => {
         </div>
       </div>
       <div>
-        {currentUser?._id !== user?._id &&
+        {!recruiterView &&
+          currentUser?._id !== user?._id &&
           (isFollowed ? (
             <button
               onClick={unfollowHandler}

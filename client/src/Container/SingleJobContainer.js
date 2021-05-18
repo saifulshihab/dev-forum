@@ -21,6 +21,10 @@ const SingleJobContainer = () => {
   return (
     <div className='p-1'>
       <JobCircular circular={circular} noRoute details developer />
+      <p className='text-xs italic text-gray-400'>
+        <span className='font-semibold'>Note: </span>Before apply make sure your
+        profile is 100% ready.
+      </p>
     </div>
   );
 };

@@ -7,6 +7,9 @@ import _ from 'lodash';
 import DevProject from '../models/DevProjectModel.js';
 import Follower from '../models/FollowerModel.js';
 import Circular from '../models/CircularModel.js';
+import emailValidator from 'email-validator';
+import nodemailer from 'nodemailer';
+import jwt from 'jsonwebtoken';
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -26,17 +29,23 @@ const signupDeveloper = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Confirm password does not match!');
   } else {
-    const newDeveloper = await Developer.create({
-      full_name,
-      username,
-      email,
-      password,
-    });
-    res.status(201).json({
-      _id: newDeveloper._id,
-      username: newDeveloper.username,
-      token: generateToken(newDeveloper._id),
-    });
+    const validEmail = emailValidator.validate(email);
+    if (validEmail) {
+      const newDeveloper = await Developer.create({
+        full_name,
+        username,
+        email,
+        password,
+      });
+      res.status(201).json({
+        _id: newDeveloper._id,
+        username: newDeveloper.username,
+        token: generateToken(newDeveloper._id),
+      });
+    } else {
+      res.status(403);
+      throw new Error('Invalid Email!');
+    }
   }
 });
 // desc: signin developer
@@ -406,6 +415,120 @@ const getJobCirculars = asyncHandler(async (req, res) => {
     throw new Error('Circilars not found!');
   }
 });
+// desc:  Change work status
+// routes: /api/dev/changeWorkStatus/:userId
+// method: PUT
+const changeWorkStatus = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId);
+  if (user) {
+    if (user._id.equals(req.params.userId)) {
+      user.workStatus = req.body.status;
+      await user.save();
+      res.status(200).json({ message: 'Work status updated!' });
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to change this!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: Reset password (developer)
+// routes: /api/dev/resetPasswordDev/:userId
+// method: PUT
+const resetPasswordDev = asyncHandler(async (req, res) => {
+  const user = await Developer.findById(req.params.userId).select('password');
+  if (user) {
+    if (user._id.equals(req.params.userId)) {
+      const { p_password, new_password, retype_new_password } = req.body;
+      if (await user.verifyPassword(p_password)) {
+        if (new_password === retype_new_password) {
+          user.password = new_password;
+          await user.save();
+          res.status(200).json({ message: 'Password reset successfully!' });
+        } else {
+          res.status(403);
+          throw new Error('New password doens not match!');
+        }
+      } else {
+        res.status(403);
+        throw new Error('Invalid Previous Password!');
+      }
+    } else {
+      res.status(403);
+      throw new Error('You are not authorized to change this!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
+// desc: Get reset password link
+// routes: /api/dev/getResetPasswordLinkDev/:userId
+// method: PUT
+const getResetPasswordLinkDev = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await Developer.findOne({ email: email });
+  if (user) {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    });
+
+    const token = await jwt.sign({ id: user._id }, process.env.EMAIL_SECRET, {
+      expiresIn: '30min',
+    });
+
+    // const url = `http://localhost:3000/createNewPassword/${token}`;    //localhost
+    const url = `${process.env.PROD_CLIENT}/recover-password/${token}`;
+
+    const emailSent = await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Reset Password | DevForum',
+      text: 'Reset your password',
+      html: `<p>Please click this link to reset password. <a href="${url}">${url}</a></p>`,
+    });
+    if (emailSent) {
+      res.status(201).json({
+        status: 'Password reset email sent.',
+        message: `Password reset link was sent to ${email}.`,
+      });
+    } else {
+      res.status(403);
+      throw new Error('Password reset failed, Email sending failed!');
+    }
+  } else {
+    res.status(403);
+    throw new Error('There is no account associated with this email!');
+  }
+});
+
+const resetPasswordFromLink = asyncHandler(async (req, res) => {
+  const { id } = jwt.verify(req.params.token, process.env.EMAIL_SECRET);
+  const user = await Developer.findById(id);
+  if (user) {
+    let { newPass, conPass } = req.body;
+    if (newPass === conPass) {
+      user.password = newPass;
+      await user.save();
+      res.status(200);
+      res.json({ message: 'Password reset successfully!' });
+    } else {
+      res.status(403);
+      throw new Error('Password does not match!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found!');
+  }
+});
 
 export {
   signupDeveloper,
@@ -426,4 +549,8 @@ export {
   getFollowers,
   getFollowing,
   getJobCirculars,
+  changeWorkStatus,
+  resetPasswordDev,
+  getResetPasswordLinkDev,
+  resetPasswordFromLink,
 };

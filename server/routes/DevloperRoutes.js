@@ -23,6 +23,10 @@ import {
   getFollowers,
   getFollowing,
   getJobCirculars,
+  changeWorkStatus,
+  resetPasswordDev,
+  getResetPasswordLinkDev,
+  resetPasswordFromLink,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -64,5 +68,13 @@ router.route('/following/:userId').get(protect, getFollowing);
 router.route('/followers/:userId').get(protect, getFollowers);
 // get job circulars
 router.route('/getJobCirculars/list').get(protect, getJobCirculars);
+// change work status
+router.route('/changeWorkStatus/:userId').put(protect, changeWorkStatus);
+// reset password
+router.route('/resetPasswordDev/:userId').put(protect, resetPasswordDev);
+// get reset password link
+router.route('/getResetPasswordLinkDev').post(getResetPasswordLinkDev);
+// reset password from link
+router.route('/resetPasswordFromLink/:token').post(resetPasswordFromLink);
 
 export default router;

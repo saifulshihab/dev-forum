@@ -99,6 +99,10 @@ const DeveloperSchema = mongoose.Schema(
     },
     topSkills: [],
     otherSkills: [],
+    workStatus: {
+      type: String,
+      default: 'off',
+    },
   },
   {
     timestamps: true,

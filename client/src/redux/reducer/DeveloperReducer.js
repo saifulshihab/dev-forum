@@ -58,6 +58,21 @@ import {
   GET_CIRCULAR_REQUEST,
   GET_CIRCULAR_SUCCESS,
   GET_CIRCULAR_FAILED,
+  CHANGE_WORK_STATUS_REQUEST,
+  CHANGE_WORK_STATUS_SUCCESS,
+  CHANGE_WORK_STATUS_FAILED,
+  CHANGE_WORK_STATUS_RESET,
+  DEV_RESET_PASSWORD_REQUEST,
+  DEV_RESET_PASSWORD_SUCCESS,
+  DEV_RESET_PASSWORD_FAILED,
+  DEV_RESET_PASSWORD_RESET,
+  DEV_RESET_PASSWORD_FROM_LINK_REQUEST,
+  DEV_RESET_PASSWORD_FROM_LINK_SUCCESS,
+  DEV_RESET_PASSWORD_FROM_LINK_FAILED,
+  GET_PASSWORD_RESET_LINK_DEV_REQUEST,
+  GET_PASSWORD_RESET_LINK_DEV_SUCCESS,
+  GET_PASSWORD_RESET_LINK_DEV_FAILED,
+  GET_PASSWORD_RESET_LINK_DEV_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -284,6 +299,64 @@ export const getCircularReducer = (state = { circulars: [] }, action) => {
     case GET_CIRCULAR_SUCCESS:
       return { loading: false, circulars: action.payload };
     case GET_CIRCULAR_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const changeWorkStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CHANGE_WORK_STATUS_REQUEST:
+      return { loading: true };
+    case CHANGE_WORK_STATUS_SUCCESS:
+      return { loading: false, success: true };
+    case CHANGE_WORK_STATUS_FAILED:
+      return { loading: false, error: action.payload };
+    case CHANGE_WORK_STATUS_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const resetPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_RESET_PASSWORD_REQUEST:
+      return { loading: true };
+    case DEV_RESET_PASSWORD_SUCCESS:
+      return { loading: false, success: true };
+    case DEV_RESET_PASSWORD_FAILED:
+      return { loading: false, error: action.payload };
+    case DEV_RESET_PASSWORD_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getResetLinkDevReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_PASSWORD_RESET_LINK_DEV_REQUEST:
+      return { loading: true };
+    case GET_PASSWORD_RESET_LINK_DEV_SUCCESS:
+      return { loading: false, success: true, message: action.payload };
+    case GET_PASSWORD_RESET_LINK_DEV_FAILED:
+      return { loading: false, error: action.payload };
+    case GET_PASSWORD_RESET_LINK_DEV_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const resetPasswordFromLinkReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_RESET_PASSWORD_FROM_LINK_REQUEST:
+      return { loading: true };
+    case DEV_RESET_PASSWORD_FROM_LINK_SUCCESS:
+      return { loading: false, success: true };
+    case DEV_RESET_PASSWORD_FROM_LINK_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

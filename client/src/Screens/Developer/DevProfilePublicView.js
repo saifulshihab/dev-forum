@@ -37,10 +37,10 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   const { loading, error, user } = devPublicView;
 
   const followersGet = useSelector((state) => state.followersGet);
-  const { followers } = followersGet;
+  const { loading: followingLoading, followers } = followersGet;
 
   const followingGet = useSelector((state) => state.followingGet);
-  const { following } = followingGet;
+  const { loading: followersLoading, following } = followingGet;
 
   const followGet = useSelector((state) => state.followGet);
   const {
@@ -73,17 +73,16 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   ]);
 
   useEffect(() => {
- 
-      dispatch(getFollowers(user?._id));
-      dispatch(getFollowing(user?._id));
-    
+    dispatch(getFollowers(user?._id));
+    dispatch(getFollowing(user?._id));
+
     return () => {};
   }, [dispatch, user]);
 
   const currentUserFollowers = followers?.map(
     (data) => data?.follower?._id?.toString() === currentUser?._id?.toString()
   );
-  const isFollowed = currentUserFollowers?.includes(true) ? true : false;  
+  const isFollowed = currentUserFollowers?.includes(true) ? true : false;
 
   const followHandler = () => {
     dispatch(followOther(user?._id));
@@ -167,7 +166,17 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                     ))}
                 </div>
               </div>
-              <span className='text-gray-400'>@{user?.username}</span>
+              <div className='flex items-center'>
+                <span className='text-gray-400'>@{user?.username}</span>
+                {user?.workStatus !== 'off' && (
+                  <div className='ml-2 flex justify-start items-center text-xs'>
+                    <span className='w-3 h-3 rounded-full bg-green-400 mr-1'></span>
+                    <span className='text-gray-400'>
+                      Open to Work ({user?.workStatus})
+                    </span>
+                  </div>
+                )}
+              </div>
               <div className='h-5 mb-1'>{user?.bio}</div>
               <span className='mr-4'>
                 {user?.email && (
@@ -177,14 +186,24 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               </span>
               <span>
                 {user?.website && <i className='mr-2 fas fa-globe'></i>}
-                {user?.website}
+                <a
+                  className='hover:text-indigo-500 hover:underline'
+                  target='_blank'
+                  rel='noreferrer'
+                  href={user?.website}
+                >
+                  {user?.website}
+                </a>
               </span>
-              {!recruiterView && (
-                <div>
-                  <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
-                  Followers {following?.length} Following
-                </div>
-              )}
+              {!recruiterView &&
+                (followersLoading || followingLoading ? (
+                  <span className='bg-gray-200 h-3 mb-1 w-28 block'></span>
+                ) : (
+                  <div>
+                    <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
+                    Followers {following?.length} Following
+                  </div>
+                ))}
               <div className='flex items-center '>
                 <span className='mr-4'>
                   <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}

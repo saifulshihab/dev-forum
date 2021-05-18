@@ -69,19 +69,17 @@ const DeveloperProfileScreen = ({ location }) => {
   } = devCoverEdit;
 
   useEffect(() => {
-    if (!user || Object.keys(user).length === 0 || editSuccess) {
-      dispatch(fetchDevProfile(devInfo._id));
-    }
+    dispatch(fetchDevProfile(devInfo._id));
 
-    dispatch(getFollowers(user?._id));
-    dispatch(getFollowing(user?._id));
+    dispatch(getFollowers(devInfo?._id));
+    dispatch(getFollowing(devInfo?._id));
 
     if (editSuccess) {
       setEditModal(false);
     }
 
     return () => {};
-  }, [dispatch, devInfo._id, user, editSuccess]);
+  }, [dispatch, devInfo._id, editSuccess]);
 
   const fieldValidationSchema = yup.object().shape({
     full_name: yup
@@ -232,7 +230,7 @@ const DeveloperProfileScreen = ({ location }) => {
                 <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
               </div>
             ) : (
-              <div className='name_address_location text-gray-600 text-sm'>
+              <div className='name_address_location text-gray-500 text-sm'>
                 <div className='flex items-center justify-between'>
                   <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
                   <button
@@ -242,7 +240,17 @@ const DeveloperProfileScreen = ({ location }) => {
                     <i className='fas fa-edit mr-1'></i>Edit Profile
                   </button>
                 </div>
-                <span className='text-gray-400'>@{user?.username}</span>
+                <div className='flex items-center'>
+                  <span className='text-gray-400'>@{user?.username}</span>
+                  {user?.workStatus !== 'off' && (
+                    <div className='ml-2 flex justify-start items-center text-xs'>
+                      <span className='w-3 h-3 rounded-full bg-green-400 mr-1'></span>
+                      <span className='text-gray-400'>
+                        Open to Work ({user?.workStatus})
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <div className='h-5 mb-1'>{user?.bio}</div>
                 <span className='mr-4'>
                   {user?.email && (
@@ -252,7 +260,14 @@ const DeveloperProfileScreen = ({ location }) => {
                 </span>
                 <span>
                   {user?.website && <i className='mr-2 fas fa-globe'></i>}
-                  {user?.website}
+                  <a
+                    className='hover:text-indigo-500 hover:underline'
+                    target='_blank'
+                    rel='noreferrer'
+                    href={user?.website}
+                  >
+                    {user?.website}
+                  </a>
                 </span>
                 <div>
                   <i className='fas fa-users mr-1'></i> {followers?.length}{' '}

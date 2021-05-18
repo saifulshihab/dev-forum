@@ -72,14 +72,14 @@ const LoginPage = ({ history }) => {
                     id='username'
                     name='username'
                     type='text'
-                    placeholder='Email or username'
+                    placeholder='Enter username'
                   />
 
                   <MyTextField
                     id='password'
                     name='password'
                     type='password'
-                    placeholder='Password'
+                    placeholder='Enter password'
                   />
                 </div>
 

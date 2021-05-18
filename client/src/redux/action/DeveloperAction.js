@@ -60,6 +60,21 @@ import {
   GET_CIRCULAR_REQUEST,
   GET_CIRCULAR_SUCCESS,
   GET_CIRCULAR_FAILED,
+  CHANGE_WORK_STATUS_REQUEST,
+  CHANGE_WORK_STATUS_SUCCESS,
+  CHANGE_WORK_STATUS_FAILED,
+  CHANGE_WORK_STATUS_RESET,
+  DEV_RESET_PASSWORD_REQUEST,
+  DEV_RESET_PASSWORD_SUCCESS,
+  DEV_RESET_PASSWORD_FAILED,
+  DEV_RESET_PASSWORD_RESET,
+  DEV_RESET_PASSWORD_FROM_LINK_REQUEST,
+  DEV_RESET_PASSWORD_FROM_LINK_SUCCESS,
+  DEV_RESET_PASSWORD_FROM_LINK_FAILED,
+  GET_PASSWORD_RESET_LINK_DEV_REQUEST,
+  GET_PASSWORD_RESET_LINK_DEV_SUCCESS,
+  GET_PASSWORD_RESET_LINK_DEV_FAILED,
+  GET_PASSWORD_RESET_LINK_DEV_RESET,
 } from '../ActionTypes';
 
 // Developer signup
@@ -683,3 +698,142 @@ export const getJobCirculars = () => async (dispatch, getState) => {
     });
   }
 };
+// Change work status
+export const changeWorkStatus =
+  (userId, status) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: CHANGE_WORK_STATUS_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${devInfo.token}`,
+        },
+      };
+      await axios.put(
+        `${baseURL}/api/dev/changeWorkStatus/${userId}`,
+        status,
+        config
+      );
+      dispatch({
+        type: CHANGE_WORK_STATUS_SUCCESS,
+      });
+      dispatch({
+        type: CHANGE_WORK_STATUS_RESET,
+      });
+    } catch (error) {
+      dispatch({
+        type: CHANGE_WORK_STATUS_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+// Reset password
+export const devResetPassword = (newPassword) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DEV_RESET_PASSWORD_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.put(
+      `${baseURL}/api/dev/resetPasswordDev/${devInfo?._id}`,
+      newPassword,
+      config
+    );
+    dispatch({
+      type: DEV_RESET_PASSWORD_SUCCESS,
+    });
+    dispatch({
+      type: DEV_RESET_PASSWORD_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEV_RESET_PASSWORD_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Get reset password link
+export const getResetPasswordLinkDev = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_DEV_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `${baseURL}/api/dev/getResetPasswordLinkDev`,
+      { email },
+      config
+    );
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_DEV_SUCCESS,
+      payload: data.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: GET_PASSWORD_RESET_LINK_DEV_RESET,
+      });
+    }, 5000);
+  } catch (error) {
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_DEV_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Reset password from link
+export const resetPasswordFromLink =
+  (token, newPass, conPass) => async (dispatch) => {
+    try {
+      dispatch({
+        type: DEV_RESET_PASSWORD_FROM_LINK_REQUEST,
+      });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      await axios.post(
+        `${baseURL}/api/dev/resetPasswordFromLink/${token}`,
+        { newPass, conPass },
+        config
+      );
+      dispatch({
+        type: DEV_RESET_PASSWORD_FROM_LINK_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: DEV_RESET_PASSWORD_FROM_LINK_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

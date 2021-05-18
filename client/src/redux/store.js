@@ -19,6 +19,10 @@ import {
   getFollowersReducer,
   unfollowReducer,
   getCircularReducer,
+  changeWorkStatusReducer,
+  resetPasswordReducer,
+  resetPasswordFromLinkReducer,
+  getResetLinkDevReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -105,6 +109,10 @@ const reducer = combineReducers({
   circularsGet: getCircularReducer,
   jobApply: jobApplyReducer,
   jobApplicantsGet: jobApplicantReducer,
+  workStatusChange: changeWorkStatusReducer,
+  devPasswordReset: resetPasswordReducer,
+  resetLinkDevGet: getResetLinkDevReducer,
+  devPasswordResetFL: resetPasswordFromLinkReducer
 });
 
 const verifyToken = (token, lsItem) => {

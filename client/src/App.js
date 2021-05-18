@@ -17,6 +17,7 @@ import RLoginScreen from './Screens/Recruiter/RLoginScreen';
 import RRegistrationScreen from './Screens/Recruiter/RRegistrationScreen';
 import RForgetPassword from './Screens/Recruiter/RForgetPassword';
 import RecruiterHomeScreen from './Screens/Recruiter/RecruiterHomeScreen';
+import RecoverPassword from './Screens/RecoverPassword';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path='/re-login' component={RLoginScreen} />
           <Route path='/re-registration' component={RRegistrationScreen} />
           <Route path='/forgot-password' component={ForgotPassword} />
+          <Route path='/recover-password/:token' component={RecoverPassword} />
           <Route path='/re-forgot-password' component={RForgetPassword} />
           <Route path='/about' component={AboutUs} />
           <PrivateRoute path='/h' component={HomeScreen} />

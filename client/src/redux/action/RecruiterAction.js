@@ -21,6 +21,24 @@ import {
   PROJECT_DELETE_SUCCESS,
   PROJECT_DELETE_FAILED,
   PROJECT_DELETE_RESET,
+  GET_RECRUITER_PROFILE_REQUEST,
+  GET_RECRUITER_PROFILE_SUCCESS,
+  GET_RECRUITER_PROFILE_FAILED,
+  EDIT_RECRUITER_PROFILE_REQUEST,
+  EDIT_RECRUITER_PROFILE_SUCCESS,
+  EDIT_RECRUITER_PROFILE_FAILED,
+  EDIT_RECRUITER_PROFILE_RESET,
+  GET_PASSWORD_RESET_LINK_REC_REQUEST,
+  GET_PASSWORD_RESET_LINK_REC_SUCCESS,
+  GET_PASSWORD_RESET_LINK_REC_RESET,
+  GET_PASSWORD_RESET_LINK_DEV_FAILED,
+  REC_RESET_PASSWORD_FROM_LINK_REQUEST,
+  REC_RESET_PASSWORD_FROM_LINK_SUCCESS,
+  REC_RESET_PASSWORD_FROM_LINK_FAILED,
+  REC_RESET_PASSWORD_REQUEST,
+  REC_RESET_PASSWORD_SUCCESS,
+  REC_RESET_PASSWORD_FAILED,
+  REC_RESET_PASSWORD_RESET,
 } from '../ActionTypes';
 
 // Recruiter signin
@@ -226,6 +244,176 @@ export const deleteRecProject = (projectId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PROJECT_DELETE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Get profile information
+export const getRecruiterProfile = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_RECRUITER_PROFILE_REQUEST,
+    });
+    const {
+      signInRec: { recInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recInfo?.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/recruiter/${recInfo._id}`,
+      config
+    );
+    dispatch({
+      type: GET_RECRUITER_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_RECRUITER_PROFILE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Get profile information
+export const editRecruiterProfile = (update) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: EDIT_RECRUITER_PROFILE_REQUEST,
+    });
+    const {
+      signInRec: { recInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recInfo?.token}`,
+      },
+    };
+    await axios.put(`${baseURL}/api/recruiter/${recInfo._id}`, update, config);
+    dispatch({
+      type: EDIT_RECRUITER_PROFILE_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: EDIT_RECRUITER_PROFILE_RESET,
+      });
+    }, 2000);
+  } catch (error) {
+    dispatch({
+      type: EDIT_RECRUITER_PROFILE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Get reset password link
+export const getResetPasswordLinkRec = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_REC_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `${baseURL}/api/recruiter/getResetPasswordLinkRec`,
+      { email },
+      config
+    );
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_REC_SUCCESS,
+      payload: data.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: GET_PASSWORD_RESET_LINK_REC_RESET,
+      });
+    }, 5000);
+  } catch (error) {
+    dispatch({
+      type: GET_PASSWORD_RESET_LINK_DEV_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Reset password from link
+export const recResetPasswordFromLink =
+  (token, newPass, conPass) => async (dispatch) => {
+    try {
+      dispatch({
+        type: REC_RESET_PASSWORD_FROM_LINK_REQUEST,
+      });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      await axios.post(
+        `${baseURL}/api/recruiter/resetPasswordFromLinkRec/${token}`,
+        { newPass, conPass },
+        config
+      );
+      dispatch({
+        type: REC_RESET_PASSWORD_FROM_LINK_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: REC_RESET_PASSWORD_FROM_LINK_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+// Reset password
+export const resetPasswordRec = (newPassword) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: REC_RESET_PASSWORD_REQUEST,
+    });
+    const {
+      signInRec: { recInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recInfo.token}`,
+      },
+    };
+    await axios.put(
+      `${baseURL}/api/recruiter/resetPasswordRec/${recInfo?._id}`,
+      newPassword,
+      config
+    );
+    dispatch({
+      type: REC_RESET_PASSWORD_SUCCESS,
+    });
+    dispatch({
+      type: REC_RESET_PASSWORD_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: REC_RESET_PASSWORD_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

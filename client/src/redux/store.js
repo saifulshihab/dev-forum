@@ -49,6 +49,11 @@ import {
   postProjectReducer,
   projectEditReducer,
   projectDeleteReducer,
+  getRecruiterProfileReducer,
+  editRecruiterProfileReducer,
+  getResetLinkRecReducer,
+  resetPasswordFromLinkRecReducer,
+  resetPasswordRecReducer,
 } from './reducer/RecruiterReducer';
 import {
   getFreelanceProjectsReducer,
@@ -112,7 +117,12 @@ const reducer = combineReducers({
   workStatusChange: changeWorkStatusReducer,
   devPasswordReset: resetPasswordReducer,
   resetLinkDevGet: getResetLinkDevReducer,
-  devPasswordResetFL: resetPasswordFromLinkReducer
+  devPasswordResetFL: resetPasswordFromLinkReducer,
+  recruiterProfileGet: getRecruiterProfileReducer,
+  recruiterProfileEdit: editRecruiterProfileReducer,
+  resetLinkRecGet: getResetLinkRecReducer,
+  recPasswordResetFL: resetPasswordFromLinkRecReducer,
+  recResetPassword: resetPasswordRecReducer,
 });
 
 const verifyToken = (token, lsItem) => {

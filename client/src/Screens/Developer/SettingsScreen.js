@@ -109,14 +109,7 @@ const SettingsScreen = () => {
           <button
             onClick={() => setResetModal(true)}
             className='h-8 rounded px-4 bg-green-500 outline-none focus:outline-none text-sm font-semibold text-white'
-          >
-            {loading ? (
-              <SmallLoader color='text-white' />
-            ) : (
-              <i className='fas fa-sync-alt mr-2'></i>
-            )}
-            {loading ? 'Deleting...' : 'Reset'}
-          </button>
+          ><i className='fas fa-sync-alt mr-2'></i>Reset</button>
         </div>
       </div>
       <div className='delete_wrapper shadow rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>

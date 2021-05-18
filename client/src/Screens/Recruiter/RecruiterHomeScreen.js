@@ -7,6 +7,7 @@ import RJobScreen from './RJobScreen';
 import RNotificationScreen from './RNotificationScreen';
 import RProfileScreen from './RProfileScreen';
 import RProjectScreen from './RProjectScreen';
+import RSettingsScreen from './RSettingsScreen';
 
 const RecruiterHomeScreen = ({ location }) => {
   const { path, url } = useRouteMatch();
@@ -87,6 +88,10 @@ const RecruiterHomeScreen = ({ location }) => {
               <Route
                 path={`${path}/profile`}
                 component={() => <RProfileScreen />}
+              />
+              <Route
+                path={`${path}/settings`}
+                component={() => <RSettingsScreen />}
               />
               <Route
                 path={`${path}/user/:username`}

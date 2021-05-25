@@ -40,45 +40,44 @@ const ArticleCommentsContainer = ({ article }) => {
         <span className='mr-3'>{comments?.length} Comments</span>
         <span>{article?.shares?.length} Shares</span>
       </div>
-      <div className='my-2'>
-        <div className='flex items-center'>
+
+      <div className='flex items-center my-2'>
+        <div className='flex-grow flex items-center'>
           <input
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             onKeyPress={keyHandler}
             placeholder='Write your comment...'
-            className='ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
+            className='flex-1 ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
           />
-          <span
-            className='cursor-pointer'
-            onClick={() => setEmoji(!emojiOn)}
-            style={{ position: 'absolute', left: '59%' }}
-          >
-            <i className='text-gray-400 far fa-grin'></i>
-          </span>
           <div>
+            <span className='cursor-pointer' onClick={() => setEmoji(!emojiOn)}>
+              <i className='text-gray-400 far fa-grin'></i>
+            </span>
+          </div>
+          <div className='absolute right-0' style={{ left: '75%' }}>
             {emojiOn && (
               <Picker
-                style={{ position: 'absolute' }}
                 onSelect={(emoji) => {
                   setComment(comment + emoji.native);
                 }}
               />
             )}
           </div>
-          <button
-            onClick={commentHandler}
-            disabled={comment === ''}
-            className={`rounded-full border ${
-              comment !== '' && 'hover:text-white hover:bg-indigo-500'
-            }
-            ${comment === '' && 'opacity-30'}
-            p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500`}
-          >
-            Send
-          </button>
         </div>
+        <button
+          onClick={commentHandler}
+          disabled={comment === ''}
+          className={`rounded-full border ${
+            comment !== '' && 'hover:text-white hover:bg-indigo-500'
+          }
+          ${comment === '' && 'opacity-30'}
+          mx-2 p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500`}
+        >
+          Send
+        </button>
       </div>
+
       {loading ? (
         <CommentLoader />
       ) : error ? (

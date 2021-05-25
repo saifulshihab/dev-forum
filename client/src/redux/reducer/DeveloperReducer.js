@@ -29,7 +29,6 @@ import {
   DEV_PUBLIC_VIEW_REQUEST,
   DEV_PUBLIC_VIEW_SUCCESS,
   DEV_PUBLIC_VIEW_FAIL,
-  DEV_PUBLIC_VIEW_RESET,
   GET_USER_PROJECT_REQUEST,
   GET_USER_PROJECT_SUCCESS,
   GET_USER_PROJECT_FAILED,
@@ -73,6 +72,13 @@ import {
   GET_PASSWORD_RESET_LINK_DEV_SUCCESS,
   GET_PASSWORD_RESET_LINK_DEV_FAILED,
   GET_PASSWORD_RESET_LINK_DEV_RESET,
+  DEV_GET_CHAT_ROOMS_REQUEST,
+  DEV_GET_CHAT_ROOMS_SUCCESS,
+  DEV_GET_CHAT_ROOMS_FAILED,
+  DEV_CREATE_CHAT_ROOM_REQUEST,
+  DEV_CREATE_CHAT_ROOM_SUCCESS,
+  DEV_CREATE_CHAT_ROOM_FAILED,
+  DEV_CREATE_CHAT_ROOM_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -185,7 +191,7 @@ export const devProfileCoverEditReducer = (state = {}, action) => {
   }
 };
 
-export const devPublicViewReducer = (state = {}, action) => {
+export const devPublicViewReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case DEV_PUBLIC_VIEW_REQUEST:
       return { loading: true };
@@ -193,8 +199,6 @@ export const devPublicViewReducer = (state = {}, action) => {
       return { loading: false, user: action.payload };
     case DEV_PUBLIC_VIEW_FAIL:
       return { loading: false, error: action.payload };
-    case DEV_PUBLIC_VIEW_RESET:
-      return {};
     default:
       return state;
   }
@@ -358,6 +362,34 @@ export const resetPasswordFromLinkReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case DEV_RESET_PASSWORD_FROM_LINK_FAILED:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getChatRoomsReducer = (state = { rooms: [] }, action) => {
+  switch (action.type) {
+    case DEV_GET_CHAT_ROOMS_REQUEST:
+      return { loading: true };
+    case DEV_GET_CHAT_ROOMS_SUCCESS:
+      return { loading: false, rooms: action.payload };
+    case DEV_GET_CHAT_ROOMS_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const devCreateChatRoomReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_CREATE_CHAT_ROOM_REQUEST:
+      return { loading: true };
+    case DEV_CREATE_CHAT_ROOM_SUCCESS:
+      return { loading: false, success: true };
+    case DEV_CREATE_CHAT_ROOM_FAILED:
+      return { loading: false, error: action.payload };
+    case DEV_CREATE_CHAT_ROOM_RESET:
+      return {};
     default:
       return state;
   }

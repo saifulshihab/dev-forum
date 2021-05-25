@@ -23,6 +23,8 @@ import {
   resetPasswordReducer,
   resetPasswordFromLinkReducer,
   getResetLinkDevReducer,
+  getChatRoomsReducer,
+  devCreateChatRoomReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -123,6 +125,8 @@ const reducer = combineReducers({
   resetLinkRecGet: getResetLinkRecReducer,
   recPasswordResetFL: resetPasswordFromLinkRecReducer,
   recResetPassword: resetPasswordRecReducer,
+  devChatRoomsGet: getChatRoomsReducer,
+  devChatRoomCreate: devCreateChatRoomReducer,
 });
 
 const verifyToken = (token, lsItem) => {

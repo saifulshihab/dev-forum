@@ -448,7 +448,7 @@ const DeveloperProfileScreen = ({ location }) => {
                 </div>
                 <div className='w-3/5 flex flex-col space-y-1 justify-center'>
                   <img
-                    className='w-full h-40 image_center'
+                    className='w-full rounded-xl h-40 image_center'
                     src={baseURL + user?.cover}
                     alt={user?.username}
                   />

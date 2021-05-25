@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Redirect,
   Route,
   Switch,
+  useHistory,
   useParams,
   useRouteMatch,
 } from 'react-router';
@@ -16,6 +17,7 @@ import {
   getFollowers,
   getFollowing,
   unfollowOther,
+  devCreateChatRoom,
 } from '../../redux/action/DeveloperAction';
 import DevAboutScreen from './DevAboutScreen';
 import DevArticleScreen from './DevArticleScreen';
@@ -23,15 +25,20 @@ import DevProjectsScreen from './DevProjectsScreen';
 import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
+import { v4 as uuidv4 } from 'uuid';
+import Alert from '../../Components/Alert';
 
 const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { url, path } = useRouteMatch();
   const currentPath = location.pathname.split('/')[4];
 
+  const [roomId, setRoomId] = useState('');
+
   const signInDev = useSelector((state) => state.signInDev);
-  const { devInfo: currentUser } = signInDev;
+  const { devInfo: loggedUser } = signInDev;
 
   const devPublicView = useSelector((state) => state.devPublicView);
   const { loading, error, user } = devPublicView;
@@ -41,6 +48,13 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
 
   const followingGet = useSelector((state) => state.followingGet);
   const { loading: followersLoading, following } = followingGet;
+
+  const devChatRoomCreate = useSelector((state) => state.devChatRoomCreate);
+  const {
+    loading: roomCreateLoading,
+    success: roomCreateSuccess,
+    error: roomCreateError,
+  } = devChatRoomCreate;
 
   const followGet = useSelector((state) => state.followGet);
   const {
@@ -58,29 +72,37 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
 
   useEffect(() => {
     dispatch(getDevPublicProfile(username, recruiterView));
-    dispatch(getFollowing(currentUser?._id));
+    dispatch(getFollowing(loggedUser?._id));
     if (followSuccess || unfollowSuccess) {
-      dispatch(getFollowing(currentUser?._id));
+      dispatch(getFollowing(loggedUser?._id));
     }
     return () => {};
   }, [
     dispatch,
     username,
     recruiterView,
-    currentUser?._id,
+    loggedUser?._id,
     followSuccess,
     unfollowSuccess,
   ]);
 
   useEffect(() => {
-    dispatch(getFollowers(user?._id));
-    dispatch(getFollowing(user?._id));
+    if (user) {
+      dispatch(getFollowers(user?._id));
+      dispatch(getFollowing(user?._id));
+    }
 
     return () => {};
   }, [dispatch, user]);
 
+  useEffect(() => {
+    if (roomCreateSuccess) {
+      history.push(`/h/messages/${roomId}`);
+    }
+  }, [history, roomCreateSuccess, roomId]);
+
   const currentUserFollowers = followers?.map(
-    (data) => data?.follower?._id?.toString() === currentUser?._id?.toString()
+    (data) => data?.follower?._id?.toString() === loggedUser?._id?.toString()
   );
   const isFollowed = currentUserFollowers?.includes(true) ? true : false;
 
@@ -92,9 +114,22 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
     dispatch(unfollowOther(user?._id));
   };
 
+  const createRoomForNewConversation = (receiverId) => {
+    const newRoomId = uuidv4();
+    setRoomId(newRoomId);
+    const roomInfo = {
+      roomId: newRoomId,
+      receiver: receiverId,
+      user_fname: user?.full_name,
+      user_dp: user?.dp,
+    };
+    dispatch(devCreateChatRoom(roomInfo));
+  };
+
   return (
     <>
       {error && error}
+      {roomCreateError && <Alert fail msg={roomCreateError} />}
       <div className='p-1'>
         <div className='dev_dp_cover w-full'>
           <div className='cover w-full'>
@@ -135,10 +170,17 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               <div className='flex items-center justify-between'>
                 <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
                 <div className='flex items-center'>
-                  <button className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'>
-                    <i className='fas fa-paper-plane mr-1'></i>Send Message
-                  </button>
-                  {followButton &&
+                  {user?._id !== loggedUser?._id && (
+                    <button
+                      onClick={() => createRoomForNewConversation(user?._id)}
+                      className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
+                    >
+                      <i className='fas fa-paper-plane mr-1'></i>
+                      {roomCreateLoading && <Spinner small />} Send Message
+                    </button>
+                  )}
+                  {user?._id !== loggedUser?._id &&
+                    followButton &&
                     (isFollowed ? (
                       <button
                         onClick={unfollowHandler}
@@ -227,8 +269,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             {loading ? (
               <div className='h-5 bg-gray-200 w-full'></div>
             ) : (
-              user?.social.length > 0 &&
-              user?.social.reverse().map((el, idx) => {
+              user?.social?.length > 0 &&
+              user?.social?.reverse().map((el, idx) => {
                 const icn_cls =
                   el.platform === 'facebook'
                     ? 'fab fa-facebook text-blue-600 hover:text-blue-700'

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import AboutUs from './Screens/AboutUs';
 import ForgotPassword from './Screens/ForgotPassword';
 import HomeScreen from './Screens/HomeScreen';
 import LoginPage from './Screens/LoginPage';
-// import PageNotFound from './Screens/PageNotFound';
 import RegFirstStep from './Screens/RegFirstStep';
 import RegPage from './Screens/RegPage';
 import Welcome from './Screens/Welcome';
@@ -34,9 +32,11 @@ function App() {
           <Route path='/re-registration' component={RRegistrationScreen} />
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/recover-password/:token' component={RecoverPassword} />
-          <Route path='/recover-password-recruiter/:token' component={RecoverPasswordRec} />
+          <Route
+            path='/recover-password-recruiter/:token'
+            component={RecoverPasswordRec}
+          />
           <Route path='/re-forgot-password' component={RForgetPassword} />
-          <Route path='/about' component={AboutUs} />
           <PrivateRoute path='/h' component={HomeScreen} />
           <PrivateRoute2 path='/r' component={RecruiterHomeScreen} />
         </div>

@@ -75,6 +75,14 @@ import {
   GET_PASSWORD_RESET_LINK_DEV_SUCCESS,
   GET_PASSWORD_RESET_LINK_DEV_FAILED,
   GET_PASSWORD_RESET_LINK_DEV_RESET,
+  DEV_SIGNUP_RESET,
+  DEV_GET_CHAT_ROOMS_REQUEST,
+  DEV_GET_CHAT_ROOMS_SUCCESS,
+  DEV_GET_CHAT_ROOMS_FAILED,
+  DEV_CREATE_CHAT_ROOM_REQUEST,
+  DEV_CREATE_CHAT_ROOM_SUCCESS,
+  DEV_CREATE_CHAT_ROOM_FAILED,
+  DEV_CREATE_CHAT_ROOM_RESET,
 } from '../ActionTypes';
 
 // Developer signup
@@ -101,6 +109,12 @@ export const devSignup = (dev) => async (dispatch) => {
       payload: data,
     });
     localStorage.setItem('devInfo', JSON.stringify(data));
+
+    setTimeout(() => {
+      dispatch({
+        type: DEV_SIGNUP_RESET,
+      });
+    }, 2000);
   } catch (error) {
     dispatch({
       type: DEV_SIGNUP_FAIL,
@@ -837,3 +851,77 @@ export const resetPasswordFromLink =
       });
     }
   };
+
+// Get chat rooms
+export const devGetChatRooms = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DEV_GET_CHAT_ROOMS_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/chat/getChatRooms/${userId}`,
+      config
+    );
+    dispatch({
+      type: DEV_GET_CHAT_ROOMS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEV_GET_CHAT_ROOMS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Get chat rooms
+export const devCreateChatRoom = (roomInfo) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DEV_CREATE_CHAT_ROOM_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token}`,
+      },
+    };
+    await axios.post(`${baseURL}/api/chat/createNewRoom`, roomInfo, config);
+    dispatch({
+      type: DEV_CREATE_CHAT_ROOM_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: DEV_CREATE_CHAT_ROOM_RESET,
+      });
+    }, 3000);
+  } catch (error) {
+    dispatch({
+      type: DEV_CREATE_CHAT_ROOM_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: DEV_CREATE_CHAT_ROOM_RESET,
+      });
+    }, 2000);
+  }
+};

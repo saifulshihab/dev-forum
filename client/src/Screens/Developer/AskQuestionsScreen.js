@@ -12,7 +12,7 @@ const AskQuestionsScreen = ({ location }) => {
 
   return (
     <div className='grid grid-cols-4 h-full'>
-      <div className='col-span-3'>
+      <div className='col-span-4 sm:col-span-4 md:col-span-3'>
         <div className='heading'>
           <nav className='bg-gray-100 text-dark'>
             <div className='max-w-7xl border-b-4 border-white mx-auto px-4 sm:px-6 lg:px-8'>
@@ -89,7 +89,7 @@ const AskQuestionsScreen = ({ location }) => {
           </Switch>
         </div>
       </div>
-      <div className='p-1'>
+      <div className='hidden md:block'>
         <p className='text-md text-gray-500 p-1 bg-gray-100 font-semibold border-b-4 border-white pb-2 mb-1'>
         <i className="fas fa-newspaper mr-2"></i>Top Articles
         </p>

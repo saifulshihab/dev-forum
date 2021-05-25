@@ -43,6 +43,7 @@ router
   .route('/user/:username/recruiterView')
   .get(protect2, getDevPublicProfile);
 router.route('/user/:username').get(protect, getDevPublicProfile);
+
 // add project
 router.route('/addProject').post(protect, addProject);
 // get user projects

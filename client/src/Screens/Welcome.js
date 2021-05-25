@@ -22,13 +22,13 @@ const Welcome = () => {
                   Create developer profile & portfolio
                 </span>
                 <span className='block text-indigo-600 xl:inline'>
-                  bid freelance job get hired by recruiters
+                  bid on projects get hired by recruiters
                 </span>
               </h1>
               <p className='mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0'>
-                BD Dev forum is an online community in BD where developers
-                showcase their work, bid on freelance job, ask questions and get
-                answer also get hired by reqruiters
+                An online platform for software developers where they can
+                showcase their projects, bid on projects, ask questions and get
+                answer also get hired by reqruiter.
               </p>
               <div className='mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start'>
                 <div className='rounded-md shadow'>
@@ -36,7 +36,7 @@ const Welcome = () => {
                     className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
                     to='/regfirststep'
                   >
-                    Get started
+                    Get Started
                   </Link>
                 </div>
               </div>

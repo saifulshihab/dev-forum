@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { devSignout, fetchDevProfile } from '../redux/action/DeveloperAction';
 import { baseURL } from '../baseURL';
 import { recSignout } from '../redux/action/RecruiterAction';
+import logo from '../logo.svg';
 
 const WelComeHeader = () => {
   const dispatch = useDispatch();
@@ -43,62 +44,32 @@ const WelComeHeader = () => {
   return (
     <>
       <div className='relative z-40 p-3 px-4 sm:px-6 lg:px-8'>
-        <nav
-          className='relative flex items-center justify-between sm:h-10 lg:justify-start'
-          aria-label='Global'
-        >
-          <div className='flex items-center flex-grow flex-shrink-0 lg:flex-grow-0'>
-            <div className='flex items-center justify-between w-full md:w-auto'>
+        <nav className='relative flex items-center justify-between h-6 sm:h-10 lg:justify-start'>
+          <div className='flex items-center'>
+            <div className='sm:hidden md:block flex items-center justify-between w-full md:w-auto'>
               <Link to='/' onClick={closeDD}>
-                <span className='sr-only'>DevForum</span>
-                <span className='text-3xl text-3xl font-extrabold text-gray-900'>
+                <span className='te-lg sm:text-xl md:text-3xl font-extrabold text-gray-900'>
                   DevForum
                 </span>
               </Link>
-              <div className='-mr-2 flex items-center md:hidden'>
-                <button
-                  type='button'
-                  className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
-                  id='main-menu'
-                  aria-haspopup='true'
-                >
-                  <span className='sr-only'>Open main menu</span>
-                </button>
-              </div>
+            </div>
+            <div className='hidden sm:block md:hidden'>
+              <Link to='/' onClick={closeDD}>
+                <img className='mx-auto h-8 w-auto' src={logo} alt='DevForum' />
+              </Link>
             </div>
           </div>
-          <div className='hidden md:flex items-center ml-auto md:space-x-8'>
-            <Link
-              onClick={closeDD}
-              to='/about'
-              className='font-medium text-gray-500 hover:text-gray-900'
-            >
-              About Us
-            </Link>
-            <Link
-              onClick={closeDD}
-              to='/'
-              className='font-medium text-gray-500 hover:text-gray-900'
-            >
-              Features
-            </Link>
-            <Link
-              onClick={closeDD}
-              to='/'
-              className='font-medium text-gray-500 hover:text-gray-900'
-            >
-              FAQ
-            </Link>
+
+          <div className='md:flex items-center ml-auto'>
             {isAuthenticated ? (
               <div className='inline-block'>
-                <div className=''>
+                <div>
                   <button
                     onClick={() => setdpDropdown((prev) => !prev)}
                     className='max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                     id='user-menu'
                     aria-haspopup='true'
                   >
-                    <span className='sr-only'>Open user menu</span>
                     <img
                       className='h-8 w-8 rounded-full image_center'
                       src={baseURL + user?.dp}
@@ -174,7 +145,6 @@ const WelComeHeader = () => {
                     id='user-menu'
                     aria-haspopup='true'
                   >
-                    <span className='sr-only'>Open user menu</span>
                     <img
                       className='h-8 w-8 rounded-full image_center'
                       src={
@@ -254,28 +224,6 @@ const WelComeHeader = () => {
             )}
           </div>
         </nav>
-      </div>
-
-      <div className='absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden'>
-        <div className='rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden'>
-          <div className='px-5 pt-4 flex items-center justify-between'>
-            <div>
-              <img
-                className='h-8 w-auto'
-                src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
-                alt=''
-              />
-            </div>
-            <div className='-mr-2'>
-              <button
-                type='button'
-                className='bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'
-              >
-                <span className='sr-only'>Close main menu</span>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </>
   );

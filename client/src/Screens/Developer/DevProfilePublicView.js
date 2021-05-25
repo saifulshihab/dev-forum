@@ -97,9 +97,11 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
 
   useEffect(() => {
     if (roomCreateSuccess) {
-      history.push(`/h/messages/${roomId}`);
+      history.push(
+        recruiterView ? `/r/messages/${roomId}` : `/h/messages/${roomId}`
+      );
     }
-  }, [history, roomCreateSuccess, roomId]);
+  }, [recruiterView, history, roomCreateSuccess, roomId]);
 
   const currentUserFollowers = followers?.map(
     (data) => data?.follower?._id?.toString() === loggedUser?._id?.toString()
@@ -123,7 +125,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
       user_fname: user?.full_name,
       user_dp: user?.dp,
     };
-    dispatch(devCreateChatRoom(roomInfo));
+    dispatch(devCreateChatRoom(roomInfo, recruiterView));
   };
 
   return (
@@ -175,8 +177,12 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                       onClick={() => createRoomForNewConversation(user?._id)}
                       className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
                     >
-                      <i className='fas fa-paper-plane mr-1'></i>
-                      {roomCreateLoading && <Spinner small />} Send Message
+                      {roomCreateLoading ? (
+                        <Spinner small />
+                      ) : (
+                        <i className='fas fa-paper-plane mr-1'></i>
+                      )}{' '}
+                      Send Message
                     </button>
                   )}
                   {user?._id !== loggedUser?._id &&

@@ -16,7 +16,7 @@ const Proposal = ({ proposal }) => {
               />
             </Link>
           </div>
-          <div className='h-8'>
+          <div className='h-full'>
             <Link to={`/r/user/${proposal?.user?.username}`}>
               <p className='hover:text-indigo-500 cursor-pointer text-sm font-semibold'>
                 {proposal?.user?.full_name}
@@ -34,7 +34,7 @@ const Proposal = ({ proposal }) => {
           </div>
         </div>
       </div>
-      <div className='mt-1 text-justify text-sm'>{proposal?.description}</div>
+      <div className='ml-10 text-justify text-xs'>{proposal?.description}</div>
     </div>
   );
 };

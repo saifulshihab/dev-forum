@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Components/Alert';
-import Loader from '../Components/Loader';
 import { addAnswer, getQuestionAnswers } from '../redux/action/QuestionAction';
 import Answer from '../Components/Answer';
 import { Picker } from 'emoji-mart';
@@ -16,7 +15,9 @@ const QuestionAnswersContainer = ({ question, details }) => {
   const { loading, answers, error } = answersQuestion;
 
   useEffect(() => {
-    dispatch(getQuestionAnswers(question?._id));
+    if (question?._id) {
+      dispatch(getQuestionAnswers(question?._id));
+    }
   }, [dispatch, question?._id]);
 
   const keyHandler = (event) => {

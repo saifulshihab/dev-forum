@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarMenu from '../../Components/SidebarMenu';
+import DevChatScreen from '../Developer/DevChatScreen';
 import DevProfilePublicView from '../Developer/DevProfilePublicView';
 import RJobScreen from './RJobScreen';
 import RNotificationScreen from './RNotificationScreen';
@@ -15,9 +16,9 @@ const RecruiterHomeScreen = ({ location }) => {
   const pathName = location.pathname.split('/')[2];
 
   return (
-    <div className='border-t-2'>
+    <div className='border-t-2 h-full'>
       <div className='grid grid-cols-5'>
-        <div className='col-span-1 h-screen'>
+        <div className='col-span-1 h-full'>
           <div className='h-full text-gray-600'>
             <Link
               to={`${url}/projects`}
@@ -33,7 +34,7 @@ const RecruiterHomeScreen = ({ location }) => {
             </Link>
             <Link
               to={`${url}/messages`}
-              className={pathName === 'jobs' ? 'text-indigo-600' : ''}
+              className={pathName === 'messages' ? 'text-indigo-600' : ''}
             >
               <SidebarMenu fontAwesome='fas fa-envelope' text={'Messages'} />
             </Link>
@@ -57,8 +58,8 @@ const RecruiterHomeScreen = ({ location }) => {
             </Link>
           </div>
         </div>
-        <div className='col-span-4 h-full'>
-          <div className='relative feed_right_content bg-gray-50 h-full'>
+        <div className='col-span-4 w-full h-full'>
+          <div className='bg-gray-50 h-full w-full'>
             <Switch>
               <Route path={`${path}/projects`} component={RProjectScreen} />
               <Route
@@ -72,6 +73,10 @@ const RecruiterHomeScreen = ({ location }) => {
               <Route
                 path={`${path}/settings`}
                 component={() => <RSettingsScreen />}
+              />
+              <Route
+                path={`${path}/messages`}
+                component={() => <DevChatScreen recruiter />}
               />
               <Route
                 path={`${path}/user/:username`}

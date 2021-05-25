@@ -5,7 +5,7 @@ import Message from '../../Components/Message';
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:5001');
 
-const DevOpenChat = () => {
+const DevOpenChat = ({recruiter}) => {
   const bottomListRef = useRef();
   const inputRef = useRef();
 
@@ -17,17 +17,16 @@ const DevOpenChat = () => {
   const { user: loggedUser } = devProfile;
 
   useEffect(() => {
-    if (loggedUser?.username) {
-      socket.emit('join', { name: loggedUser?.username, room: roomId });
+    if (loggedUser?.username || recruiter) {
+      socket.emit('join', { name: recruiter ? 'recruiter' : loggedUser?.username, room: roomId });
     }
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
     });
-  }, [roomId, loggedUser?.username]);
+  }, [roomId, loggedUser?.username, recruiter]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     socket.emit('sendMessage', newMessage, () => {
       setNewMessage('');
     });

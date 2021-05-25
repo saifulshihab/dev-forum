@@ -257,7 +257,7 @@ const Article = ({ article, routeFromProfile, details }) => {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              {(ref) => (
+              {({ ref }) => (
                 <div
                   ref={ref}
                   className='flex flex-col space-y-1 absolute right-25 text-sm text-gray-500 text-left mt-10 w-40 rounded-md shadow-lg p-2 bg-white ring-1 ring-black ring-opacity-5'

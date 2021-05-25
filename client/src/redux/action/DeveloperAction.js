@@ -853,75 +853,91 @@ export const resetPasswordFromLink =
   };
 
 // Get chat rooms
-export const devGetChatRooms = (userId) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: DEV_GET_CHAT_ROOMS_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
+export const devGetChatRooms =
+  (userId, recruiterView) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: DEV_GET_CHAT_ROOMS_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+        signInRec: { recInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      `${baseURL}/api/chat/getChatRooms/${userId}`,
-      config
-    );
-    dispatch({
-      type: DEV_GET_CHAT_ROOMS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DEV_GET_CHAT_ROOMS_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            recruiterView ? recInfo.token : devInfo.token
+          } `,
+        },
+      };
+      const { data } = await axios.get(
+        recruiterView
+          ? `${baseURL}/api/chat/getChatRooms/${userId}?recruiter=true`
+          : `${baseURL}/api/chat/getChatRooms/${userId}`,
+        config
+      );
+      dispatch({
+        type: DEV_GET_CHAT_ROOMS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DEV_GET_CHAT_ROOMS_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 // Get chat rooms
-export const devCreateChatRoom = (roomInfo) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: DEV_CREATE_CHAT_ROOM_REQUEST,
-    });
-    const {
-      signInDev: { devInfo },
-    } = getState();
+export const devCreateChatRoom =
+  (roomInfo, recruiterView) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: DEV_CREATE_CHAT_ROOM_REQUEST,
+      });
+      const {
+        signInDev: { devInfo },
+        signInRec: { recInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${devInfo.token}`,
-      },
-    };
-    await axios.post(`${baseURL}/api/chat/createNewRoom`, roomInfo, config);
-    dispatch({
-      type: DEV_CREATE_CHAT_ROOM_SUCCESS,
-    });
-    setTimeout(() => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${
+            recruiterView ? recInfo.token : devInfo.token
+          } `,
+        },
+      };
+      await axios.post(
+        recruiterView
+          ? `${baseURL}/api/chat/createRoomByRecruiter`
+          : `${baseURL}/api/chat/createNewRoom    `,
+        roomInfo,
+        config
+      );
       dispatch({
-        type: DEV_CREATE_CHAT_ROOM_RESET,
+        type: DEV_CREATE_CHAT_ROOM_SUCCESS,
       });
-    }, 3000);
-  } catch (error) {
-    dispatch({
-      type: DEV_CREATE_CHAT_ROOM_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-    setTimeout(() => {
+      setTimeout(() => {
+        dispatch({
+          type: DEV_CREATE_CHAT_ROOM_RESET,
+        });
+      }, 3000);
+    } catch (error) {
       dispatch({
-        type: DEV_CREATE_CHAT_ROOM_RESET,
+        type: DEV_CREATE_CHAT_ROOM_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
       });
-    }, 2000);
-  }
-};
+      setTimeout(() => {
+        dispatch({
+          type: DEV_CREATE_CHAT_ROOM_RESET,
+        });
+      }, 2000);
+    }
+  };

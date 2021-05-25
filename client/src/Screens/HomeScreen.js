@@ -85,7 +85,7 @@ const HomeScreen = ({ location }) => {
           </div>
         </div>
         <div className='col-span-4 h-full w-full'>
-          <div className='relative feed_right_content bg-gray-50 h-full w-full'>
+          <div className='bg-gray-50 h-full w-full'>
             <Switch>
               <Route path={`${path}/forum`} component={AskQuestionsScreen} />
               <Route path={`${path}/projects`} component={FreelanceScreen} />

@@ -35,6 +35,7 @@ const io = new Server(server, {
 });
 io.on('connection', (socket) => {
   socket.on('join', ({ name, room }) => {
+    
     const { user } = addUser({ id: socket.id, name, room });
 
     socket.join(user.room);

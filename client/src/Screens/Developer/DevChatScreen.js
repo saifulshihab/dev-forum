@@ -4,14 +4,13 @@ import { useRouteMatch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import { baseURL } from '../../baseURL';
 import Alert from '../../Components/Alert';
-import {
-  devGetChatRooms,
-  getDevelopers,
-} from '../../redux/action/DeveloperAction';
+import { devGetChatRooms } from '../../redux/action/DeveloperAction';
 import DevOpenChat from './DevOpenChat';
 import Loader from '../../Components/Loader';
 
-const DevChatScreen = () => {
+const recId = JSON.parse(localStorage?.getItem('recInfo'))?._id;
+
+const DevChatScreen = ({ recruiter }) => {
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
 
@@ -22,10 +21,9 @@ const DevChatScreen = () => {
   const { user: loggedUser } = devProfile;
 
   useEffect(() => {
-    dispatch(getDevelopers());
     // get user chat rooms
-    dispatch(devGetChatRooms(loggedUser?._id));
-  }, [dispatch, loggedUser?._id]);
+    dispatch(devGetChatRooms(recruiter ? recId : loggedUser?._id, recruiter));
+  }, [recruiter, dispatch, loggedUser?._id]);
 
   return (
     <div className='grid grid-cols-4 w-full h-full'>
@@ -58,9 +56,15 @@ const DevChatScreen = () => {
                       />
                     </div>
                     <div>
-                      {loggedUser?._id && (
+                      {loggedUser?._id ? (
                         <p className='text-gray-500 font-semibold'>
                           {room?.sender === loggedUser?._id
+                            ? room?.user_fname
+                            : room?.sender_fname}
+                        </p>
+                      ) : (
+                        <p className='text-gray-500 font-semibold'>
+                          {room?.sender === recId
                             ? room?.user_fname
                             : room?.sender_fname}
                         </p>
@@ -77,7 +81,10 @@ const DevChatScreen = () => {
       </div>
       <div className='col-span-3 border-l'>
         {/* chat open here */}
-        <Route path={`${path}/:roomId`} component={() => <DevOpenChat />} />
+        <Route
+          path={`${path}/:roomId`}
+          component={() => <DevOpenChat recruiter={recruiter} />}
+        />
       </div>
     </div>
   );

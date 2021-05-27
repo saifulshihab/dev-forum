@@ -1,5 +1,5 @@
 import cors from 'cors';
-const whitelist = ['http://localhost:3000', 'http://localhost:5000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:5000', 'https://devforum.netlify.app'];
 
 const corsOptionsDelegate = function (req, callback) {
   let corsOptions;

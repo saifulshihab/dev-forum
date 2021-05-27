@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/index"
+    "start": "node server/index",
+    "start:dev": "nodemon server/index"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

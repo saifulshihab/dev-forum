@@ -177,9 +177,9 @@ const DeveloperProfileScreen = ({ location }) => {
 
   useEffect(() => {
     if (dpEditSucccess || coverEditSucccess) {
-      dispatch(fetchDevProfile(devInfo.username));
+      dispatch(fetchDevProfile(devInfo?._id));
     }
-  }, [dispatch, devInfo.username, dpEditSucccess, coverEditSucccess]);
+  }, [dispatch, devInfo?._id, dpEditSucccess, coverEditSucccess]);
 
   const dpUpdateHandler = () => {
     dispatch(editDevDp(dp));

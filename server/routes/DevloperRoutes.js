@@ -1,8 +1,7 @@
 import express from 'express';
-const router = express.Router();
-import { corsWithOptions } from './cors.js';
-import cors from 'cors';
 import { protect, protect2 } from '../middleware/authMiddleware.js';
+import { corsWithOptions } from './cors.js';
+const router = express.Router();
 
 import {
   signupDeveloper,

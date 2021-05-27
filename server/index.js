@@ -3,7 +3,6 @@ import path from 'path';
 import http from 'http';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import 'colors';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
@@ -17,25 +16,30 @@ import circularRoutes from './routes/CircularRoutes.js';
 import chatRoutes from './routes/ChatRoutes.js';
 import { Server } from 'socket.io';
 import { addUser, getUser } from './socket/chat.js';
+import cors from 'cors';
+import { corsWithOptions } from './routes/cors.js';
+import Conversation from './models/ConversationModel.js';
 
 dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+
+// set cors preflight options
+app.options('*', cors());
+app.use(corsWithOptions);
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:5000', 'http://localhost:3000'],
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 io.on('connection', (socket) => {
   socket.on('join', ({ name, room }) => {
-    
     const { user } = addUser({ id: socket.id, name, room });
 
     socket.join(user.room);
@@ -50,12 +54,30 @@ io.on('connection', (socket) => {
     //   .emit('message', { user: 'admin', text: `${user.name} has joined` });
   });
 
-  socket.on('sendMessage', (message, callback) => {
+  // send message
+  socket.on('sendMessage', async (message, callback) => {
     const user = getUser(socket.id);
     if (user) {
-      io.to(user.room).emit('message', { user: user.name, text: message });
+      await Conversation.create({
+        room: user.room,
+        user: user.id,
+        userName: user.name,
+        text: message,
+      });
+      io.to(user.room).emit('message', {
+        room: user.room,
+        user: user.id,
+        userName: user.name,
+        text: message,
+      });
     }
     callback();
+  });
+
+  // get conversations
+  socket.on('getMessages', async (room) => {    
+    const conversationMessages = await Conversation.find({ room: room });
+    io.to(room).emit('returnMessages', { conversationMessages });
   });
 });
 

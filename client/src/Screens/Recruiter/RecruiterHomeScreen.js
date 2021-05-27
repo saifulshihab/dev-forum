@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarMenu from '../../Components/SidebarMenu';
-import DevChatScreen from '../Developer/DevChatScreen';
+import ChatScreen from '../Developer/ChatScreen';
 import DevProfilePublicView from '../Developer/DevProfilePublicView';
 import RJobScreen from './RJobScreen';
 import RNotificationScreen from './RNotificationScreen';
@@ -76,7 +76,7 @@ const RecruiterHomeScreen = ({ location }) => {
               />
               <Route
                 path={`${path}/messages`}
-                component={() => <DevChatScreen recruiter />}
+                component={() => <ChatScreen recruiter />}
               />
               <Route
                 path={`${path}/user/:username`}

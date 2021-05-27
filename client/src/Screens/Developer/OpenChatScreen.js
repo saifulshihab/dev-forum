@@ -5,7 +5,7 @@ import Message from '../../Components/Message';
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:5001');
 
-const DevOpenChat = ({recruiter}) => {
+const OpenChatScreen = ({ recruiter }) => {
   const bottomListRef = useRef();
   const inputRef = useRef();
 
@@ -17,8 +17,21 @@ const DevOpenChat = ({recruiter}) => {
   const { user: loggedUser } = devProfile;
 
   useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    socket.emit('getMessages', roomId);
+    socket.on('returnMessages', ({ conversationMessages }) => {
+      setMessages(conversationMessages);
+    });
+  }, [roomId, inputRef]);
+
+  useEffect(() => {
     if (loggedUser?.username || recruiter) {
-      socket.emit('join', { name: recruiter ? 'recruiter' : loggedUser?.username, room: roomId });
+      socket.emit('join', {
+        name: recruiter ? 'recruiter' : loggedUser?.username,
+        room: roomId,
+      });
     }
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
@@ -31,7 +44,7 @@ const DevOpenChat = ({recruiter}) => {
       setNewMessage('');
     });
     bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  };  
 
   return (
     <div className='w-full h-full'>
@@ -39,13 +52,19 @@ const DevOpenChat = ({recruiter}) => {
       <div className='flex flex-col h-full' style={{ height: '80vh' }}>
         <div className='overflow-auto h-full w-full'>
           <div className='py-4 max-w-screen-lg mx-auto w-full'>
-            <ul className='text-right mr-2 pb-8'>
-              {messages?.map((data) => (
-                <li key={data?.id}>
-                  <Message {...data} />
-                </li>
+            <div className='mx-2 pb-8'>
+              {messages?.map((data, idx) => (
+                <Message
+                  key={idx}
+                  text={data?.text}
+                  userName={data?.userName}
+                  right={
+                    data?.userName.toString() ===
+                    (recruiter ? 'recruiter' : loggedUser?.username?.toString())
+                  }
+                />
               ))}
-            </ul>
+            </div>
             <div ref={bottomListRef}></div>
           </div>
         </div>
@@ -74,4 +93,4 @@ const DevOpenChat = ({recruiter}) => {
   );
 };
 
-export default DevOpenChat;
+export default OpenChatScreen;

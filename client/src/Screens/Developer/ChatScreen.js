@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { baseURL } from '../../baseURL';
 import Alert from '../../Components/Alert';
 import { devGetChatRooms } from '../../redux/action/DeveloperAction';
-import DevOpenChat from './DevOpenChat';
+import OpenChatScreen from './OpenChatScreen';
 import Loader from '../../Components/Loader';
 
 const recId = JSON.parse(localStorage?.getItem('recInfo'))?._id;
 
-const DevChatScreen = ({ recruiter }) => {
+const ChatScreen = ({ recruiter }) => {
   const dispatch = useDispatch();
   const { url, path } = useRouteMatch();
 
@@ -83,11 +83,11 @@ const DevChatScreen = ({ recruiter }) => {
         {/* chat open here */}
         <Route
           path={`${path}/:roomId`}
-          component={() => <DevOpenChat recruiter={recruiter} />}
+          component={() => <OpenChatScreen recruiter={recruiter} />}
         />
       </div>
     </div>
   );
 };
 
-export default DevChatScreen;
+export default ChatScreen;

@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarMenu from '../Components/SidebarMenu';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
-import DevChatScreen from './Developer/DevChatScreen';
+import ChatScreen from './Developer/ChatScreen';
 import DeveloperProfileScreen from './Developer/DeveloperProfileScreen';
 import DevProfilePublicView from './Developer/DevProfilePublicView';
 import FindPeopleScreen from './Developer/FindPeopleScreen';
@@ -91,7 +91,7 @@ const HomeScreen = ({ location }) => {
               <Route path={`${path}/projects`} component={FreelanceScreen} />
               <Route path={`${path}/jobs`} component={JobsScreen} />
               <Route path={`${path}/people`} component={FindPeopleScreen} />
-              <Route path={`${path}/messages`} component={DevChatScreen} />
+              <Route path={`${path}/messages`} component={ChatScreen} />
               <Route
                 path={`${path}/notification`}
                 component={NotificationScreen}

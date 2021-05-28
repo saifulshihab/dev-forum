@@ -19,6 +19,7 @@ import Alert from '../../Components/Alert';
 import { baseURL } from '../../baseURL';
 import Modal from '../../Components/Modal';
 import Loader from '../../Components/Loader';
+import Spinner from '../../Components/Spinner';
 import DevTimelineScreen from './DevTimelineScreen';
 import { Field, FieldArray, Formik } from 'formik';
 import MyTextField from '../../Components/MyTextField';
@@ -32,6 +33,7 @@ const DeveloperProfileScreen = ({ location }) => {
   const [editModal, setEditModal] = useState(false);
   const [dpUploaded, setDpuploaded] = useState(false);
   const [coverUploaded, setCoveruploaded] = useState(false);
+  const [photoUploading, setPhotoUploading] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -147,9 +149,11 @@ const DeveloperProfileScreen = ({ location }) => {
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
+      setPhotoUploading(true);
       const { data } = await axios.post(baseURL + '/upload', formData, config);
       if (data) {
         setDp(data);
+        setPhotoUploading(false);
         setDpuploaded(true);
       }
     } catch (error) {
@@ -167,9 +171,11 @@ const DeveloperProfileScreen = ({ location }) => {
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
+      setPhotoUploading(true);
       const { data } = await axios.post(baseURL + '/upload', formData, config);
       if (data) {
         setCover(data);
+        setPhotoUploading(false);
         setCoveruploaded(true);
       }
     } catch (error) {
@@ -437,6 +443,11 @@ const DeveloperProfileScreen = ({ location }) => {
                     ) : dpEditError ? (
                       <Alert fail msg={dpEditError} />
                     ) : null}
+                    {photoUploading && (
+                      <button className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'>
+                        <Spinner /> Uploading...
+                      </button>
+                    )}
                     {dpUploaded && (
                       <button
                         onClick={dpUpdateHandler}
@@ -463,6 +474,11 @@ const DeveloperProfileScreen = ({ location }) => {
                   ) : coverEditError ? (
                     <Alert fail msg={coverEditError} />
                   ) : null}
+                  {photoUploading && (
+                    <button className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'>
+                      <Spinner /> Uploading...
+                    </button>
+                  )}
                   {coverUploaded && (
                     <button
                       onClick={coverUpdateHandler}
@@ -493,7 +509,6 @@ const DeveloperProfileScreen = ({ location }) => {
               validationSchema={fieldValidationSchema}
               onSubmit={(data, { setSubmitting }) => {
                 dispatch(editDevAccount(devInfo?._id, { data }));
-
                 setSubmitting(false);
               }}
             >

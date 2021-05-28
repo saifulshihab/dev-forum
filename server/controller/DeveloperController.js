@@ -155,12 +155,14 @@ const updateDevDp = asyncHandler(async (req, res) => {
   const { dp } = req.body;
   const user = await Developer.findById(req.user._id);
   if (user) {
-    const __dirname = path.resolve();
-    fs.unlink(path.join(__dirname + user.dp), (err) => {
-      if (err) {
-        res.send(err);
-      }
-    });
+    const __dirname = path.resolve();    
+    if (user.dp !== '/server/uploads/default_dp.png') {
+      fs.unlink(path.join(__dirname + user.dp), (err) => {
+        if (err) {
+          res.send(err);
+        }
+      });
+    }
     user.dp = dp || user.dp;
     const updatedUser = await user.save();
     if (updatedUser) {
@@ -182,11 +184,13 @@ const updateDevCover = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.user._id);
   if (user) {
     const __dirname = path.resolve();
-    fs.unlink(path.join(__dirname + user.cover), (err) => {
-      if (err) {
-        res.send(err);
-      }
-    });
+    if (user.cover !== '/server/uploads/default_dp.png') {
+      fs.unlink(path.join(__dirname + user.cover), (err) => {
+        if (err) {
+          res.send(err);
+        }
+      });
+    }
     user.cover = cover || user.cover;
     const updatedUser = await user.save();
     if (updatedUser) {

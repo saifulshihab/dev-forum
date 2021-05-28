@@ -30,7 +30,8 @@ const DeveloperProfileScreen = ({ location }) => {
   const currentPath = location.pathname.split('/')[3];
 
   const [editModal, setEditModal] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [dpUploaded, setDpuploaded] = useState(false);
+  const [coverUploaded, setCoveruploaded] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -69,16 +70,15 @@ const DeveloperProfileScreen = ({ location }) => {
   } = devCoverEdit;
 
   useEffect(() => {
-    dispatch(fetchDevProfile(devInfo._id));
-
-    dispatch(getFollowers(devInfo?._id));
-    dispatch(getFollowing(devInfo?._id));
-
+    const unsubscribe = () => {
+      dispatch(fetchDevProfile(devInfo._id));
+      dispatch(getFollowers(devInfo?._id));
+      dispatch(getFollowing(devInfo?._id));
+    };
     if (editSuccess) {
       setEditModal(false);
     }
-
-    return () => {};
+    return unsubscribe;
   }, [dispatch, devInfo._id, editSuccess]);
 
   const fieldValidationSchema = yup.object().shape({
@@ -140,7 +140,6 @@ const DeveloperProfileScreen = ({ location }) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
-    setUploading(true);
     try {
       const config = {
         headers: {
@@ -149,17 +148,18 @@ const DeveloperProfileScreen = ({ location }) => {
         },
       };
       const { data } = await axios.post(baseURL + '/upload', formData, config);
-      setDp(data);
+      if (data) {
+        setDp(data);
+        setDpuploaded(true);
+      }
     } catch (error) {
       console.error(error);
-      setUploading(false);
     }
   };
   const uploadCoverFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
-    setUploading(true);
     try {
       const config = {
         headers: {
@@ -168,10 +168,12 @@ const DeveloperProfileScreen = ({ location }) => {
         },
       };
       const { data } = await axios.post(baseURL + '/upload', formData, config);
-      setCover(data);
+      if (data) {
+        setCover(data);
+        setCoveruploaded(true);
+      }
     } catch (error) {
       console.error(error);
-      setUploading(false);
     }
   };
 
@@ -183,11 +185,11 @@ const DeveloperProfileScreen = ({ location }) => {
 
   const dpUpdateHandler = () => {
     dispatch(editDevDp(dp));
-    setUploading(false);
+    setDpuploaded(false);
   };
   const coverUpdateHandler = () => {
     dispatch(editDevCover(cover));
-    setUploading(false);
+    setCoveruploaded(false);
   };
 
   return (
@@ -417,7 +419,6 @@ const DeveloperProfileScreen = ({ location }) => {
             large
           >
             <>
-              {uploading && <Alert success msg='Uploaded' />}
               <div className='dp_cover_uplaod flex '>
                 <div className='w-2/5 flex flex-col space-y-2 justify-center'>
                   <img
@@ -430,21 +431,21 @@ const DeveloperProfileScreen = ({ location }) => {
                     type='file'
                     className='none text-sm focus:outline-none'
                   />
-                  {dpEditLoading ? (
-                    <Loader />
-                  ) : dpEditError ? (
-                    <Alert fail msg={dpEditError} />
-                  ) : (
-                    dpEditSucccess && <Alert success msg={'Dp Updated!'} />
-                  )}
-                  {uploading && (
-                    <button
-                      onClick={dpUpdateHandler}
-                      className='w-28 focus:outline-none focus:border-indigo-600 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
-                    >
-                      Update Dp
-                    </button>
-                  )}
+                  <div>
+                    {dpEditLoading ? (
+                      <Loader />
+                    ) : dpEditError ? (
+                      <Alert fail msg={dpEditError} />
+                    ) : null}
+                    {dpUploaded && (
+                      <button
+                        onClick={dpUpdateHandler}
+                        className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'
+                      >
+                        Update Dp
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className='w-3/5 flex flex-col space-y-1 justify-center'>
                   <img
@@ -461,15 +462,11 @@ const DeveloperProfileScreen = ({ location }) => {
                     <Loader />
                   ) : coverEditError ? (
                     <Alert fail msg={coverEditError} />
-                  ) : (
-                    coverEditSucccess && (
-                      <Alert success msg={'Cover Updated!'} />
-                    )
-                  )}
-                  {uploading && (
+                  ) : null}
+                  {coverUploaded && (
                     <button
                       onClick={coverUpdateHandler}
-                      className='w-32 focus:outline-none focus:border-indigo-600 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                      className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'
                     >
                       Update Cover
                     </button>

@@ -282,7 +282,7 @@ export const editDevDp = (dp) => async (dispatch, getState) => {
     await axios.put(`${baseURL}/api/dev/updateDp`, { dp }, config);
     dispatch({
       type: DEV_DP_EDIT_SUCCESS,
-    });
+    });    
     dispatch({
       type: DEV_DP_EDIT_RESET,
     });

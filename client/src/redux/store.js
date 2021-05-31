@@ -38,6 +38,7 @@ import {
   sharedArticleGetReducer,
 } from './reducer/ArticleReducer';
 import {
+  createQuestionReducer,
   deleteQuestionReducer,
   editQuestionReducer,
   getQuestionReducer,
@@ -90,6 +91,7 @@ const reducer = combineReducers({
   articleShare: articleShareReducer,
   sharedArticleGet: sharedArticleGetReducer,
   questionsGet: getQuestionReducer,
+  questionCreate: createQuestionReducer,
   questionDelete: deleteQuestionReducer,
   questionEdit: editQuestionReducer,
   answersQuestion: questionAnswersReducer,

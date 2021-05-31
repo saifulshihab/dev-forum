@@ -26,6 +26,8 @@ import {
   GET_USER_QUESTIONS_FAILED,
   DELETE_ANS_SUCCESS,
   DELETE_ANS_FAILED,
+  CREATE_QUESTION_REQUEST,
+  CREATE_QUESTION_FAILED,
 } from '../ActionTypes';
 
 export const getQuestionReducer = (state = { questions: [] }, action) => {
@@ -35,16 +37,24 @@ export const getQuestionReducer = (state = { questions: [] }, action) => {
     case GET_ALL_QUESTIONS_SUCCESS:
       return { ...state, loading: false, questions: action.payload };
     case CREATE_QUESTION_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        createQuestion: true,
-        questions: [action.payload, ...state.questions],
-      };
-    case CREATE_QUESTION_RESET:
-      return { ...state, createQuestion: false };
+      return { ...state, questions: [action.payload, ...state.questions] };
     case GET_ALL_QUESTIONS_FAILED:
       return { loading: false, articles: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const createQuestionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_QUESTION_REQUEST:
+      return { loading: true };
+    case CREATE_QUESTION_SUCCESS:
+      return { loading: false, success: true };
+    case CREATE_QUESTION_FAILED:
+      return { loading: false, error: action.payload };
+    case CREATE_QUESTION_RESET:
+      return {};
     default:
       return state;
   }

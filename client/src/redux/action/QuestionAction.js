@@ -103,6 +103,11 @@ export const createQuestion = (question) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
+    setTimeout(() => {
+      dispatch({
+        type: CREATE_QUESTION_RESET,
+      });
+    }, 2000);
   }
 };
 

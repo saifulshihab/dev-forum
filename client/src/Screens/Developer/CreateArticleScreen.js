@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../Components/Alert';
 import { articleCreate } from '../../redux/action/ArticleAction';
 import { Editor } from '@tinymce/tinymce-react';
+import Spinner from '../../Components/Spinner';
 
 const CreateArticleScreen = () => {
   const dispatch = useDispatch();
@@ -141,7 +142,7 @@ const CreateArticleScreen = () => {
               } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2`}
               disabled={isSubmitting}
             >
-              {loading ? 'Posting...' : 'Post'}
+              {loading ? <Spinner /> : 'Post'}
             </button>
             {success ? (
               <Alert success msg={'Article posted!'} />

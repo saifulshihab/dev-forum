@@ -18,7 +18,7 @@ const AskQuestionsScreen = ({ location }) => {
             <div className='max-w-7xl border-b-4 border-white mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
-                  <div className='hidden md:block'>
+                  <div className=''>
                     <div className='flex items-baseline space-x-4'>
                       <Link to={`${url}/questions`}>
                         <div

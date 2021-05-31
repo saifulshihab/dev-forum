@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import { createQuestion } from '../../redux/action/QuestionAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../Components/Modal';
+import Spinner from '../../Components/Spinner';
+import Alert from '../../Components/Alert';
 
 const QuestionScreen = () => {
   const { path } = useRouteMatch();
@@ -15,8 +17,12 @@ const QuestionScreen = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const questionsGet = useSelector((state) => state.questionsGet);
-  const { createQuestion: createQuestionSuccess } = questionsGet;
+  const questionCreate = useSelector((state) => state.questionCreate);
+  const {
+    loading: createQLoading,
+    success: createQSuccess,
+    error: createQError,
+  } = questionCreate;
 
   const fieldValidationSchema = yup.object().shape({
     title: yup
@@ -31,11 +37,11 @@ const QuestionScreen = () => {
   });
 
   useEffect(() => {
-    if (createQuestionSuccess) {
+    if (createQSuccess) {
       setModalOpen(false);
     }
     return () => {};
-  }, [createQuestionSuccess]);
+  }, [createQSuccess]);
 
   return (
     <div>
@@ -50,6 +56,7 @@ const QuestionScreen = () => {
           Ask a Question...
         </div>
       </div>
+      {createQError && <Alert fail msg={createQError} />}
       <Modal
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
@@ -159,7 +166,7 @@ const QuestionScreen = () => {
                 disabled={isSubmitting}
                 className='w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
               >
-                Post
+                {createQLoading ? <Spinner /> : 'Post'}
               </button>
             </form>
           )}

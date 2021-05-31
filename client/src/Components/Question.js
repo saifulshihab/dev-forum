@@ -15,11 +15,11 @@ import Modal from './Modal';
 const Question = ({ question, details }) => {
   const dispatch = useDispatch();
 
-  const [ansOpen, setAnsOpen] = useState(details ? true : false);  
+  const [ansOpen, setAnsOpen] = useState(details ? true : false);
   const [editModal, setEditModal] = useState(false);
 
   const { url } = useRouteMatch();
-  const history = useHistory();  
+  const history = useHistory();
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -68,15 +68,15 @@ const Question = ({ question, details }) => {
     <>
       <div className='w-full bg-white shadow rounded-md my-2 px-5 py-2 '>
         <div className='flex items-center'>
-          <div className='w-10 h-10'>
+          <div className='w-8 h-8 sm:w-10 sm:h-10'>
             <img
               className='border w-full h-full rounded-full'
               src={baseURL + question?.user?.dp}
               alt={question?.user?.username}
             />
           </div>
-          <div className='ml-2 w-40 h-10'>
-            <h4 className='text-gray-700 font-medium cursor-pointer hover:text-gray-800'>
+          <div className='ml-2 w-40 h-8 sm:h-10'>
+            <h4 className='text-gray-700 text-sm sm:font-medium cursor-pointer hover:text-gray-800'>
               <Link to={`/h/user/${question?.user?.username}`}>
                 {question?.user?.full_name}
               </Link>
@@ -89,7 +89,7 @@ const Question = ({ question, details }) => {
         <div
           className={`text-gray-600 ${
             !details ? 'hover:text-indigo-700' : ''
-          } cursor-pointer text-xl`}
+          } cursor-pointer sm:text-xl`}
         >
           {!details ? (
             <Link to={`${url}/${question?._id}`}>{question?.title}</Link>
@@ -97,24 +97,24 @@ const Question = ({ question, details }) => {
             <span>{question?.title}</span>
           )}
         </div>
-        <div className={`flex mt-2 items-center text-xs`}>        
+        <div className={`flex mt-1 sm:mt-2 items-center text-xs`}>
           {question?.tags?.map((tag, idx) => (
             <span
               key={idx}
-              className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+              className='bg-gray-200 mr-2 sm:mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
             >
               {tag}
             </span>
           ))}
         </div>
         {details && (
-          <div className='text-gray-500 text-sm h-auto w-full text-justify'>
+          <div className='text-gray-500 text-xs sm:text-sm h-auto w-full text-justify'>
             {question?.description}
           </div>
         )}
         <div
           onClick={() => setAnsOpen(!ansOpen)}
-          className='flex items-center justify-center mt-3 border-t cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500'
+          className='flex items-center justify-center mt-1 sm:mt-3 border-t cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500'
         >
           <div className='flex  hover:text-indigo-600 items-center justify-center w-1/2'>
             <span className='mr-1'>
@@ -133,7 +133,7 @@ const Question = ({ question, details }) => {
                 />
               </svg>
             </span>
-            <span className='text-sm'>Answers</span>
+            <span className='text-xs sm:text-sm'>Answers</span>
           </div>
           {details &&
             devInfo?._id.toString() === question?.user?._id.toString() && (
@@ -143,7 +143,7 @@ const Question = ({ question, details }) => {
                 }}
                 className='w-1/2  hover:text-indigo-600'
               >
-                <span>
+                <span className='text-xs sm:text-sm'>
                   <i className='mr-1 far fa-edit'></i>Edit
                 </span>
               </div>
@@ -154,7 +154,7 @@ const Question = ({ question, details }) => {
                 onClick={() => deleteHandler(question?._id)}
                 className='w-1/2  hover:text-indigo-600'
               >
-                <span>
+                <span className='text-xs sm:text-sm'>
                   <i className='mr-1 far fa-trash-alt'></i> Delete
                 </span>
               </div>

@@ -54,7 +54,7 @@ const Developer = ({ user, recruiterView }) => {
   const isFollowed = currentUserFollowings?.includes(true) ? true : false;
 
   return (
-    <div className='bg-white rounded p-2 shadow mb-2 flex items-center justify-between'>
+    <div className='w-full bg-white rounded p-2 shadow mb-2 flex items-center justify-between'>
       <div className='flex items-center'>
         <div className='w-10 h-10 mr-2'>
           <Link

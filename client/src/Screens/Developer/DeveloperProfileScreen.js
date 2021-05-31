@@ -425,6 +425,11 @@ const DeveloperProfileScreen = ({ location }) => {
             large
           >
             <>
+              {photoUploading && (
+                <button className='flex items-center mb-2 font-semibold justify-center w-full bg-yellow-400 text-white text-sm p-1 px-4 rounded'>
+                  <Spinner /> Uploading...
+                </button>
+              )}
               <div className='dp_cover_uplaod flex '>
                 <div className='w-2/5 flex flex-col space-y-2 justify-center'>
                   <img
@@ -443,11 +448,6 @@ const DeveloperProfileScreen = ({ location }) => {
                     ) : dpEditError ? (
                       <Alert fail msg={dpEditError} />
                     ) : null}
-                    {photoUploading && (
-                      <button className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'>
-                        <Spinner /> Uploading...
-                      </button>
-                    )}
                     {dpUploaded && (
                       <button
                         onClick={dpUpdateHandler}
@@ -474,11 +474,6 @@ const DeveloperProfileScreen = ({ location }) => {
                   ) : coverEditError ? (
                     <Alert fail msg={coverEditError} />
                   ) : null}
-                  {photoUploading && (
-                    <button className='focus:outline-none focus:bg-indigo-600 bg-indigo-500 text-white text-sm p-1 px-4 rounded border-2'>
-                      <Spinner /> Uploading...
-                    </button>
-                  )}
                   {coverUploaded && (
                     <button
                       onClick={coverUpdateHandler}

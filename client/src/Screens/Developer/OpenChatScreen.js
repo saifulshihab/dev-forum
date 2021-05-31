@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Message from '../../Components/Message';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:5001');
+const socket = io('https://devforum-server.herokuapp.com');
 
 const OpenChatScreen = ({ recruiter }) => {
   const bottomListRef = useRef();
@@ -44,7 +44,7 @@ const OpenChatScreen = ({ recruiter }) => {
       setNewMessage('');
     });
     bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
-  };  
+  };
 
   return (
     <div className='w-full h-full'>

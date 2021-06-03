@@ -27,16 +27,16 @@ const OpenChatScreen = ({ recruiter }) => {
   }, [roomId, inputRef]);
 
   useEffect(() => {
-    if (loggedUser?.username || recruiter) {
+    if (loggedUser?.user?.username || recruiter) {
       socket.emit('join', {
-        name: recruiter ? 'recruiter' : loggedUser?.username,
+        name: recruiter ? 'recruiter' : loggedUser?.user?.username,
         room: roomId,
       });
     }
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
     });
-  }, [roomId, loggedUser?.username, recruiter]);
+  }, [roomId, loggedUser?.user?.username, recruiter]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -60,7 +60,9 @@ const OpenChatScreen = ({ recruiter }) => {
                   userName={data?.userName}
                   right={
                     data?.userName.toString() ===
-                    (recruiter ? 'recruiter' : loggedUser?.username?.toString())
+                    (recruiter
+                      ? 'recruiter'
+                      : loggedUser?.user?.username?.toString())
                   }
                 />
               ))}

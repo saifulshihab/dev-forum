@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Components/Alert';
 import { recSignout } from '../redux/action/RecruiterAction';
 import Spinner from '../Components/Spinner';
-import { baseURL } from '../baseURL';
 
 const LoginPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -29,9 +28,9 @@ const LoginPage = ({ history }) => {
     password: yup.string().required('Required!'),
   });
 
-  const googleLoginHandler = () => {
-    window.location.href = `${baseURL}/auth/google`;
-  };
+  // const googleLoginHandler = () => {
+  //   window.location.href = `${baseURL}/auth/google`;
+  // };
 
   return (
     <>
@@ -129,7 +128,7 @@ const LoginPage = ({ history }) => {
               </form>
             )}
           </Formik>
-          <div className='flex flex-col space-y-2'>
+          {/* <div className='flex flex-col space-y-2'>
             <button
               onClick={googleLoginHandler}
               type='button'
@@ -173,7 +172,7 @@ const LoginPage = ({ history }) => {
               />
               Sign in with Twitter
             </button>
-          </div>
+          </div> */}
           {error && <Alert fail msg={error} />}
         </div>
       </div>

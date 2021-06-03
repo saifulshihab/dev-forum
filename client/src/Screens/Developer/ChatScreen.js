@@ -7,6 +7,7 @@ import Alert from '../../Components/Alert';
 import { devGetChatRooms } from '../../redux/action/DeveloperAction';
 import OpenChatScreen from './OpenChatScreen';
 import Loader from '../../Components/Loader';
+import { useLocalStorage } from '../../useLocalStorage';
 
 const recId = JSON.parse(localStorage?.getItem('recInfo'))?._id;
 
@@ -17,13 +18,12 @@ const ChatScreen = ({ recruiter }) => {
   const devChatRoomsGet = useSelector((state) => state.devChatRoomsGet);
   const { loading: roomLoading, rooms, error: roomError } = devChatRoomsGet;
 
-  const devProfile = useSelector((state) => state.devProfile);
-  const { user: loggedUser } = devProfile;
+  const { loggedUserId } = useLocalStorage('devInfo');
 
   useEffect(() => {
     // get user chat rooms
-    dispatch(devGetChatRooms(recruiter ? recId : loggedUser?._id, recruiter));
-  }, [recruiter, dispatch, loggedUser?._id]);
+    dispatch(devGetChatRooms(recruiter ? recId : loggedUserId, recruiter));
+  }, [recruiter, dispatch, loggedUserId]);
 
   return (
     <div className='grid grid-cols-4 w-full h-full'>
@@ -48,7 +48,7 @@ const ChatScreen = ({ recruiter }) => {
                       <img
                         alt='dp'
                         src={
-                          room?.sender === loggedUser?._id
+                          room?.sender === loggedUserId
                             ? baseURL + room?.user_dp
                             : baseURL + room?.sender_dp
                         }
@@ -56,9 +56,9 @@ const ChatScreen = ({ recruiter }) => {
                       />
                     </div>
                     <div>
-                      {loggedUser?._id ? (
+                      {loggedUserId ? (
                         <p className='text-gray-500 font-semibold'>
-                          {room?.sender === loggedUser?._id
+                          {room?.sender === loggedUserId
                             ? room?.user_fname
                             : room?.sender_fname}
                         </p>

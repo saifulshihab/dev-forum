@@ -72,8 +72,8 @@ const WelComeHeader = () => {
                   >
                     <img
                       className='h-8 w-8 rounded-full image_center'
-                      src={baseURL + user?.dp}
-                      alt=''
+                      src={baseURL + user?.user?.dp}
+                      alt='dp'
                     />
                   </button>
                   {dpDropdown && (

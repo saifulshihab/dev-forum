@@ -14,8 +14,6 @@ import Spinner from '../../Components/Spinner';
 import {
   followOther,
   getDevPublicProfile,
-  getFollowers,
-  getFollowing,
   unfollowOther,
   devCreateChatRoom,
 } from '../../redux/action/DeveloperAction';
@@ -25,8 +23,10 @@ import DevProjectsScreen from './DevProjectsScreen';
 import DevQuesAskScreen from './DevQuesAskScreen';
 import DevTimelineScreen from './DevTimelineScreen';
 import GithubScreen from './GithubScreen';
-import { v4 as uuidv4 } from 'uuid';
 import Alert from '../../Components/Alert';
+import Modal from '../../Components/Modal';
+import Developer from '../../Components/Developer';
+import { v4 as uuidv4 } from 'uuid';
 
 const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   const { username } = useParams();
@@ -36,18 +36,14 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   const currentPath = location.pathname.split('/')[4];
 
   const [roomId, setRoomId] = useState('');
+  const [followerModal, setFollowerModal] = useState(false);
+  const [followingModal, setFollowingModal] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: loggedUser } = signInDev;
 
   const devPublicView = useSelector((state) => state.devPublicView);
   const { loading, error, user } = devPublicView;
-
-  const followersGet = useSelector((state) => state.followersGet);
-  const { loading: followingLoading, followers } = followersGet;
-
-  const followingGet = useSelector((state) => state.followingGet);
-  const { loading: followersLoading, following } = followingGet;
 
   const devChatRoomCreate = useSelector((state) => state.devChatRoomCreate);
   const {
@@ -71,12 +67,10 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   } = unfollowGet;
 
   useEffect(() => {
-    dispatch(getDevPublicProfile(username, recruiterView));
-    dispatch(getFollowing(loggedUser?._id));
-    if (followSuccess || unfollowSuccess) {
-      dispatch(getFollowing(loggedUser?._id));
-    }
-    return () => {};
+    const unsubscribe = () => {
+      dispatch(getDevPublicProfile(username, recruiterView));
+    };
+    return unsubscribe;
   }, [
     dispatch,
     username,
@@ -87,15 +81,6 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
   ]);
 
   useEffect(() => {
-    if (user) {
-      dispatch(getFollowers(user?._id));
-      dispatch(getFollowing(user?._id));
-    }
-
-    return () => {};
-  }, [dispatch, user]);
-
-  useEffect(() => {
     if (roomCreateSuccess) {
       history.push(
         recruiterView ? `/r/messages/${roomId}` : `/h/messages/${roomId}`
@@ -103,17 +88,18 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
     }
   }, [recruiterView, history, roomCreateSuccess, roomId]);
 
-  const currentUserFollowers = followers?.map(
-    (data) => data?.follower?._id?.toString() === loggedUser?._id?.toString()
+  const currentUserFollowers = user?.followers?.map(
+    (user) =>
+      user?.follower?._id?.toString() === loggedUser?._id?.toString()
   );
   const isFollowed = currentUserFollowers?.includes(true) ? true : false;
 
   const followHandler = () => {
-    dispatch(followOther(user?._id));
+    dispatch(followOther(user?.user?._id));
   };
 
   const unfollowHandler = () => {
-    dispatch(unfollowOther(user?._id));
+    dispatch(unfollowOther(user?.user?._id));
   };
 
   const createRoomForNewConversation = (receiverId) => {
@@ -122,8 +108,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
     const roomInfo = {
       roomId: newRoomId,
       receiver: receiverId,
-      user_fname: user?.full_name,
-      user_dp: user?.dp,
+      user_fname: user?.user?.full_name,
+      user_dp: user?.user?.dp,
     };
     dispatch(devCreateChatRoom(roomInfo, recruiterView));
   };
@@ -140,7 +126,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             ) : (
               <img
                 className='image_center w-full h-48'
-                src={baseURL + user?.cover}
+                src={baseURL + user?.user?.cover}
                 alt='cover'
               />
             )}
@@ -151,7 +137,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             ) : (
               <img
                 className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
-                src={baseURL + user?.dp}
+                src={baseURL + user?.user?.dp}
                 alt='dp'
               />
             )}
@@ -170,11 +156,15 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
           ) : (
             <div className='name_address_location text-gray-600 text-sm'>
               <div className='flex items-center justify-between'>
-                <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
+                <h4 className='text-2xl font-extrabold'>
+                  {user?.user?.full_name}
+                </h4>
                 <div className='flex items-center'>
-                  {user?._id !== loggedUser?._id && (
+                  {user?.user?._id !== loggedUser?._id && (
                     <button
-                      onClick={() => createRoomForNewConversation(user?._id)}
+                      onClick={() =>
+                        createRoomForNewConversation(user?.user?._id)
+                      }
                       className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
                     >
                       {roomCreateLoading ? (
@@ -185,7 +175,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                       Send Message
                     </button>
                   )}
-                  {user?._id !== loggedUser?._id &&
+                  {user?.user?._id !== loggedUser?._id &&
                     followButton &&
                     (isFollowed ? (
                       <button
@@ -215,57 +205,63 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                 </div>
               </div>
               <div className='flex items-center'>
-                <span className='text-gray-400'>@{user?.username}</span>
-                {user?.workStatus !== 'off' && (
+                <span className='text-gray-400'>@{user?.user?.username}</span>
+                {user?.user?.workStatus !== 'off' && (
                   <div className='ml-2 flex justify-start items-center text-xs'>
                     <span className='w-3 h-3 rounded-full bg-green-400 mr-1'></span>
                     <span className='text-gray-400'>
-                      Open to Work ({user?.workStatus})
+                      Open to Work ({user?.user?.workStatus})
                     </span>
                   </div>
                 )}
               </div>
-              <div className='h-5 mb-1'>{user?.bio}</div>
+              <div className='h-5 mb-1'>{user?.user?.bio}</div>
               <span className='mr-4'>
-                {user?.email && (
+                {user?.user?.email && (
                   <i className='mr-2 fas fa-envelope-open-text'></i>
                 )}
-                {user?.email}
+                {user?.user?.email}
               </span>
               <span>
-                {user?.website && <i className='mr-2 fas fa-globe'></i>}
+                {user?.user?.website && <i className='mr-2 fas fa-globe'></i>}
                 <a
                   className='hover:text-indigo-500 hover:underline'
                   target='_blank'
                   rel='noreferrer'
-                  href={user?.website}
+                  href={user?.user?.website}
                 >
-                  {user?.website}
+                  {user?.user?.website}
                 </a>
               </span>
-              {!recruiterView &&
-                (followersLoading || followingLoading ? (
-                  <span className='bg-gray-200 h-3 mb-1 w-28 block'></span>
-                ) : (
-                  <div>
-                    <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
-                    Followers {following?.length} Following
-                  </div>
-                ))}
+              <div className='flex items-center space-x-2'>
+                <i className='fas fa-users mr-1'></i>
+                <button
+                  onClick={() => setFollowerModal(true)}
+                  className='focus:outline-none hover:text-indigo-500'
+                >
+                  {user?.followers?.length} Followers
+                </button>
+                <button
+                  onClick={() => setFollowingModal(true)}
+                  className='focus:outline-none hover:text-indigo-500'
+                >
+                  {user?.following?.length} Following
+                </button>
+              </div>
               <div className='flex items-center '>
                 <span className='mr-4'>
                   <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
-                  {new Date(user?.createdAt).toLocaleDateString('en-gb', {
+                  {new Date(user?.user?.createdAt).toLocaleDateString('en-gb', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
                   })}
                 </span>
                 <span className=''>
-                  {user?.location && (
+                  {user?.user?.location && (
                     <i className='fas mr-2 fa-map-marker-alt'></i>
                   )}
-                  {user?.location}
+                  {user?.user?.location}
                 </span>
               </div>
             </div>
@@ -275,8 +271,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             {loading ? (
               <div className='h-5 bg-gray-200 w-full'></div>
             ) : (
-              user?.social?.length > 0 &&
-              user?.social?.reverse().map((el, idx) => {
+              user?.user?.social?.length > 0 &&
+              user?.user?.social?.reverse().map((el, idx) => {
                 const icn_cls =
                   el.platform === 'facebook'
                     ? 'fab fa-facebook text-blue-600 hover:text-blue-700'
@@ -387,6 +383,38 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               </div>
             </div>
           </nav>
+          <Modal
+            modalOpen={followerModal}
+            setModalOpen={setFollowerModal}
+            title={`Followers (${
+              user?.followers ? user?.followers?.length : '0'
+            })`}
+            titleIcon='fas fa-users'
+          >
+            {user?.followers?.map((user) => (
+              <Developer
+                key={user?.user?._id}
+                user={user?.follower}
+                recruiterView={recruiterView}
+              />
+            ))}
+          </Modal>
+          <Modal
+            modalOpen={followingModal}
+            setModalOpen={setFollowingModal}
+            title={`Following (${
+              user?.following ? user?.following?.length : '0'
+            })`}
+            titleIcon='fas fa-users'
+          >
+            {user?.following?.map((user) => (
+              <Developer
+                key={user?.user?._id}
+                user={user?.user}
+                recruiterView={recruiterView}
+              />
+            ))}
+          </Modal>
           <div className='question_article_feed p-2 bg-white w-full'>
             <Switch>
               {/* <Route
@@ -397,18 +425,21 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               <Route
                 path={`${path}/about`}
                 component={() => (
-                  <DevAboutScreen profile={user && user} loading={loading} />
+                  <DevAboutScreen
+                    profile={user && user?.user}
+                    loading={loading}
+                  />
                 )}
               />
               <Route
                 path={`${path}/gh-profile`}
-                component={() => <GithubScreen username={user?.github} />}
+                component={() => <GithubScreen username={user?.user?.github} />}
               />
               <Route
                 path={`${path}/timeline`}
                 component={() => (
                   <DevTimelineScreen
-                    user={user}
+                    user={user?.user}
                     recruiterView={recruiterView}
                   />
                 )}
@@ -417,7 +448,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                 path={`${path}/projects`}
                 component={() => (
                   <DevProjectsScreen
-                    user={user}
+                    user={user?.user}
                     recruiterView={recruiterView}
                   />
                 )}
@@ -425,13 +456,19 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               <Route
                 path={`${path}/articles`}
                 component={() => (
-                  <DevArticleScreen user={user} recruiterView={recruiterView} />
+                  <DevArticleScreen
+                    user={user?.user}
+                    recruiterView={recruiterView}
+                  />
                 )}
               />
               <Route
                 path={`${path}/ques`}
                 component={() => (
-                  <DevQuesAskScreen user={user} recruiterView={recruiterView} />
+                  <DevQuesAskScreen
+                    user={user?.user}
+                    recruiterView={recruiterView}
+                  />
                 )}
               />
               <Redirect to={`${path}/about`} />

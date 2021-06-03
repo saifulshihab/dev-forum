@@ -11,8 +11,6 @@ import {
   editDevAccount,
   editDevDp,
   editDevCover,
-  getFollowers,
-  getFollowing,
 } from '../../redux/action/DeveloperAction';
 import axios from 'axios';
 import Alert from '../../Components/Alert';
@@ -23,6 +21,7 @@ import Spinner from '../../Components/Spinner';
 import DevTimelineScreen from './DevTimelineScreen';
 import { Field, FieldArray, Formik } from 'formik';
 import MyTextField from '../../Components/MyTextField';
+import Developer from '../../Components/Developer';
 import * as yup from 'yup';
 
 const DeveloperProfileScreen = ({ location }) => {
@@ -34,6 +33,8 @@ const DeveloperProfileScreen = ({ location }) => {
   const [dpUploaded, setDpuploaded] = useState(false);
   const [coverUploaded, setCoveruploaded] = useState(false);
   const [photoUploading, setPhotoUploading] = useState(false);
+  const [followerModal, setFollowerModal] = useState(false);
+  const [followingModal, setFollowingModal] = useState(false);
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo } = signInDev;
@@ -43,12 +44,6 @@ const DeveloperProfileScreen = ({ location }) => {
 
   const [dp, setDp] = useState(user?.dp);
   const [cover, setCover] = useState(user?.cover);
-
-  const followersGet = useSelector((state) => state.followersGet);
-  const { followers } = followersGet;
-
-  const followingGet = useSelector((state) => state.followingGet);
-  const { following } = followingGet;
 
   const devProfileEdit = useSelector((state) => state.devProfileEdit);
   const {
@@ -74,14 +69,12 @@ const DeveloperProfileScreen = ({ location }) => {
   useEffect(() => {
     const unsubscribe = () => {
       dispatch(fetchDevProfile(devInfo._id));
-      dispatch(getFollowers(devInfo?._id));
-      dispatch(getFollowing(devInfo?._id));
     };
     if (editSuccess) {
       setEditModal(false);
     }
     return unsubscribe;
-  }, [dispatch, devInfo._id, editSuccess]);
+  }, [dispatch, devInfo?._id, editSuccess]);
 
   const fieldValidationSchema = yup.object().shape({
     full_name: yup
@@ -210,7 +203,7 @@ const DeveloperProfileScreen = ({ location }) => {
               ) : (
                 <img
                   className='image_center w-full h-48'
-                  src={baseURL + user?.cover}
+                  src={baseURL + user?.user?.cover}
                   alt='cover'
                 />
               )}
@@ -221,7 +214,7 @@ const DeveloperProfileScreen = ({ location }) => {
               ) : (
                 <img
                   className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
-                  src={baseURL + user?.dp}
+                  src={baseURL + user?.user?.dp}
                   alt='dp'
                 />
               )}
@@ -240,7 +233,9 @@ const DeveloperProfileScreen = ({ location }) => {
             ) : (
               <div className='name_address_location text-gray-500 text-sm'>
                 <div className='flex items-center justify-between'>
-                  <h4 className='text-2xl font-extrabold'>{user?.full_name}</h4>
+                  <h4 className='text-2xl font-extrabold'>
+                    {user?.user?.full_name}
+                  </h4>
                   <button
                     onClick={() => setEditModal(!editModal)}
                     className='border border-indigo-500 font-semibold bg-indigo-500 focus:outline-none px-2 py-1 text-sm hover:bg-indigo-600 text-white rounded'
@@ -249,52 +244,66 @@ const DeveloperProfileScreen = ({ location }) => {
                   </button>
                 </div>
                 <div className='flex items-center'>
-                  <span className='text-gray-400'>@{user?.username}</span>
-                  {user?.workStatus !== 'off' && (
+                  <span className='text-gray-400'>@{user?.user?.username}</span>
+                  {user?.user?.workStatus !== 'off' && (
                     <div className='ml-2 flex justify-start items-center text-xs'>
                       <span className='w-3 h-3 rounded-full bg-green-400 mr-1'></span>
                       <span className='text-gray-400'>
-                        Open to Work ({user?.workStatus})
+                        Open to Work ({user?.user?.workStatus})
                       </span>
                     </div>
                   )}
                 </div>
-                <div className='h-5 mb-1'>{user?.bio}</div>
+                <div className='h-5 mb-1'>{user?.user?.bio}</div>
                 <span className='mr-4'>
-                  {user?.email && (
+                  {user?.user?.email && (
                     <i className='mr-2 fas fa-envelope-open-text'></i>
                   )}
-                  {user?.email}
+                  {user?.user?.email}
                 </span>
                 <span>
-                  {user?.website && <i className='mr-2 fas fa-globe'></i>}
+                  {user?.user?.website && <i className='mr-2 fas fa-globe'></i>}
                   <a
                     className='hover:text-indigo-500 hover:underline'
                     target='_blank'
                     rel='noreferrer'
-                    href={user?.website}
+                    href={user?.user?.website}
                   >
-                    {user?.website}
+                    {user?.user?.website}
                   </a>
                 </span>
-                <div>
-                  <i className='fas fa-users mr-1'></i> {followers?.length}{' '}
-                  Followers {following?.length} Following
+                <div className='flex items-center space-x-2'>
+                  <i className='fas fa-users mr-1'></i>
+                  <button
+                    onClick={() => setFollowerModal(true)}
+                    className='focus:outline-none hover:text-indigo-500'
+                  >
+                    {user?.followers?.length} Followers
+                  </button>
+                  <button
+                    onClick={() => setFollowingModal(true)}
+                    className='focus:outline-none hover:text-indigo-500'
+                  >
+                    {user?.following?.length} Following
+                  </button>
                 </div>
                 <div className='flex items-center '>
                   <span className='mr-4'>
                     <i className='mr-2 far fa-calendar-alt'></i>Joined{' '}
-                    {new Date(user?.createdAt).toLocaleDateString('en-gb', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {new Date(user?.user?.createdAt).toLocaleDateString(
+                      'en-gb',
+                      {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      }
+                    )}
                   </span>
                   <span className=''>
-                    {user?.location && (
+                    {user?.user?.location && (
                       <i className='fas mr-2 fa-map-marker-alt'></i>
                     )}
-                    {user?.location}
+                    {user?.user?.location}
                   </span>
                 </div>
               </div>
@@ -304,8 +313,8 @@ const DeveloperProfileScreen = ({ location }) => {
             {loading ? (
               <div className='h-5 bg-gray-200 w-full'></div>
             ) : (
-              user?.social.length > 0 &&
-              user?.social.reverse().map((el, idx) => {
+              user?.user?.social.length > 0 &&
+              user?.user?.social.reverse().map((el, idx) => {
                 const icn_cls =
                   el.platform === 'facebook'
                     ? 'fab fa-facebook text-blue-600 hover:text-blue-700'
@@ -434,8 +443,8 @@ const DeveloperProfileScreen = ({ location }) => {
                 <div className='w-2/5 flex flex-col space-y-2 justify-center'>
                   <img
                     className='rounded-full w-40 h-40 image_center'
-                    src={baseURL + user?.dp}
-                    alt={user?.username}
+                    src={baseURL + user?.user?.dp}
+                    alt={user?.user?.username}
                   />
                   <input
                     onChange={uploadDpFileHandler}
@@ -461,8 +470,8 @@ const DeveloperProfileScreen = ({ location }) => {
                 <div className='w-3/5 flex flex-col space-y-1 justify-center'>
                   <img
                     className='w-full rounded-xl h-40 image_center'
-                    src={baseURL + user?.cover}
-                    alt={user?.username}
+                    src={baseURL + user?.user?.cover}
+                    alt={user?.user?.username}
                   />
                   <input
                     type='file'
@@ -488,18 +497,18 @@ const DeveloperProfileScreen = ({ location }) => {
             {editError && <Alert fail msg={editError} />}
             <Formik
               initialValues={{
-                full_name: user?.full_name,
-                username: user?.username,
-                email: user?.email,
-                bio: user?.bio,
-                location: user?.location,
-                website: user?.website,
-                social: user?.social,
-                education: user?.education,
-                experience: user?.experience,
-                github: user?.github,
-                topSkills: user?.topSkills,
-                otherSkills: user?.otherSkills,
+                full_name: user?.user?.full_name,
+                username: user?.user?.username,
+                email: user?.user?.email,
+                bio: user?.user?.bio,
+                location: user?.user?.location,
+                website: user?.user?.website,
+                social: user?.user?.social,
+                education: user?.user?.education,
+                experience: user?.user?.experience,
+                github: user?.user?.github,
+                topSkills: user?.user?.topSkills,
+                otherSkills: user?.user?.otherSkills,
               }}
               validationSchema={fieldValidationSchema}
               onSubmit={(data, { setSubmitting }) => {
@@ -941,6 +950,26 @@ const DeveloperProfileScreen = ({ location }) => {
               )}
             </Formik>
           </Modal>
+          <Modal
+            modalOpen={followerModal}
+            setModalOpen={setFollowerModal}
+            title={`Followers (${user?.followers ? user?.followers?.length : '0'})`}
+            titleIcon='fas fa-users'
+          >
+            {user?.followers?.map((user) => (
+              <Developer key={user?.user?._id} user={user?.follower} />
+            ))}
+          </Modal>
+          <Modal
+            modalOpen={followingModal}
+            setModalOpen={setFollowingModal}
+            title={`Following (${user?.following ? user?.following?.length : '0'})`}
+            titleIcon='fas fa-users'
+          >
+            {user?.following?.map((user) => (
+              <Developer key={user?.user?._id} user={user?.user} />
+            ))}
+          </Modal>
           <div className='question_article_feed p-2 bg-white w-full'>
             <Switch>
               {/* <Route
@@ -951,28 +980,31 @@ const DeveloperProfileScreen = ({ location }) => {
               <Route
                 path={`${path}/about`}
                 component={() => (
-                  <DevAboutScreen profile={user && user} loading={loading} />
+                  <DevAboutScreen
+                    profile={user && user?.user}
+                    loading={loading}
+                  />
                 )}
               />
               <Route
                 path={`${path}/gh-profile`}
-                component={() => <GithubScreen username={user?.github} />}
+                component={() => <GithubScreen username={user?.user?.github} />}
               />
               <Route
                 path={`${path}/projects`}
-                component={() => <DevProjectsScreen user={user} />}
+                component={() => <DevProjectsScreen user={user?.user} />}
               />
               <Route
                 path={`${path}/timeline`}
-                component={() => <DevTimelineScreen user={user} />}
+                component={() => <DevTimelineScreen user={user?.user} />}
               />
               <Route
                 path={`${path}/articles`}
-                component={() => <DevArticleScreen user={user} />}
+                component={() => <DevArticleScreen user={user?.user} />}
               />
               <Route
                 path={`${path}/ques`}
-                component={() => <DevQuesAskScreen user={user} />}
+                component={() => <DevQuesAskScreen user={user?.user} />}
               />
               <Redirect to={`${path}/about`} />
             </Switch>

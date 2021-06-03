@@ -63,7 +63,6 @@ const DeveloperSchema = mongoose.Schema(
     username: {
       type: String,
       unique: true,
-      required: true,
     },
     email: {
       type: String,
@@ -71,7 +70,6 @@ const DeveloperSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
       select: false,
     },
     dp: {
@@ -103,6 +101,9 @@ const DeveloperSchema = mongoose.Schema(
       type: String,
       default: 'off',
     },
+    googleId: { type: String },
+    twitterId: { type: String },
+    githubId: { type: String },
   },
   {
     timestamps: true,

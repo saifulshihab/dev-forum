@@ -75,7 +75,14 @@ const getDevprofile = asyncHandler(async (req, res) => {
     .populate('social')
     .populate('experience');
   if (user) {
-    res.status(200).json(user);
+    const followers = await Follower.find({ user: user?._id }).populate(
+      'follower'
+    );
+    const following = await Follower.find({ follower: user?._id }).populate(
+      'user'
+    );
+    const userData = { user, followers, following };
+    res.status(200).json(userData);
   } else {
     res.status(404);
     throw new Error('User not found!');
@@ -155,7 +162,7 @@ const updateDevDp = asyncHandler(async (req, res) => {
   const { dp } = req.body;
   const user = await Developer.findById(req.user._id);
   if (user) {
-    const __dirname = path.resolve();    
+    const __dirname = path.resolve();
     if (user.dp !== '/server/uploads/default_dp.png') {
       fs.unlink(path.join(__dirname + user.dp), (err) => {
         if (err) {
@@ -212,7 +219,14 @@ const getDevPublicProfile = asyncHandler(async (req, res) => {
     username: req.params.username,
   }).select('-password');
   if (user) {
-    res.status(200).json(user);
+    const followers = await Follower.find({ user: user?._id }).populate(
+      'follower'
+    );
+    const following = await Follower.find({ follower: user?._id }).populate(
+      'user'
+    );
+    const userData = { user, followers, following };
+    res.status(200).json(userData);
   } else {
     res.status(404);
     throw new Error('User not found!');
@@ -367,7 +381,8 @@ const unfollowOther = asyncHandler(async (req, res) => {
     throw new Error('User not found!');
   }
 });
-// desc: get followers
+// no need anymore
+// desc: get following
 // routes: /api/dev/getFollowing/:userId
 // method: GET
 const getFollowing = asyncHandler(async (req, res) => {
@@ -387,6 +402,7 @@ const getFollowing = asyncHandler(async (req, res) => {
     throw new Error('User not found!');
   }
 });
+// no need anymore
 // desc: get followers
 // routes: /api/dev/getFollowers/:userId
 // method: GET

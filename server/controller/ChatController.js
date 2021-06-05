@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import ChatRoom from '../models/ChatRoomModel.js';
 import Developer from '../models/DeveloperModel.js';
 import Recruiter from '../models/RecruiterModel.js';
+import Conversation from '../models/ConversationModel.js';
 
 // desc: create new room
 // routes: api/chat/createRoom
@@ -63,5 +64,25 @@ export const getChatRooms = asyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error('User not found!');
+  }
+});
+// delete chat
+// routes: api/chat/deleteChat/:roomId
+// method: DELETE
+export const deleteChat = asyncHandler(async (req, res) => {
+  const roomId = req.params.roomId;
+  const room = await ChatRoom.findOne({ roomId: roomId });
+  if (room) {
+    const deleteRoom = await room.delete();
+    const deleteConversation = await Conversation.deleteMany({ room: roomId });
+    if (deleteRoom && deleteConversation) {
+      res.status(200).json({ message: 'Chat deleted!' });
+    } else {
+      res.status(500);
+      throw new Error('Failed to delete chat!');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Chat room not found!');
   }
 });

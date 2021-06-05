@@ -83,6 +83,10 @@ import {
   DEV_CREATE_CHAT_ROOM_SUCCESS,
   DEV_CREATE_CHAT_ROOM_FAILED,
   DEV_CREATE_CHAT_ROOM_RESET,
+  CHAT_DELETE_REQUEST,
+  CHAT_DELETE_SUCCESS,
+  CHAT_DELETE_RESET,
+  CHAT_DELETE_FAILED,
 } from '../ActionTypes';
 
 // Developer signup
@@ -282,7 +286,7 @@ export const editDevDp = (dp) => async (dispatch, getState) => {
     await axios.put(`${baseURL}/api/dev/updateDp`, { dp }, config);
     dispatch({
       type: DEV_DP_EDIT_SUCCESS,
-    });    
+    });
     dispatch({
       type: DEV_DP_EDIT_RESET,
     });
@@ -892,7 +896,7 @@ export const devGetChatRooms =
     }
   };
 
-// Get chat rooms
+// Create chat rooms
 export const devCreateChatRoom =
   (roomInfo, recruiterView) => async (dispatch, getState) => {
     try {
@@ -941,3 +945,48 @@ export const devCreateChatRoom =
       }, 2000);
     }
   };
+// Delete a Chat
+export const deleteChat = (roomId, recruiter) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CHAT_DELETE_REQUEST,
+    });
+    const {
+      signInDev: { devInfo },
+      signInRec: { recInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${recruiter ? recInfo.token : devInfo.token} `,
+      },
+    };
+    await axios.delete(
+      recruiter
+        ? `${baseURL}/api/chat/deleteChatByRecruiter/${roomId}`
+        : `${baseURL}/api/chat/deleteChat/${roomId}`,
+      config
+    );
+    dispatch({
+      type: CHAT_DELETE_SUCCESS,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: CHAT_DELETE_RESET,
+      });
+    }, 2000);
+  } catch (error) {
+    dispatch({
+      type: CHAT_DELETE_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: CHAT_DELETE_RESET,
+      });
+    }, 2000);
+  }
+};

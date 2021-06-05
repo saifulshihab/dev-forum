@@ -21,8 +21,7 @@ const ChatScreen = ({ recruiter }) => {
   const { loggedUserId } = useLocalStorage('devInfo');
 
   useEffect(() => {
-    // get user chat rooms
-    console.log(recId)
+    // get user chat rooms    
     dispatch(devGetChatRooms(recruiter ? recId : loggedUserId, recruiter));
   }, [recruiter, dispatch, loggedUserId]);
 

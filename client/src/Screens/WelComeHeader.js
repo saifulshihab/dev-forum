@@ -35,19 +35,18 @@ const WelComeHeader = () => {
   }, [dispatch, devInfo?._id, isAuthenticated]);
 
   useEffect(() => {
-    // set theme
-    if (localStorage.getItem('devForum-theme') === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-
     if (darkMode) {
       if (localStorage.getItem('devForum-theme') !== 'dark') {
         localStorage.setItem('devForum-theme', 'dark');
       }
     } else {
       localStorage.removeItem('devForum-theme');
+    }
+    // set theme
+    if (localStorage.getItem('devForum-theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
 

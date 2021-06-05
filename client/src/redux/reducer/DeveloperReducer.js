@@ -79,6 +79,10 @@ import {
   DEV_CREATE_CHAT_ROOM_SUCCESS,
   DEV_CREATE_CHAT_ROOM_FAILED,
   DEV_CREATE_CHAT_ROOM_RESET,
+  CHAT_DELETE_REQUEST,
+  CHAT_DELETE_SUCCESS,
+  CHAT_DELETE_FAILED,
+  CHAT_DELETE_RESET,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -389,6 +393,21 @@ export const devCreateChatRoomReducer = (state = {}, action) => {
     case DEV_CREATE_CHAT_ROOM_FAILED:
       return { loading: false, error: action.payload };
     case DEV_CREATE_CHAT_ROOM_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const chatDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CHAT_DELETE_REQUEST:
+      return { loading: true };
+    case CHAT_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case CHAT_DELETE_FAILED:
+      return { loading: false, error: action.payload };
+    case CHAT_DELETE_RESET:
       return {};
     default:
       return state;

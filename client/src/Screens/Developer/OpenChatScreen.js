@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import Message from '../../Components/Message';
+import Alert from '../../Components/Alert';
+import Loader from '../../Components/Loader';
 import { io } from 'socket.io-client';
+import { deleteChat } from '../../redux/action/DeveloperAction';
+
 const socket = io('https://devforum-server.herokuapp.com');
 
 const OpenChatScreen = ({ recruiter }) => {
   const bottomListRef = useRef();
   const inputRef = useRef();
+  const dispatch = useDispatch();
 
   const { roomId } = useParams();
   const [newMessage, setNewMessage] = useState('');
@@ -15,6 +20,13 @@ const OpenChatScreen = ({ recruiter }) => {
 
   const devProfile = useSelector((state) => state.devProfile);
   const { user: loggedUser } = devProfile;
+
+  const chatDelete = useSelector((state) => state.chatDelete);
+  const {
+    loading: deleteLoading,
+    success: deleteSuccess,
+    error: deleteError,
+  } = chatDelete;
 
   useEffect(() => {
     if (inputRef.current) {
@@ -46,15 +58,26 @@ const OpenChatScreen = ({ recruiter }) => {
     bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const chatDeleteHandler = () => {
+    dispatch(deleteChat(roomId, recruiter));
+  };
+
   return (
     <div className='w-full h-full'>
       <div className='h-12 text-center w-full bg-white dark:bg-gray-800 dark:border-gray-700 border-b-2 flex items-center justify-between'>
         <div></div>
-        <div className='text-red-500 mr-2 text-xs cursor-pointer hover:text-indigo-500'>
-          <i className='fas fa-trash mr-2'></i>
-          <span>Delete chat</span>
+        <div className='text-red-500 mr-2 text-xs cursor-pointer hover:text-red-600'>
+          {deleteLoading ? (
+            <Loader />
+          ) : (
+            <button onClick={chatDeleteHandler} className='focus:outline-none'>
+              <i className='fas fa-trash-alt mr-1'></i>Delete chat
+            </button>
+          )}
         </div>
       </div>
+      {deleteError && <Alert fail msg={deleteError} />}
+      {deleteSuccess && <Alert success msg={'Chat deleted!'} />}
       <div className='flex flex-col h-full' style={{ height: '85vh' }}>
         <div className='overflow-auto h-full w-full'>
           <div className='py-4 max-w-screen-lg mx-auto w-full'>

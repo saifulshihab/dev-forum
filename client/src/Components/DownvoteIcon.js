@@ -8,7 +8,7 @@ const DownvoteIcon = ({ color, fromAnswer }) => {
       } cursor-pointer   rounded-full ${
         color
           ? 'bg-indigo-500 text-white '
-          : 'bg-gray-200 text-gray-500 hover:bg-gray-300 '
+          : 'bg-gray-200 text-gray-500 dark:bg-gray-600 dark:text-gray-300 hover:bg-gray-300 '
       }`}
     >
       <svg

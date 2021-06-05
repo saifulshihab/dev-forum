@@ -16,10 +16,10 @@ const RecruiterHomeScreen = ({ location }) => {
   const pathName = location.pathname.split('/')[2];
 
   return (
-    <div className='border-t-2 h-full'>
+    <div className='border-t-2 dark:border-gray-800 h-full'>
       <div className='grid grid-cols-5'>
         <div className='col-span-1 h-full'>
-          <div className='h-full text-gray-600'>
+          <div className='h-full text-gray-600 dark:text-gray-400'>
             <Link
               to={`${url}/projects`}
               className={pathName === 'projects' ? 'text-indigo-600' : ''}
@@ -59,7 +59,7 @@ const RecruiterHomeScreen = ({ location }) => {
           </div>
         </div>
         <div className='col-span-4 w-full h-full'>
-          <div className='bg-gray-50 h-full w-full'>
+          <div className='bg-gray-50 dark:bg-gray-900 h-full min-h-screen w-full'>
             <Switch>
               <Route path={`${path}/projects`} component={RProjectScreen} />
               <Route

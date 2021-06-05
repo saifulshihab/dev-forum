@@ -12,12 +12,12 @@ const Comment = ({ cmnt }) => {
             <Link to={`/h/user/${cmnt?.user?.username}`}>
               <img
                 alt={'user dp'}
-                src={baseURL + cmnt?.user?.dp}
+                src={cmnt?.user?.cover ? baseURL + cmnt?.user?.dp : 'https://picsum.photos/200'}
                 className='w-full h-full rounded-full border border-gray-300'
               />
             </Link>
           </div>
-          <div className='w-full text-justify p-1'>
+          <div className='w-full text-justify dark:text-gray-300 p-1'>
             {ReactEmoji.emojify(cmnt?.comment)}
           </div>
         </div>

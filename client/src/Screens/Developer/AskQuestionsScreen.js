@@ -14,18 +14,18 @@ const AskQuestionsScreen = ({ location }) => {
     <div className='grid grid-cols-4 h-full'>
       <div className='col-span-4 sm:col-span-4 md:col-span-3'>
         <div className='heading'>
-          <nav className='bg-gray-100 text-dark'>
-            <div className='max-w-7xl border-b-4 border-white mx-auto px-4 sm:px-6 lg:px-8'>
+          <nav className='bg-gray-100 dark:bg-gray-800'>
+            <div className='max-w-7xl border-b-4 dark:border-gray-700 border-white mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
                   <div className=''>
-                    <div className='flex items-baseline space-x-4'>
+                    <div className='flex items-baseline space-x-4 text-gray-600 dark:text-gray-200'>
                       <Link to={`${url}/questions`}>
                         <div
                           className={`flex items-center cursor-pointer ${
                             (currentPath === 'questions' || undefined) &&
-                            'bg-white'
-                          } text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-700'
+                          } hover:bg-white dark:hover:bg-gray-700 px-3 py-2.5 text-sm font-medium`}
                         >
                           <span className='h-full text-red-600 w-4 mr-1'>
                             <svg
@@ -48,8 +48,8 @@ const AskQuestionsScreen = ({ location }) => {
                       <Link to={`${url}/articles`}>
                         <div
                           className={`flex items-center cursor-pointer ${
-                            currentPath === 'articles' && 'bg-white'
-                          }  text-gray-600 hover:bg-white hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            currentPath === 'articles' && 'bg-white dark:bg-gray-700'
+                          } hover:bg-white dark:hover:bg-gray-700 px-3 py-2.5 text-sm font-medium`}
                         >
                           <span className='h-full text-blue-600 w-4 mr-1'>
                             <svg
@@ -90,8 +90,8 @@ const AskQuestionsScreen = ({ location }) => {
         </div>
       </div>
       <div className='hidden md:block'>
-        <p className='text-md text-gray-500 p-1 bg-gray-100 font-semibold border-b-4 border-white pb-2 mb-1'>
-        <i className="fas fa-newspaper mr-2"></i>Top Articles
+        <p className='text-md text-gray-600 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 font-semibold border-b-4 dark:border-gray-700 border-white p-2 mb-1'>
+          <i className='fas fa-newspaper mr-2'></i>Top Articles
         </p>
         <ArticleContainer topArticle />
       </div>

@@ -194,7 +194,7 @@ const DeveloperProfileScreen = ({ location }) => {
   return (
     <div className='profile p-1'>
       {error && <Alert fail msg={error} />}
-      <div className='bg-white'>
+      <div className='bg-white dark:bg-gray-800'>
         <div className='shadow rounded mb-4'>
           <div className='dev_dp_cover w-full'>
             <div className='cover w-full'>
@@ -203,7 +203,11 @@ const DeveloperProfileScreen = ({ location }) => {
               ) : (
                 <img
                   className='image_center w-full h-48'
-                  src={baseURL + user?.user?.cover}
+                  src={
+                    user?.user?.cover
+                      ? baseURL + user?.user?.cover
+                      : 'https://picsum.photos/1920'
+                  }
                   alt='cover'
                 />
               )}
@@ -214,13 +218,17 @@ const DeveloperProfileScreen = ({ location }) => {
               ) : (
                 <img
                   className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
-                  src={baseURL + user?.user?.dp}
+                  src={
+                    user?.user?.dp
+                      ? baseURL + user?.user?.dp
+                      : 'https://picsum.photos/200'
+                  }
                   alt='dp'
                 />
               )}
             </div>
           </div>
-          <div className='name_others mt-1 px-3 mb-1 bg-white'>
+          <div className='name_others mt-1 px-3 mb-1 bg-white dark:bg-gray-800'>
             {loading ? (
               <div className='name_address_location animate-pulse'>
                 <span className='bg-gray-200 p-3 mb-1 px-28 w-40 block'></span>
@@ -231,7 +239,7 @@ const DeveloperProfileScreen = ({ location }) => {
                 <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
               </div>
             ) : (
-              <div className='name_address_location text-gray-500 text-sm'>
+              <div className='name_address_location text-gray-500 dark:text-gray-300 text-sm'>
                 <div className='flex items-center justify-between'>
                   <h4 className='text-2xl font-extrabold'>
                     {user?.user?.full_name}
@@ -327,7 +335,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     : el.platform === 'medium'
                     ? 'fab fa-medium text-blue-700 hover:text-blue-800'
                     : el.platform === 'github'
-                    ? 'fab fa-github text-gray-800 hover:text-gray-900'
+                    ? 'fab fa-github text-gray-800 dark:text-gray-600 dark:hover:text-gray-400 hover:text-gray-900'
                     : el.platform === 'dribble'
                     ? 'fas fa-basketball-ball text-pink-500 hover:text-pink-600'
                     : el.platform === 'behance'
@@ -346,7 +354,7 @@ const DeveloperProfileScreen = ({ location }) => {
           </div>
         </div>
         <div className='others mt-2'>
-          <nav className='bg-gray-100 text-dark'>
+          <nav className='bg-gray-100 dark:bg-gray-700'>
             <div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-2'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
@@ -356,8 +364,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             (currentPath === 'about' || undefined) &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
@@ -367,8 +375,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'timeline' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-stream mr-2 text-yellow-700'></i>
                           <span className='h-full'>Timeline</span>
@@ -378,8 +386,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'gh-profile' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
@@ -389,8 +397,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'projects' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
@@ -400,8 +408,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'articles' &&
-                            'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
@@ -411,8 +419,8 @@ const DeveloperProfileScreen = ({ location }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'ques' &&
-                            'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
 
@@ -579,7 +587,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     render={(arrayHelpers) => (
                       <div className='flex items-center mt-2'>
                         <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                          <label className='block dark:text-gray-300 mt-2 text-xs font-semibold text-gray-600 uppercase'>
                             Top Skills
                           </label>
                         </div>
@@ -594,7 +602,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                   type='text'
                                   name={`topSkills.${idx}`}
                                   value={data}
-                                  className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                                  className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                                 />
                                 <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                                   <button
@@ -614,7 +622,7 @@ const DeveloperProfileScreen = ({ location }) => {
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                              className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                               type='button'
                               onClick={() => arrayHelpers.push('')}
                             >
@@ -630,7 +638,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     render={(arrayHelpers) => (
                       <div className='flex items-center mt-2'>
                         <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                          <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                             Other Skills
                           </label>
                         </div>
@@ -645,7 +653,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                   type='text'
                                   name={`otherSkills.${idx}`}
                                   value={data}
-                                  className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                                  className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                                 />
                                 <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                                   <button
@@ -665,7 +673,7 @@ const DeveloperProfileScreen = ({ location }) => {
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                              className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                               type='button'
                               onClick={() => arrayHelpers.push('')}
                             >
@@ -681,7 +689,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     render={(arrayHelpers) => (
                       <div className='flex items-center mt-2'>
                         <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                          <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                             Education
                           </label>
                         </div>
@@ -715,7 +723,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                     id='present'
                                     label='Present'
                                     type='checkbox'
-                                    className='border py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm'
+                                    className='border dark:border-gray-600 rounded dark:bg-gray-800 py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm'
                                     name={`education.${idx}.present`}
                                   />
                                   <MyTextField
@@ -753,7 +761,7 @@ const DeveloperProfileScreen = ({ location }) => {
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                              className='dark:text-gray-300 focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                               type='button'
                               onClick={() => arrayHelpers.push('')}
                             >
@@ -769,7 +777,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     render={(arrayHelpers) => (
                       <div className='flex items-center mt-2'>
                         <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                          <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                             Experience
                           </label>
                         </div>
@@ -810,7 +818,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                     id='present'
                                     type='checkbox'
                                     label='Present'
-                                    className='border py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm'
+                                    className='border dark:bg-gray-800 dark:border-gray-600 rounded py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm'
                                     name={`experience.${idx}.present`}
                                   />
                                 </div>
@@ -842,7 +850,7 @@ const DeveloperProfileScreen = ({ location }) => {
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                              className='dark:text-gray-300 focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                               type='button'
                               onClick={() => arrayHelpers.push('')}
                             >
@@ -858,7 +866,7 @@ const DeveloperProfileScreen = ({ location }) => {
                     render={(arrayHelpers) => (
                       <div className='flex items-center mt-2'>
                         <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                          <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                             Social links
                           </label>
                         </div>
@@ -869,7 +877,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                 <div className='flex items-center space-x-4 '>
                                   <div>
                                     <label
-                                      className='block mt-2 mb-2 text-xs font-semibold text-gray-600 uppercase'
+                                      className='dark:text-gray-300 block mt-2 mb-2 text-xs font-semibold text-gray-600 uppercase'
                                       htmlFor='platform'
                                     >
                                       Select platform
@@ -879,7 +887,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                       as='select'
                                       label='Platform'
                                       name={`social.${idx}.platform`}
-                                      className='border text-sm rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'
+                                      className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 text-sm rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'
                                     >
                                       <option value='facebook'>Facebook</option>
                                       <option value='instagram'>
@@ -928,7 +936,7 @@ const DeveloperProfileScreen = ({ location }) => {
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                              className='dark:text-gray-300 focus:outline-none text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                               type='button'
                               onClick={() => arrayHelpers.push('')}
                             >
@@ -953,24 +961,28 @@ const DeveloperProfileScreen = ({ location }) => {
           <Modal
             modalOpen={followerModal}
             setModalOpen={setFollowerModal}
-            title={`Followers (${user?.followers ? user?.followers?.length : '0'})`}
+            title={`Followers (${
+              user?.followers ? user?.followers?.length : '0'
+            })`}
             titleIcon='fas fa-users'
           >
-            {user?.followers?.map((user) => (
-              <Developer key={user?.user?._id} user={user?.follower} />
+            {user?.followers?.map((user, idx) => (
+              <Developer key={idx} user={user?.follower} />
             ))}
           </Modal>
           <Modal
             modalOpen={followingModal}
             setModalOpen={setFollowingModal}
-            title={`Following (${user?.following ? user?.following?.length : '0'})`}
+            title={`Following (${
+              user?.following ? user?.following?.length : '0'
+            })`}
             titleIcon='fas fa-users'
           >
-            {user?.following?.map((user) => (
-              <Developer key={user?.user?._id} user={user?.user} />
+            {user?.following?.map((user, idx) => (
+              <Developer key={idx} user={user?.user} />
             ))}
           </Modal>
-          <div className='question_article_feed p-2 bg-white w-full'>
+          <div className='question_article_feed p-2 bg-white dark:bg-gray-800 w-full'>
             <Switch>
               {/* <Route
                 exact

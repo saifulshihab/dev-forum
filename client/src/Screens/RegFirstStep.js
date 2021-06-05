@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const RegFirstStep = () => {
   return (
     <div className='px-4 mt-16 text-center '>
-      <span className='text-2xl text-gray-500 font-bold inline-block mx-auto'>
+      <span className='text-2xl text-gray-500 dark:text-gray-100 font-bold inline-block mx-auto'>
         I Want to Start Here As a
       </span>
       <div className='mt-5 flex justify-center'>
@@ -22,7 +22,7 @@ const RegFirstStep = () => {
           <div className='rounded-md shadow'>
             <Link
               to='/re-registration'
-              className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 hover:bg-indigo-700 hover:text-white md:py-4 md:text-lg md:px-10'
+              className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-100 hover:bg-indigo-200 hover:text-white md:py-4 md:text-lg md:px-10'
             >
               Recruiter
             </Link>

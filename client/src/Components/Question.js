@@ -66,28 +66,28 @@ const Question = ({ question, details }) => {
 
   return (
     <>
-      <div className='w-full bg-white shadow rounded-md my-2 px-5 py-2 '>
+      <div className='w-full bg-white dark:bg-gray-800 shadow rounded-md my-2 px-5 py-2 '>
         <div className='flex items-center'>
           <div className='w-8 h-8 sm:w-10 sm:h-10'>
             <img
               className='border w-full h-full rounded-full'
-              src={baseURL + question?.user?.dp}
+              src={question?.user?.dp ? baseURL + question?.user?.dp : 'https://picsum.photos/200'}
               alt={question?.user?.username}
             />
           </div>
           <div className='ml-2 w-40 h-8 sm:h-10'>
-            <h4 className='text-gray-700 text-sm sm:font-medium cursor-pointer hover:text-gray-800'>
+            <h4 className='text-gray-700 dark:text-gray-300 text-sm sm:font-medium cursor-pointer hover:text-gray-800'>
               <Link to={`/h/user/${question?.user?.username}`}>
                 {question?.user?.full_name}
               </Link>
             </h4>
-            <p className='-mt-0.5 text-gray-400 text-xs'>
+            <p className='-mt-0.5 text-gray-400 dark:text-gray-500 text-xs'>
               {moment(question?.createdAt).startOf('hour').fromNow()}
             </p>
           </div>
         </div>
         <div
-          className={`text-gray-600 ${
+          className={`text-gray-600 dark:text-gray-300 ${
             !details ? 'hover:text-indigo-700' : ''
           } cursor-pointer sm:text-xl`}
         >
@@ -101,7 +101,7 @@ const Question = ({ question, details }) => {
           {question?.tags?.map((tag, idx) => (
             <span
               key={idx}
-              className='bg-gray-200 mr-2 sm:mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+              className='pl-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 mr-2 sm:mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
             >
               {tag}
             </span>
@@ -114,9 +114,9 @@ const Question = ({ question, details }) => {
         )}
         <div
           onClick={() => setAnsOpen(!ansOpen)}
-          className='flex items-center justify-center mt-1 sm:mt-3 border-t cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500'
+          className='flex items-center justify-center mt-1 sm:mt-3 border-t dark:border-gray-600 cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500'
         >
-          <div className='flex  hover:text-indigo-600 items-center justify-center w-1/2'>
+          <div className='flex hover:text-indigo-600 dark:text-gray-300 items-center justify-center w-1/2'>
             <span className='mr-1'>
               <svg
                 style={{ width: '15px' }}

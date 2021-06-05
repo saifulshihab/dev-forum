@@ -91,7 +91,7 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
   };
 
   return (
-    <div className='w-full h-42 bg-white p-2 px-4 mb-2 text-gray-600 rounded shadow'>
+    <div className='w-full h-42 bg-white dark:bg-gray-800 p-2 px-4 mb-2 text-gray-600 dark:text-gray-300 rounded shadow'>
       {!noRoute ? (
         <Link to={`${url}/${circular?._id}`}>
           <p className='w-full text-xl hover font-semibold hover:text-indigo-600 cursor-pointer'>
@@ -107,7 +107,7 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
         {circular?.skills?.map((skill, idx) => (
           <span
             key={idx}
-            className='bg-gray-200 mr-2 mb-1text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+            className='pl-1 bg-gray-200 dark:bg-gray-700 dark:text-indigo-500 mr-2 mb-1text-xs text-gray-500 py-.5 px-1 rounded mb-1'
           >
             {skill}
           </span>
@@ -139,7 +139,7 @@ const JobCircular = ({ circular, noRoute, recruiter, details, developer }) => {
           <div>
             <p className='font-semibold mb-1'>Job Description</p>
           </div>
-          <div className='text-sm text-justify text-gray-500'>
+          <div className='text-sm text-justify text-gray-500 dark:text-gray-400'>
             {circular?.jobDescription}
           </div>
         </div>

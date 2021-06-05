@@ -38,17 +38,17 @@ const DevProject = ({ project }) => {
     dispatch(deleteProject(project?._id));
   };
   return (
-    <div className='p-3 mb-3 bg-white rounded shadow'>
+    <div className='p-3 mb-3 bg-white dark:bg-gray-700 rounded shadow'>
       <div className='border-b flex justify-between items-center pb-1'>
         <div>
-          <div className='text-lg font-semibold text-gray-600'>
+          <div className='text-lg font-semibold text-gray-600 dark:text-gray-300'>
             <p>{project?.title}</p>
           </div>
           <div className={`flex mt-1 items-center text-xs`}>
             {project?.technologies?.map((tech, idx) => (
               <span
                 key={idx}
-                className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+                className='pl-1 dark:text-gray-300 dark:bg-gray-600 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
               >
                 {tech}
               </span>
@@ -58,20 +58,20 @@ const DevProject = ({ project }) => {
         <div className='text-gray-500'>
           <button
             onClick={deleteHandler}
-            className='w-8 h-8 text-sm focus:outline-none hover:text-indigo-600 hover:border-indigo-500 mr-1 border rounded-full'
+            className='w-8 h-8 text-sm dark:border-gray-600 focus:outline-none hover:text-indigo-600 hover:border-indigo-500 mr-1 border rounded-full'
           >
             <i className='fas fa-trash-alt'></i>
           </button>
           <button
             onClick={() => setEditProjectModal(true)}
-            className='w-8 h-8 text-sm focus:outline-none hover:text-indigo-600 hover:border-indigo-500 border rounded-full'
+            className='w-8 h-8 text-sm dark:border-gray-600 focus:outline-none hover:text-indigo-600 hover:border-indigo-500 border rounded-full'
           >
             <i className='fas fa-edit'></i>
           </button>
         </div>
       </div>
       <div className='mt-2'>
-        <p className='text-justify text-gray-500 text-sm'>
+        <p className='text-justify dark:text-gray-300 text-gray-500 text-sm'>
           {project?.description}
         </p>
       </div>
@@ -124,14 +124,14 @@ const DevProject = ({ project }) => {
                   {({ field, meta }) => (
                     <div>
                       <label
-                        className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
+                        className='block mt-2 dark:text-gray-300 text-xs font-semibold text-gray-600 uppercase'
                         htmlFor='description'
                       >
                         Description
                       </label>
                       <textarea
                         className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                                dark:text-gray-300 dark:border-gray-600 dark:bg-gray-800 appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                         id='description'
                         placeholder='Project description'
@@ -157,7 +157,7 @@ const DevProject = ({ project }) => {
                   render={(arrayHelpers) => (
                     <div className='flex items-center mt-2'>
                       <div className='w-2/5'>
-                        <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                        <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                           Technology Used
                         </label>
                       </div>
@@ -192,7 +192,7 @@ const DevProject = ({ project }) => {
                           ))
                         ) : (
                           <button
-                            className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                            className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                             type='button'
                             onClick={() => arrayHelpers.push('')}
                           >

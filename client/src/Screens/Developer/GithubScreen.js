@@ -18,7 +18,7 @@ const GithubScreen = ({ username }) => {
       setGithubData(res.data);
       setRepo(repoData.data);
     };
-    fetchGhData();
+    return fetchGhData();
   }, [username]);
   return (
     <div>
@@ -34,7 +34,7 @@ const GithubScreen = ({ username }) => {
                 src={gh.avatar_url}
               />
             </div>
-            <div className='text-sm text-gray-600 ml-3'>
+            <div className='text-sm text-gray-600 dark:text-gray-300 ml-3'>
               <p className='text-xl font-semibold'>{gh.name}</p>
               <p className='text-sm'>@{gh.login}</p>
               <p className='italic'>{gh.bio}</p>
@@ -65,8 +65,8 @@ const GithubScreen = ({ username }) => {
               )}
             </div>
           </div>
-          <div className='w-full mt-2 pt-3 border-t'>
-            <p className='text-gray-600 text-lg mb-2  font-semibold'>
+          <div className='w-full mt-2 pt-3 border-t dark:border-gray-500'>
+            <p className='text-gray-600 text-lg mb-2 dark:text-gray-300 font-semibold'>
               Repositories ({gh.public_repos})
             </p>
             {repo

@@ -41,9 +41,9 @@ const RProfileScreen = () => {
 
   return (
     <div className='p-2 rounded text-gray-500'>
-      <div className='w-full bg-white max-w-md w-full bg-gray-50 p-6 space-y-8'>
+      <div className='w-full rounded bg-white dark:bg-gray-700 max-w-md w-full bg-gray-50 p-6 space-y-8'>
         <div>
-          <p className='font-semibold text-xl border-b pb-1 mb-1'>
+          <p className='font-semibold text-xl border-b dark:border-gray-600 dark:text-gray-200 pb-1 mb-1'>
             <i className='fas fa-user mr-2'></i>Profile Information{' '}
             {getLoading && 'Loading...'}
           </p>
@@ -77,7 +77,7 @@ const RProfileScreen = () => {
 
                 <button
                   disabled={isSubmitting}
-                  className='p-1 px-2 bg-blue-500 hover:bg-blue-600 text-white mt-2 font-semibold focus:outline-none rounded'
+                  className='p-1 px-2 bg-blue-500 hover:bg-blue-600 text-white mt-5 font-semibold focus:outline-none rounded'
                 >
                   {editLoading ? <Spinner small /> : 'Update'}
                 </button>

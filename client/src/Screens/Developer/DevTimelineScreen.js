@@ -17,7 +17,7 @@ const DevTimelineScreen = ({ user, recruiterView }) => {
 
   const signInDev = useSelector((state) => state.signInDev);
   const { devInfo: currentUser } = signInDev;
-  
+
   useEffect(() => {
     dispatch(getSharedArticle(user?._id, recruiterView));
   }, [dispatch, user?._id, recruiterView]);
@@ -34,10 +34,10 @@ const DevTimelineScreen = ({ user, recruiterView }) => {
         articles?.map((data) => (
           <div key={data?._id} className='p-2 shadow mb-2 rounded'>
             <div className='flex'>
-              <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
+              <div className='mx-auto flex-shrink-0 dark:bg-gray-900 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
                 <i className='fas fa-share'></i>
               </div>
-              <div className='ml-3'>
+              <div className='ml-3 text-gray-500 dark:text-gray-300'>
                 <div className='text-sm'>
                   {user?.full_name}{' '}
                   <span className='font-semibold'>shared</span> this article.
@@ -60,7 +60,7 @@ const DevTimelineScreen = ({ user, recruiterView }) => {
               </div>
             </div>
             {data?.caption && (
-              <div className='text-sm text-gray-600 mt-2'>{data?.caption}</div>
+              <div className='text-sm text-gray-600 dark:text-gray-300 mt-2'>{data?.caption}</div>
             )}
             <div className='pl-5'>
               <Article article={data?.article} />

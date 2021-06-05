@@ -19,14 +19,16 @@ const HomeScreen = ({ location }) => {
   const pathName = location.pathname.split('/')[2];
 
   return (
-    <div className='border-t-2 h-full'>
-      <div className='grid grid-cols-5'>
+    <div className='border-t-2 dark:border-gray-800 h-full'>
+      <div className='dark:bg-gray-900 grid grid-cols-5'>
         <div className='col-span-1 h-full'>
-          <div className='text-gray-600 h-full'>
+          <div className='text-gray-600 dark:text-gray-400 h-full'>
             <Link
               to={`${url}/forum`}
               className={
-                pathName === 'forum' || undefined ? 'text-indigo-600' : ''
+                pathName === 'forum' || undefined
+                  ? 'text-indigo-600'
+                  : ''
               }
             >
               <SidebarMenu fontAwesome='fas fa-users' text={'Forum'} />
@@ -85,7 +87,7 @@ const HomeScreen = ({ location }) => {
           </div>
         </div>
         <div className='col-span-4 h-full w-full'>
-          <div className='bg-gray-50 h-full w-full'>
+          <div className='bg-gray-50 dark:bg-gray-900 h-full min-h-screen w-full'>
             <Switch>
               <Route path={`${path}/forum`} component={AskQuestionsScreen} />
               <Route path={`${path}/projects`} component={FreelanceScreen} />

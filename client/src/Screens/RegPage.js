@@ -48,10 +48,10 @@ const RegPage = ({ history }) => {
 
   return (
     <div className='grid mt-10 place-items-center'>
-      <div className='w-11/12 p-4 bg-gray-50 sm:w-3/5 md:w-2/5 lg:w-1/3'>
+      <div className='w-11/12 p-4 bg-gray-50 dark:bg-gray-700 sm:w-3/5 md:w-2/5 lg:w-1/3'>
         <div className='mt-3'>
           <img className='mx-auto h-12 w-auto' src={logo} alt='Workflow' />
-          <h2 className='mt-4 text-center text-3xl font-extrabold text-gray-900'>
+          <h2 className='mt-4 dark:text-gray-200 text-center text-3xl font-extrabold text-gray-900'>
             Create Account
           </h2>
         </div>

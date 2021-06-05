@@ -42,12 +42,12 @@ const JobsContainer = () => {
   return (
     <div>
       <div>
-        <div className='rounded bg-white mt-2 p-2 mb-2 shadow'>
-          <div className='flex justify-between'>
-            <span className='text-sm text-gray-500 font-semibold'>
-              <i className='fas fa-filter text-gray-500 mr-1'></i>Filter Job
+        <div className='rounded bg-white dark:bg-gray-700 mt-2 p-2 mb-2 shadow'>
+          <div className='flex justify-between text-gray-500 dark:text-gray-300'>
+            <span className='text-sm  font-semibold'>
+              <i className='fas fa-filter  mr-1'></i>Filter Job
             </span>
-            <span className='text-xs text-gray-500'>
+            <span className='text-xs '>
               Available Job ({circularList?.length})
             </span>
           </div>

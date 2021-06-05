@@ -19,24 +19,18 @@ const RJobContainer = () => {
   }, [dispatch, recInfo?._id]);
 
   return (
-    <div>
-      <div className='p-2 mb-1 bg-white flex items-center  text-gray-600'>
-        <i className='fas fa-briefcase mr-2'></i>
-        <p className='text-lg font-semibold'>Browse Jobs</p>
-      </div>
-      <div className='p-1'>
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Alert fail msg={error} />
-        ) : circulars?.length > 0 ? (
-          circulars?.map((circular) => (
-            <JobCircular key={circular?._id} circular={circular} recruiter />
-          ))
-        ) : (
-          <Alert warning msg='No circular posted yet!' />
-        )}
-      </div>
+    <div className='p-1'>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Alert fail msg={error} />
+      ) : circulars?.length > 0 ? (
+        circulars?.map((circular) => (
+          <JobCircular key={circular?._id} circular={circular} recruiter />
+        ))
+      ) : (
+        <Alert warning msg='No circular posted yet!' />
+      )}
     </div>
   );
 };

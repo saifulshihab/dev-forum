@@ -63,7 +63,7 @@ const Project = ({ project, recruiter, noRoute }) => {
     dispatch(deleteRecProject(project?._id));
   };
   return (
-    <div className='bg-white p-2 px-3 text-gray-500 rounded shadow mb-2 text-justify'>
+    <div className='bg-white dark:bg-gray-800 p-2 px-3 text-gray-500 dark:text-gray-300 rounded shadow mb-2 text-justify'>
       <div className='w-full h-auto'>
         {!noRoute ? (
           <Link to={`${url}/${project?._id}`}>
@@ -78,7 +78,7 @@ const Project = ({ project, recruiter, noRoute }) => {
         )}
       </div>
       <div className='w-full text-sm  mt-2 h-auto'>
-        <p>{project?.description}</p>
+        <p className='dark:text-gray-400'>{project?.description}</p>
       </div>
       <div className='text-xs flex mt-2 items-center justify-between italic'>
         <span>
@@ -104,7 +104,7 @@ const Project = ({ project, recruiter, noRoute }) => {
             {project?.technologies?.map((tech, idx) => (
               <span
                 key={idx}
-                className='bg-gray-200 mr-1 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+                className='pl-1 bg-gray-200 dark:bg-gray-700 dark:text-indigo-500 mr-1 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
               >
                 {tech}
               </span>

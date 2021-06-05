@@ -20,10 +20,10 @@ const RForgetPassword = () => {
   return (
     <>
       <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-md w-full bg-gray-50 p-6 space-y-8'>
+        <div className='max-w-md w-full bg-gray-50 dark:bg-gray-700 p-6 space-y-8'>
           <div>
             <img className='mx-auto h-12 w-auto' src={logo} alt='Workflow' />
-            <h2 className='mt-4 text-center text-3xl font-extrabold text-gray-900'>
+            <h2 className='mt-4 dark:text-gray-200 text-center text-3xl font-extrabold text-gray-900'>
               Recover Password
             </h2>
           </div>
@@ -41,7 +41,7 @@ const RForgetPassword = () => {
                   name='email'
                   type='email'
                   required
-                  className='appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                  className='dark:bg-gray-800 dark:border-gray-600 appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
                   placeholder='Enter your registered email addess'
                 />
               </div>

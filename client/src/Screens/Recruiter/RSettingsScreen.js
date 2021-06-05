@@ -51,14 +51,14 @@ const RSettingsScreen = () => {
 
   return (
     <div className='p-1 text-gray-500'>
-      <div className='account_wrapper shadow rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>
+      <div className='account_wrapper shadow rounded mb-2 bg-white dark:bg-gray-700 dark:text-gray-300 w-full h-12 px-3 flex items-center'>
         <div className=''>
           <p className='text-lg font-semibold'>Account settings</p>
         </div>
         <div className='ml-auto'></div>
       </div>
 
-      <d className='mb-2 bg-white shadow rounded w-full h-12 px-3 flex items-center'>
+      <d className='mb-2 bg-white dark:bg-gray-700 dark:text-gray-300 shadow rounded w-full h-12 px-3 flex items-center'>
         <div className=''>
           <p className='text-lg font-semibold'>Reset Password</p>
         </div>

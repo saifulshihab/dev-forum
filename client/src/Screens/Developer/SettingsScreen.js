@@ -77,13 +77,13 @@ const SettingsScreen = () => {
   };
   return (
     <div className='p-1 text-gray-500'>
-      <div className='account_wrapper shadow rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>
+      <div className='account_wrapper shadow rounded mb-2 bg-white dark:bg-gray-700 dark:text-gray-300 w-full h-12 px-3 flex items-center'>
         <div className=''>
           <p className='text-lg font-semibold'>Account settings</p>
         </div>
         <div className='ml-auto'></div>
       </div>
-      <div className='privacy_wrapper shadow rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>
+      <div className='privacy_wrapper shadow rounded dark:bg-gray-700 dark:text-gray-300 mb-2 bg-white w-full h-12 px-3 flex items-center'>
         <div className=''>
           <div>
             <p className='text-lg font-semibold'>Open to Work?</p>
@@ -91,7 +91,7 @@ const SettingsScreen = () => {
         </div>
         <div className='ml-auto'>
           <select
-            className='border bg-gray-100 rounded p-1 font-semibold shadow-inner focus:outline-none'
+            className='border bg-gray-100 dark:bg-gray-800 rounded p-1 font-semibold shadow-inner focus:outline-none'
             value={workStatus}
             onChange={(e) => setWorkStatus(e.target.value)}
           >
@@ -101,7 +101,7 @@ const SettingsScreen = () => {
           </select>
         </div>
       </div>
-      <div className='mb-2 bg-white shadow rounded w-full h-12 px-3 flex items-center'>
+      <div className='mb-2 bg-white dark:bg-gray-700 dark:text-gray-300 shadow rounded w-full h-12 px-3 flex items-center'>
         <div className=''>
           <p className='text-lg font-semibold'>Reset Password</p>
         </div>
@@ -109,10 +109,12 @@ const SettingsScreen = () => {
           <button
             onClick={() => setResetModal(true)}
             className='h-8 rounded px-4 bg-green-500 outline-none focus:outline-none text-sm font-semibold text-white'
-          ><i className='fas fa-sync-alt mr-2'></i>Reset</button>
+          >
+            <i className='fas fa-sync-alt mr-2'></i>Reset
+          </button>
         </div>
       </div>
-      <div className='delete_wrapper shadow rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>
+      <div className='delete_wrapper shadow dark:bg-gray-700 dark:text-gray-300 rounded mb-2 bg-white w-full h-12 px-3 flex items-center'>
         <div className=''>
           <p className='text-lg font-semibold'>Permenantly Delete Account?</p>
         </div>
@@ -168,21 +170,21 @@ const SettingsScreen = () => {
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
-              <div className='inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
-                <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
+              <div className='inline-block align-bottom bg-white dark:bg-gray-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
+                <div className='bg-white dark:bg-gray-700 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
                   <div className='sm:flex sm:items-start'>
-                    <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10'>
+                    <div className='mx-auto flex-shrink-0 flex items-center dark:bg-gray-800 justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10'>
                       <i className='fas text-red-600 fa-trash-alt'></i>
                     </div>
                     <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
                       <Dialog.Title
                         as='h3'
-                        className='text-lg leading-6 font-medium text-gray-900'
+                        className='text-lg dark:text-gray-200 leading-6 font-medium text-gray-900'
                       >
                         Deactivate account
                       </Dialog.Title>
                       <div className='mt-2'>
-                        <p className='text-sm text-gray-500'>
+                        <p className='text-sm text-gray-500 dark:text-gray-300'>
                           Are you sure you want to deactivate your account? All
                           of your data will be permanently removed. This action
                           cannot be undone.
@@ -191,18 +193,18 @@ const SettingsScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                <div className='bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
                   <button
                     onClick={profileDeleteHandler}
                     type='button'
-                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm'
+                    className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none  sm:ml-3 sm:w-auto sm:text-sm'
                   >
                     Confirm delete
                   </button>
                   <button
                     onClick={() => setModalOpen(false)}
                     type='button'
-                    className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
+                    className='mt-3 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none   sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
                   >
                     Cancel
                   </button>

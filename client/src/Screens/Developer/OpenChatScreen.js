@@ -48,8 +48,14 @@ const OpenChatScreen = ({ recruiter }) => {
 
   return (
     <div className='w-full h-full'>
-      <div className='h-12 text-center w-full bg-white border-b-2 '></div>
-      <div className='flex flex-col h-full' style={{ height: '80vh' }}>
+      <div className='h-12 text-center w-full bg-white dark:bg-gray-800 dark:border-gray-700 border-b-2 flex items-center justify-between'>
+        <div></div>
+        <div className='text-red-500 mr-2 text-xs cursor-pointer hover:text-indigo-500'>
+          <i className='fas fa-trash mr-2'></i>
+          <span>Delete chat</span>
+        </div>
+      </div>
+      <div className='flex flex-col h-full' style={{ height: '85vh' }}>
         <div className='overflow-auto h-full w-full'>
           <div className='py-4 max-w-screen-lg mx-auto w-full'>
             <div className='mx-2 pb-8'>
@@ -73,7 +79,7 @@ const OpenChatScreen = ({ recruiter }) => {
         <div className='w-full'>
           <form
             onSubmit={submitHandler}
-            className='flex flex-row bg-gray-200 dark:bg-coolDark-400 rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto dark:text-white shadow-md'
+            className='flex flex-row bg-gray-200 dark:bg-gray-700 rounded-md px-4 py-3 z-10 max-w-screen-lg mx-auto dark:text-white shadow-md'
           >
             <input
               ref={inputRef}

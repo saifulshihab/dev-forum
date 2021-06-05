@@ -37,7 +37,7 @@ const CreateProjectScreen = () => {
   });
 
   return (
-    <div className='bg-white rounded p-2 mt-2 px-2'>
+    <div className='bg-white dark:bg-gray-700 rounded p-2 mt-2 px-2'>
       <div>
         {/* form submission */}
         <Formik
@@ -67,14 +67,14 @@ const CreateProjectScreen = () => {
                 {({ field, meta }) => (
                   <div>
                     <label
-                      className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
+                      className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'
                       htmlFor='description'
                     >
                       Description
                     </label>
                     <textarea
                       className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                                appearance-none dark:bg-gray-800 dark:border-gray-600 rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                       id='description'
                       placeholder='Project description'
@@ -107,7 +107,7 @@ const CreateProjectScreen = () => {
                 render={(arrayHelpers) => (
                   <div className='flex items-center mt-2'>
                     <div className='w-2/5'>
-                      <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      <label className='block dark:text-gray-300 mt-2 text-xs font-semibold text-gray-600 uppercase'>
                         Technologies
                       </label>
                     </div>
@@ -122,7 +122,7 @@ const CreateProjectScreen = () => {
                               type='text'
                               name={`technologies.${idx}`}
                               value={data}
-                              className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                              className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                             />
                             <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                               <button
@@ -142,7 +142,7 @@ const CreateProjectScreen = () => {
                         ))
                       ) : (
                         <button
-                          className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                          className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                           type='button'
                           onClick={() => arrayHelpers.push('')}
                         >

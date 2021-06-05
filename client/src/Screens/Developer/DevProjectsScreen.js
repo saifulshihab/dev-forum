@@ -12,8 +12,7 @@ import MyTextField from '../../Components/MyTextField';
 import * as yup from 'yup';
 import Modal from '../../Components/Modal';
 
-const DevProjectsScreen = ({ user, recruiterView }) => {
-  console.log(recruiterView)
+const DevProjectsScreen = ({ user, recruiterView }) => {  
   const dispatch = useDispatch();
 
   const [addProjectModal, setAddProjectModal] = useState(false);
@@ -47,14 +46,14 @@ const DevProjectsScreen = ({ user, recruiterView }) => {
 
   return (
     <>
-      <div className='text-xl flex items-center justify-between font-semibold text-gray-600'>
+      <div className='text-xl flex items-center justify-between font-semibold text-gray-600 dark:text-gray-300'>
         <p>
           <i className='fas mr-2 fa-tasks'></i>Projects ({projects?.length})
         </p>
         {user?._id?.toString() === currentUser?._id?.toString() && (
           <button
             onClick={() => setAddProjectModal(true)}
-            className='border text-sm text-gray-500 hover:text-white focus:outline-none hover:border-indigo-500 p-1 rounded px-2 font-semibold hover:bg-indigo-500'
+            className='border dark:text-gray-300 dark:border-gray-500 text-sm text-gray-500 hover:text-white focus:outline-none hover:border-indigo-500 p-1 rounded px-2 font-semibold hover:bg-indigo-500'
           >
             <i className='mr-2 far fa-plus-square'></i>
             Add Project
@@ -104,14 +103,14 @@ const DevProjectsScreen = ({ user, recruiterView }) => {
                   {({ field, meta }) => (
                     <div>
                       <label
-                        className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
+                        className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'
                         htmlFor='description'
                       >
                         Description
                       </label>
                       <textarea
                         className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                                dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                         id='description'
                         placeholder='Project description'
@@ -137,7 +136,7 @@ const DevProjectsScreen = ({ user, recruiterView }) => {
                   render={(arrayHelpers) => (
                     <div className='flex items-center mt-2'>
                       <div className='w-2/5'>
-                        <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                        <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                           Technology Used
                         </label>
                       </div>
@@ -172,7 +171,7 @@ const DevProjectsScreen = ({ user, recruiterView }) => {
                           ))
                         ) : (
                           <button
-                            className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                            className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                             type='button'
                             onClick={() => arrayHelpers.push('')}
                           >

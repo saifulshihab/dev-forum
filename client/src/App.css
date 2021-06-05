@@ -13,16 +13,19 @@
   margin-top: -90px;
 }
 
-/* Loder CSS */
+/* Loader CSS */
 .loader {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 .comment-loader {
   width: 30px;
   height: 30px;
 }
 .react-tag-input {
+  background-color: transparent;
+  border: none;
+  box-shadow: inset 0px 1px 8px rgba(0, 0, 0, 0.2);
   font-size: 13px;
   margin-top: 5px;
 }

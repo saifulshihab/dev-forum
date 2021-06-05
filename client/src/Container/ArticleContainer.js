@@ -45,9 +45,9 @@ const ArticleContainer = ({ topArticle }) => {
 
   return (
     <>
-      <div className='rounded bg-white mt-2 mb-2 p-2 shadow'>
-        <span className='text-sm text-gray-500 font-semibold'>
-          <i className='fas fa-filter text-gray-500 mr-1'></i>
+      <div className='rounded bg-white dark:bg-gray-700 mt-2 mb-2 p-2 shadow'>
+        <span className='text-sm text-gray-500 dark:text-gray-200 font-semibold'>
+          <i className='fas fa-filter mr-1'></i>
           Filter Article
         </span>
         <div>

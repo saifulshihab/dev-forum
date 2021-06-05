@@ -16,24 +16,18 @@ const RProjectContainer = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <div className='p-2 mb-1 bg-white flex items-center  text-gray-600'>
-        <i className='fas fa-code mr-2'></i>
-        <p className='text-lg font-semibold'>Browse Projects</p>
-      </div>
-      <div className='p-1'>
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Alert fail msg={error} />
-        ) : projects?.length > 0 ? (
-          projects?.map((project) => (
-            <Project key={project?._id} project={project} recruiter />
-          ))
-        ) : (
-          <Alert warning msg='No projects posted yet!' />
-        )}
-      </div>
+    <div className='p-1'>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Alert fail msg={error} />
+      ) : projects?.length > 0 ? (
+        projects?.map((project) => (
+          <Project key={project?._id} project={project} recruiter />
+        ))
+      ) : (
+        <Alert warning msg='No projects posted yet!' />
+      )}
     </div>
   );
 };

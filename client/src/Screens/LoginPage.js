@@ -35,10 +35,10 @@ const LoginPage = ({ history }) => {
   return (
     <>
       <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-md w-full bg-gray-50 p-6 space-y-6'>
+        <div className='max-w-md w-full bg-gray-50 dark:bg-gray-700 p-6 space-y-6'>
           <div>
             <img className='mx-auto h-12 w-auto' src={logo} alt='Workflow' />
-            <h2 className='mt-4 text-center text-3xl font-extrabold text-gray-900'>
+            <h2 className='mt-4 text-center text-3xl font-extrabold text-gray- dark:text-gray-200'>
               Sign in to your account
             </h2>
             <p className='mt-2 text-center text-sm text-gray-600'>
@@ -93,11 +93,11 @@ const LoginPage = ({ history }) => {
                       id='remember_me'
                       name='remember_me'
                       type='checkbox'
-                      className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
+                      className='h-4 w-4 dark:bg-gray-800 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
                     />
                     <label
                       htmlFor='remember_me'
-                      className='ml-2 block text-sm text-gray-900'
+                      className='ml-2 block text-sm text-gray-900 dark:text-gray-300'
                     >
                       Remember me
                     </label>

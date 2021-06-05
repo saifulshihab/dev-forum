@@ -10,9 +10,14 @@ import logo from '../logo.svg';
 const WelComeHeader = () => {
   const dispatch = useDispatch();
 
-  // const ref = React.createRef();
-
   const [dpDropdown, setdpDropdown] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (localStorage.getItem('devForum-theme') === 'dark') {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   const signInDev = useSelector((state) => state.signInDev);
   const { isAuthenticated, devInfo } = signInDev;
@@ -29,6 +34,23 @@ const WelComeHeader = () => {
     }
   }, [dispatch, devInfo?._id, isAuthenticated]);
 
+  useEffect(() => {
+    // set theme
+    if (localStorage.getItem('devForum-theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    if (darkMode) {
+      if (localStorage.getItem('devForum-theme') !== 'dark') {
+        localStorage.setItem('devForum-theme', 'dark');
+      }
+    } else {
+      localStorage.removeItem('devForum-theme');
+    }
+  }, [darkMode]);
+
   const logoutHandler = () => {
     dispatch(devSignout());
   };
@@ -41,6 +63,10 @@ const WelComeHeader = () => {
     setdpDropdown(false);
   };
 
+  const themeModeHandler = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
     <>
       <div className='relative z-40 p-3 px-4 sm:px-6 lg:px-8'>
@@ -48,7 +74,7 @@ const WelComeHeader = () => {
           <div className='flex items-center'>
             <div className='sm:hidden md:block flex items-center justify-between w-full md:w-auto'>
               <Link to='/' onClick={closeDD}>
-                <span className='te-lg sm:text-xl md:text-3xl font-extrabold text-gray-900'>
+                <span className='te-lg sm:text-xl md:text-3xl font-extrabold text-gray-900 dark:text-gray-100'>
                   DevForum
                 </span>
               </Link>
@@ -61,6 +87,14 @@ const WelComeHeader = () => {
           </div>
 
           <div className='md:flex items-center ml-auto'>
+            <div className='h-8 w-8 mr-2'>
+              <button
+                onClick={themeModeHandler}
+                className='focus:outline-none border dark:border-gray-600 dark:text-gray-100 w-full h-full rounded-full'
+              >
+                <i className='fas dark:far fa-sun'></i>
+              </button>
+            </div>
             {isAuthenticated ? (
               <div className='inline-block'>
                 <div>
@@ -72,7 +106,11 @@ const WelComeHeader = () => {
                   >
                     <img
                       className='h-8 w-8 rounded-full image_center'
-                      src={baseURL + user?.user?.dp}
+                      src={
+                        user?.user?.dp
+                          ? baseURL + user?.user?.dp
+                          : 'https://picsum.photos/200'
+                      }
                       alt='dp'
                     />
                   </button>
@@ -95,7 +133,7 @@ const WelComeHeader = () => {
                   {({ ref }) => (
                     <div
                       ref={ref}
-                      className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'
+                      className='text-gray-600 text-sm dark:text-gray-300 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5'
                       role='menu'
                       aria-orientation='vertical'
                       aria-labelledby='user-menu'
@@ -103,7 +141,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/h/profile'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-user-circle mr-2'></i>Profile
@@ -111,7 +149,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/h'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-tachometer-alt mr-2'></i>Dashboard
@@ -119,7 +157,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/h/settings'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-cog mr-2'></i>Settings
@@ -127,7 +165,7 @@ const WelComeHeader = () => {
 
                       <p
                         onClick={logoutHandler}
-                        className='block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-sign-out-alt mr-2'></i>Sign out
@@ -141,15 +179,13 @@ const WelComeHeader = () => {
                 <div className=''>
                   <button
                     onClick={() => setdpDropdown((prev) => !prev)}
-                    className='max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                    className='max-w-xs rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                     id='user-menu'
                     aria-haspopup='true'
                   >
                     <img
                       className='h-8 w-8 rounded-full image_center'
-                      src={
-                        'https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/WAO9fJenkhr.png'
-                      }
+                      src={'https://picsum.photos/200'}
                       alt=''
                     />
                   </button>
@@ -172,7 +208,7 @@ const WelComeHeader = () => {
                   {({ ref }) => (
                     <div
                       ref={ref}
-                      className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'
+                      className='text-gray-600 text-sm dark:text-gray-300 dark:bg-gray-700 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5'
                       role='menu'
                       aria-orientation='vertical'
                       aria-labelledby='user-menu'
@@ -180,7 +216,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/r/profile'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-user-circle mr-2'></i>Profile
@@ -188,7 +224,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/r'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-tachometer-alt mr-2'></i>Dashboard
@@ -196,7 +232,7 @@ const WelComeHeader = () => {
                       <Link
                         onClick={closeDD}
                         to='/r/settings'
-                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-cog mr-2'></i>Settings
@@ -204,7 +240,7 @@ const WelComeHeader = () => {
 
                       <p
                         onClick={recLogoutHandler}
-                        className='block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                        className='block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
                         role='menuitem'
                       >
                         <i className='fas fa-sign-out-alt mr-2'></i>Sign out

@@ -6,7 +6,7 @@ const UpvoteIcon = ({ color, fromAnswer }) => {
       className={`${fromAnswer ? 'w-5' : 'w-full'} cursor-pointer  ${
         color
           ? 'bg-indigo-500 text-white '
-          : 'bg-gray-200 text-gray-500 hover:bg-gray-300 '
+          : 'bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-300 hover:bg-gray-300 '
       } rounded-full`}
     >
       <svg

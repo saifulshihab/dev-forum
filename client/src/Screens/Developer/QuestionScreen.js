@@ -45,13 +45,13 @@ const QuestionScreen = () => {
 
   return (
     <div>
-      <div className='h-12 items-center bg-white flex rounded shadow p-2 mt-2'>
-        <div className='mx-auto h-full flex-shrink-0 flex items-center justify-center w-12 rounded-full bg-indigo-100 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
+      <div className='h-12 items-center bg-white dark:bg-gray-700 flex rounded shadow p-2 mt-2'>
+        <div className='mx-auto h-full flex-shrink-0 flex items-center justify-center w-12 rounded-full bg-indigo-100 dark:bg-gray-800 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
           <i className='fas fa-question'></i>
         </div>
         <div
           onClick={() => setModalOpen(!modalOpen)}
-          className='flex items-center text-sm text-gray-400 rounded cursor-pointer ml-2 bg-gray-100 p-2 h-full w-full'
+          className='flex items-center text-sm text-gray-400 rounded cursor-pointer ml-2 bg-gray-100 dark:bg-gray-800 p-2 h-full w-full'
         >
           Ask a Question...
         </div>
@@ -96,7 +96,7 @@ const QuestionScreen = () => {
                     </label>
                     <textarea
                       className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                                appearance-none dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                       id='description'
                       placeholder='Question description'
@@ -115,7 +115,7 @@ const QuestionScreen = () => {
                 render={(arrayHelpers) => (
                   <div className='flex items-center mt-2'>
                     <div className='w-2/5'>
-                      <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      <label className='block dark:text-gray-300 mt-2 text-xs font-semibold text-gray-600 uppercase'>
                         Tags
                       </label>
                     </div>
@@ -130,7 +130,7 @@ const QuestionScreen = () => {
                               type='text'
                               name={`tags.${idx}`}
                               value={data}
-                              className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                              className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                             />
                             <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                               <button
@@ -150,7 +150,7 @@ const QuestionScreen = () => {
                         ))
                       ) : (
                         <button
-                          className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                          className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                           type='button'
                           onClick={() => arrayHelpers.push('')}
                         >

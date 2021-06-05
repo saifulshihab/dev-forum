@@ -33,10 +33,10 @@ const ArticleCommentsContainer = ({ article }) => {
   };
   return (
     <div
-      className='py-2 bg-white max-h-96 overflow-hidden rounded shadow'
+      className='py-2 bg-white dark:bg-gray-700 max-h-96 overflow-hidden rounded shadow'
       style={{ overflowY: 'scroll' }}
     >
-      <div className='px-5 text-gray-500 text-sm border-b pb-1'>
+      <div className='px-5 text-gray-500 dark:text-gray-300 text-sm border-b dark:border-gray-600 pb-1'>
         <span className='mr-3'>{comments?.length} Comments</span>
         <span>{article?.shares?.length} Shares</span>
       </div>
@@ -48,7 +48,7 @@ const ArticleCommentsContainer = ({ article }) => {
             onChange={(e) => setComment(e.target.value)}
             onKeyPress={keyHandler}
             placeholder='Write your comment...'
-            className='flex-1 ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border rounded-full'
+            className='flex-1 dark:bg-gray-800 dark:text-gray-300 ml-3 p-1 px-6 mr-2 w-10/12 text-xs focus:outline-none border dark:border-gray-600 rounded-full'
           />
           <div>
             <span className='cursor-pointer' onClick={() => setEmoji(!emojiOn)}>
@@ -68,7 +68,7 @@ const ArticleCommentsContainer = ({ article }) => {
         <button
           onClick={commentHandler}
           disabled={comment === ''}
-          className={`rounded-full border ${
+          className={`rounded-full border dark:border-gray-600 ${
             comment !== '' && 'hover:text-white hover:bg-indigo-500'
           }
           ${comment === '' && 'opacity-30'}

@@ -54,7 +54,7 @@ const Developer = ({ user, recruiterView }) => {
   const isFollowed = currentUserFollowings?.includes(true) ? true : false;
 
   return (
-    <div className='w-full bg-white rounded p-2 shadow mb-2 flex items-center justify-between'>
+    <div className='w-full bg-white dark:bg-gray-800 rounded p-2 shadow mb-2 flex items-center justify-between'>
       <div className='flex items-center'>
         <div className='w-10 h-10 mr-2'>
           <Link
@@ -66,12 +66,12 @@ const Developer = ({ user, recruiterView }) => {
           >
             <img
               className='w-full h-full rounded-full'
-              src={baseURL + user?.dp}
+              src={user?.dp ? baseURL + user?.dp : 'https://picsum.photos/200'}
               alt='dp'
             />
           </Link>
         </div>
-        <div className='text-gray-500'>
+        <div className='text-gray-500 dark:text-gray-300'>
           <Link
             to={`${
               recruiterView
@@ -88,7 +88,7 @@ const Developer = ({ user, recruiterView }) => {
             {user?.topSkills?.map((skill, idx) => (
               <span
                 key={idx}
-                className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+                className='pl-1 dark:bg-gray-700 dark:text-gray-300 bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
               >
                 {skill}
               </span>

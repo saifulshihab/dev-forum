@@ -126,7 +126,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             ) : (
               <img
                 className='image_center w-full h-48'
-                src={baseURL + user?.user?.cover}
+                src={user?.user?.cover ? baseURL + user?.user?.cover : 'https://picsum.photos/1920'}
                 alt='cover'
               />
             )}
@@ -137,13 +137,13 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
             ) : (
               <img
                 className='image_center relative border-2 border-indigo-400 rounded-full w-full h-40'
-                src={baseURL + user?.user?.dp}
+                src={user?.user?.dp ? baseURL + user?.user?.dp : 'https://picsum.photos/200'}
                 alt='dp'
               />
             )}
           </div>
         </div>
-        <div className='name_others rounded mt-1 p-3 bg-white'>
+        <div className='name_others rounded mt-1 p-3 bg-white dark:bg-gray-800'>
           {loading ? (
             <div className='name_address_location animate-pulse'>
               <span className='bg-gray-200 p-3 mb-1 px-28 w-40 block'></span>
@@ -154,7 +154,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               <span className='bg-gray-200 h-3 mb-1 w-20 block'></span>
             </div>
           ) : (
-            <div className='name_address_location text-gray-600 text-sm'>
+            <div className='name_address_location text-gray-600 dark:text-gray-300 text-sm'>
               <div className='flex items-center justify-between'>
                 <h4 className='text-2xl font-extrabold'>
                   {user?.user?.full_name}
@@ -285,7 +285,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                     : el.platform === 'medium'
                     ? 'fab fa-medium text-blue-700 hover:text-blue-800'
                     : el.platform === 'github'
-                    ? 'fab fa-github text-gray-800 hover:text-gray-900'
+                    ? 'fab fa-github text-gray-800 dark:text-gray-700 hover:text-gray-900'
                     : el.platform === 'dribble'
                     ? 'fas fa-basketball-ball text-pink-500 hover:text-pink-600'
                     : el.platform === 'behance'
@@ -304,7 +304,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
           </div>
         </div>
         <div className='others mt-2'>
-          <nav className='bg-gray-100 text-dark'>
+          <nav className='bg-gray-100 dark:bg-gray-700'>
             <div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-2'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
@@ -314,8 +314,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             (currentPath === 'about' || undefined) &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-address-card mr-2 text-blue-500'></i>
                           <span className='h-full'>About</span>
@@ -325,8 +325,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'timeline' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-stream mr-2 text-yellow-700'></i>
                           <span className='h-full'>Timeline</span>
@@ -336,8 +336,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'gh-profile' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-code-branch mr-2 text-green-600'></i>
                           <span className='h-full'>GitHub</span>
@@ -347,8 +347,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'projects' &&
-                            'bg-white border-indigo-500'
-                          } text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          } text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-tasks mr-2 text-yellow-500'></i>
                           <span className='h-full'>Projects</span>
@@ -358,8 +358,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'articles' &&
-                            'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          }  text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='far fa-newspaper mr-2 text-purple-500'></i>
                           <span className='h-full'>Article</span>
@@ -369,8 +369,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                         <div
                           className={`flex items-center cursor-pointer ${
                             currentPath === 'ques' &&
-                            'bg-white border-indigo-500'
-                          }  text-gray-600 hover:bg-white border-t-2 border-transparent hover:text-gray-600 px-3 py-2.5 text-sm font-medium`}
+                            'bg-white dark:bg-gray-800 border-indigo-500'
+                          }  text-gray-600 hover:bg-white dark:text-gray-300 dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
                         >
                           <i className='fas fa-question mr-2 text-red-500'></i>
 
@@ -415,13 +415,8 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
               />
             ))}
           </Modal>
-          <div className='question_article_feed p-2 bg-white w-full'>
-            <Switch>
-              {/* <Route
-                exact
-                path={path}
-                component={() => <DevAboutScreen profile={user && user} />}
-              /> */}
+          <div className='question_article_feed p-2 bg-white dark:bg-gray-800 w-full'>
+            <Switch>           
               <Route
                 path={`${path}/about`}
                 component={() => (

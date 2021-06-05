@@ -20,8 +20,8 @@ import RecoverPasswordRec from './Screens/Recruiter/RecoverPasswordRec';
 
 function App() {
   return (
-    <div>
-      <div className='max-w-7xl mx-auto'>
+    <div className='bg-white w-full h-full dark:bg-gray-900'>
+      <div className='max-w-7xl h-full min-h-screen mx-auto bg-white dark:bg-gray-900'>
         <WelComeHeader />
         <div className='relative px-4 sm:px-6 lg:px-8'>
           <Route path='/' exact component={Welcome} />

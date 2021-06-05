@@ -43,12 +43,12 @@ const FreelanceProjectContainer = () => {
 
   return (
     <>
-      <div className='rounded bg-white mt-2 p-2 mb-2 shadow'>
-        <div className='flex justify-between'>
-        <span className='text-sm text-gray-500 font-semibold'>
-          <i className='fas fa-filter text-gray-500 mr-1'></i>Filter Project
+      <div className='rounded bg-white dark:bg-gray-700 mt-2 p-2 mb-2 shadow'>
+        <div className='flex justify-between text-gray-500 dark:text-gray-300'>
+        <span className='text-sm font-semibold'>
+          <i className='fas fa-filter mr-1'></i>Filter Project
         </span>
-        <span className='text-xs text-gray-500'>Available Projects ({filterProjects?.length})</span>
+        <span className='text-xs'>Available Projects ({filterProjects?.length})</span>
         </div>
         <div>
           <ReactTagInput

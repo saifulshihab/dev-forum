@@ -23,9 +23,9 @@ const FindPeopleContainer = () => {
   );
   return (
     <div className='px-2'>
-      <div className='w-full mb-2 shadow bg-white rounded p-2'>
+      <div className='w-full mb-2 shadow bg-white dark:bg-gray-700 rounded p-2'>
         <div>
-          <p className='font-semibold text-gray-500 text-sm' htmlFor='srcName'>
+          <p className='font-semibold text-gray-500 dark:text-gray-300 text-sm' htmlFor='srcName'>
             Search by Name
           </p>
         </div>
@@ -33,7 +33,7 @@ const FindPeopleContainer = () => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           placeholder='Type a name...'
-          className='w-full py-1 focus:outline-none border-b focus:border-blue-500 focus:border-b-2 text-sm'
+          className='dark:bg-gray-800 rounded w-full p-1 dark:text-gray-300 dark:border-gray-600 focus:outline-none border-b focus:border-blue-500 dark:focus:border-blue-500 focus:border-b-2 text-sm'
         />
       </div>
       <div>

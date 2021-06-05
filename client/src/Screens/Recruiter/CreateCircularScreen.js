@@ -46,7 +46,7 @@ const CreateCircularScreen = () => {
   });
 
   return (
-    <div className='bg-white rounded p-2 mt-2 px-2'>
+    <div className='bg-white dark:bg-gray-700 rounded p-2 mt-2 px-2'>
       <div>
         {/* form submission */}
         <Formik
@@ -87,14 +87,14 @@ const CreateCircularScreen = () => {
                 {({ field, meta }) => (
                   <div>
                     <label
-                      className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
+                      className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'
                       htmlFor='description'
                     >
                       Description
                     </label>
                     <textarea
                       className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                      dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                       id='description'
                       placeholder='Job description'
@@ -118,14 +118,17 @@ const CreateCircularScreen = () => {
               <div className='flex items-center justify-between mt-2 mb-2 w-full'>
                 <div>
                   <label
-                    className={`block mb-2 mt-2 text-xs font-semibold text-gray-600 uppercase`}
+                    className={`block dark:text-gray-300 mb-2 mt-2 text-xs font-semibold text-gray-600 uppercase`}
                   >
                     Job Type
                   </label>
                   <Field name='jobType'>
                     {({ field, meta }) => (
                       <>
-                        <select {...field} className='w-full border text-sm rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'>
+                        <select
+                          {...field}
+                          className='w-full dark:bg-gray-800 border text-sm rounded py-1.5 px-2 block focus:outline-none focus:border-indigo-600'
+                        >
                           <option value=''> --- </option>
                           <option value='Full-Time'>Full-Time</option>
                           <option value='Part-Time'>Part-Time</option>
@@ -146,7 +149,7 @@ const CreateCircularScreen = () => {
                     id='negotiable'
                     type='checkbox'
                     label='Salary negotiable'
-                    className='border py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm'
+                    className='border dark:border-gray-600 rounded dark:bg-gray-800 py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none sm:text-sm'
                     name='negotiable'
                   />
                 </div>
@@ -178,7 +181,7 @@ const CreateCircularScreen = () => {
                 render={(arrayHelpers) => (
                   <div className='flex items-center mt-2'>
                     <div className='w-2/5'>
-                      <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      <label className='dark:text-gray-300 block mt-2 text-xs font-semibold text-gray-600 uppercase'>
                         Recruired Skills
                       </label>
                     </div>
@@ -193,7 +196,7 @@ const CreateCircularScreen = () => {
                               type='text'
                               name={`skills.${idx}`}
                               value={data}
-                              className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                              className='border focus:border-indigo-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 rounded focus:outline-none text-sm px-1'
                             />
                             <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                               <button
@@ -213,7 +216,7 @@ const CreateCircularScreen = () => {
                         ))
                       ) : (
                         <button
-                          className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                          className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                           type='button'
                           onClick={() => arrayHelpers.push('')}
                         >

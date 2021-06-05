@@ -2,7 +2,7 @@ import React from 'react';
 
 const Loader = () => {
   return (
-    <div className='text-center'>
+    <div className='text-center mt-1'>
       <svg
         className='loader inline-block'
         version='1.1'

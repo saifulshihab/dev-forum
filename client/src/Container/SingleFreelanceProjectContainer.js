@@ -51,9 +51,9 @@ const SingleFreelanceProjectContainer = () => {
       <div>
         <Project project={project} noRoute />
       </div>
-      <div className='bg-white rounded shadow p-2'>
+      <div className='bg-white dark:bg-gray-700 rounded shadow p-2'>
         <div>
-          <p className='text-md font-semibold text-gray-600 italic'>
+          <p className='text-md font-semibold text-gray-600 dark:text-gray-300 italic'>
             Send a Proposal
           </p>
         </div>
@@ -71,14 +71,14 @@ const SingleFreelanceProjectContainer = () => {
                 {({ field, meta }) => (
                   <div>
                     <label
-                      className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
+                      className='block mt-2 dark:text-gray-300 text-xs font-semibold text-gray-600 uppercase'
                       htmlFor='description'
                     >
                       Description
                     </label>
                     <textarea
                       className='
-                                appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
+                                appearance-none dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
                                 '
                       id='description'
                       placeholder='Project description'

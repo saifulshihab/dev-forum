@@ -60,7 +60,7 @@ const Answer = ({ ans }) => {
           )}
         </div>
         <div className='h-full' style={{ width: '96%' }}>
-          <div className='text-gray-500 text-justify text-sm'>
+          <div className='text-gray-500 dark:text-gray-300 text-justify text-sm'>
             {ans?.answer}
           </div>
           <div className='text-gray-400 text-xs'>

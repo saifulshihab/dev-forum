@@ -26,7 +26,7 @@ const CreateArticleScreen = () => {
       .required('Description Required!'),
   });
   return (
-    <div className='bg-white px-3 py-2 mt-2 rounded shadow'>
+    <div className='bg-white dark:bg-gray-800 px-3 py-2 mt-2 rounded shadow'>
       <div>
         <h2 className='font-semibold text-gray-600 text-xl'>
           Write an Article
@@ -50,7 +50,7 @@ const CreateArticleScreen = () => {
             />
             <label
               htmlFor='article_body'
-              className='block mt-2 mb-1 font-semibold text-xs text-gray-600 uppercase'
+              className='block mt-2 mb-1 font-semibold text-xs dark:text-gray-300 text-gray-600 uppercase'
             >
               Description
             </label>
@@ -58,12 +58,13 @@ const CreateArticleScreen = () => {
               {({ field, meta }) => (
                 <div>
                   <Editor
+                  style={{backgroundColor: 'transparent'}}
                     id='article_body'
                     apiKey={process.env.TINY_MCE_KEY}
-                    initialValue='Write...'
+                    initialValue='Write...'                    
                     init={{
                       height: 500,
-                      menubar: true,
+                      menubar: true,                      
                       plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
                         'searchreplace visualblocks code fullscreen',
@@ -89,7 +90,7 @@ const CreateArticleScreen = () => {
               render={(arrayHelpers) => (
                 <div className='flex items-center mt-2'>
                   <div className='w-2/5'>
-                    <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                    <label className='block dark:text-gray-300 mt-2 text-xs font-semibold text-gray-600 uppercase'>
                       Tags
                     </label>
                   </div>
@@ -104,7 +105,7 @@ const CreateArticleScreen = () => {
                             type='text'
                             name={`tags.${idx}`}
                             value={data}
-                            className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                            className='border dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
                           />
                           <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
                             <button
@@ -124,7 +125,7 @@ const CreateArticleScreen = () => {
                       ))
                     ) : (
                       <button
-                        className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
+                        className='focus:outline-none dark:text-gray-300 text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
                         type='button'
                         onClick={() => arrayHelpers.push('')}
                       >

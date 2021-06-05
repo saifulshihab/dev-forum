@@ -47,8 +47,8 @@ const Article = ({ article, routeFromProfile, details }) => {
 
   return (
     <>
-      <div className='w-full bg-white rounded shadow my-2 px-5 py-2'>
-        <div className='flex h-16 items-center pb-2 my-1.5 border-b'>
+      <div className='w-full bg-white dark:bg-gray-800 rounded shadow my-2 px-5 py-2'>
+        <div className='flex h-16 items-center pb-2 my-1.5 border-b dark:border-gray-600'>
           <div className='mr-3 w-6 h-full'>
             {_.findIndex(
               article?.upvote,
@@ -106,7 +106,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                     : `/h/forum/articles/${article && article._id}`
                 }
               >
-                <div className='text-gray-600 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
+                <div className='text-gray-600 dark:text-gray-300 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
                   {article.title}
                 </div>
               </Link>
@@ -140,21 +140,25 @@ const Article = ({ article, routeFromProfile, details }) => {
               showMore ? 'h-full' : 'max-h-60'
             } overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
           >
-            <div>{ReactHtmlParser(article?.description)}</div>
+            <div className='text-gray-600 text-justify dark:text-gray-400 overflow-hidden'>
+              {ReactHtmlParser(article?.description)}
+            </div>
           </div>
         ) : (
           <>
             <div className={`mt-3 h-full max-h-50 overflow-ellipsis`}>
-              <div>{ReactHtmlParser(article?.description)}</div>
+              <div className='text-gray-600 text-justify dark:text-gray-400 overflow-hidden'>
+                {ReactHtmlParser(article?.description)}
+              </div>
             </div>
             <div className={`flex mt-2 items-center text-xs`}>
-              <span className='bg-gray-200 mr-2 mb-2 font-semibold text-xs text-gray-500 py-.5 px-1 rounded mb-1'>
+              <span className='pl-1 bg-gray-200 mr-2 mb-2 font-semibold text-xs text-gray-500 py-.5 px-1 rounded mb-1'>
                 Tags :
               </span>
               {article?.tags?.map((tag, idx) => (
                 <span
                   key={idx}
-                  className='bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+                  className='pl-1 dark:bg-gray-700 bg-gray-200 mr-2 mb-2 text-xs text-gray-500 dark:text-gray-300 py-.5 px-1 rounded mb-1'
                 >
                   #{tag}
                 </span>
@@ -170,7 +174,7 @@ const Article = ({ article, routeFromProfile, details }) => {
           Show{showMore ? ' less' : ' more'}...
         </span>
 
-        <div className='flex mt-3 border-t cursor-pointer pt-1 text-center space-x-2'>
+        <div className='flex mt-3 border-t dark:border-gray-600 cursor-pointer pt-1 text-center space-x-2'>
           <div
             onClick={() => setshowComment(!showComment)}
             className='flex w-1/2 border-r items-center justify-center hover:text-indigo-600 text-gray-500'
@@ -190,7 +194,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                 />
               </svg>
             </span>
-            <span className='text-gray-500 hover:text-indigo-600 text-sm'>
+            <span className='text-gray-500 hover:text-indigo-600 dark:text-gray-400 text-sm'>
               Comment
             </span>
           </div>
@@ -216,7 +220,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                 />
               </svg>
             </span>
-            <span className='text-gray-500 hover:text-indigo-600 text-sm'>
+            <span className='text-gray-500 hover:text-indigo-600 dark:text-gray-400 text-sm'>
               Share
             </span>
           </div>
@@ -238,7 +242,7 @@ const Article = ({ article, routeFromProfile, details }) => {
             </span>
             <span
               onClick={() => serArticleOption(true)}
-              className='text-gray-500 hover:text-indigo-600 text-sm'
+              className='text-gray-500 hover:text-indigo-600 dark:text-gray-400 text-sm'
             >
               More
             </span>
@@ -260,7 +264,7 @@ const Article = ({ article, routeFromProfile, details }) => {
               {({ ref }) => (
                 <div
                   ref={ref}
-                  className='flex flex-col space-y-1 absolute right-25 text-sm text-gray-500 text-left mt-10 w-40 rounded-md shadow-lg p-2 bg-white ring-1 ring-black ring-opacity-5'
+                  className='flex dark:bg-gray-700 flex-col space-y-1 absolute right-25 text-sm text-gray-500 dark:text-gray-300 text-left mt-10 w-40 rounded-md shadow-lg p-2 bg-white ring-1 ring-black ring-opacity-5'
                   role='menu'
                   aria-orientation='vertical'
                   aria-labelledby='user-menu'
@@ -273,7 +277,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                           : `/h/forum/articles/${article?._id}/edit`
                       }
                     >
-                      <p className='p-1 hover:bg-gray-50'>
+                      <p className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'>
                         <i className='mr-2 far fa-edit'></i>Edit
                       </p>
                     </Link>
@@ -281,16 +285,16 @@ const Article = ({ article, routeFromProfile, details }) => {
                   {currentUser._id === article?.user?._id && (
                     <p
                       onClick={() => deleteArticleHandler(article?._id)}
-                      className='p-1 hover:bg-gray-50'
+                      className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'
                     >
                       <i className='mr-2 far fa-trash-alt'></i>Delete
                     </p>
                   )}
 
-                  <p className='p-1 hover:bg-gray-50'>
+                  <p className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'>
                     <i className='mr-2 far fa-save'></i>Save
                   </p>
-                  <p className='p-1 hover:bg-gray-50'>
+                  <p className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'>
                     <Link
                       onClick={() => closeDD()}
                       to={
@@ -302,10 +306,10 @@ const Article = ({ article, routeFromProfile, details }) => {
                       <i className='mr-2 fas fa-info'></i>Details
                     </Link>
                   </p>
-                  <p className='p-1 hover:bg-gray-50'>
+                  <p className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'>
                     <i className='mr-2 fas fa-arrow-up'></i>Upvote
                   </p>
-                  <p className='p-1 hover:bg-gray-50'>
+                  <p className='p-1 hover:bg-gray-50 dark:hover:bg-gray-800'>
                     <i className='mr-2 fas fa-arrow-down'></i>Downvote
                   </p>
                 </div>
@@ -349,22 +353,22 @@ const Article = ({ article, routeFromProfile, details }) => {
                     leaveFrom='opacity-100 translate-y-0 sm:scale-100'
                     leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
                   >
-                    <div className='inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
-                      <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
+                    <div className='inline-block align-bottom bg-white dark:bg-gray-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'>
+                      <div className='bg-white dark:bg-gray-700 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
                         <div className='sm:flex sm:items-start'>
-                          <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
+                          <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 dark:bg-gray-800 text-indigo-400 sm:mx-0 sm:h-10 sm:w-10'>
                             <i className='fas fa-share'></i>
                           </div>
                           <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
                             <Dialog.Title
                               as='h3'
-                              className='text-lg leading-6 font-medium text-gray-900'
+                              className='text-lg leading-6 font-medium text-gray-900 dark:text-gray-300'
                             >
                               Share Article
                             </Dialog.Title>
                             <div className='mt-2 w-full'>
                               <input
-                                className='text-sm border-b p-.5 border-indigo-400 focus:outline-none w-full'
+                                className='text-sm dark:text-gray-300 border-b p-1 dark:bg-gray-800 border-indigo-400 focus:outline-none w-full'
                                 placeholder='Write a caption...'
                                 value={caption}
                                 onChange={(e) => setCaption(e.target.value)}
@@ -373,10 +377,10 @@ const Article = ({ article, routeFromProfile, details }) => {
                           </div>
                         </div>
                       </div>
-                      <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                      <div className='bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
                         <button
                           type='button'
-                          className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm'
+                          className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm'
                           onClick={() => {
                             shareArticleHandler();
                             setShareOpen(false);
@@ -386,7 +390,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                         </button>
                         <button
                           type='button'
-                          className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
+                          className='mt-3 dark:bg-gray-600 dark:text-gray-300 dark:border-gray-500 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
                           onClick={() => setShareOpen(false)}
                           ref={cancelButtonRef}
                         >

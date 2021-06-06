@@ -307,8 +307,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
           <nav className='bg-gray-100 dark:bg-gray-700'>
             <div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-2'>
               <div className='flex items-center justify-between h-10'>
-                <div className='flex items-center'>
-                  <div className='hidden md:block'>
+                <div className='flex items-center'>                  
                     <div className='flex items-baseline space-x-4'>
                       <Link to={`${url}/about`}>
                         <div
@@ -377,8 +376,7 @@ const DevProfilePublicView = ({ location, recruiterView, followButton }) => {
                           <span className='h-full'>Question Asked</span>
                         </div>
                       </Link>
-                    </div>
-                  </div>
+                    </div>                  
                 </div>
               </div>
             </div>

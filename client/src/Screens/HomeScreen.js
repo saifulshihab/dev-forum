@@ -26,9 +26,7 @@ const HomeScreen = ({ location }) => {
             <Link
               to={`${url}/forum`}
               className={
-                pathName === 'forum' || undefined
-                  ? 'text-indigo-600'
-                  : ''
+                pathName === 'forum' || undefined ? 'text-indigo-600' : ''
               }
             >
               <SidebarMenu fontAwesome='fas fa-users' text={'Forum'} />
@@ -86,37 +84,35 @@ const HomeScreen = ({ location }) => {
             </Link>
           </div>
         </div>
-        <div className='col-span-4 h-full w-full'>
-          <div className='bg-gray-50 dark:bg-gray-900 h-full min-h-screen w-full'>
-            <Switch>
-              <Route path={`${path}/forum`} component={AskQuestionsScreen} />
-              <Route path={`${path}/projects`} component={FreelanceScreen} />
-              <Route path={`${path}/jobs`} component={JobsScreen} />
-              <Route path={`${path}/people`} component={FindPeopleScreen} />
-              <Route path={`${path}/messages`} component={ChatScreen} />
-              <Route
-                path={`${path}/notification`}
-                component={NotificationScreen}
-              />
-              <Route path={`${path}/settings`} component={SettingsScreen} />
-              <Route
-                path={`${path}/profile`}
-                component={DeveloperProfileScreen}
-              />
-              <Route path={`${path}/more`} component={MoreScreen} />
-              <Route
-                path={`${path}/user/:username`}
-                component={() => (
-                  <DevProfilePublicView
-                    location={location}
-                    recruiterView={false}
-                    followButton
-                  />
-                )}
-              />
-              <Redirect to={`${path}/forum`} />
-            </Switch>
-          </div>
+        <div className='col-span-4 bg-gray-50 dark:bg-gray-900 w-full h-full'>
+          <Switch>
+            <Route path={`${path}/forum`} component={AskQuestionsScreen} />
+            <Route path={`${path}/projects`} component={FreelanceScreen} />
+            <Route path={`${path}/jobs`} component={JobsScreen} />
+            <Route path={`${path}/people`} component={FindPeopleScreen} />
+            <Route path={`${path}/messages`} component={ChatScreen} />
+            <Route
+              path={`${path}/notification`}
+              component={NotificationScreen}
+            />
+            <Route path={`${path}/settings`} component={SettingsScreen} />
+            <Route
+              path={`${path}/profile`}
+              component={DeveloperProfileScreen}
+            />
+            <Route path={`${path}/more`} component={MoreScreen} />
+            <Route
+              path={`${path}/user/:username`}
+              component={() => (
+                <DevProfilePublicView
+                  location={location}
+                  recruiterView={false}
+                  followButton
+                />
+              )}
+            />
+            <Redirect to={`${path}/forum`} />
+          </Switch>
         </div>
       </div>
     </div>

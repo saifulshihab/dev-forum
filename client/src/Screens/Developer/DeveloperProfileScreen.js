@@ -358,76 +358,74 @@ const DeveloperProfileScreen = ({ location }) => {
             <div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-2'>
               <div className='flex items-center justify-between h-10'>
                 <div className='flex items-center'>
-                  <div className='hidden md:block'>
-                    <div className='flex items-baseline space-x-4'>
-                      <Link to={`${url}/about`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            (currentPath === 'about' || undefined) &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='far fa-address-card mr-2 text-blue-500'></i>
-                          <span className='h-full'>About</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/timeline`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            currentPath === 'timeline' &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-stream mr-2 text-yellow-700'></i>
-                          <span className='h-full'>Timeline</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/gh-profile`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            currentPath === 'gh-profile' &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-code-branch mr-2 text-green-600'></i>
-                          <span className='h-full'>GitHub</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/projects`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            currentPath === 'projects' &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-tasks mr-2 text-yellow-500'></i>
-                          <span className='h-full'>Projects</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/articles`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            currentPath === 'articles' &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='far fa-newspaper mr-2 text-purple-500'></i>
-                          <span className='h-full'>Article</span>
-                        </div>
-                      </Link>
-                      <Link to={`${url}/ques`}>
-                        <div
-                          className={`flex items-center cursor-pointer ${
-                            currentPath === 'ques' &&
-                            'bg-white dark:bg-gray-800 border-indigo-500'
-                          }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
-                        >
-                          <i className='fas fa-question mr-2 text-red-500'></i>
+                  <div className='flex items-baseline space-x-4'>
+                    <Link to={`${url}/about`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          (currentPath === 'about' || undefined) &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='far fa-address-card mr-2 text-blue-500'></i>
+                        <span className='h-full'>About</span>
+                      </div>
+                    </Link>
+                    <Link to={`${url}/timeline`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          currentPath === 'timeline' &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='fas fa-stream mr-2 text-yellow-700'></i>
+                        <span className='h-full'>Timeline</span>
+                      </div>
+                    </Link>
+                    <Link to={`${url}/gh-profile`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          currentPath === 'gh-profile' &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='fas fa-code-branch mr-2 text-green-600'></i>
+                        <span className='h-full'>GitHub</span>
+                      </div>
+                    </Link>
+                    <Link to={`${url}/projects`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          currentPath === 'projects' &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        } text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='fas fa-tasks mr-2 text-yellow-500'></i>
+                        <span className='h-full'>Projects</span>
+                      </div>
+                    </Link>
+                    <Link to={`${url}/articles`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          currentPath === 'articles' &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='far fa-newspaper mr-2 text-purple-500'></i>
+                        <span className='h-full'>Article</span>
+                      </div>
+                    </Link>
+                    <Link to={`${url}/ques`}>
+                      <div
+                        className={`flex items-center cursor-pointer ${
+                          currentPath === 'ques' &&
+                          'bg-white dark:bg-gray-800 border-indigo-500'
+                        }  text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 border-t-2 border-transparent px-3 py-2.5 text-sm font-medium`}
+                      >
+                        <i className='fas fa-question mr-2 text-red-500'></i>
 
-                          <span className='h-full'>Question Asked</span>
-                        </div>
-                      </Link>
-                    </div>
+                        <span className='h-full'>Question Asked</span>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </div>

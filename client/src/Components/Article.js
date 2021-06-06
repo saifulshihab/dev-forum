@@ -106,7 +106,7 @@ const Article = ({ article, routeFromProfile, details }) => {
                     : `/h/forum/articles/${article && article._id}`
                 }
               >
-                <div className='text-gray-600 dark:text-gray-300 hover:text-indigo-700 cursor-pointer text-xl font-semibold'>
+                <div className='text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-600 cursor-pointer text-xl font-semibold'>
                   {article.title}
                 </div>
               </Link>

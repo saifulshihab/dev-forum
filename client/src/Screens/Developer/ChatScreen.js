@@ -79,7 +79,7 @@ const ChatScreen = ({ recruiter }) => {
           )}
         </div>
       </div>
-      <div className='col-span-3 border-l dark:border-gray-700 border-r'>        
+      <div className='col-span-3 h-screen border-l dark:border-gray-700 border-r'>        
         {/* chat open here */}
         <Route
           path={`${path}/:roomId`}

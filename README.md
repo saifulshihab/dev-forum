@@ -1,6 +1,6 @@
 # dev-forum
 
-[DevForum]('https://devforum.netlify.app') an online platform for software developers, build portfolio, bid projects & get hired by recruiters.
+[DevForum](https://devforum.netlify.app) an online platform for software developers, build portfolio, bid projects & get hired by recruiters.
 
 # Contributing
 
@@ -23,6 +23,6 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 ### Screenshot
 <img src="ui.png" alt="devforum" />
 
-Live: https://devforum.netlify.app/h/profile/about
+Live: https://devforum.netlify.app
 
 Licensed under the [MIT License](LICENSE.md).

@@ -20,7 +20,7 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 ### Screenshot
 
-<img src="ui.png" alt="devforum" />
+<img src="ui.PNG" alt="devforum" />
 
 Live: https://devforum.netlify.app
 

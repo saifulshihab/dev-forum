@@ -26,6 +26,8 @@ import {
   getChatRoomsReducer,
   devCreateChatRoomReducer,
   chatDeleteReducer,
+  getNotificationsReducer,
+  seenNotificationReducer,
 } from './reducer/DeveloperReducer';
 import {
   createArticelReducer,
@@ -131,6 +133,8 @@ const reducer = combineReducers({
   devChatRoomsGet: getChatRoomsReducer,
   devChatRoomCreate: devCreateChatRoomReducer,
   chatDelete: chatDeleteReducer,
+  notificationsGet: getNotificationsReducer,
+  notificationsSeen: seenNotificationReducer,
 });
 
 const verifyToken = (token, lsItem) => {

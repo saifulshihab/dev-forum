@@ -83,6 +83,11 @@ import {
   CHAT_DELETE_SUCCESS,
   CHAT_DELETE_FAILED,
   CHAT_DELETE_RESET,
+  GET_NOTIFICATION_SUCCESS,
+  GET_NOTIFICATION_FAILED,
+  SEEN_NOTIFICATIONS_SUCCESS,
+  SEEN_NOTIFICATIONS_FAILED,
+  ADD_NEW_NOTIFICATION,
 } from '../ActionTypes';
 
 export const devSignupReducer = (state = {}, action) => {
@@ -98,7 +103,10 @@ export const devSignupReducer = (state = {}, action) => {
   }
 };
 
-export const devSigninReducer = (state = {}, action) => {
+export const devSigninReducer = (
+  state = { devInfo: {}, isAuthenticated: false },
+  action
+) => {
   switch (action.type) {
     case DEV_SIGNIN_REQUEST:
       return { loading: true };
@@ -409,6 +417,34 @@ export const chatDeleteReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case CHAT_DELETE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const getNotificationsReducer = (
+  state = { notifications: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_NOTIFICATION_SUCCESS:
+      return { notifications: action.payload };
+    case ADD_NEW_NOTIFICATION:
+      return { notifications: [action.payload, ...state.notifications] };
+    case GET_NOTIFICATION_FAILED:
+      return { error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const seenNotificationReducer = (state = { seen: false }, action) => {
+  switch (action.type) {
+    case SEEN_NOTIFICATIONS_SUCCESS:
+      return { seen: true };
+    case SEEN_NOTIFICATIONS_FAILED:
+      return { error: action.payload };
     default:
       return state;
   }

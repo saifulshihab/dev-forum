@@ -87,6 +87,10 @@ import {
   CHAT_DELETE_SUCCESS,
   CHAT_DELETE_RESET,
   CHAT_DELETE_FAILED,
+  GET_NOTIFICATION_SUCCESS,
+  GET_NOTIFICATION_FAILED,
+  SEEN_NOTIFICATIONS_SUCCESS,
+  SEEN_NOTIFICATIONS_FAILED,
 } from '../ActionTypes';
 
 // Developer signup
@@ -988,5 +992,64 @@ export const deleteChat = (roomId, recruiter) => async (dispatch, getState) => {
         type: CHAT_DELETE_RESET,
       });
     }, 2000);
+  }
+};
+// Get notifications
+export const getNotifications = (userId) => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token} `,
+      },
+    };
+    const { data } = await axios.get(
+      `${baseURL}/api/dev/getNotifications/${userId}`,
+      config
+    );
+    dispatch({
+      type: GET_NOTIFICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_NOTIFICATION_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+// Get notifications
+export const seenNotifications = () => async (dispatch, getState) => {
+  try {
+    const {
+      signInDev: { devInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${devInfo.token} `,
+      },
+    };
+    await axios.put(`${baseURL}/api/dev/notifications/seen`, {}, config);
+
+    setTimeout(() => {
+      dispatch({
+        type: SEEN_NOTIFICATIONS_SUCCESS,
+      });
+    }, 5000);
+  } catch (error) {
+    dispatch({
+      type: SEEN_NOTIFICATIONS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

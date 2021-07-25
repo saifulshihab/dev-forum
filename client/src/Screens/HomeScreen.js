@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import SidebarMenu from '../Components/SidebarMenu';
+import { useNewNotification } from '../Context/NewNotificationProvider';
 import AskQuestionsScreen from './Developer/AskQuestionsScreen';
 import ChatScreen from './Developer/ChatScreen';
 import DeveloperProfileScreen from './Developer/DeveloperProfileScreen';
@@ -18,37 +19,39 @@ const HomeScreen = ({ location }) => {
 
   const pathName = location.pathname.split('/')[2];
 
+  const { setNewNotification } = useNewNotification();
+
   return (
-    <div className='border-t-2 dark:border-gray-800 h-full'>
-      <div className='dark:bg-gray-900 grid grid-cols-5'>
-        <div className='col-span-1 h-full'>
-          <div className='text-gray-600 dark:text-gray-400 h-full'>
+    <div className="border-t-2 dark:border-gray-800 h-full">
+      <div className="dark:bg-gray-900 grid grid-cols-5">
+        <div className="col-span-1 h-full">
+          <div className="text-gray-600 dark:text-gray-400 h-full">
             <Link
               to={`${url}/forum`}
               className={
                 pathName === 'forum' || undefined ? 'text-indigo-600' : ''
               }
             >
-              <SidebarMenu fontAwesome='fas fa-users' text={'Forum'} />
+              <SidebarMenu fontAwesome="fas fa-users" text={'Forum'} />
             </Link>
             <Link
               to={`${url}/projects`}
               className={pathName === 'projects' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-laptop-code' text={'Projects'} />
+              <SidebarMenu fontAwesome="fas fa-laptop-code" text={'Projects'} />
             </Link>
             <Link
               to={`${url}/jobs`}
               className={pathName === 'jobs' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-briefcase' text={'Jobs'} />
+              <SidebarMenu fontAwesome="fas fa-briefcase" text={'Jobs'} />
             </Link>
             <Link
               to={`${url}/people`}
               className={pathName === 'people' ? 'text-indigo-600' : ''}
             >
               <SidebarMenu
-                fontAwesome='fas fa-user-plus'
+                fontAwesome="fas fa-user-plus"
                 text={'Find People'}
               />
             </Link>
@@ -56,35 +59,40 @@ const HomeScreen = ({ location }) => {
               to={`${url}/messages`}
               className={pathName === 'messages' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-envelope' text={'Messages'} />
+              <SidebarMenu fontAwesome="fas fa-envelope" text={'Messages'} />
             </Link>
             <Link
               to={`${url}/notification`}
+              onClick={() => setNewNotification(false)}
               className={pathName === 'notification' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-bell' text={'Notification'} />
+              <SidebarMenu
+                notifyMenu
+                fontAwesome="fas fa-bell"
+                text={'Notification'}
+              />
             </Link>
             <Link
               to={`${url}/settings`}
               className={pathName === 'settings' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-cog' text={'Settings'} />
+              <SidebarMenu fontAwesome="fas fa-cog" text={'Settings'} />
             </Link>
             <Link
               to={`${url}/profile`}
               className={pathName === 'profile' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-user-circle' text='Profile' />
+              <SidebarMenu fontAwesome="fas fa-user-circle" text="Profile" />
             </Link>
             <Link
               to={`${url}/more`}
               className={pathName === 'more' ? 'text-indigo-600' : ''}
             >
-              <SidebarMenu fontAwesome='fas fa-ellipsis-h' text={'More'} />
+              <SidebarMenu fontAwesome="fas fa-ellipsis-h" text={'More'} />
             </Link>
           </div>
         </div>
-        <div className='col-span-4 bg-gray-50 dark:bg-gray-900 w-full h-full'>
+        <div className="col-span-4 bg-gray-50 dark:bg-gray-900 w-full h-full">
           <Switch>
             <Route path={`${path}/forum`} component={AskQuestionsScreen} />
             <Route path={`${path}/projects`} component={FreelanceScreen} />

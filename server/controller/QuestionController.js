@@ -3,6 +3,9 @@ import QuestionAnswer from '../models/QuestionAnswerModel.js';
 import Question from '../models/QuestionModel.js';
 import _ from 'lodash';
 import Developer from '../models/DeveloperModel.js';
+import Notification from '../models/NotificationModel.js';
+import { sendNotification } from '../utils/sendNotification.js';
+import { createNotification } from '../utils/createNotification.js';
 
 // desc: ask/create a quesion
 // routes: api/question/createQuestion
@@ -83,10 +86,28 @@ export const answerQuestion = asyncHandler(async (req, res) => {
       answer: answer,
     });
     if (newAnswer) {
-      const populated = await QuestionAnswer.findById(newAnswer?._id).populate(
-        'user'
-      );
-      res.status(200).json(populated);
+      const populatedNewAnswer = await QuestionAnswer.findById(
+        newAnswer?._id
+      ).populate('user');
+
+      // create & send notification
+      if (populatedNewAnswer.user._id.toString() !== question.user.toString()) {
+        const { newNotification } = await createNotification(
+          populatedNewAnswer.user.full_name,
+          question.user,
+          'answered your question.',
+          'comment',
+          'question',
+          question._id
+        );
+
+        await sendNotification(
+          'newNotification',
+          question.user,
+          newNotification
+        );
+      }
+      res.status(200).json(populatedNewAnswer);
     } else {
       res.status(500);
       throw new Error('Failed to answer question!');

@@ -26,6 +26,8 @@ import {
   resetPasswordDev,
   getResetPasswordLinkDev,
   resetPasswordFromLink,
+  getNotifications,
+  seenNotifications,
 } from '../controller/DeveloperController.js';
 
 router.route('/signup').post(signupDeveloper);
@@ -76,5 +78,9 @@ router.route('/resetPasswordDev/:userId').put(protect, resetPasswordDev);
 router.route('/getResetPasswordLinkDev').post(getResetPasswordLinkDev);
 // reset password from link
 router.route('/resetPasswordFromLink/:token').post(resetPasswordFromLink);
+// get notification for specific user
+router.route('/getNotifications/:userId').get(protect, getNotifications);
+// seen unseen notifications
+router.route('/notifications/seen').put(protect, seenNotifications);
 
 export default router;

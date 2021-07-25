@@ -7,9 +7,13 @@ import _ from 'lodash';
 import DevProject from '../models/DevProjectModel.js';
 import Follower from '../models/FollowerModel.js';
 import Circular from '../models/CircularModel.js';
+import Notification from '../models/NotificationModel.js';
 import emailValidator from 'email-validator';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import { getUserNotifications } from '../utils/getUserNotifications.js';
+import { createNotification } from '../utils/createNotification.js';
+import { sendNotification } from '../utils/sendNotification.js';
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -345,6 +349,19 @@ const followOther = asyncHandler(async (req, res) => {
         follower: req.user?._id,
       });
       if (newFollower) {
+        // create & send notification
+
+      const {newNotification} =   await createNotification(
+          req.user.full_name,
+          user._id,
+          'followed you!',
+          'follow',
+          'user',
+          req.user.username
+        );
+
+        await sendNotification('newNotification', user._id, newNotification);
+
         res.status(200).json(newFollower);
       } else {
         res.status(500);
@@ -550,6 +567,36 @@ const resetPasswordFromLink = asyncHandler(async (req, res) => {
   }
 });
 
+const getNotifications = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const { notifications } = await getUserNotifications(userId);
+
+  if (notifications) {
+    res.status(200).json(notifications);
+  } else {
+    res.status(500);
+    throw new Error('Failed to fetch notifications! ');
+  }
+});
+
+const seenNotifications = asyncHandler(async (req, res) => {
+  const notifications = await Notification.find({
+    toUserId: req.user._id,
+    seen: false,
+  });
+  if (notifications) {
+    notifications.forEach(async (notification) => {
+      notification.seen = true;
+      await notification.save();
+    });
+
+    res.status(200).json({ status: 'ok' });
+  } else {
+    res.status(404);
+    throw new Error('Notification not found!');
+  }
+});
+
 export {
   signupDeveloper,
   signinDeveloper,
@@ -573,4 +620,6 @@ export {
   resetPasswordDev,
   getResetPasswordLinkDev,
   resetPasswordFromLink,
+  getNotifications,
+  seenNotifications,
 };

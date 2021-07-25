@@ -66,22 +66,26 @@ const Question = ({ question, details }) => {
 
   return (
     <>
-      <div className='w-full bg-white dark:bg-gray-800 shadow rounded-md my-2 px-5 py-2 '>
-        <div className='flex items-center'>
-          <div className='w-8 h-8 sm:w-10 sm:h-10'>
+      <div className="w-full bg-white dark:bg-gray-800 shadow rounded-md my-2 px-5 py-2 ">
+        <div className="flex items-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10">
             <img
-              className='border w-full h-full rounded-full'
-              src={question?.user?.dp ? baseURL + question?.user?.dp : 'https://picsum.photos/200'}
+              className="border w-full h-full rounded-full"
+              src={
+                question?.user?.dp
+                  ? baseURL + question?.user?.dp
+                  : 'https://picsum.photos/200'
+              }
               alt={question?.user?.username}
             />
           </div>
-          <div className='ml-2 w-40 h-8 sm:h-10'>
-            <h4 className='text-gray-700 dark:text-gray-300 text-sm sm:font-medium cursor-pointer hover:text-gray-800'>
+          <div className="ml-2 w-40 h-8 sm:h-10">
+            <h4 className="text-gray-700 dark:text-gray-300 text-sm sm:font-medium cursor-pointer hover:text-gray-800">
               <Link to={`/h/user/${question?.user?.username}`}>
                 {question?.user?.full_name}
               </Link>
             </h4>
-            <p className='-mt-0.5 text-gray-400 dark:text-gray-500 text-xs'>
+            <p className="-mt-0.5 text-gray-400 dark:text-gray-500 text-xs">
               {moment(question?.createdAt).startOf('hour').fromNow()}
             </p>
           </div>
@@ -101,39 +105,39 @@ const Question = ({ question, details }) => {
           {question?.tags?.map((tag, idx) => (
             <span
               key={idx}
-              className='pl-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 mr-2 sm:mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1'
+              className="pl-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 mr-2 sm:mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1"
             >
               {tag}
             </span>
           ))}
         </div>
         {details && (
-          <div className='text-gray-500 text-xs sm:text-sm h-auto w-full text-justify'>
+          <div className="text-gray-500 text-xs sm:text-sm h-auto w-full text-justify">
             {question?.description}
           </div>
         )}
         <div
           onClick={() => setAnsOpen(!ansOpen)}
-          className='flex items-center justify-center mt-1 sm:mt-3 border-t dark:border-gray-600 cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500'
+          className="flex items-center justify-center mt-1 sm:mt-3 border-t dark:border-gray-600 cursor-pointer pt-1 text-center text-sm mr-2 text-gray-500"
         >
-          <div className='flex hover:text-indigo-600 dark:text-gray-300 items-center justify-center w-1/2'>
-            <span className='mr-1'>
+          <div className="flex hover:text-indigo-600 dark:text-gray-300 items-center justify-center w-1/2">
+            <span className="mr-1">
               <svg
                 style={{ width: '15px' }}
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
                 <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   strokeWidth={2}
-                  d='M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z'
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                 />
               </svg>
             </span>
-            <span className='text-xs sm:text-sm'>Answers</span>
+            <span className="text-xs sm:text-sm">Answers</span>
           </div>
           {details &&
             devInfo?._id.toString() === question?.user?._id.toString() && (
@@ -141,10 +145,10 @@ const Question = ({ question, details }) => {
                 onClick={() => {
                   setEditModal(true);
                 }}
-                className='w-1/2  hover:text-indigo-600'
+                className="w-1/2  hover:text-indigo-600"
               >
-                <span className='text-xs sm:text-sm'>
-                  <i className='mr-1 far fa-edit'></i>Edit
+                <span className="text-xs sm:text-sm">
+                  <i className="mr-1 far fa-edit"></i>Edit
                 </span>
               </div>
             )}
@@ -152,18 +156,18 @@ const Question = ({ question, details }) => {
             devInfo?._id.toString() === question?.user?._id.toString() && (
               <div
                 onClick={() => deleteHandler(question?._id)}
-                className='w-1/2  hover:text-indigo-600'
+                className="w-1/2  hover:text-indigo-600"
               >
-                <span className='text-xs sm:text-sm'>
-                  <i className='mr-1 far fa-trash-alt'></i> Delete
+                <span className="text-xs sm:text-sm">
+                  <i className="mr-1 far fa-trash-alt"></i> Delete
                 </span>
               </div>
             )}
           <Modal
             modalOpen={editModal}
             setModalOpen={setEditModal}
-            title='Edit Question'
-            titleIcon='fas fa-edit'
+            title="Edit Question"
+            titleIcon="fas fa-edit"
           >
             {/* form submission */}
             <Formik
@@ -181,33 +185,33 @@ const Question = ({ question, details }) => {
               {({ values, isSubmitting, handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                   <MyTextField
-                    id='title'
-                    type='text'
-                    name='title'
-                    label='Title'
-                    placeholder='Question title'
+                    id="title"
+                    type="text"
+                    name="title"
+                    label="Title"
+                    placeholder="Question title"
                   />
-                  <Field name='description'>
+                  <Field name="description">
                     {({ field, meta }) => (
                       <div>
                         <label
-                          className='block mt-2 text-xs font-semibold text-gray-600 uppercase'
-                          htmlFor='description'
+                          className="block mt-2 text-xs font-semibold text-gray-600 uppercase"
+                          htmlFor="description"
                         >
                           Description
                         </label>
                         <textarea
-                          className='
+                          className="
                                 appearance-none rounded mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm 
-                                '
-                          id='description'
-                          placeholder='Question description'
-                          rows='3'
-                          cols='10'
+                                "
+                          id="description"
+                          placeholder="Question description"
+                          rows="3"
+                          cols="10"
                           {...field}
                         ></textarea>
                         {meta.touched && meta.error ? (
-                          <div className='text-red-500 text-sm'>
+                          <div className="text-red-500 text-sm">
                             {meta.error}
                           </div>
                         ) : null}
@@ -215,47 +219,47 @@ const Question = ({ question, details }) => {
                     )}
                   </Field>
                   <FieldArray
-                    name='tags'
+                    name="tags"
                     render={(arrayHelpers) => (
-                      <div className='flex items-center mt-2'>
-                        <div className='w-2/5'>
-                          <label className='block mt-2 text-xs font-semibold text-gray-600 uppercase'>
+                      <div className="flex items-center mt-2">
+                        <div className="w-2/5">
+                          <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                             Tags
                           </label>
                         </div>
-                        <div className='w-3/5 border border-blue-300 p-2 rounded'>
+                        <div className="w-3/5 border border-blue-300 p-2 rounded">
                           {values.tags?.length > 0 ? (
                             values.tags?.map((data, idx) => (
                               <div
                                 key={idx}
-                                className='float-left mr-2 flex items-center'
+                                className="float-left mr-2 flex items-center"
                               >
                                 <Field
-                                  type='text'
+                                  type="text"
                                   name={`tags.${idx}`}
                                   value={data}
-                                  className='border focus:border-indigo-300 rounded focus:outline-none text-sm px-1'
+                                  className="border focus:border-indigo-300 rounded focus:outline-none text-sm px-1"
                                 />
-                                <div className='ml-2 flex text-gray-400 items-center space-x-2 justify-center'>
+                                <div className="ml-2 flex text-gray-400 items-center space-x-2 justify-center">
                                   <button
-                                    type='button'
+                                    type="button"
                                     onClick={() => arrayHelpers.remove(idx)}
                                   >
-                                    <i className='far fa-trash-alt'></i>
+                                    <i className="far fa-trash-alt"></i>
                                   </button>
                                   <button
-                                    type='button'
+                                    type="button"
                                     onClick={() => arrayHelpers.insert(idx, '')}
                                   >
-                                    <i className='fas fa-plus'></i>
+                                    <i className="fas fa-plus"></i>
                                   </button>
                                 </div>
                               </div>
                             ))
                           ) : (
                             <button
-                              className='focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500'
-                              type='button'
+                              className="focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500"
+                              type="button"
                               onClick={() => arrayHelpers.push('')}
                             >
                               Add Tag
@@ -266,9 +270,9 @@ const Question = ({ question, details }) => {
                     )}
                   />
                   <button
-                    type='submit'
+                    type="submit"
                     disabled={isSubmitting}
-                    className='w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none'
+                    className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
                   >
                     Update
                   </button>
@@ -277,7 +281,7 @@ const Question = ({ question, details }) => {
             </Formik>
           </Modal>
         </div>
-        <div className=''>
+        <div className="">
           {deleteLoading ? (
             <Loader />
           ) : (

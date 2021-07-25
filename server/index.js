@@ -36,7 +36,7 @@ app.options('*', cors());
 app.use(corsWithOptions);
 
 const server = http.createServer(app);
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: [
       'http://localhost:5000',
@@ -50,17 +50,7 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   socket.on('join', ({ name, room }) => {
     const { user } = addUser({ id: socket.id, name, room });
-
     socket.join(user.room);
-
-    // socket.emit('message', {
-    //   user: 'Admin',
-    //   text: `${user.name}, welcome to the ${room}`,
-    // });
-
-    // socket.broadcast
-    //   .to(user.room)
-    //   .emit('message', { user: 'admin', text: `${user.name} has joined` });
   });
 
   // send message

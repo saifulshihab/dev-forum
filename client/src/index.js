@@ -6,12 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { NewNotificationProvider } from './Context/NewNotificationProvider';
+import { LoggedUserProvider } from './Context/LoggedUserProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <LoggedUserProvider>
+          <NewNotificationProvider>
+            <App />
+          </NewNotificationProvider>
+        </LoggedUserProvider>
       </Router>
     </Provider>
   </React.StrictMode>,

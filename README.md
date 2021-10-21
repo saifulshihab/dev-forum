@@ -23,5 +23,4 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 Live: https://devforum.netlify.app
 
-Licensed under the [MIT License](LICENSE.md).
-
+Show some ❤️ by ⭐ the project.

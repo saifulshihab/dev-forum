@@ -38,7 +38,7 @@ export const NewNotificationProvider = ({ children }) => {
         }
       }
     }
-  }, [dispatch, loggedUserId, notifications?.length]);
+  }, [dispatch, loggedUserId, notifications]);
 
   return (
     <NewNotificationContext.Provider

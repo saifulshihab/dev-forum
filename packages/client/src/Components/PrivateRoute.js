@@ -1,6 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route } from "react-router";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const signInDev = useSelector((state) => state.signInDev);
@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: "/login",
               state: { from: props.location },
             }}
           />
@@ -35,7 +35,7 @@ export const PrivateRoute2 = ({ component: Component, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: '/re-login',
+              pathname: "/re-login",
               state: { from: props.location },
             }}
           />

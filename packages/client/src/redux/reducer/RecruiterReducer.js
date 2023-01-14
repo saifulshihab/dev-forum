@@ -37,7 +37,7 @@ import {
   REC_RESET_PASSWORD_SUCCESS,
   REC_RESET_PASSWORD_FAILED,
   REC_RESET_PASSWORD_RESET,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const recrSignupReducer = (state = {}, action) => {
   switch (action.type) {

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const DevProjectSchema = new mongoose.Schema(
   {
@@ -16,7 +16,7 @@ const DevProjectSchema = new mongoose.Schema(
     technologies: [],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -24,5 +24,5 @@ const DevProjectSchema = new mongoose.Schema(
   }
 );
 
-const DevProject = mongoose.model('DevProject', DevProjectSchema);
+const DevProject = mongoose.model("DevProject", DevProjectSchema);
 export default DevProject;

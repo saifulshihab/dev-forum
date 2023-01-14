@@ -1,6 +1,6 @@
-import React from 'react';
-import { useField } from 'formik';
-import { Editor } from '@tinymce/tinymce-react';
+import React from "react";
+import { useField } from "formik";
+import { Editor } from "@tinymce/tinymce-react";
 
 const MyEditor = ({ label, ref, ...props }) => {
   const [field, meta] = useField(props);
@@ -14,7 +14,7 @@ const MyEditor = ({ label, ref, ...props }) => {
       </label>
       <Editor {...field} {...props} ref={ref} />
       {meta.touched && meta.error ? (
-        <div className='text-red-500 text-sm'>{meta.error}</div>
+        <div className="text-red-500 text-sm">{meta.error}</div>
       ) : null}
     </div>
   );

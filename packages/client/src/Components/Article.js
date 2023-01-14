@@ -1,18 +1,18 @@
-import React, { Fragment, useRef, useEffect, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useRouteMatch } from 'react-router-dom';
-import moment from 'moment';
+import React, { Fragment, useRef, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+import moment from "moment";
 import {
   deleteArticle,
   upvoteArticle,
   downvoteArticle,
   shareArticle,
-} from '../redux/action/ArticleAction';
-import UpvoteIcon from './UpvoteIcon';
-import DownvoteIcon from './DownvoteIcon';
-import _ from 'lodash';
-import ArticleCommentsContainer from '../Container/ArticleCommentsContainer';
+} from "../redux/action/ArticleAction";
+import UpvoteIcon from "./UpvoteIcon";
+import DownvoteIcon from "./DownvoteIcon";
+import _ from "lodash";
+import ArticleCommentsContainer from "../Container/ArticleCommentsContainer";
 
 const Article = ({ article, routeFromProfile, details }) => {
   const { url } = useRouteMatch();
@@ -20,8 +20,8 @@ const Article = ({ article, routeFromProfile, details }) => {
   const [showComment, setshowComment] = useState(false);
   const [showMore, setshowMore] = useState(false);
   const [shoeArtileOption, serArticleOption] = useState(false);
-  const [caption, setCaption] = useState('');
-  const [articleId, setArticleId] = useState('');
+  const [caption, setCaption] = useState("");
+  const [articleId, setArticleId] = useState("");
 
   const [shareOpen, setShareOpen] = useState(false);
   const cancelButtonRef = useRef();
@@ -127,7 +127,7 @@ const Article = ({ article, routeFromProfile, details }) => {
               </Link>
               <span className="ml-4">
                 <i className="far fa-clock mr-1"></i>
-                {moment(article?.createdAt).startOf('hour').fromNow()}
+                {moment(article?.createdAt).startOf("hour").fromNow()}
               </span>
             </div>
           </div>
@@ -136,8 +136,8 @@ const Article = ({ article, routeFromProfile, details }) => {
         {!details ? (
           <div
             className={`mt-3 ${
-              showMore ? 'h-full' : 'max-h-60'
-            } overflow-ellipsis ${!showMore && 'overflow-hidden'}`}
+              showMore ? "h-full" : "max-h-60"
+            } overflow-ellipsis ${!showMore && "overflow-hidden"}`}
           >
             <div className="text-gray-600 text-justify dark:text-gray-400 overflow-hidden">
               {article?.description}
@@ -170,7 +170,7 @@ const Article = ({ article, routeFromProfile, details }) => {
           onClick={() => setshowMore(!showMore)}
           className="text-xs text-indigo-600 hover:text-indigo-800 cursor-pointer"
         >
-          Show{showMore ? ' less' : ' more'}...
+          Show{showMore ? " less" : " more"}...
         </span>
 
         <div className="flex mt-3 border-t dark:border-gray-600 cursor-pointer pt-1 text-center space-x-2">

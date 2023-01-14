@@ -28,7 +28,7 @@ import {
   DELETE_ANS_FAILED,
   CREATE_QUESTION_REQUEST,
   CREATE_QUESTION_FAILED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const getQuestionReducer = (state = { questions: [] }, action) => {
   switch (action.type) {

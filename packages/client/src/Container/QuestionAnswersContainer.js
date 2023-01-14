@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Alert from '../Components/Alert';
-import { addAnswer, getQuestionAnswers } from '../redux/action/QuestionAction';
-import Answer from '../Components/Answer';
-import { Picker } from 'emoji-mart';
-import CommentLoader from '../Components/CommentLoader';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Alert from "../Components/Alert";
+import { addAnswer, getQuestionAnswers } from "../redux/action/QuestionAction";
+import Answer from "../Components/Answer";
+import { Picker } from "emoji-mart";
+import CommentLoader from "../Components/CommentLoader";
 
 const QuestionAnswersContainer = ({ question, details }) => {
   const dispatch = useDispatch();
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState("");
   const [emojiOn, setEmoji] = useState(false);
 
   const answersQuestion = useSelector((state) => state.answersQuestion);
@@ -21,39 +21,39 @@ const QuestionAnswersContainer = ({ question, details }) => {
   }, [dispatch, question?._id]);
 
   const keyHandler = (event) => {
-    if (event.key === 'Enter' && answer !== '') {
+    if (event.key === "Enter" && answer !== "") {
       answerHandler();
     }
   };
 
   const answerHandler = () => {
     dispatch(addAnswer(question?._id, answer));
-    setAnswer('');
+    setAnswer("");
   };
 
   return (
     <div
-      className='py-2 bg-white dark:bg-gray-700 max-h-96 overflow-hidden rounded shadow'
-      style={{ overflowY: 'scroll' }}
+      className="py-2 bg-white dark:bg-gray-700 max-h-96 overflow-hidden rounded shadow"
+      style={{ overflowY: "scroll" }}
     >
-      <div className='pb-1 border-b dark:border-gray-600 text-sm text-gray-500 dark:text-gray-300 px-5'>
+      <div className="pb-1 border-b dark:border-gray-600 text-sm text-gray-500 dark:text-gray-300 px-5">
         {answers?.length} Answers
       </div>
-      <div className='flex items-center my-2'>
-        <div className='flex-grow flex items-center'>
+      <div className="flex items-center my-2">
+        <div className="flex-grow flex items-center">
           <input
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             onKeyPress={keyHandler}
-            placeholder='Write your answer...'
-            className='flex-1 ml-3 p-1 px-6 mr-2 w-10/12 text-xs dark:bg-gray-800 focus:outline-none border dark:border-gray-600 dark:text-gray-300 rounded-full'
+            placeholder="Write your answer..."
+            className="flex-1 ml-3 p-1 px-6 mr-2 w-10/12 text-xs dark:bg-gray-800 focus:outline-none border dark:border-gray-600 dark:text-gray-300 rounded-full"
           />
           <div>
-            <span className='cursor-pointer' onClick={() => setEmoji(!emojiOn)}>
-              <i className='text-gray-400 far fa-grin'></i>
+            <span className="cursor-pointer" onClick={() => setEmoji(!emojiOn)}>
+              <i className="text-gray-400 far fa-grin"></i>
             </span>
           </div>
-          <div className='absolute right-0' style={{ left: '75%' }}>
+          <div className="absolute right-0" style={{ left: "75%" }}>
             {emojiOn && (
               <Picker
                 onSelect={(emoji) => {
@@ -65,11 +65,11 @@ const QuestionAnswersContainer = ({ question, details }) => {
         </div>
         <button
           onClick={answerHandler}
-          disabled={answer === ''}
+          disabled={answer === ""}
           className={`rounded-full border ${
-            answer !== '' && 'hover:text-white hover:bg-indigo-500'
+            answer !== "" && "hover:text-white hover:bg-indigo-500"
           }
-            ${answer === '' && 'opacity-30'}
+            ${answer === "" && "opacity-30"}
             mx-2 p-1 px-3 text-xs focus:outline-none font-semibold text-indigo-500 dark:border-gray-600`}
         >
           Send
@@ -82,7 +82,7 @@ const QuestionAnswersContainer = ({ question, details }) => {
       ) : answers && answers?.length > 0 ? (
         answers?.map((ans) => <Answer key={ans?._id} ans={ans} />)
       ) : (
-        <Alert msg='No answers yet!' />
+        <Alert msg="No answers yet!" />
       )}
     </div>
   );

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   DEV_DP_EDIT_FAIL,
   DEV_DP_EDIT_REQUEST,
@@ -91,7 +91,7 @@ import {
   GET_NOTIFICATION_FAILED,
   SEEN_NOTIFICATIONS_SUCCESS,
   SEEN_NOTIFICATIONS_FAILED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // Developer signup
 export const devSignup = (dev) => async (dispatch) => {
@@ -101,7 +101,7 @@ export const devSignup = (dev) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -116,7 +116,7 @@ export const devSignup = (dev) => async (dispatch) => {
       type: DEV_SIGNIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('devInfo', JSON.stringify(data));
+    localStorage.setItem("devInfo", JSON.stringify(data));
 
     setTimeout(() => {
       dispatch({
@@ -142,7 +142,7 @@ export const devSignin = (credentials) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -154,7 +154,7 @@ export const devSignin = (credentials) => async (dispatch) => {
       type: DEV_SIGNIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('devInfo', JSON.stringify(data));
+    localStorage.setItem("devInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: DEV_SIGNIN_FAIL,
@@ -168,7 +168,7 @@ export const devSignin = (credentials) => async (dispatch) => {
 
 // Developer signout
 export const devSignout = () => async (dispatch) => {
-  localStorage.removeItem('devInfo');
+  localStorage.removeItem("devInfo");
   dispatch({ type: DEV_SIGNOUT });
 };
 
@@ -801,7 +801,7 @@ export const getResetPasswordLinkDev = (email) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -838,7 +838,7 @@ export const resetPasswordFromLink =
       });
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       await axios.post(

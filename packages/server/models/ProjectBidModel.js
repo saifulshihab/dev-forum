@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ProjectBidSchema = new mongoose.Schema(
   {
     project: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',
+      ref: "Project",
       required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
       required: true,
     },
     description: {
@@ -27,5 +27,5 @@ const ProjectBidSchema = new mongoose.Schema(
   }
 );
 
-const ProjectBid = mongoose.model('ProjectBid', ProjectBidSchema);
+const ProjectBid = mongoose.model("ProjectBid", ProjectBidSchema);
 export default ProjectBid;

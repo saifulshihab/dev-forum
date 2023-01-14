@@ -1,5 +1,5 @@
-import React from 'react';
-import RJobContainer from '../../Container/RJobContainer';
+import React from "react";
+import RJobContainer from "../../Container/RJobContainer";
 
 const RBrowseJobScreen = () => {
   return (

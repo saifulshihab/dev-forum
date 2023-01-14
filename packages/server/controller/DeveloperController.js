@@ -1,19 +1,19 @@
-import path from 'path';
-import fs from 'fs';
-import asyncHandler from 'express-async-handler';
-import { generateToken } from '../utils/generateToken.js';
-import Developer from '../models/DeveloperModel.js';
-import _ from 'lodash';
-import DevProject from '../models/DevProjectModel.js';
-import Follower from '../models/FollowerModel.js';
-import Circular from '../models/CircularModel.js';
-import Notification from '../models/NotificationModel.js';
-import emailValidator from 'email-validator';
-import nodemailer from 'nodemailer';
-import jwt from 'jsonwebtoken';
-import { getUserNotifications } from '../utils/getUserNotifications.js';
-import { createNotification } from '../utils/createNotification.js';
-import { sendNotification } from '../utils/sendNotification.js';
+import path from "path";
+import fs from "fs";
+import asyncHandler from "express-async-handler";
+import { generateToken } from "../utils/generateToken.js";
+import Developer from "../models/DeveloperModel.js";
+import _ from "lodash";
+import DevProject from "../models/DevProjectModel.js";
+import Follower from "../models/FollowerModel.js";
+import Circular from "../models/CircularModel.js";
+import Notification from "../models/NotificationModel.js";
+import emailValidator from "email-validator";
+import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken";
+import { getUserNotifications } from "../utils/getUserNotifications.js";
+import { createNotification } from "../utils/createNotification.js";
+import { sendNotification } from "../utils/sendNotification.js";
 
 // desc: developer signup
 // routes: api/dev/signup
@@ -25,13 +25,13 @@ const signupDeveloper = asyncHandler(async (req, res) => {
   const devExist2 = await Developer.findOne({ username: username });
   if (devExist) {
     res.status(400);
-    throw new Error('User already exist with this email!');
+    throw new Error("User already exist with this email!");
   } else if (devExist2) {
     res.status(400);
-    throw new Error('User already exist with this username!');
+    throw new Error("User already exist with this username!");
   } else if (!_.isEqual(password, c_password)) {
     res.status(400);
-    throw new Error('Confirm password does not match!');
+    throw new Error("Confirm password does not match!");
   } else {
     const validEmail = emailValidator.validate(email);
     if (validEmail) {
@@ -48,7 +48,7 @@ const signupDeveloper = asyncHandler(async (req, res) => {
       });
     } else {
       res.status(403);
-      throw new Error('Invalid Email!');
+      throw new Error("Invalid Email!");
     }
   }
 });
@@ -57,7 +57,7 @@ const signupDeveloper = asyncHandler(async (req, res) => {
 // access: public
 const signinDeveloper = asyncHandler(async (req, res) => {
   const { username, password } = req.body.credentials;
-  const dev = await Developer.findOne({ username }).select('password');
+  const dev = await Developer.findOne({ username }).select("password");
   if (dev && (await dev.verifyPassword(password))) {
     res.status(200).json({
       _id: dev._id,
@@ -66,7 +66,7 @@ const signinDeveloper = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Invalid Credential!');
+    throw new Error("Invalid Credential!");
   }
 });
 
@@ -75,21 +75,21 @@ const signinDeveloper = asyncHandler(async (req, res) => {
 // access: private
 const getDevprofile = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.params.userId)
-    .populate('education')
-    .populate('social')
-    .populate('experience');
+    .populate("education")
+    .populate("social")
+    .populate("experience");
   if (user) {
     const followers = await Follower.find({ user: user?._id }).populate(
-      'follower'
+      "follower"
     );
     const following = await Follower.find({ follower: user?._id }).populate(
-      'user'
+      "user"
     );
     const userData = { user, followers, following };
     res.status(200).json(userData);
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 
@@ -102,15 +102,15 @@ const delDevprofile = asyncHandler(async (req, res) => {
     if (user._id.equals(req.user._id)) {
       await user.remove();
       res.status(200).json({
-        status: 'user deleted!',
+        status: "user deleted!",
       });
     } else {
       res.status(400);
-      throw new Error('You are not authorized to delete this!');
+      throw new Error("You are not authorized to delete this!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: Edit developer profile
@@ -134,7 +134,7 @@ const editDevProfile = asyncHandler(async (req, res) => {
           );
           if (updateProfile) {
             res.status(200).json({
-              status: 'Profile updated!',
+              status: "Profile updated!",
               data: updateProfile,
             });
           } else {
@@ -143,19 +143,19 @@ const editDevProfile = asyncHandler(async (req, res) => {
           }
         } else {
           res.status(500);
-          throw new Error('This username is already taken!');
+          throw new Error("This username is already taken!");
         }
       } else {
         res.status(400);
-        throw new Error('User already exist with this email!');
+        throw new Error("User already exist with this email!");
       }
     } else {
       res.status(400);
-      throw new Error('You are not authorized to delete this!');
+      throw new Error("You are not authorized to delete this!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 
@@ -167,7 +167,7 @@ const updateDevDp = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.user._id);
   if (user) {
     const __dirname = path.resolve();
-    if (user.dp !== '/server/uploads/default_dp.png') {
+    if (user.dp !== "/server/uploads/default_dp.png") {
       fs.unlink(path.join(__dirname + user.dp), (err) => {
         if (err) {
           res.send(err);
@@ -177,13 +177,13 @@ const updateDevDp = asyncHandler(async (req, res) => {
     user.dp = dp || user.dp;
     const updatedUser = await user.save();
     if (updatedUser) {
-      res.status(200).json({ status: 'Dp updated!' });
+      res.status(200).json({ status: "Dp updated!" });
     } else {
       throw new Error();
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 
@@ -195,7 +195,7 @@ const updateDevCover = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.user._id);
   if (user) {
     const __dirname = path.resolve();
-    if (user.cover !== '/server/uploads/default_dp.png') {
+    if (user.cover !== "/server/uploads/default_dp.png") {
       fs.unlink(path.join(__dirname + user.cover), (err) => {
         if (err) {
           res.send(err);
@@ -205,13 +205,13 @@ const updateDevCover = asyncHandler(async (req, res) => {
     user.cover = cover || user.cover;
     const updatedUser = await user.save();
     if (updatedUser) {
-      res.status(200).json({ status: 'Cover updated!' });
+      res.status(200).json({ status: "Cover updated!" });
     } else {
       throw new Error();
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 
@@ -221,19 +221,19 @@ const updateDevCover = asyncHandler(async (req, res) => {
 const getDevPublicProfile = asyncHandler(async (req, res) => {
   const user = await Developer.findOne({
     username: req.params.username,
-  }).select('-password');
+  }).select("-password");
   if (user) {
     const followers = await Follower.find({ user: user?._id }).populate(
-      'follower'
+      "follower"
     );
     const following = await Follower.find({ follower: user?._id }).populate(
-      'user'
+      "user"
     );
     const userData = { user, followers, following };
     res.status(200).json(userData);
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: add project
@@ -246,12 +246,12 @@ const addProject = asyncHandler(async (req, res) => {
   });
   if (newProject) {
     const populated = await DevProject.findById(newProject._id).populate(
-      'user'
+      "user"
     );
     res.status(201).json(populated);
   } else {
     res.status(500);
-    throw new Error('Faild to add project!');
+    throw new Error("Faild to add project!");
   }
 });
 // desc: get user projects
@@ -259,13 +259,13 @@ const addProject = asyncHandler(async (req, res) => {
 // access: private
 const getUserProjects = asyncHandler(async (req, res) => {
   const projects = await DevProject.find({ user: req.params.userId }).populate(
-    'user'
+    "user"
   );
   if (projects) {
     res.status(200).json(projects);
   } else {
     res.status(404);
-    throw new Error('Projects not found!');
+    throw new Error("Projects not found!");
   }
 });
 // desc: delete project
@@ -277,16 +277,16 @@ const deleteProject = asyncHandler(async (req, res) => {
     if (project.user.toString() === req.user._id.toString()) {
       await project.remove();
       const projects = await DevProject.find({ user: req.user._id }).populate(
-        'user'
+        "user"
       );
       res.status(200).json(projects);
     } else {
       res.status(403);
-      throw new Error('You are not authorized to delete this!');
+      throw new Error("You are not authorized to delete this!");
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });
 // desc: edit project
@@ -303,20 +303,20 @@ const editProject = asyncHandler(async (req, res) => {
       );
       if (update) {
         const projects = await DevProject.find({ user: req.user._id }).populate(
-          'user'
+          "user"
         );
         res.status(200).json(projects);
       } else {
         res.status(500);
-        throw new Error('Failed to updtae project!');
+        throw new Error("Failed to updtae project!");
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorized to edit this!');
+      throw new Error("You are not authorized to edit this!");
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });
 
@@ -329,7 +329,7 @@ const getDevelopers = asyncHandler(async (req, res) => {
     res.status(200).json(developers);
   } else {
     res.status(404);
-    throw new Error('Developers not found!');
+    throw new Error("Developers not found!");
   }
 });
 
@@ -351,29 +351,29 @@ const followOther = asyncHandler(async (req, res) => {
       if (newFollower) {
         // create & send notification
 
-      const {newNotification} =   await createNotification(
+        const { newNotification } = await createNotification(
           req.user.full_name,
           user._id,
-          'followed you!',
-          'follow',
-          'user',
+          "followed you!",
+          "follow",
+          "user",
           req.user.username
         );
 
-        await sendNotification('newNotification', user._id, newNotification);
+        await sendNotification("newNotification", user._id, newNotification);
 
         res.status(200).json(newFollower);
       } else {
         res.status(500);
-        throw new Error('Failed to follow!');
+        throw new Error("Failed to follow!");
       }
     } else {
       res.status(403);
-      throw new Error('You already followed this person!');
+      throw new Error("You already followed this person!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: unfollow others
@@ -391,11 +391,11 @@ const unfollowOther = asyncHandler(async (req, res) => {
       res.status(200).json(follower);
     } else {
       res.status(404);
-      throw new Error('Follower not found!');
+      throw new Error("Follower not found!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // no need anymore
@@ -406,17 +406,17 @@ const getFollowing = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.params.userId);
   if (user) {
     const following = await Follower.find({ follower: user?._id }).populate(
-      'user'
+      "user"
     );
     if (following) {
       res.status(200).json(following);
     } else {
       res.status(404);
-      throw new Error('Follower not found!');
+      throw new Error("Follower not found!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // no need anymore
@@ -427,29 +427,29 @@ const getFollowers = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.params.userId);
   if (user) {
     const followers = await Follower.find({ user: user?._id }).populate(
-      'follower'
+      "follower"
     );
     if (followers) {
       res.status(200).json(followers);
     } else {
       res.status(404);
-      throw new Error('Follower not found!');
+      throw new Error("Follower not found!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc:  get job circulars
 // routes: /api/dev/getJobCirculars
 // method: GET
 const getJobCirculars = asyncHandler(async (req, res) => {
-  const circulars = await Circular.find({}).sort({ createdAt: '-1' });
+  const circulars = await Circular.find({}).sort({ createdAt: "-1" });
   if (circulars) {
     res.status(200).json(circulars);
   } else {
     res.status(404);
-    throw new Error('Circilars not found!');
+    throw new Error("Circilars not found!");
   }
 });
 // desc:  Change work status
@@ -461,21 +461,21 @@ const changeWorkStatus = asyncHandler(async (req, res) => {
     if (user._id.equals(req.params.userId)) {
       user.workStatus = req.body.status;
       await user.save();
-      res.status(200).json({ message: 'Work status updated!' });
+      res.status(200).json({ message: "Work status updated!" });
     } else {
       res.status(403);
-      throw new Error('You are not authorized to change this!');
+      throw new Error("You are not authorized to change this!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: Reset password (developer)
 // routes: /api/dev/resetPasswordDev/:userId
 // method: PUT
 const resetPasswordDev = asyncHandler(async (req, res) => {
-  const user = await Developer.findById(req.params.userId).select('password');
+  const user = await Developer.findById(req.params.userId).select("password");
   if (user) {
     if (user._id.equals(req.params.userId)) {
       const { p_password, new_password, retype_new_password } = req.body;
@@ -483,22 +483,22 @@ const resetPasswordDev = asyncHandler(async (req, res) => {
         if (new_password === retype_new_password) {
           user.password = new_password;
           await user.save();
-          res.status(200).json({ message: 'Password reset successfully!' });
+          res.status(200).json({ message: "Password reset successfully!" });
         } else {
           res.status(403);
-          throw new Error('New password doens not match!');
+          throw new Error("New password doens not match!");
         }
       } else {
         res.status(403);
-        throw new Error('Invalid Previous Password!');
+        throw new Error("Invalid Previous Password!");
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorized to change this!');
+      throw new Error("You are not authorized to change this!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: Get reset password link
@@ -509,7 +509,7 @@ const getResetPasswordLinkDev = asyncHandler(async (req, res) => {
   const user = await Developer.findOne({ email: email });
   if (user) {
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: "smtp.gmail.com",
       port: 465,
       secure: true,
       auth: {
@@ -519,7 +519,7 @@ const getResetPasswordLinkDev = asyncHandler(async (req, res) => {
     });
 
     const token = await jwt.sign({ id: user._id }, process.env.EMAIL_SECRET, {
-      expiresIn: '30min',
+      expiresIn: "30min",
     });
 
     // const url = `http://localhost:3000/createNewPassword/${token}`;    //localhost
@@ -528,22 +528,22 @@ const getResetPasswordLinkDev = asyncHandler(async (req, res) => {
     const emailSent = await transporter.sendMail({
       from: process.env.EMAIL,
       to: email,
-      subject: 'Reset Password | DevForum',
-      text: 'Reset your password',
+      subject: "Reset Password | DevForum",
+      text: "Reset your password",
       html: `<p>Please click this link to reset password. <a href="${url}">${url}</a></p>`,
     });
     if (emailSent) {
       res.status(201).json({
-        status: 'Password reset email sent.',
+        status: "Password reset email sent.",
         message: `Password reset link was sent to ${email}.`,
       });
     } else {
       res.status(403);
-      throw new Error('Password reset failed, Email sending failed!');
+      throw new Error("Password reset failed, Email sending failed!");
     }
   } else {
     res.status(403);
-    throw new Error('There is no account associated with this email!');
+    throw new Error("There is no account associated with this email!");
   }
 });
 
@@ -556,14 +556,14 @@ const resetPasswordFromLink = asyncHandler(async (req, res) => {
       user.password = newPass;
       await user.save();
       res.status(200);
-      res.json({ message: 'Password reset successfully!' });
+      res.json({ message: "Password reset successfully!" });
     } else {
       res.status(403);
-      throw new Error('Password does not match!');
+      throw new Error("Password does not match!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 
@@ -575,7 +575,7 @@ const getNotifications = asyncHandler(async (req, res) => {
     res.status(200).json(notifications);
   } else {
     res.status(500);
-    throw new Error('Failed to fetch notifications! ');
+    throw new Error("Failed to fetch notifications! ");
   }
 });
 
@@ -590,10 +590,10 @@ const seenNotifications = asyncHandler(async (req, res) => {
       await notification.save();
     });
 
-    res.status(200).json({ status: 'ok' });
+    res.status(200).json({ status: "ok" });
   } else {
     res.status(404);
-    throw new Error('Notification not found!');
+    throw new Error("Notification not found!");
   }
 });
 

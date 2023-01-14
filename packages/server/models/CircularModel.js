@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const CircularSchema = new mongoose.Schema(
   {
@@ -35,7 +35,7 @@ const CircularSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Recruiter',
+      ref: "Recruiter",
     },
   },
   {
@@ -43,5 +43,5 @@ const CircularSchema = new mongoose.Schema(
   }
 );
 
-const Circular = mongoose.model('Circular', CircularSchema);
+const Circular = mongoose.model("Circular", CircularSchema);
 export default Circular;

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
-import { getRecruiterCirculars } from '../redux/action/CircularAction';
-import JobCircular from '../Components/JobCircular';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
+import { getRecruiterCirculars } from "../redux/action/CircularAction";
+import JobCircular from "../Components/JobCircular";
 
 const RJobContainer = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const RJobContainer = () => {
   }, [dispatch, recInfo?._id]);
 
   return (
-    <div className='p-1'>
+    <div className="p-1">
       {loading ? (
         <Loader />
       ) : error ? (
@@ -29,7 +29,7 @@ const RJobContainer = () => {
           <JobCircular key={circular?._id} circular={circular} recruiter />
         ))
       ) : (
-        <Alert warning msg='No circular posted yet!' />
+        <Alert warning msg="No circular posted yet!" />
       )}
     </div>
   );

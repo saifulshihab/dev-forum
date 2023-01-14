@@ -88,7 +88,7 @@ import {
   SEEN_NOTIFICATIONS_SUCCESS,
   SEEN_NOTIFICATIONS_FAILED,
   ADD_NEW_NOTIFICATION,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const devSignupReducer = (state = {}, action) => {
   switch (action.type) {

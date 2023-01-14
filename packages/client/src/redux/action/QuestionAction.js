@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   ADD_ANSWER,
   CREATE_QUESTION_FAILED,
@@ -30,7 +30,7 @@ import {
   GET_USER_QUESTIONS_FAILED,
   DELETE_ANS_FAILED,
   DELETE_ANS_SUCCESS,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // get all questions
 export const getQuestions = () => async (dispatch, getState) => {

@@ -1,16 +1,16 @@
-import { Field, FieldArray, Formik } from 'formik';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-import { baseURL } from '../baseURL';
-import { deleteQuestion, editQuestion } from '../redux/action/QuestionAction';
-import Alert from './Alert';
-import Loader from './Loader';
-import MyTextField from './MyTextField';
-import * as yup from 'yup';
-import QuestionAnswersContainer from '../Container/QuestionAnswersContainer';
-import Modal from './Modal';
+import { Field, FieldArray, Formik } from "formik";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { baseURL } from "../baseURL";
+import { deleteQuestion, editQuestion } from "../redux/action/QuestionAction";
+import Alert from "./Alert";
+import Loader from "./Loader";
+import MyTextField from "./MyTextField";
+import * as yup from "yup";
+import QuestionAnswersContainer from "../Container/QuestionAnswersContainer";
+import Modal from "./Modal";
 
 const Question = ({ question, details }) => {
   const dispatch = useDispatch();
@@ -55,13 +55,13 @@ const Question = ({ question, details }) => {
   const fieldValidationSchema = yup.object().shape({
     title: yup
       .string()
-      .max(100, 'Not greater than 100!')
-      .min(10, 'At least 10 charecter!')
-      .required('Required!'),
+      .max(100, "Not greater than 100!")
+      .min(10, "At least 10 charecter!")
+      .required("Required!"),
     description: yup
       .string()
-      .max(500, 'Must be 500 charecter or less!')
-      .min(10, 'At least 10 charecter!'),
+      .max(500, "Must be 500 charecter or less!")
+      .min(10, "At least 10 charecter!"),
   });
 
   return (
@@ -74,7 +74,7 @@ const Question = ({ question, details }) => {
               src={
                 question?.user?.dp
                   ? baseURL + question?.user?.dp
-                  : 'https://picsum.photos/200'
+                  : "https://picsum.photos/200"
               }
               alt={question?.user?.username}
             />
@@ -86,13 +86,13 @@ const Question = ({ question, details }) => {
               </Link>
             </h4>
             <p className="-mt-0.5 text-gray-400 dark:text-gray-500 text-xs">
-              {moment(question?.createdAt).startOf('hour').fromNow()}
+              {moment(question?.createdAt).startOf("hour").fromNow()}
             </p>
           </div>
         </div>
         <div
           className={`text-gray-600 dark:text-gray-300 ${
-            !details ? 'hover:text-indigo-700' : ''
+            !details ? "hover:text-indigo-700" : ""
           } cursor-pointer sm:text-xl`}
         >
           {!details ? (
@@ -123,7 +123,7 @@ const Question = ({ question, details }) => {
           <div className="flex hover:text-indigo-600 dark:text-gray-300 items-center justify-center w-1/2">
             <span className="mr-1">
               <svg
-                style={{ width: '15px' }}
+                style={{ width: "15px" }}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -249,7 +249,7 @@ const Question = ({ question, details }) => {
                                   </button>
                                   <button
                                     type="button"
-                                    onClick={() => arrayHelpers.insert(idx, '')}
+                                    onClick={() => arrayHelpers.insert(idx, "")}
                                   >
                                     <i className="fas fa-plus"></i>
                                   </button>
@@ -260,7 +260,7 @@ const Question = ({ question, details }) => {
                             <button
                               className="focus:outline-none  text-indigo-800 text-sm p-1 px-4 rounded border-dotted border-4 border-light-blue-500"
                               type="button"
-                              onClick={() => arrayHelpers.push('')}
+                              onClick={() => arrayHelpers.push("")}
                             >
                               Add Tag
                             </button>
@@ -292,7 +292,7 @@ const Question = ({ question, details }) => {
           ) : editError ? (
             <Alert fail msg={editError} />
           ) : (
-            editSuccess && <Alert success msg={'Question Updated!'} />
+            editSuccess && <Alert success msg={"Question Updated!"} />
           )}
         </div>
       </div>

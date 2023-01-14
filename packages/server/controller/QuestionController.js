@@ -1,11 +1,11 @@
-import asyncHandler from 'express-async-handler';
-import QuestionAnswer from '../models/QuestionAnswerModel.js';
-import Question from '../models/QuestionModel.js';
-import _ from 'lodash';
-import Developer from '../models/DeveloperModel.js';
-import Notification from '../models/NotificationModel.js';
-import { sendNotification } from '../utils/sendNotification.js';
-import { createNotification } from '../utils/createNotification.js';
+import asyncHandler from "express-async-handler";
+import QuestionAnswer from "../models/QuestionAnswerModel.js";
+import Question from "../models/QuestionModel.js";
+import _ from "lodash";
+import Developer from "../models/DeveloperModel.js";
+import Notification from "../models/NotificationModel.js";
+import { sendNotification } from "../utils/sendNotification.js";
+import { createNotification } from "../utils/createNotification.js";
 
 // desc: ask/create a quesion
 // routes: api/question/createQuestion
@@ -17,11 +17,11 @@ export const createQuestion = asyncHandler(async (req, res) => {
     ...req.body,
   });
   if (newQuestion) {
-    const question = await Question.findById(newQuestion?._id).populate('user');
+    const question = await Question.findById(newQuestion?._id).populate("user");
     res.status(201).json(question);
   } else {
     res.status(500);
-    throw new Error('Failed to create question!');
+    throw new Error("Failed to create question!");
   }
 });
 // desc: fetch all questions
@@ -29,13 +29,13 @@ export const createQuestion = asyncHandler(async (req, res) => {
 // method: GET
 export const getQuestions = asyncHandler(async (req, res) => {
   const questions = await Question.find({})
-    .populate('user')
-    .sort({ createdAt: '-1' });
+    .populate("user")
+    .sort({ createdAt: "-1" });
   if (questions) {
     res.status(200).json(questions);
   } else {
     res.status(404);
-    throw new Error('Failed to fetch questions!');
+    throw new Error("Failed to fetch questions!");
   }
 });
 
@@ -46,10 +46,10 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
   const question = await Question.findById(req.params.questionId);
   if (question) {
     await question.remove();
-    res.status(200).json({ status: 'Question deleted!' });
+    res.status(200).json({ status: "Question deleted!" });
   } else {
     res.status(404);
-    throw new Error('Question not found!');
+    throw new Error("Question not found!");
   }
 });
 // desc: edit question
@@ -66,11 +66,11 @@ export const editQuestion = asyncHandler(async (req, res) => {
     if (update) {
       res.status(200).json(update);
     } else {
-      throw new Error('Failed to update question!');
+      throw new Error("Failed to update question!");
     }
   } else {
     res.status(404);
-    throw new Error('Question not found!');
+    throw new Error("Question not found!");
   }
 });
 // desc: answer on question
@@ -88,21 +88,21 @@ export const answerQuestion = asyncHandler(async (req, res) => {
     if (newAnswer) {
       const populatedNewAnswer = await QuestionAnswer.findById(
         newAnswer?._id
-      ).populate('user');
+      ).populate("user");
 
       // create & send notification
       if (populatedNewAnswer.user._id.toString() !== question.user.toString()) {
         const { newNotification } = await createNotification(
           populatedNewAnswer.user.full_name,
           question.user,
-          'answered your question.',
-          'comment',
-          'question',
+          "answered your question.",
+          "comment",
+          "question",
           question._id
         );
 
         await sendNotification(
-          'newNotification',
+          "newNotification",
           question.user,
           newNotification
         );
@@ -110,11 +110,11 @@ export const answerQuestion = asyncHandler(async (req, res) => {
       res.status(200).json(populatedNewAnswer);
     } else {
       res.status(500);
-      throw new Error('Failed to answer question!');
+      throw new Error("Failed to answer question!");
     }
   } else {
     res.status(404);
-    throw new Error('Question not found!');
+    throw new Error("Question not found!");
   }
 });
 // desc: get question answers
@@ -124,13 +124,13 @@ export const getQuestionAnswers = asyncHandler(async (req, res) => {
   const answers = await QuestionAnswer.find({
     question: req.params.questionId,
   })
-    .populate('user')
-    .sort({ createdAt: '-1' });
+    .populate("user")
+    .sort({ createdAt: "-1" });
   if (answers) {
     res.status(200).json(answers);
   } else {
     res.status(404);
-    throw new Error('No answers!');
+    throw new Error("No answers!");
   }
 });
 // desc: upvote answer
@@ -139,8 +139,8 @@ export const getQuestionAnswers = asyncHandler(async (req, res) => {
 // access: private
 export const upvoteAnswer = asyncHandler(async (req, res) => {
   const answer = await QuestionAnswer.findById(req.params.answerId).populate([
-    { path: 'upvote' },
-    { path: 'user' },
+    { path: "upvote" },
+    { path: "user" },
   ]);
   if (answer) {
     let alreadyUpVoted = _.findIndex(answer.upvote, function (data) {
@@ -148,7 +148,7 @@ export const upvoteAnswer = asyncHandler(async (req, res) => {
     });
     if (alreadyUpVoted > -1) {
       res.status(403);
-      throw new Error('You already upvoted!');
+      throw new Error("You already upvoted!");
     } else {
       let alreadyDownVoted = _.findIndex(answer.downvote, function (data) {
         return data.user.toString() === req.user._id.toString();
@@ -162,17 +162,17 @@ export const upvoteAnswer = asyncHandler(async (req, res) => {
         const answers = await QuestionAnswer.find({
           question: answer?.question,
         })
-          .sort({ createdAt: '-1' })
-          .populate('user');
+          .sort({ createdAt: "-1" })
+          .populate("user");
         res.status(200).json(answers);
       } else {
         res.status(500);
-        throw new Error('Somthing wrong! Failed to upvote!');
+        throw new Error("Somthing wrong! Failed to upvote!");
       }
     }
   } else {
     res.status(404);
-    throw new Error('Answer not found!');
+    throw new Error("Answer not found!");
   }
 });
 // desc: downvote article
@@ -181,8 +181,8 @@ export const upvoteAnswer = asyncHandler(async (req, res) => {
 // access: private
 export const downvoteAnswer = asyncHandler(async (req, res) => {
   const answer = await QuestionAnswer.findById(req.params.answerId).populate([
-    { path: 'downvote' },
-    { path: 'user' },
+    { path: "downvote" },
+    { path: "user" },
   ]);
   if (answer) {
     let alreadydownVoted = _.findIndex(answer.downvote, function (data) {
@@ -191,7 +191,7 @@ export const downvoteAnswer = asyncHandler(async (req, res) => {
 
     if (alreadydownVoted > -1) {
       res.status(403);
-      throw new Error('You already downvoted!');
+      throw new Error("You already downvoted!");
     } else {
       let alreadyUpVoted = _.findIndex(answer.upvote, function (data) {
         return data.user.toString() === req.user._id.toString();
@@ -206,17 +206,17 @@ export const downvoteAnswer = asyncHandler(async (req, res) => {
         const answers = await QuestionAnswer.find({
           question: answer?.question,
         })
-          .sort({ createdAt: '-1' })
-          .populate('user');
+          .sort({ createdAt: "-1" })
+          .populate("user");
         res.status(200).json(answers);
       } else {
         res.status(500);
-        throw new Error('Somthing wrong! Failed to upvote!');
+        throw new Error("Somthing wrong! Failed to upvote!");
       }
     }
   } else {
     res.status(404);
-    throw new Error('Answer not found!');
+    throw new Error("Answer not found!");
   }
 });
 // desc: get user questions
@@ -226,16 +226,16 @@ export const downvoteAnswer = asyncHandler(async (req, res) => {
 export const getUserQuestions = asyncHandler(async (req, res) => {
   const user = await Developer.findById(req.params.userId);
   if (user) {
-    const questions = await Question.find({ user: user?._id }).populate('user');
+    const questions = await Question.find({ user: user?._id }).populate("user");
     if (questions) {
       res.status(200).json(questions);
     } else {
       res.status(500);
-      throw new Error('Failed to fetch user questions!');
+      throw new Error("Failed to fetch user questions!");
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // desc: delete answer
@@ -250,15 +250,15 @@ export const deleteAnswer = asyncHandler(async (req, res) => {
       const answers = await QuestionAnswer.find({
         question: answer?.question,
       })
-        .populate('user')
-        .sort({ createdAt: '-1' });
+        .populate("user")
+        .sort({ createdAt: "-1" });
       res.status(200).json(answers);
     } else {
       res.status(403);
-      throw new Error('You are not authorized to perform this action!');
+      throw new Error("You are not authorized to perform this action!");
     }
   } else {
     res.status(404);
-    throw new Error('Answer not found!');
+    throw new Error("Answer not found!");
   }
 });

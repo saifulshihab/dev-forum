@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const SocialSchema = mongoose.Schema({
   platform: {
@@ -74,11 +74,11 @@ const DeveloperSchema = mongoose.Schema(
     },
     dp: {
       type: String,
-      default: '/server/uploads/default_dp.png',
+      default: "/server/uploads/default_dp.png",
     },
     cover: {
       type: String,
-      default: '/server/uploads/default_dp.png',
+      default: "/server/uploads/default_dp.png",
     },
     bio: {
       type: String,
@@ -99,7 +99,7 @@ const DeveloperSchema = mongoose.Schema(
     otherSkills: [],
     workStatus: {
       type: String,
-      default: 'off',
+      default: "off",
     },
     googleId: { type: String },
     twitterId: { type: String },
@@ -114,14 +114,14 @@ DeveloperSchema.methods.verifyPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-DeveloperSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+DeveloperSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const Developer = mongoose.model('Developer', DeveloperSchema);
+const Developer = mongoose.model("Developer", DeveloperSchema);
 
 export default Developer;

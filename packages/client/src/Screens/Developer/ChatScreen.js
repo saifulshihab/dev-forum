@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
-import { baseURL } from '../../baseURL';
-import Alert from '../../Components/Alert';
-import { devGetChatRooms } from '../../redux/action/DeveloperAction';
-import OpenChatScreen from './OpenChatScreen';
-import Loader from '../../Components/Loader';
-import { useLocalStorage } from '../../useLocalStorage';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouteMatch, Route } from "react-router";
+import { Link } from "react-router-dom";
+import { baseURL } from "../../baseURL";
+import Alert from "../../Components/Alert";
+import { devGetChatRooms } from "../../redux/action/DeveloperAction";
+import OpenChatScreen from "./OpenChatScreen";
+import Loader from "../../Components/Loader";
+import { useLocalStorage } from "../../useLocalStorage";
 
-const recId = JSON.parse(localStorage?.getItem('recInfo'))?._id;
+const recId = JSON.parse(localStorage?.getItem("recInfo"))?._id;
 
 const ChatScreen = ({ recruiter }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ChatScreen = ({ recruiter }) => {
   const devChatRoomsGet = useSelector((state) => state.devChatRoomsGet);
   const { loading: roomLoading, rooms, error: roomError } = devChatRoomsGet;
 
-  const { loggedUserId } = useLocalStorage('devInfo');
+  const { loggedUserId } = useLocalStorage("devInfo");
 
   useEffect(() => {
     // get user chat rooms
@@ -51,10 +51,10 @@ const ChatScreen = ({ recruiter }) => {
                           room?.sender === loggedUserId
                             ? room?.user_dp
                               ? baseURL + room?.user_dp
-                              : 'https://picsum.photos/200'
+                              : "https://picsum.photos/200"
                             : room?.sender_dp
                             ? baseURL + room?.sender_dp
-                            : 'https://picsum.photos/200'
+                            : "https://picsum.photos/200"
                         }
                         className="w-full h-full rounded-full"
                       />

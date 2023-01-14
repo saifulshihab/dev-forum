@@ -9,7 +9,7 @@ import {
   GET_PROJECT_PROPOSAL_REQUEST,
   GET_PROJECT_PROPOSAL_SUCCESS,
   GET_PROJECT_PROPOSAL_FAILED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const getFreelanceProjectsReducer = (
   state = { projects: [] },

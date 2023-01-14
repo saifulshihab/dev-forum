@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const UpvoteSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -15,7 +15,7 @@ const DownvoteSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -27,7 +27,7 @@ const AnswerSchema = new mongoose.Schema(
   {
     question: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Question',
+      ref: "Question",
       required: true,
     },
     answer: {
@@ -38,7 +38,7 @@ const AnswerSchema = new mongoose.Schema(
     downvote: [DownvoteSchema],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
       required: true,
     },
   },
@@ -47,6 +47,6 @@ const AnswerSchema = new mongoose.Schema(
   }
 );
 
-const QuestionAnswer = mongoose.model('QuestionAnswer', AnswerSchema);
+const QuestionAnswer = mongoose.model("QuestionAnswer", AnswerSchema);
 
 export default QuestionAnswer;

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
-import ArticleContainer from '../../Container/ArticleContainer';
-import SingleArticleContainer from '../../Container/SingleArticleContainer';
-import CreateArticleScreen from './CreateArticleScreen';
-import UpdateArticleScreen from './UpdateArticleScreen';
+import React from "react";
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
+import ArticleContainer from "../../Container/ArticleContainer";
+import SingleArticleContainer from "../../Container/SingleArticleContainer";
+import CreateArticleScreen from "./CreateArticleScreen";
+import UpdateArticleScreen from "./UpdateArticleScreen";
 
 const ArticleScreen = () => {
   const { path, url } = useRouteMatch();

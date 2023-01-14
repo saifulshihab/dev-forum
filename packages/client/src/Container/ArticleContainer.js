@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Alert from '../Components/Alert';
-import Article from '../Components/Article';
-import Loader from '../Components/Loader';
-import TopArticle from '../Components/TopArticle';
-import { getAllArticles } from '../redux/action/ArticleAction';
-import ReactTagInput from '@pathofdev/react-tag-input';
+import Alert from "../Components/Alert";
+import Article from "../Components/Article";
+import Loader from "../Components/Loader";
+import TopArticle from "../Components/TopArticle";
+import { getAllArticles } from "../redux/action/ArticleAction";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const ArticleContainer = ({ topArticle }) => {
   const dispatch = useDispatch();
@@ -45,16 +45,16 @@ const ArticleContainer = ({ topArticle }) => {
 
   return (
     <>
-      <div className='rounded bg-white dark:bg-gray-700 mt-2 mb-2 p-2 shadow'>
-        <span className='text-sm text-gray-500 dark:text-gray-200 font-semibold'>
-          <i className='fas fa-filter mr-1'></i>
+      <div className="rounded bg-white dark:bg-gray-700 mt-2 mb-2 p-2 shadow">
+        <span className="text-sm text-gray-500 dark:text-gray-200 font-semibold">
+          <i className="fas fa-filter mr-1"></i>
           Filter Article
         </span>
         <div>
           <ReactTagInput
-            placeholder='Add a Tag'
-            maxTags='10'
-            editable='true'
+            placeholder="Add a Tag"
+            maxTags="10"
+            editable="true"
             tags={tags}
             removeOnBackspace={true}
             onChange={(newTag) => setTags(newTag)}

@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const JobApplicationSchema = new mongoose.Schema(
   {
     circular: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Circular',
+      ref: "Circular",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -16,5 +16,5 @@ const JobApplicationSchema = new mongoose.Schema(
   }
 );
 
-const JobApplication = mongoose.model('JobApplication', JobApplicationSchema);
+const JobApplication = mongoose.model("JobApplication", JobApplicationSchema);
 export default JobApplication;

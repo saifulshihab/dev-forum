@@ -1,5 +1,5 @@
-import { io } from '../index.js';
-import { getUserUnseenNotifications } from './getUserUnseenNotifications.js';
+import { io } from "../index.js";
+import { getUserUnseenNotifications } from "./getUserUnseenNotifications.js";
 
 export const sendNotification = async (event, userId, newNotification) => {
   // get unseen notifications

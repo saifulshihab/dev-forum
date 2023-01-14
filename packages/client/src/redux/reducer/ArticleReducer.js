@@ -38,7 +38,7 @@ import {
   GET_SHARED_ARTICLE_REQUEST,
   GET_SHARED_ARTICLE_SUCCESS,
   GET_SHARED_ARTICLE_FAILED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const fetchAllArticelReducer = (state = { articles: [] }, action) => {
   switch (action.type) {

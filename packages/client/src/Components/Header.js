@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Transition } from '@headlessui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { devSignout, fetchDevProfile } from '../redux/action/DeveloperAction';
-import { baseURL } from '../baseURL';
-import { recSignout } from '../redux/action/RecruiterAction';
-import logo from '../logo.svg';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { devSignout, fetchDevProfile } from "../redux/action/DeveloperAction";
+import { baseURL } from "../baseURL";
+import { recSignout } from "../redux/action/RecruiterAction";
+import logo from "../logo.svg";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Header = () => {
   const [dpDropdown, setdpDropdown] = useState(false);
 
   const [darkMode, setDarkMode] = useState(() => {
-    if (localStorage.getItem('devForum-theme') === 'dark') {
+    if (localStorage.getItem("devForum-theme") === "dark") {
       return true;
     } else {
       return false;
@@ -37,17 +37,17 @@ const Header = () => {
 
   useEffect(() => {
     if (darkMode) {
-      if (localStorage.getItem('devForum-theme') !== 'dark') {
-        localStorage.setItem('devForum-theme', 'dark');
+      if (localStorage.getItem("devForum-theme") !== "dark") {
+        localStorage.setItem("devForum-theme", "dark");
       }
     } else {
-      localStorage.removeItem('devForum-theme');
+      localStorage.removeItem("devForum-theme");
     }
     // set theme
-    if (localStorage.getItem('devForum-theme') === 'dark') {
-      document.documentElement.classList.add('dark');
+    if (localStorage.getItem("devForum-theme") === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
 
@@ -109,7 +109,7 @@ const Header = () => {
                       src={
                         user?.user?.dp
                           ? baseURL + user?.user?.dp
-                          : 'https://picsum.photos/200'
+                          : "https://picsum.photos/200"
                       }
                       alt="dp"
                     />
@@ -185,7 +185,7 @@ const Header = () => {
                   >
                     <img
                       className="h-8 w-8 rounded-full image_center"
-                      src={'https://picsum.photos/200'}
+                      src={"https://picsum.photos/200"}
                       alt=""
                     />
                   </button>

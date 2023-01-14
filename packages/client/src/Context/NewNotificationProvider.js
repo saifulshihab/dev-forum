@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getNotifications } from '../redux/action/DeveloperAction';
-import { useLoggedUser } from './LoggedUserProvider';
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotifications } from "../redux/action/DeveloperAction";
+import { useLoggedUser } from "./LoggedUserProvider";
 
 const NewNotificationContext = createContext();
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import moment from 'moment';
-import ReactEmoji from 'react-emoji';
-import { baseURL } from '../baseURL';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React from "react";
+import moment from "moment";
+import ReactEmoji from "react-emoji";
+import { baseURL } from "../baseURL";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 const Comment = ({ cmnt }) => {
   return (
     <>
@@ -16,11 +16,11 @@ const Comment = ({ cmnt }) => {
           <div className="h-4 w-4 mr-1">
             <Link to={`/h/user/${cmnt?.user?.username}`}>
               <img
-                alt={'user dp'}
+                alt={"user dp"}
                 src={
                   cmnt?.user?.cover
                     ? baseURL + cmnt?.user?.dp
-                    : 'https://picsum.photos/200'
+                    : "https://picsum.photos/200"
                 }
                 className="w-full h-full rounded-full border border-gray-300"
               />
@@ -31,7 +31,7 @@ const Comment = ({ cmnt }) => {
           </div>
         </div>
         <div className="flex text-gray-400 text-xs w-full">
-          <span>{moment(cmnt.createdAt).startOf('m').fromNow(true)}</span>
+          <span>{moment(cmnt.createdAt).startOf("m").fromNow(true)}</span>
           <div className="ml-3">
             @
             <span className="cursor-pointer hover:text-indigo-600 ">

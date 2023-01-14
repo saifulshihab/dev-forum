@@ -1,5 +1,5 @@
-import React from 'react';
-import RProjectContainer from '../../Container/RProjectContainer';
+import React from "react";
+import RProjectContainer from "../../Container/RProjectContainer";
 
 const RBrowseProjectScreen = () => {
   return (

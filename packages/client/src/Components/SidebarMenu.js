@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { socket } from '../App';
-import { useLoggedUser } from '../Context/LoggedUserProvider';
-import { useNewNotification } from '../Context/NewNotificationProvider';
-import { ADD_NEW_NOTIFICATION } from '../redux/ActionTypes';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { socket } from "../App";
+import { useLoggedUser } from "../Context/LoggedUserProvider";
+import { useNewNotification } from "../Context/NewNotificationProvider";
+import { ADD_NEW_NOTIFICATION } from "../redux/ActionTypes";
 
 const SidebarSVG = ({ fontAwesome, text, notifyMenu }) => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const SidebarSVG = ({ fontAwesome, text, notifyMenu }) => {
 
   useEffect(() => {
     socket.on(
-      'newNotification',
+      "newNotification",
       ({ toUserId, newNotificationLength, newNotification }) => {
         if (toUserId === loggedUserId) {
           dispatch({

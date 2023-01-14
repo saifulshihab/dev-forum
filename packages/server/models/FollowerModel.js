@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const FollowerSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
     follower: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -16,5 +16,5 @@ const FollowerSchema = new mongoose.Schema(
   }
 );
 
-const Follower = mongoose.model('Follower', FollowerSchema);
+const Follower = mongoose.model("Follower", FollowerSchema);
 export default Follower;

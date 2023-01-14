@@ -1,7 +1,7 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import jwtDecode from 'jwt-decode';
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import jwtDecode from "jwt-decode";
 
 import {
   devSigninReducer,
@@ -28,7 +28,7 @@ import {
   chatDeleteReducer,
   getNotificationsReducer,
   seenNotificationReducer,
-} from './reducer/DeveloperReducer';
+} from "./reducer/DeveloperReducer";
 import {
   createArticelReducer,
   fetchAllArticelReducer,
@@ -39,7 +39,7 @@ import {
   articleCommentsReducer,
   articleShareReducer,
   sharedArticleGetReducer,
-} from './reducer/ArticleReducer';
+} from "./reducer/ArticleReducer";
 import {
   createQuestionReducer,
   deleteQuestionReducer,
@@ -47,7 +47,7 @@ import {
   getQuestionReducer,
   getUserQuestionsReducer,
   questionAnswersReducer,
-} from './reducer/QuestionReducer';
+} from "./reducer/QuestionReducer";
 import {
   recrSignupReducer,
   recrSigninReducer,
@@ -60,12 +60,12 @@ import {
   getResetLinkRecReducer,
   resetPasswordFromLinkRecReducer,
   resetPasswordRecReducer,
-} from './reducer/RecruiterReducer';
+} from "./reducer/RecruiterReducer";
 import {
   getFreelanceProjectsReducer,
   getProjectProposalReducer,
   sendProposalReducer,
-} from './reducer/ProjectReducer';
+} from "./reducer/ProjectReducer";
 import {
   circularDeleteReducer,
   circularEditReducer,
@@ -73,7 +73,7 @@ import {
   jobApplicantReducer,
   jobApplyReducer,
   postCircularReducer,
-} from './reducer/CircularReducer';
+} from "./reducer/CircularReducer";
 
 const reducer = combineReducers({
   signUpDev: devSignupReducer,
@@ -148,25 +148,25 @@ const verifyToken = (token, lsItem) => {
 
 const initialState = {
   signInDev: {
-    isAuthenticated: localStorage.getItem('devInfo')
+    isAuthenticated: localStorage.getItem("devInfo")
       ? verifyToken(
-          JSON.parse(localStorage.getItem('devInfo')).token,
-          'devInfo'
+          JSON.parse(localStorage.getItem("devInfo")).token,
+          "devInfo"
         )
       : false,
-    devInfo: localStorage.getItem('devInfo')
-      ? JSON.parse(localStorage.getItem('devInfo'))
+    devInfo: localStorage.getItem("devInfo")
+      ? JSON.parse(localStorage.getItem("devInfo"))
       : {},
   },
   signInRec: {
-    isAuthenticated: localStorage.getItem('recInfo')
+    isAuthenticated: localStorage.getItem("recInfo")
       ? verifyToken(
-          JSON.parse(localStorage.getItem('recInfo')).token,
-          'recInfo'
+          JSON.parse(localStorage.getItem("recInfo")).token,
+          "recInfo"
         )
       : false,
-    recInfo: localStorage.getItem('recInfo')
-      ? JSON.parse(localStorage.getItem('recInfo'))
+    recInfo: localStorage.getItem("recInfo")
+      ? JSON.parse(localStorage.getItem("recInfo"))
       : {},
   },
 };

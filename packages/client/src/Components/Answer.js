@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import DownvoteIcon from './DownvoteIcon';
-import UpvoteIcon from './UpvoteIcon';
-import _ from 'lodash';
+import React from "react";
+import { Link } from "react-router-dom";
+import DownvoteIcon from "./DownvoteIcon";
+import UpvoteIcon from "./UpvoteIcon";
+import _ from "lodash";
 import {
   upvoteAnswer,
   downvoteAnswer,
   deleteAnswer,
-} from '../redux/action/QuestionAction';
-import { useDispatch, useSelector } from 'react-redux';
-import { motion } from 'framer-motion';
+} from "../redux/action/QuestionAction";
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const Answer = ({ ans }) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Answer = ({ ans }) => {
         animate={{ y: 0 }}
         className="w-full items-center flex h-auto rounded-md my-2 px-5 py-1"
       >
-        <div className="mr-3 h-10" style={{ width: '4%' }}>
+        <div className="mr-3 h-10" style={{ width: "4%" }}>
           {_.findIndex(
             ans?.upvote,
             (o) => o.user.toString() === currentUser._id.toString()
@@ -64,7 +64,7 @@ const Answer = ({ ans }) => {
             </button>
           )}
         </div>
-        <div className="h-full" style={{ width: '96%' }}>
+        <div className="h-full" style={{ width: "96%" }}>
           <div className="text-gray-500 dark:text-gray-300 text-justify text-sm">
             {ans?.answer}
           </div>

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ShareSchema = new mongoose.Schema(
   {
@@ -7,11 +7,11 @@ const ShareSchema = new mongoose.Schema(
     },
     article: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Article',
+      ref: "Article",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
   },
   {
@@ -19,6 +19,6 @@ const ShareSchema = new mongoose.Schema(
   }
 );
 
-const SharedArticle = mongoose.model('SharedArticle', ShareSchema);
+const SharedArticle = mongoose.model("SharedArticle", ShareSchema);
 
 export default SharedArticle;

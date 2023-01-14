@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   CIRCULAR_DELETE_FAILED,
   CIRCULAR_DELETE_REQUEST,
@@ -23,7 +23,7 @@ import {
   POST_CIRCULAR_REQUEST,
   POST_CIRCULAR_RESET,
   POST_CIRCULAR_SUCCESS,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // Get recruiter ciruclars
 export const getRecruiterCirculars = (userId) => async (dispatch, getState) => {
@@ -73,7 +73,7 @@ export const postCircular = (circular) => async (dispatch, getState) => {
     const config = {
       headers: {
         Authorization: `Bearer ${recInfo.token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -153,7 +153,7 @@ export const editCircular =
       const config = {
         headers: {
           Authorization: `Bearer ${recInfo.token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       await axios.put(

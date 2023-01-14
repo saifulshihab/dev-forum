@@ -1,6 +1,6 @@
-import asyncHandler from 'express-async-handler';
-import Project from '../models/ProjectModel.js';
-import ProjectProposal from '../models/ProjectProposalModel.js';
+import asyncHandler from "express-async-handler";
+import Project from "../models/ProjectModel.js";
+import ProjectProposal from "../models/ProjectProposalModel.js";
 
 // desc: create new freelance project by recruiter
 // routes: api/project/createProject
@@ -11,7 +11,7 @@ export const createProject = asyncHandler(async (req, res) => {
     res.status(201).json(newProject);
   } else {
     res.status(500);
-    throw new Error('Failed to post project!');
+    throw new Error("Failed to post project!");
   }
 });
 // desc: edit freelance project by recruiter
@@ -30,15 +30,15 @@ export const editProject = asyncHandler(async (req, res) => {
         res.status(200).json(update);
       } else {
         res.status(500);
-        throw new Error('Failed to update project!');
+        throw new Error("Failed to update project!");
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorized to edit this!');
+      throw new Error("You are not authorized to edit this!");
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });
 // desc: Delete freelance project by recruiter
@@ -52,11 +52,11 @@ export const deleteProject = asyncHandler(async (req, res) => {
       res.status(200).json(project);
     } else {
       res.status(403);
-      throw new Error('You are not authorized to delete this!');
+      throw new Error("You are not authorized to delete this!");
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });
 // desc: Get recruiter projects
@@ -64,25 +64,25 @@ export const deleteProject = asyncHandler(async (req, res) => {
 // method: GET
 export const getRecruiterProjects = asyncHandler(async (req, res) => {
   const projects = await Project.find({ user: req.user?._id }).sort({
-    createdAt: '-1',
+    createdAt: "-1",
   });
   if (projects) {
     res.status(200).json(projects);
   } else {
     res.status(404);
-    throw new Error('Projects not found!');
+    throw new Error("Projects not found!");
   }
 });
 // desc: Get freelance projects by developer
 // routes: api/project/getFreelanceProjects
 // method: GET
 export const getFreelanceProjects = asyncHandler(async (req, res) => {
-  const projects = await Project.find({}).sort({ createdAt: '-1' });
+  const projects = await Project.find({}).sort({ createdAt: "-1" });
   if (projects) {
     res.status(200).json(projects);
   } else {
     res.status(404);
-    throw new Error('Projects not found!');
+    throw new Error("Projects not found!");
   }
 });
 // desc: Developer send project proposal
@@ -94,7 +94,7 @@ export const sendProjectProposal = asyncHandler(async (req, res) => {
     const alreadySent = await ProjectProposal.find({
       user: req.user._id,
       project: project._id,
-    });    
+    });
     if (alreadySent?.length <= 0) {
       const newProposal = await ProjectProposal.create({
         user: req.user?._id,
@@ -105,15 +105,19 @@ export const sendProjectProposal = asyncHandler(async (req, res) => {
         res.status(201).json(newProposal);
       } else {
         res.status(500);
-        throw new Error('Failed to send proposal!');
+        throw new Error("Failed to send proposal!");
       }
     } else {
       res.status(403);
-      throw new Error('You already sent a proposal for this project!' + project?.title + project?._id);
+      throw new Error(
+        "You already sent a proposal for this project!" +
+          project?.title +
+          project?._id
+      );
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });
 // desc: Edit project proposal
@@ -127,11 +131,11 @@ export const deleteProjectProposal = asyncHandler(async (req, res) => {
       res.status(200).json(proposal);
     } else {
       res.status(403);
-      throw new Error('You are not authorized to delete this proposal!');
+      throw new Error("You are not authorized to delete this proposal!");
     }
   } else {
     res.status(404);
-    throw new Error('Proposal not found!');
+    throw new Error("Proposal not found!");
   }
 });
 // desc: Get project proposals
@@ -143,19 +147,19 @@ export const getProjectProposals = asyncHandler(async (req, res) => {
     if (project.user.toString() === req.user._id.toString()) {
       const proposals = await ProjectProposal.find({
         project: project?._id,
-      }).populate('user');
+      }).populate("user");
       if (proposals) {
         res.status(200).json(proposals);
       } else {
         res.status(404);
-        throw new Error('No proposals!');
+        throw new Error("No proposals!");
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorized to dot this!');
+      throw new Error("You are not authorized to dot this!");
     }
   } else {
     res.status(404);
-    throw new Error('Project not found!');
+    throw new Error("Project not found!");
   }
 });

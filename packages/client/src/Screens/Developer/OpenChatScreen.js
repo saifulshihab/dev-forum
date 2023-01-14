@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import Message from '../../Components/Message';
-import Alert from '../../Components/Alert';
-import Loader from '../../Components/Loader';
-import { deleteChat } from '../../redux/action/DeveloperAction';
-import { socket } from '../../App';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import Message from "../../Components/Message";
+import Alert from "../../Components/Alert";
+import Loader from "../../Components/Loader";
+import { deleteChat } from "../../redux/action/DeveloperAction";
+import { socket } from "../../App";
 
 const OpenChatScreen = ({ recruiter }) => {
   const bottomListRef = useRef();
@@ -13,7 +13,7 @@ const OpenChatScreen = ({ recruiter }) => {
   const dispatch = useDispatch();
 
   const { roomId } = useParams();
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const devProfile = useSelector((state) => state.devProfile);
@@ -30,30 +30,30 @@ const OpenChatScreen = ({ recruiter }) => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    socket.emit('getMessages', roomId);
-    socket.on('returnMessages', ({ conversationMessages }) => {
+    socket.emit("getMessages", roomId);
+    socket.on("returnMessages", ({ conversationMessages }) => {
       setMessages(conversationMessages);
     });
   }, [roomId, inputRef]);
 
   useEffect(() => {
     if (loggedUser?.user?.username || recruiter) {
-      socket.emit('join', {
-        name: recruiter ? 'recruiter' : loggedUser?.user?.username,
+      socket.emit("join", {
+        name: recruiter ? "recruiter" : loggedUser?.user?.username,
         room: roomId,
       });
     }
-    socket.on('message', (message) => {
+    socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
   }, [roomId, loggedUser?.user?.username, recruiter]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    socket.emit('sendMessage', newMessage, () => {
-      setNewMessage('');
+    socket.emit("sendMessage", newMessage, () => {
+      setNewMessage("");
     });
-    bottomListRef.current.scrollIntoView({ behavior: 'smooth' });
+    bottomListRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const chatDeleteHandler = () => {
@@ -75,8 +75,8 @@ const OpenChatScreen = ({ recruiter }) => {
         </div>
       </div>
       {deleteError && <Alert fail msg={deleteError} />}
-      {deleteSuccess && <Alert success msg={'Chat deleted!'} />}
-      <div className="flex flex-col h-full" style={{ height: '85vh' }}>
+      {deleteSuccess && <Alert success msg={"Chat deleted!"} />}
+      <div className="flex flex-col h-full" style={{ height: "85vh" }}>
         <div className="overflow-auto h-full w-full">
           <div className="py-4 max-w-screen-lg mx-auto w-full">
             <div className="mx-2 pb-8">
@@ -88,7 +88,7 @@ const OpenChatScreen = ({ recruiter }) => {
                   right={
                     data?.userName.toString() ===
                     (recruiter
-                      ? 'recruiter'
+                      ? "recruiter"
                       : loggedUser?.user?.username?.toString())
                   }
                 />
@@ -110,7 +110,7 @@ const OpenChatScreen = ({ recruiter }) => {
               className="flex-1 bg-transparent outline-none"
             />
             <button
-              disabled={newMessage === ''}
+              disabled={newMessage === ""}
               className="focus:outline-none uppercase font-semibold text-sm tracking-wider text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               <i className="fas fa-paper-plane"></i>

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   CREATE_ARTICLE_REQUEST,
   CREATE_ARTICLE_SUCCESS,
@@ -40,7 +40,7 @@ import {
   GET_SHARED_ARTICLE_FAILED,
   DELETE_SHARED_ARTICLE_REQUEST,
   DELETE_SHARED_ARTICLE_FALIED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // fetch all articles
 export const getAllArticles = () => async (dispatch, getState) => {
@@ -278,7 +278,7 @@ export const upvoteArticle =
       };
       const { data } = await axios.put(
         `${baseURL}/api/article/${articleId}/upvote?singleArticle=${
-          singleArticle ? 'true' : 'false'
+          singleArticle ? "true" : "false"
         }`,
         {},
         config
@@ -325,7 +325,7 @@ export const downvoteArticle =
       };
       const { data } = await axios.put(
         `${baseURL}/api/article/${articleId}/downvote?singleArticle=${
-          singleArticle ? 'true' : 'false'
+          singleArticle ? "true" : "false"
         }`,
         {},
         config

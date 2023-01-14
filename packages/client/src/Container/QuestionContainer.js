@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Alert from '../Components/Alert';
-import Loader from '../Components/Loader';
-import { getQuestions } from '../redux/action/QuestionAction';
-import { useDispatch, useSelector } from 'react-redux';
-import Question from '../Components/Question';
-import ReactTagInput from '@pathofdev/react-tag-input';
+import React, { useEffect, useState } from "react";
+import Alert from "../Components/Alert";
+import Loader from "../Components/Loader";
+import { getQuestions } from "../redux/action/QuestionAction";
+import { useDispatch, useSelector } from "react-redux";
+import Question from "../Components/Question";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const QuestionContainer = () => {
   const dispatch = useDispatch();
@@ -41,16 +41,16 @@ const QuestionContainer = () => {
 
   return (
     <>
-      <div className='rounded bg-white dark:bg-gray-700 mt-2 p-2 shadow'>
-        <span className='text-sm text-gray-500 dark:text-gray-200 font-semibold'>
-          <i className='fas fa-filter mr-1'></i>Filter Question
+      <div className="rounded bg-white dark:bg-gray-700 mt-2 p-2 shadow">
+        <span className="text-sm text-gray-500 dark:text-gray-200 font-semibold">
+          <i className="fas fa-filter mr-1"></i>Filter Question
         </span>
         <div>
           <ReactTagInput
-            style={{ dark: 'bg-gray-800' }}
-            placeholder='Add a Tag'
-            maxTags='10'
-            editable='true'
+            style={{ dark: "bg-gray-800" }}
+            placeholder="Add a Tag"
+            maxTags="10"
+            editable="true"
             tags={tags}
             removeOnBackspace={true}
             onChange={(newTag) => setTags(newTag)}
@@ -64,7 +64,7 @@ const QuestionContainer = () => {
       ) : filterQuestions && filterQuestions?.length > 0 ? (
         filterQuestions?.map((qu) => <Question key={qu?._id} question={qu} />)
       ) : (
-        <Alert warning msg='No questions available!' />
+        <Alert warning msg="No questions available!" />
       )}
     </>
   );

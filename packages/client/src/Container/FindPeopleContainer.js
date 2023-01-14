@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDevelopers } from '../redux/action/DeveloperAction';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
-import Developer from '../Components/Developer';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getDevelopers } from "../redux/action/DeveloperAction";
+import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
+import Developer from "../Components/Developer";
 
 const FindPeopleContainer = () => {
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const developersGet = useSelector((state) => state.developersGet);
   const { loading, developers, error } = developersGet;
@@ -17,23 +17,26 @@ const FindPeopleContainer = () => {
   }, [dispatch]);
 
   const developerList = developers?.filter((user) =>
-    searchText !== ''
+    searchText !== ""
       ? user?.full_name?.toLowerCase().includes(searchText?.toLocaleLowerCase())
       : user
   );
   return (
-    <div className='px-2'>
-      <div className='w-full mb-2 shadow bg-white dark:bg-gray-700 rounded p-2'>
+    <div className="px-2">
+      <div className="w-full mb-2 shadow bg-white dark:bg-gray-700 rounded p-2">
         <div>
-          <p className='font-semibold text-gray-500 dark:text-gray-300 text-sm' htmlFor='srcName'>
+          <p
+            className="font-semibold text-gray-500 dark:text-gray-300 text-sm"
+            htmlFor="srcName"
+          >
             Search by Name
           </p>
         </div>
         <input
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          placeholder='Type a name...'
-          className='dark:bg-gray-800 rounded w-full p-1 dark:text-gray-300 dark:border-gray-600 focus:outline-none border-b focus:border-blue-500 dark:focus:border-blue-500 focus:border-b-2 text-sm'
+          placeholder="Type a name..."
+          className="dark:bg-gray-800 rounded w-full p-1 dark:text-gray-300 dark:border-gray-600 focus:outline-none border-b focus:border-blue-500 dark:focus:border-blue-500 focus:border-b-2 text-sm"
         />
       </div>
       <div>
@@ -48,7 +51,7 @@ const FindPeopleContainer = () => {
               <Developer key={developer?._id} user={developer} />
             ))
         ) : (
-          <Alert msg='No Developers!' />
+          <Alert msg="No Developers!" />
         )}
       </div>
     </div>

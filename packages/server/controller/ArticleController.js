@@ -1,8 +1,8 @@
-import asyncHandler from 'express-async-handler';
-import Article from '../models/ArticleModel.js';
-import _ from 'lodash';
-import ArticleComment from '../models/ArticleCommentModels.js';
-import SharedArticle from '../models/ArticleShareModel.js';
+import asyncHandler from "express-async-handler";
+import Article from "../models/ArticleModel.js";
+import _ from "lodash";
+import ArticleComment from "../models/ArticleCommentModels.js";
+import SharedArticle from "../models/ArticleShareModel.js";
 
 // desc: create a article
 // routes: api/article
@@ -15,7 +15,7 @@ const createArticle = asyncHandler(async (req, res) => {
     res.status(200).json(newArticle);
   } else {
     res.status(500);
-    throw new Error('Failed to create article!');
+    throw new Error("Failed to create article!");
   }
 });
 // desc: fetch all articles
@@ -24,13 +24,13 @@ const createArticle = asyncHandler(async (req, res) => {
 // access: private
 const fetchAllArticle = asyncHandler(async (req, res) => {
   const articles = await Article.find({})
-    .sort({ createdAt: '-1' })
-    .populate('user');
+    .sort({ createdAt: "-1" })
+    .populate("user");
   if (articles) {
     res.status(200).json(articles);
   } else {
     res.status(500);
-    throw new Error('Failed to fetch article!');
+    throw new Error("Failed to fetch article!");
   }
 });
 // desc: fetch single articles
@@ -38,13 +38,13 @@ const fetchAllArticle = asyncHandler(async (req, res) => {
 // method: GET
 // access: private
 const fetchSingleArticle = asyncHandler(async (req, res) => {
-  const article = await Article.findById(req.params.articleId).populate('user');
+  const article = await Article.findById(req.params.articleId).populate("user");
 
   if (article) {
     res.status(200).json(article);
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: fetch single user articles
@@ -53,13 +53,13 @@ const fetchSingleArticle = asyncHandler(async (req, res) => {
 // access: private
 const getUserArticles = asyncHandler(async (req, res) => {
   const articles = await Article.find({ user: req.params.userId }).populate(
-    'user'
+    "user"
   );
   if (articles) {
     res.status(200).json(articles);
   } else {
     res.status(404);
-    throw new Error('Failed to fetch user articles!');
+    throw new Error("Failed to fetch user articles!");
   }
 });
 // desc: delete single article by authentic user
@@ -67,14 +67,14 @@ const getUserArticles = asyncHandler(async (req, res) => {
 // method: DEL
 // access: private
 const deleteArticle = asyncHandler(async (req, res) => {
-  const article = await Article.findById(req.params.articleId).populate('user');
+  const article = await Article.findById(req.params.articleId).populate("user");
   if (article) {
     if (article.user._id.toString() === req.user._id.toString()) {
       const deleteArticle = await article.remove();
       if (deleteArticle) {
         const articles = await Article.find({})
-          .sort({ createdAt: '-1' })
-          .populate('user');
+          .sort({ createdAt: "-1" })
+          .populate("user");
         res.status(200).json(articles);
       } else {
         res.status(500);
@@ -82,11 +82,11 @@ const deleteArticle = asyncHandler(async (req, res) => {
       }
     } else {
       res.status(400);
-      throw new Error('You are not authorized to delete this article!');
+      throw new Error("You are not authorized to delete this article!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: edit article by authentic user
@@ -94,7 +94,7 @@ const deleteArticle = asyncHandler(async (req, res) => {
 // method: PUT
 // access: private
 const editArticle = asyncHandler(async (req, res) => {
-  const article = await Article.findById(req.params.articleId).populate('user');
+  const article = await Article.findById(req.params.articleId).populate("user");
   if (article) {
     if (article.user._id.toString() === req.user._id.toString()) {
       const updateArticle = await Article.findByIdAndUpdate(
@@ -106,15 +106,15 @@ const editArticle = asyncHandler(async (req, res) => {
         res.status(200).json(updateArticle);
       } else {
         res.status(500);
-        throw new Error('Failed to update Article!');
+        throw new Error("Failed to update Article!");
       }
     } else {
       res.status(400);
-      throw new Error('You are not authorized to delete this article!');
+      throw new Error("You are not authorized to delete this article!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: upvote article
@@ -123,16 +123,16 @@ const editArticle = asyncHandler(async (req, res) => {
 // access: private
 const upvoteArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId).populate([
-    { path: 'upvote' },
-    { path: 'user' },
-  ]);  
+    { path: "upvote" },
+    { path: "user" },
+  ]);
   if (article) {
     let alreadyUpVoted = _.findIndex(article.upvote, function (data) {
       return data.user.toString() === req.user._id.toString();
     });
     if (alreadyUpVoted > -1) {
       res.status(400);
-      throw new Error('You already upvoted!');
+      throw new Error("You already upvoted!");
     } else {
       let alreadyDownVoted = _.findIndex(article.downvote, function (data) {
         return data.user.toString() === req.user._id.toString();
@@ -144,22 +144,22 @@ const upvoteArticle = asyncHandler(async (req, res) => {
       const vote = article.upvote.push({ user: req.user._id });
       if (vote) {
         await article.save();
-        if (req.query.singleArticle === 'true') {
+        if (req.query.singleArticle === "true") {
           res.status(200).json(article);
-        } else if (req.query.singleArticle === 'false') {
+        } else if (req.query.singleArticle === "false") {
           const articles = await Article.find({})
-            .sort({ createdAt: '-1' })
-            .populate('user');
+            .sort({ createdAt: "-1" })
+            .populate("user");
           res.status(200).json(articles);
         }
       } else {
         res.status(400);
-        throw new Error('Somthing wrong!');
+        throw new Error("Somthing wrong!");
       }
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: downvote article
@@ -168,8 +168,8 @@ const upvoteArticle = asyncHandler(async (req, res) => {
 // access: private
 const downvoteArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId).populate([
-    { path: 'downvote' },
-    { path: 'user' },
+    { path: "downvote" },
+    { path: "user" },
   ]);
   if (article) {
     let alreadydownVoted = _.findIndex(article.downvote, function (data) {
@@ -178,7 +178,7 @@ const downvoteArticle = asyncHandler(async (req, res) => {
 
     if (alreadydownVoted > -1) {
       res.status(400);
-      throw new Error('You already upvoted!');
+      throw new Error("You already upvoted!");
     } else {
       let alreadyUpVoted = _.findIndex(article.upvote, function (data) {
         return data.user.toString() === req.user._id.toString();
@@ -190,22 +190,22 @@ const downvoteArticle = asyncHandler(async (req, res) => {
       const vote = article.downvote.push({ user: req.user._id });
       if (vote) {
         await article.save();
-        if (req.query.singleArticle === 'true') {
+        if (req.query.singleArticle === "true") {
           res.status(200).json(article);
-        } else if (req.query.singleArticle === 'false') {
+        } else if (req.query.singleArticle === "false") {
           const articles = await Article.find({})
-            .sort({ createdAt: '-1' })
-            .populate('user');
+            .sort({ createdAt: "-1" })
+            .populate("user");
           res.status(200).json(articles);
         }
       } else {
         res.status(400);
-        throw new Error('Somthing wrong!');
+        throw new Error("Somthing wrong!");
       }
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: fetch article comment
@@ -218,17 +218,17 @@ const fetchCommentArticle = asyncHandler(async (req, res) => {
     const comments = await ArticleComment.find({
       article: article._id,
     })
-      .sort({ createdAt: '-1' })
-      .populate('user');
+      .sort({ createdAt: "-1" })
+      .populate("user");
     if (comments) {
       res.status(200).json(comments);
     } else {
       res.status(500);
-      throw new Error('Failed to fetch comments!');
+      throw new Error("Failed to fetch comments!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: comment on article
@@ -248,16 +248,16 @@ const commentonArticle = asyncHandler(async (req, res) => {
       const comments = await ArticleComment.find({
         article: newComment.article,
       })
-        .sort({ createdAt: '-1' })
-        .populate('user');
+        .sort({ createdAt: "-1" })
+        .populate("user");
       res.status(200).json(comments);
     } else {
       res.status(500);
-      throw new Error('Comment Failed!');
+      throw new Error("Comment Failed!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: share an article
@@ -266,7 +266,7 @@ const commentonArticle = asyncHandler(async (req, res) => {
 // access: private
 const shareArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.articleId).populate(
-    'shares'
+    "shares"
   );
   if (article) {
     const newShare = await SharedArticle.create({
@@ -278,11 +278,11 @@ const shareArticle = asyncHandler(async (req, res) => {
       res.status(201).json(newShare);
     } else {
       res.status(500);
-      throw new Error('Failed to share!');
+      throw new Error("Failed to share!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: comment on article
@@ -293,13 +293,13 @@ const getSharedArticle = asyncHandler(async (req, res) => {
   const articles = await SharedArticle.find({
     user: req.params.userId,
   })
-    .populate('article')
-    .sort({ createdAt: '-1' });
+    .populate("article")
+    .sort({ createdAt: "-1" });
   if (articles) {
     res.status(200).json(articles);
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 // desc: delete a shared article
@@ -314,19 +314,19 @@ const deleteSharedArticle = asyncHandler(async (req, res) => {
       if (deleteSharedArticle) {
         const articles = await SharedArticle.find({
           user: req.user._id,
-        }).populate('article');
+        }).populate("article");
         res.status(200).json(articles);
       } else {
         res.status(500);
-        throw new Error('Failed to delete shared article!');
+        throw new Error("Failed to delete shared article!");
       }
     } else {
       res.status(403);
-      throw new Error('You are not authorized to perform this action!');
+      throw new Error("You are not authorized to perform this action!");
     }
   } else {
     res.status(404);
-    throw new Error('Article not found!');
+    throw new Error("Article not found!");
   }
 });
 

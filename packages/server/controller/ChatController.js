@@ -1,8 +1,8 @@
-import asyncHandler from 'express-async-handler';
-import ChatRoom from '../models/ChatRoomModel.js';
-import Developer from '../models/DeveloperModel.js';
-import Recruiter from '../models/RecruiterModel.js';
-import Conversation from '../models/ConversationModel.js';
+import asyncHandler from "express-async-handler";
+import ChatRoom from "../models/ChatRoomModel.js";
+import Developer from "../models/DeveloperModel.js";
+import Recruiter from "../models/RecruiterModel.js";
+import Conversation from "../models/ConversationModel.js";
 
 // desc: create new room
 // routes: api/chat/createRoom
@@ -18,21 +18,21 @@ export const createNewRoom = asyncHandler(async (req, res) => {
     res.status(200).json(newRoom);
   } else {
     res.status(500);
-    throw new Error('Can not create room!');
+    throw new Error("Can not create room!");
   }
 });
 export const createNewRoom2 = asyncHandler(async (req, res) => {
   const newRoom = await ChatRoom.create({
     sender: req.user._id,
     sender_fname: req.user.fullname,
-    sender_dp: '/server/uploads/default_dp.png',
+    sender_dp: "/server/uploads/default_dp.png",
     ...req.body,
   });
   if (newRoom) {
     res.status(200).json(newRoom);
   } else {
     res.status(500);
-    throw new Error('Can not create room!');
+    throw new Error("Can not create room!");
   }
 });
 
@@ -63,7 +63,7 @@ export const getChatRooms = asyncHandler(async (req, res) => {
     }
   } else {
     res.status(404);
-    throw new Error('User not found!');
+    throw new Error("User not found!");
   }
 });
 // delete chat
@@ -76,13 +76,13 @@ export const deleteChat = asyncHandler(async (req, res) => {
     const deleteRoom = await room.delete();
     const deleteConversation = await Conversation.deleteMany({ room: roomId });
     if (deleteRoom && deleteConversation) {
-      res.status(200).json({ message: 'Chat deleted!' });
+      res.status(200).json({ message: "Chat deleted!" });
     } else {
       res.status(500);
-      throw new Error('Failed to delete chat!');
+      throw new Error("Failed to delete chat!");
     }
   } else {
     res.status(404);
-    throw new Error('Chat room not found!');
+    throw new Error("Chat room not found!");
   }
 });

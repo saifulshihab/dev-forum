@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   GET_FREELANCE_PROJECTS_FAILED,
   GET_FREELANCE_PROJECTS_REQUEST,
@@ -11,7 +11,7 @@ import {
   SEND_PROPOSAL_REQUEST,
   SEND_PROPOSAL_RESET,
   SEND_PROPOSAL_SUCCESS,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // Get freelance projects by developer
 export const getFreelanceProjects = () => async (dispatch, getState) => {
@@ -60,7 +60,7 @@ export const sendProjectProposal =
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${devInfo.token}`,
         },
       };

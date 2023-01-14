@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const QuestionSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
     title: {
       type: String,
@@ -20,6 +20,6 @@ const QuestionSchema = new mongoose.Schema(
   }
 );
 
-const Question = mongoose.model('Question', QuestionSchema);
+const Question = mongoose.model("Question", QuestionSchema);
 
 export default Question;

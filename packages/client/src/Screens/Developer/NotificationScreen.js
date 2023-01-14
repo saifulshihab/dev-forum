@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Notification from '../../Components/Notification';
-import { useNewNotification } from '../../Context/NewNotificationProvider';
-import { seenNotifications } from '../../redux/action/DeveloperAction';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Notification from "../../Components/Notification";
+import { useNewNotification } from "../../Context/NewNotificationProvider";
+import { seenNotifications } from "../../redux/action/DeveloperAction";
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();

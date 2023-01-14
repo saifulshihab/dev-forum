@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
-import JobCircular from '../Components/JobCircular';
-import { getJobCirculars } from '../redux/action/DeveloperAction';
-import ReactTagInput from '@pathofdev/react-tag-input';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
+import JobCircular from "../Components/JobCircular";
+import { getJobCirculars } from "../redux/action/DeveloperAction";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const JobsContainer = () => {
   const dispatch = useDispatch();
@@ -42,20 +42,20 @@ const JobsContainer = () => {
   return (
     <div>
       <div>
-        <div className='rounded bg-white dark:bg-gray-700 mt-2 p-2 mb-2 shadow'>
-          <div className='flex justify-between text-gray-500 dark:text-gray-300'>
-            <span className='text-sm  font-semibold'>
-              <i className='fas fa-filter  mr-1'></i>Filter Job
+        <div className="rounded bg-white dark:bg-gray-700 mt-2 p-2 mb-2 shadow">
+          <div className="flex justify-between text-gray-500 dark:text-gray-300">
+            <span className="text-sm  font-semibold">
+              <i className="fas fa-filter  mr-1"></i>Filter Job
             </span>
-            <span className='text-xs '>
+            <span className="text-xs ">
               Available Job ({circularList?.length})
             </span>
           </div>
           <div>
             <ReactTagInput
-              placeholder='Add a Tag e.g (react, node.js, php)'
-              maxTags='10'
-              editable='true'
+              placeholder="Add a Tag e.g (react, node.js, php)"
+              maxTags="10"
+              editable="true"
               tags={tags}
               removeOnBackspace={true}
               onChange={(newTag) => setTags(newTag)}
@@ -71,7 +71,7 @@ const JobsContainer = () => {
             <JobCircular key={circular?._id} circular={circular} />
           ))
         ) : (
-          <Alert warning msg='No circular posted yet!' />
+          <Alert warning msg="No circular posted yet!" />
         )}
       </div>
     </div>

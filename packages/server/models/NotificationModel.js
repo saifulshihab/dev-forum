@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const NotificationSchema = new mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const NotificationSchema = new mongoose.Schema(
     },
     toUserId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
     },
     text: {
       type: String,
@@ -34,6 +34,6 @@ const NotificationSchema = new mongoose.Schema(
   }
 );
 
-const Notification = mongoose.model('Notification', NotificationSchema);
+const Notification = mongoose.model("Notification", NotificationSchema);
 
 export default Notification;

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Project from '../Components/Project';
-import { getRecProjects } from '../redux/action/RecruiterAction';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Project from "../Components/Project";
+import { getRecProjects } from "../redux/action/RecruiterAction";
+import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
 
 const RProjectContainer = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const RProjectContainer = () => {
   }, [dispatch]);
 
   return (
-    <div className='p-1'>
+    <div className="p-1">
       {loading ? (
         <Loader />
       ) : error ? (
@@ -26,7 +26,7 @@ const RProjectContainer = () => {
           <Project key={project?._id} project={project} recruiter />
         ))
       ) : (
-        <Alert warning msg='No projects posted yet!' />
+        <Alert warning msg="No projects posted yet!" />
       )}
     </div>
   );

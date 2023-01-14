@@ -14,7 +14,9 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|jsx|tsx|json)\""
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.8.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/saifulshihab/dev-forum.git"

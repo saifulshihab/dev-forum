@@ -1,28 +1,28 @@
-import '@pathofdev/react-tag-input/build/index.css';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { io } from 'socket.io-client';
-import './App.css';
-import Header from './Components/Header';
-import PrivateRoute, { PrivateRoute2 } from './Components/PrivateRoute';
-import { LoggedUserProvider } from './Context/LoggedUserProvider';
-import { NewNotificationProvider } from './Context/NewNotificationProvider';
-import store from './redux/store';
-import ForgotPassword from './Screens/ForgotPassword';
-import HomeScreen from './Screens/HomeScreen';
-import LoginPage from './Screens/LoginPage';
-import RecoverPassword from './Screens/RecoverPassword';
-import RecoverPasswordRec from './Screens/Recruiter/RecoverPasswordRec';
-import RecruiterHomeScreen from './Screens/Recruiter/RecruiterHomeScreen';
-import RForgetPassword from './Screens/Recruiter/RForgetPassword';
-import RLoginScreen from './Screens/Recruiter/RLoginScreen';
-import RRegistrationScreen from './Screens/Recruiter/RRegistrationScreen';
-import RegFirstStep from './Screens/RegFirstStep';
-import RegPage from './Screens/RegPage';
-import Welcome from './Screens/Welcome';
+import "@pathofdev/react-tag-input/build/index.css";
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { io } from "socket.io-client";
+import "./App.css";
+import Header from "./Components/Header";
+import PrivateRoute, { PrivateRoute2 } from "./Components/PrivateRoute";
+import { LoggedUserProvider } from "./Context/LoggedUserProvider";
+import { NewNotificationProvider } from "./Context/NewNotificationProvider";
+import store from "./redux/store";
+import ForgotPassword from "./Screens/ForgotPassword";
+import HomeScreen from "./Screens/HomeScreen";
+import LoginPage from "./Screens/LoginPage";
+import RecoverPassword from "./Screens/RecoverPassword";
+import RecoverPasswordRec from "./Screens/Recruiter/RecoverPasswordRec";
+import RecruiterHomeScreen from "./Screens/Recruiter/RecruiterHomeScreen";
+import RForgetPassword from "./Screens/Recruiter/RForgetPassword";
+import RLoginScreen from "./Screens/Recruiter/RLoginScreen";
+import RRegistrationScreen from "./Screens/Recruiter/RRegistrationScreen";
+import RegFirstStep from "./Screens/RegFirstStep";
+import RegPage from "./Screens/RegPage";
+import Welcome from "./Screens/Welcome";
 
-export const socket = io('http://localhost:5001');
+export const socket = io("http://localhost:5001");
 
 function App() {
   return (

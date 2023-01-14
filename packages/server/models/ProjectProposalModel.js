@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ProjectProposalSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Developer',
+      ref: "Developer",
       required: true,
     },
     project: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',
+      ref: "Project",
       required: true,
     },
     description: {
@@ -29,7 +29,7 @@ const ProjectProposalSchema = new mongoose.Schema(
 );
 
 const ProjectProposal = mongoose.model(
-  'ProjectProposal',
+  "ProjectProposal",
   ProjectProposalSchema
 );
 

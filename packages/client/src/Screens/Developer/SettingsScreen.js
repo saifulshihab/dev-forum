@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import SmallLoader from '../../Components/SmallLoader';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import SmallLoader from "../../Components/SmallLoader";
+import { useDispatch, useSelector } from "react-redux";
 import {
   devSignout,
   deleteDevAccount,
   changeWorkStatus,
   fetchDevProfile,
   devResetPassword,
-} from '../../redux/action/DeveloperAction';
-import Modal from '../../Components/Modal';
-import MyTextField from '../../Components/MyTextField';
-import Alert from '../../Components/Alert';
-import { Formik } from 'formik';
-import * as yup from 'yup';
+} from "../../redux/action/DeveloperAction";
+import Modal from "../../Components/Modal";
+import MyTextField from "../../Components/MyTextField";
+import Alert from "../../Components/Alert";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 const SettingsScreen = () => {
   const cancelButtonRef = useRef();
@@ -56,19 +56,19 @@ const SettingsScreen = () => {
   const formValidationSchema = yup.object().shape({
     p_password: yup
       .string()
-      .min(6, 'Minimum 6 character!')
-      .max(10, 'Maximum 10 character!')
-      .required('Previous Password Required!'),
+      .min(6, "Minimum 6 character!")
+      .max(10, "Maximum 10 character!")
+      .required("Previous Password Required!"),
     new_password: yup
       .string()
-      .min(6, 'Minimum 6 character!')
-      .max(10, 'Maximum 10 character!')
-      .required('Previous Password Required!'),
+      .min(6, "Minimum 6 character!")
+      .max(10, "Maximum 10 character!")
+      .required("Previous Password Required!"),
     retype_new_password: yup
       .string()
-      .min(6, 'Minimum 6 character!')
-      .max(10, 'Maximum 10 character!')
-      .required('Previous Password Required!'),
+      .min(6, "Minimum 6 character!")
+      .max(10, "Maximum 10 character!")
+      .required("Previous Password Required!"),
   });
 
   const profileDeleteHandler = () => {
@@ -128,7 +128,7 @@ const SettingsScreen = () => {
             ) : (
               <i className="fas fa-trash-alt mr-2"></i>
             )}
-            {loading ? 'Deleting...' : 'Delete'}
+            {loading ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>
@@ -222,9 +222,9 @@ const SettingsScreen = () => {
       >
         <Formik
           initialValues={{
-            p_password: '',
-            new_password: '',
-            retype_new_password: '',
+            p_password: "",
+            new_password: "",
+            retype_new_password: "",
           }}
           validationSchema={formValidationSchema}
           onSubmit={(data, { setSubmitting }) => {
@@ -255,11 +255,11 @@ const SettingsScreen = () => {
               <button
                 type="submit"
                 className={`text-white bg-indigo-600 ${
-                  loading && 'bg-indigo-300'
+                  loading && "bg-indigo-300"
                 } focus:outline-none focus:bg-indigo-500 py-1.5 w-full rounded font-semibold mt-2`}
                 disabled={isSubmitting}
               >
-                {resetLoading ? 'Reseting...' : 'Reset'}
+                {resetLoading ? "Reseting..." : "Reset"}
               </button>
             </form>
           )}

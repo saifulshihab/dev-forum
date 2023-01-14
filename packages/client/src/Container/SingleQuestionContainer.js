@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import Question from '../Components/Question';
-import { getQuestions } from '../redux/action/QuestionAction';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import Question from "../Components/Question";
+import { getQuestions } from "../redux/action/QuestionAction";
 
 const SingleQuestionContainer = () => {
   const dispatch = useDispatch();

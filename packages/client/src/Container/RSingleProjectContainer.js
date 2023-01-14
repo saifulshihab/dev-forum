@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import Loader from '../Components/Loader';
-import Alert from '../Components/Alert';
-import Project from '../Components/Project';
-import { getProjectProposal } from '../redux/action/ProjectAction';
-import Proposal from '../Components/Proposal';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
+import Project from "../Components/Project";
+import { getProjectProposal } from "../redux/action/ProjectAction";
+import Proposal from "../Components/Proposal";
 
 const RSingleProjectContainer = () => {
   const dispatch = useDispatch();
@@ -34,13 +34,15 @@ const RSingleProjectContainer = () => {
 
   return (
     <div>
-      <div className='p-2 mb-1 bg-white flex items-center  text-gray-600'></div>
-      <div className='p-1'>
+      <div className="p-2 mb-1 bg-white flex items-center  text-gray-600"></div>
+      <div className="p-1">
         <Project project={project} recruiter noRoute />
       </div>
-      <div className='bg-white p-1 rounded shadow'>
-        <div className='mb-1 px-2 border-b pb-1'>
-          <p className='font-semibold text-gray-500'>Proposal ({proposals ? proposals?.length : '0'})</p>
+      <div className="bg-white p-1 rounded shadow">
+        <div className="mb-1 px-2 border-b pb-1">
+          <p className="font-semibold text-gray-500">
+            Proposal ({proposals ? proposals?.length : "0"})
+          </p>
         </div>
         {getProposalLoading ? (
           <Loader />
@@ -51,7 +53,7 @@ const RSingleProjectContainer = () => {
             <Proposal key={proposal?._id} proposal={proposal} />
           ))
         ) : (
-          <Alert msg={'No proposal yet!'} />
+          <Alert msg={"No proposal yet!"} />
         )}
       </div>
     </div>

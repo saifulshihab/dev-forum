@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { baseURL } from '../../baseURL';
+import axios from "axios";
+import { baseURL } from "../../baseURL";
 import {
   REC_SIGNIN_REQUEST,
   REC_SIGNIN_SUCCESS,
@@ -39,7 +39,7 @@ import {
   REC_RESET_PASSWORD_SUCCESS,
   REC_RESET_PASSWORD_FAILED,
   REC_RESET_PASSWORD_RESET,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 // Recruiter signin
 export const recSignin = (credentials) => async (dispatch) => {
@@ -49,7 +49,7 @@ export const recSignin = (credentials) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -61,7 +61,7 @@ export const recSignin = (credentials) => async (dispatch) => {
       type: REC_SIGNIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('recInfo', JSON.stringify(data));
+    localStorage.setItem("recInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: REC_SIGNIN_FAILED,
@@ -75,7 +75,7 @@ export const recSignin = (credentials) => async (dispatch) => {
 
 // Recruiter signout
 export const recSignout = () => async (dispatch) => {
-  localStorage.removeItem('recInfo');
+  localStorage.removeItem("recInfo");
   dispatch({
     type: REC_SIGNOUT,
   });
@@ -89,7 +89,7 @@ export const recSignup = (datas) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -104,7 +104,7 @@ export const recSignup = (datas) => async (dispatch) => {
       type: REC_SIGNIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem('devInfo', JSON.stringify(data));
+    localStorage.setItem("devInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: REC_SIGNUP_FAILED,
@@ -327,7 +327,7 @@ export const getResetPasswordLinkRec = (email) => async (dispatch) => {
     });
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -364,7 +364,7 @@ export const recResetPasswordFromLink =
       });
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       await axios.post(

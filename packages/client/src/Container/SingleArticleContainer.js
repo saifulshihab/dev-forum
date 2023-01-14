@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import Alert from '../Components/Alert';
-import Article from '../Components/Article';
-import Loader from '../Components/Loader';
-import { getSingleArticle } from '../redux/action/ArticleAction';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import Alert from "../Components/Alert";
+import Article from "../Components/Article";
+import Loader from "../Components/Loader";
+import { getSingleArticle } from "../redux/action/ArticleAction";
 
 const SingleArticleContainer = () => {
   const { articleId } = useParams();

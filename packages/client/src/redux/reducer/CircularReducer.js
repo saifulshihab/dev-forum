@@ -21,7 +21,7 @@ import {
   GET_JOB_APPLICANT_REQUEST,
   GET_JOB_APPLICANT_SUCCESS,
   GET_JOB_APPLICANT_FAILED,
-} from '../ActionTypes';
+} from "../ActionTypes";
 
 export const getRCircularReducer = (state = { circulars: [] }, action) => {
   switch (action.type) {

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Alert from '../../Components/Alert';
-import Question from '../../Components/Question';
-import Loader from '../../Components/Loader';
-import { getUserQuestions } from '../../redux/action/QuestionAction';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Alert from "../../Components/Alert";
+import Question from "../../Components/Question";
+import Loader from "../../Components/Loader";
+import { getUserQuestions } from "../../redux/action/QuestionAction";
 
 const DevQuesAskScreen = ({ user, recruiterView }) => {
   const dispatch = useDispatch();
@@ -21,11 +21,9 @@ const DevQuesAskScreen = ({ user, recruiterView }) => {
       ) : error ? (
         <Alert fail msg={error} />
       ) : questions?.length > 0 ? (
-        questions.map((qu) => (
-          <Question question={qu} key={qu?._id} />
-        ))
+        questions.map((qu) => <Question question={qu} key={qu?._id} />)
       ) : (
-        'No articles posted yet!'
+        "No articles posted yet!"
       )}
     </div>
   );

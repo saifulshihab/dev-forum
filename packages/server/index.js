@@ -85,43 +85,43 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // passport strategy
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `http://localhost:5001/auth/google/callback`,
-    },
-    async function (accessToken, refreshToken, profile, cb) {
-      const userExist = await Developer.findOne({ googleId: profile.id });
-      if (!userExist || userExist === 'null') {
-        const newUser = await Developer.create({
-          googleId: profile.id,
-          full_name: profile.name,
-          email: profile.emails[0].value,
-        });
-        if (newUser) {
-          return cb(null, newUser);
-        } else {
-          return cb('Failed to register user!', null);
-        }
-      } else {
-        return cb(null, profile);
-      }
-    }
-  )
-);
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: `http://localhost:5001/auth/google/callback`,
+//     },
+//     async function (accessToken, refreshToken, profile, cb) {
+//       const userExist = await Developer.findOne({ googleId: profile.id });
+//       if (!userExist || userExist === 'null') {
+//         const newUser = await Developer.create({
+//           googleId: profile.id,
+//           full_name: profile.name,
+//           email: profile.emails[0].value,
+//         });
+//         if (newUser) {
+//           return cb(null, newUser);
+//         } else {
+//           return cb('Failed to register user!', null);
+//         }
+//       } else {
+//         return cb(null, profile);
+//       }
+//     }
+//   )
+// );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
-// passport initilize
-app.use(passport.initialize());
+// // passport initilize
+// app.use(passport.initialize());
 
 // Routes
 app.get('/', (req, res) => {

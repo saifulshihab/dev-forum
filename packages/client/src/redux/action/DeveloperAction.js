@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   DEV_DP_EDIT_FAIL,
   DEV_DP_EDIT_REQUEST,
@@ -104,8 +103,8 @@ export const devSignup = (dev) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/dev/signup`,
+    const { data } = await privateApiRequest.post(
+      `/api/dev/signup`,
       { dev },
       config
     );
@@ -145,8 +144,8 @@ export const devSignin = (credentials) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/dev/signin`,
+    const { data } = await privateApiRequest.post(
+      `/api/dev/signin`,
       { credentials },
       config
     );
@@ -186,7 +185,7 @@ export const fetchDevProfile = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseURL}/api/dev/${id}`, config);
+    const { data } = await privateApiRequest.get(`/api/dev/${id}`, config);
     dispatch({
       type: GET_DEV_PROFILE_SUCCESS,
       payload: data,
@@ -216,7 +215,7 @@ export const deleteDevAccount = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.delete(`${baseURL}/api/dev/${id}/deleteAccount`, config);
+    await privateApiRequest.delete(`/api/dev/${id}/deleteAccount`, config);
     dispatch({
       type: DEV_PROFILE_DELETE_SUCCESS,
     });
@@ -248,8 +247,8 @@ export const editDevAccount =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.put(
-        `${baseURL}/api/dev/${id}`,
+      const { data } = await privateApiRequest.put(
+        `/api/dev/${id}`,
         updateUser.data,
         config
       );
@@ -287,7 +286,7 @@ export const editDevDp = (dp) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.put(`${baseURL}/api/dev/updateDp`, { dp }, config);
+    await privateApiRequest.put(`/api/dev/updateDp`, { dp }, config);
     dispatch({
       type: DEV_DP_EDIT_SUCCESS,
     });
@@ -321,7 +320,7 @@ export const editDevCover = (cover) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.put(`${baseURL}/api/dev/updateCover`, { cover }, config);
+    await privateApiRequest.put(`/api/dev/updateCover`, { cover }, config);
     dispatch({
       type: DEV_COVER_EDIT_SUCCESS,
     });
@@ -359,11 +358,11 @@ export const getDevPublicProfile =
           }`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         `${
           recruiterView
-            ? `${baseURL}/api/dev/user/${username}/recruiterView`
-            : `${baseURL}/api/dev/user/${username}`
+            ? `/api/dev/user/${username}/recruiterView`
+            : `/api/dev/user/${username}`
         }`,
         config
       );
@@ -401,11 +400,11 @@ export const getUserProjects =
           }`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         `${
           recruiterView
-            ? `${baseURL}/api/dev/getProjects/${userId}/recruiterView`
-            : `${baseURL}/api/dev/getProjects/${userId}`
+            ? `/api/dev/getProjects/${userId}/recruiterView`
+            : `/api/dev/getProjects/${userId}`
         }`,
         config
       );
@@ -439,8 +438,8 @@ export const addProject = (project) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/dev/addProject`,
+    const { data } = await privateApiRequest.post(
+      `/api/dev/addProject`,
       project,
       config
     );
@@ -470,8 +469,8 @@ export const deleteProject = (projectId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.delete(
-      `${baseURL}/api/dev/deleteProject/${projectId}`,
+    const { data } = await privateApiRequest.delete(
+      `/api/dev/deleteProject/${projectId}`,
       config
     );
     dispatch({
@@ -501,8 +500,8 @@ export const editProject =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.put(
-        `${baseURL}/api/dev/editProject/${projectId}`,
+      const { data } = await privateApiRequest.put(
+        `/api/dev/editProject/${projectId}`,
         project,
         config
       );
@@ -535,8 +534,8 @@ export const getDevelopers = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/developers/list`,
+    const { data } = await privateApiRequest.get(
+      `/api/dev/developers/list`,
       config
     );
     dispatch({
@@ -568,8 +567,8 @@ export const getFollowing = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/following/${userId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/dev/following/${userId}`,
       config
     );
     dispatch({
@@ -601,8 +600,8 @@ export const getFollowers = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/followers/${userId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/dev/followers/${userId}`,
       config
     );
     dispatch({
@@ -634,7 +633,7 @@ export const followOther = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.post(`${baseURL}/api/dev/follow/${userId}`, {}, config);
+    await privateApiRequest.post(`/api/dev/follow/${userId}`, {}, config);
     dispatch({
       type: FOLLOW_SUCCESS,
     });
@@ -668,7 +667,7 @@ export const unfollowOther = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.delete(`${baseURL}/api/dev/unfollow/${userId}`, config);
+    await privateApiRequest.delete(`/api/dev/unfollow/${userId}`, config);
     dispatch({
       type: UNFOLLOW_SUCCESS,
     });
@@ -702,8 +701,8 @@ export const getJobCirculars = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/getJobCirculars/list`,
+    const { data } = await privateApiRequest.get(
+      `/api/dev/getJobCirculars/list`,
       config
     );
     dispatch({
@@ -736,8 +735,8 @@ export const changeWorkStatus =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      await axios.put(
-        `${baseURL}/api/dev/changeWorkStatus/${userId}`,
+      await privateApiRequest.put(
+        `/api/dev/changeWorkStatus/${userId}`,
         status,
         config
       );
@@ -772,8 +771,8 @@ export const devResetPassword = (newPassword) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.put(
-      `${baseURL}/api/dev/resetPasswordDev/${devInfo?._id}`,
+    await privateApiRequest.put(
+      `/api/dev/resetPasswordDev/${devInfo?._id}`,
       newPassword,
       config
     );
@@ -804,8 +803,8 @@ export const getResetPasswordLinkDev = (email) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/dev/getResetPasswordLinkDev`,
+    const { data } = await privateApiRequest.post(
+      `/api/dev/getResetPasswordLinkDev`,
       { email },
       config
     );
@@ -841,8 +840,8 @@ export const resetPasswordFromLink =
           "Content-Type": "application/json",
         },
       };
-      await axios.post(
-        `${baseURL}/api/dev/resetPasswordFromLink/${token}`,
+      await privateApiRequest.post(
+        `/api/dev/resetPasswordFromLink/${token}`,
         { newPass, conPass },
         config
       );
@@ -879,10 +878,10 @@ export const devGetChatRooms =
           } `,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         recruiterView
-          ? `${baseURL}/api/chat/getChatRooms/${userId}?recruiter=true`
-          : `${baseURL}/api/chat/getChatRooms/${userId}`,
+          ? `/api/chat/getChatRooms/${userId}?recruiter=true`
+          : `/api/chat/getChatRooms/${userId}`,
         config
       );
       dispatch({
@@ -919,10 +918,10 @@ export const devCreateChatRoom =
           } `,
         },
       };
-      await axios.post(
+      await privateApiRequest.post(
         recruiterView
-          ? `${baseURL}/api/chat/createRoomByRecruiter`
-          : `${baseURL}/api/chat/createNewRoom    `,
+          ? `/api/chat/createRoomByRecruiter`
+          : `/api/chat/createNewRoom    `,
         roomInfo,
         config
       );
@@ -965,10 +964,10 @@ export const deleteChat = (roomId, recruiter) => async (dispatch, getState) => {
         Authorization: `Bearer ${recruiter ? recInfo.token : devInfo.token} `,
       },
     };
-    await axios.delete(
+    await privateApiRequest.delete(
       recruiter
-        ? `${baseURL}/api/chat/deleteChatByRecruiter/${roomId}`
-        : `${baseURL}/api/chat/deleteChat/${roomId}`,
+        ? `/api/chat/deleteChatByRecruiter/${roomId}`
+        : `/api/chat/deleteChat/${roomId}`,
       config
     );
     dispatch({
@@ -1006,8 +1005,8 @@ export const getNotifications = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token} `,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/dev/getNotifications/${userId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/dev/getNotifications/${userId}`,
       config
     );
     dispatch({
@@ -1036,7 +1035,7 @@ export const seenNotifications = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token} `,
       },
     };
-    await axios.put(`${baseURL}/api/dev/notifications/seen`, {}, config);
+    await privateApiRequest.put(`/api/dev/notifications/seen`, {}, config);
 
     setTimeout(() => {
       dispatch({

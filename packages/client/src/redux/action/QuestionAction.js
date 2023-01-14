@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   ADD_ANSWER,
   CREATE_QUESTION_FAILED,
@@ -47,8 +46,8 @@ export const getQuestions = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/question/getAllQuestions`,
+    const { data } = await privateApiRequest.get(
+      `/api/question/getAllQuestions`,
       config
     );
     dispatch({
@@ -81,8 +80,8 @@ export const createQuestion = (question) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/question/createQuestion`,
+    const { data } = await privateApiRequest.post(
+      `/api/question/createQuestion`,
       question,
       config
     );
@@ -126,8 +125,8 @@ export const deleteQuestion = (questionId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.delete(
-      `${baseURL}/api/question/deleteQuestion/${questionId}`,
+    await privateApiRequest.delete(
+      `/api/question/deleteQuestion/${questionId}`,
       config
     );
     dispatch({
@@ -165,8 +164,8 @@ export const editQuestion =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      await axios.put(
-        `${baseURL}/api/question/editQuestion/${questionId}`,
+      await privateApiRequest.put(
+        `/api/question/editQuestion/${questionId}`,
         updateQuestion,
         config
       );
@@ -204,8 +203,8 @@ export const getQuestionAnswers =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.get(
-        `${baseURL}/api/question/getAnswers/${questionId}`,
+      const { data } = await privateApiRequest.get(
+        `/api/question/getAnswers/${questionId}`,
         config
       );
       dispatch({
@@ -234,8 +233,8 @@ export const addAnswer = (questionId, answer) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/question/${questionId}/createAnswer`,
+    const { data } = await privateApiRequest.post(
+      `/api/question/${questionId}/createAnswer`,
       { answer },
       config
     );
@@ -266,8 +265,8 @@ export const upvoteAnswer = (answerId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.put(
-      `${baseURL}/api/question/upvoteAnswer/${answerId}`,
+    const { data } = await privateApiRequest.put(
+      `/api/question/upvoteAnswer/${answerId}`,
       {},
       config
     );
@@ -298,8 +297,8 @@ export const downvoteAnswer = (answerId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.put(
-      `${baseURL}/api/question/downvoteAnswer/${answerId}`,
+    const { data } = await privateApiRequest.put(
+      `/api/question/downvoteAnswer/${answerId}`,
       {},
       config
     );
@@ -337,10 +336,10 @@ export const getUserQuestions =
           }`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         recruiterView
-          ? `${baseURL}/api/question/getUserQuestions/${userId}/recruiterView`
-          : `${baseURL}/api/question/getUserQuestions/${userId}`,
+          ? `/api/question/getUserQuestions/${userId}/recruiterView`
+          : `/api/question/getUserQuestions/${userId}`,
         config
       );
 
@@ -371,8 +370,8 @@ export const deleteAnswer = (answerId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.delete(
-      `${baseURL}/api/question/deleteAnswer/${answerId}`,
+    const { data } = await privateApiRequest.delete(
+      `/api/question/deleteAnswer/${answerId}`,
       config
     );
 

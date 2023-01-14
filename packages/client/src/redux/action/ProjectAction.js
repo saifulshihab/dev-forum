@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   GET_FREELANCE_PROJECTS_FAILED,
   GET_FREELANCE_PROJECTS_REQUEST,
@@ -29,8 +28,8 @@ export const getFreelanceProjects = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/project/getFreelanceProjects`,
+    const { data } = await privateApiRequest.get(
+      `/api/project/getFreelanceProjects`,
       config
     );
     dispatch({
@@ -64,8 +63,8 @@ export const sendProjectProposal =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      await axios.post(
-        `${baseURL}/api/project/sendProjectProposal/${projectId}`,
+      await privateApiRequest.post(
+        `/api/project/sendProjectProposal/${projectId}`,
         project,
         config
       );
@@ -107,8 +106,8 @@ export const getProjectProposal = (projectId) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/project/getProjectProposals/${projectId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/project/getProjectProposals/${projectId}`,
       config
     );
     dispatch({

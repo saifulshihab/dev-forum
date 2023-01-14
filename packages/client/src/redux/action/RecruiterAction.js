@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   REC_SIGNIN_REQUEST,
   REC_SIGNIN_SUCCESS,
@@ -52,8 +51,8 @@ export const recSignin = (credentials) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/recruiter/signin`,
+    const { data } = await privateApiRequest.post(
+      `/api/recruiter/signin`,
       credentials,
       config
     );
@@ -92,8 +91,8 @@ export const recSignup = (datas) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/recruiter/signup`,
+    const { data } = await privateApiRequest.post(
+      `/api/recruiter/signup`,
       datas,
       config
     );
@@ -130,8 +129,8 @@ export const getRecProjects = () => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo?.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/project/getRecruiterProjects`,
+    const { data } = await privateApiRequest.get(
+      `/api/project/getRecruiterProjects`,
       config
     );
     dispatch({
@@ -163,7 +162,7 @@ export const postAProject = (project) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo?.token}`,
       },
     };
-    await axios.post(`${baseURL}/api/project/createProject`, project, config);
+    await privateApiRequest.post(`/api/project/createProject`, project, config);
     dispatch({
       type: PROJECT_POST_SUCCESS,
     });
@@ -198,8 +197,8 @@ export const editRecProject =
           Authorization: `Bearer ${recInfo?.token}`,
         },
       };
-      await axios.put(
-        `${baseURL}/api/project/${projectId}`,
+      await privateApiRequest.put(
+        `/api/project/${projectId}`,
         updateProject,
         config
       );
@@ -228,8 +227,8 @@ export const deleteRecProject = (projectId) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo?.token}`,
       },
     };
-    const { data } = await axios.delete(
-      `${baseURL}/api/project/${projectId}`,
+    const { data } = await privateApiRequest.delete(
+      `/api/project/${projectId}`,
       config
     );
     dispatch({
@@ -266,8 +265,8 @@ export const getRecruiterProfile = () => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo?.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/recruiter/${recInfo._id}`,
+    const { data } = await privateApiRequest.get(
+      `/api/recruiter/${recInfo._id}`,
       config
     );
     dispatch({
@@ -299,7 +298,11 @@ export const editRecruiterProfile = (update) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo?.token}`,
       },
     };
-    await axios.put(`${baseURL}/api/recruiter/${recInfo._id}`, update, config);
+    await privateApiRequest.put(
+      `/api/recruiter/${recInfo._id}`,
+      update,
+      config
+    );
     dispatch({
       type: EDIT_RECRUITER_PROFILE_SUCCESS,
     });
@@ -330,8 +333,8 @@ export const getResetPasswordLinkRec = (email) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/recruiter/getResetPasswordLinkRec`,
+    const { data } = await privateApiRequest.post(
+      `/api/recruiter/getResetPasswordLinkRec`,
       { email },
       config
     );
@@ -367,8 +370,8 @@ export const recResetPasswordFromLink =
           "Content-Type": "application/json",
         },
       };
-      await axios.post(
-        `${baseURL}/api/recruiter/resetPasswordFromLinkRec/${token}`,
+      await privateApiRequest.post(
+        `/api/recruiter/resetPasswordFromLinkRec/${token}`,
         { newPass, conPass },
         config
       );
@@ -400,8 +403,8 @@ export const resetPasswordRec = (newPassword) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo.token}`,
       },
     };
-    await axios.put(
-      `${baseURL}/api/recruiter/resetPasswordRec/${recInfo?._id}`,
+    await privateApiRequest.put(
+      `/api/recruiter/resetPasswordRec/${recInfo?._id}`,
       newPassword,
       config
     );

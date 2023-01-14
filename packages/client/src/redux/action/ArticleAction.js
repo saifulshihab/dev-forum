@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   CREATE_ARTICLE_REQUEST,
   CREATE_ARTICLE_SUCCESS,
@@ -58,7 +57,7 @@ export const getAllArticles = () => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseURL}/api/article`, config);
+    const { data } = await privateApiRequest.get(`/api/article`, config);
     dispatch({
       type: FETCH_ALL_ARTICLE_SUCCESS,
       payload: data,
@@ -93,7 +92,7 @@ export const articleCreate = (article) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.post(`${baseURL}/api/article`, article, config);
+    await privateApiRequest.post(`/api/article`, article, config);
     dispatch({
       type: CREATE_ARTICLE_SUCCESS,
     });
@@ -131,10 +130,10 @@ export const getUserArticles =
           }`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         recruiterView
-          ? `${baseURL}/api/article/${userId}/articles/recruiterView`
-          : `${baseURL}/api/article/${userId}/articles`,
+          ? `/api/article/${userId}/articles/recruiterView`
+          : `/api/article/${userId}/articles`,
         config
       );
       dispatch({
@@ -167,7 +166,7 @@ export const getSingleArticle = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.get(`${baseURL}/api/article/${id}`, config);
+    const { data } = await privateApiRequest.get(`/api/article/${id}`, config);
     dispatch({
       type: FETCH_SINGLE_ARTICLE_SUCCESS,
       payload: data,
@@ -202,8 +201,8 @@ export const deleteArticle = (articleId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    const { data } = await axios.delete(
-      `${baseURL}/api/article/${articleId}`,
+    const { data } = await privateApiRequest.delete(
+      `/api/article/${articleId}`,
       config
     );
     dispatch({
@@ -238,8 +237,8 @@ export const articleEdit =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      await axios.put(
-        `${baseURL}/api/article/${articleId}`,
+      await privateApiRequest.put(
+        `/api/article/${articleId}`,
         updatedArticle,
         config
       );
@@ -276,8 +275,8 @@ export const upvoteArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.put(
-        `${baseURL}/api/article/${articleId}/upvote?singleArticle=${
+      const { data } = await privateApiRequest.put(
+        `/api/article/${articleId}/upvote?singleArticle=${
           singleArticle ? "true" : "false"
         }`,
         {},
@@ -323,8 +322,8 @@ export const downvoteArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.put(
-        `${baseURL}/api/article/${articleId}/downvote?singleArticle=${
+      const { data } = await privateApiRequest.put(
+        `/api/article/${articleId}/downvote?singleArticle=${
           singleArticle ? "true" : "false"
         }`,
         {},
@@ -374,8 +373,8 @@ export const fetchCommentArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.get(
-        `${baseURL}/api/article/${articleId}/comment`,
+      const { data } = await privateApiRequest.get(
+        `/api/article/${articleId}/comment`,
         config
       );
       dispatch({
@@ -405,8 +404,8 @@ export const commentOnArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.post(
-        `${baseURL}/api/article/${articleId}/comment`,
+      const { data } = await privateApiRequest.post(
+        `/api/article/${articleId}/comment`,
         { comment },
         config
       );
@@ -440,8 +439,8 @@ export const shareArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      await axios.post(
-        `${baseURL}/api/article/${articleId}/share`,
+      await privateApiRequest.post(
+        `/api/article/${articleId}/share`,
         { caption },
         config
       );
@@ -478,11 +477,11 @@ export const getSharedArticle =
           }`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await privateApiRequest.get(
         `${
           recruiterView
-            ? `${baseURL}/api/article/getSharedArticle/${userId}/recruiterView`
-            : `${baseURL}/api/article/getSharedArticle/${userId}`
+            ? `/api/article/getSharedArticle/${userId}/recruiterView`
+            : `/api/article/getSharedArticle/${userId}`
         }`,
         config
       );
@@ -517,8 +516,8 @@ export const deleteSharedArticle =
           Authorization: `Bearer ${devInfo.token}`,
         },
       };
-      const { data } = await axios.delete(
-        `${baseURL}/api/article/deleteSharedArticle/${sharedArticleId}`,
+      const { data } = await privateApiRequest.delete(
+        `/api/article/deleteSharedArticle/${sharedArticleId}`,
         config
       );
       dispatch({

@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL } from "../../baseURL";
+import { privateApiRequest } from "../../api/apiRequest";
 import {
   CIRCULAR_DELETE_FAILED,
   CIRCULAR_DELETE_REQUEST,
@@ -41,8 +40,8 @@ export const getRecruiterCirculars = (userId) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/circular/getRecruiterCirculars/${userId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/circular/getRecruiterCirculars/${userId}`,
       config
     );
     dispatch({
@@ -76,8 +75,8 @@ export const postCircular = (circular) => async (dispatch, getState) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      `${baseURL}/api/circular/postCircular`,
+    const { data } = await privateApiRequest.post(
+      `/api/circular/postCircular`,
       circular,
       config
     );
@@ -116,8 +115,8 @@ export const deleteCircular = (circularId) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo.token}`,
       },
     };
-    await axios.delete(
-      `${baseURL}/api/circular/deleteCircular/${circularId}`,
+    await privateApiRequest.delete(
+      `/api/circular/deleteCircular/${circularId}`,
       config
     );
     dispatch({
@@ -156,8 +155,8 @@ export const editCircular =
           "Content-Type": "application/json",
         },
       };
-      await axios.put(
-        `${baseURL}/api/circular/editCircular/${circularId}`,
+      await privateApiRequest.put(
+        `/api/circular/editCircular/${circularId}`,
         circular,
         config
       );
@@ -195,8 +194,8 @@ export const applyForJob = (circularId) => async (dispatch, getState) => {
         Authorization: `Bearer ${devInfo.token}`,
       },
     };
-    await axios.post(
-      `${baseURL}/api/circular/sendApplication/${circularId}`,
+    await privateApiRequest.post(
+      `/api/circular/sendApplication/${circularId}`,
       {},
       config
     );
@@ -239,8 +238,8 @@ export const getJobApplicants = (circularId) => async (dispatch, getState) => {
         Authorization: `Bearer ${recInfo.token}`,
       },
     };
-    const { data } = await axios.get(
-      `${baseURL}/api/circular/getApplicants/${circularId}`,
+    const { data } = await privateApiRequest.get(
+      `/api/circular/getApplicants/${circularId}`,
       config
     );
     dispatch({

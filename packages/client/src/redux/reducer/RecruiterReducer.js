@@ -78,7 +78,9 @@ export const getRecProjectsReducer = (state = { projects: [] }, action) => {
     case GET_RECRUITER_PROJECTS_SUCCESS:
       return { loading: false, projects: action.payload };
     case PROJECT_DELETE_SUCCESS:
+      // eslint-disable-next-line no-case-declarations
       const id = action.payload._id;
+      // eslint-disable-next-line no-case-declarations
       const newProjects = state.projects.filter(
         (project) => project?._id !== id
       );

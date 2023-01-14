@@ -88,7 +88,7 @@ const Developer = ({ user, recruiterView }) => {
             {user?.topSkills?.map((skill, idx) => (
               <span
                 key={idx}
-                className="pl-1 dark:bg-gray-700 dark:text-gray-300 bg-gray-200 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1"
+                className="pl-1 dark:bg-gray-700 dark:text-gray-300 bg-gray-200 mr-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1"
               >
                 {skill}
               </span>

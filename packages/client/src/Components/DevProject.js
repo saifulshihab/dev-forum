@@ -48,7 +48,7 @@ const DevProject = ({ project }) => {
             {project?.technologies?.map((tech, idx) => (
               <span
                 key={idx}
-                className="pl-1 dark:text-gray-300 dark:bg-gray-600 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded mb-1"
+                className="pl-1 dark:text-gray-300 dark:bg-gray-600 mr-2 mb-2 text-xs text-gray-500 py-.5 px-1 rounded"
               >
                 {tech}
               </span>
@@ -206,7 +206,7 @@ const DevProject = ({ project }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+                  className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none  hover:shadow-none"
                 >
                   Update
                 </button>

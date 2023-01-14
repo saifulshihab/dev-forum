@@ -14,8 +14,8 @@ const FProjectDetails = ({ project }) => {
           <div className="mr-4 flex items-center text-gray-500">
             <span className="mr-2 font-semibold">Skills:</span>
             <div className="flex items-center">
-              {project.languages.map((ln) => (
-                <span className="mr-1">{`${ln}, `}</span>
+              {project.languages.map((ln, idx) => (
+                <span key={idx} className="mr-1">{`${ln}, `}</span>
               ))}
             </div>
           </div>
@@ -33,8 +33,8 @@ const FProjectDetails = ({ project }) => {
         <div className="">
           <form>
             <label
-              for="_proposal_input"
-              class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
+              htmlFor="_proposal_input"
+              className="block mt-2 text-xs font-semibold text-gray-600 uppercase"
             >
               Send a proposal to client
             </label>
@@ -42,11 +42,11 @@ const FProjectDetails = ({ project }) => {
               id="_proposal_input"
               placeholder="Write your proposal..."
               rows="6"
-              class="appearance-none rounded-none mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-none mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm"
             ></textarea>
             <label
-              for="budget"
-              class="block mt-2 text-xs font-semibold text-gray-600 uppercase"
+              htmlFor="budget"
+              className="block mt-2 text-xs font-semibold text-gray-600 uppercase"
             >
               Project milestone
             </label>
@@ -55,8 +55,8 @@ const FProjectDetails = ({ project }) => {
               type="text"
               name="budget"
               placeholder="Project milestone (eg. 30k)"
-              autocomplete="budget"
-              class="appearance-none rounded-none mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm"
+              autoComplete="budget"
+              className="appearance-none rounded-none mt-2 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-700 focus:border-indigo-700 focus:z-10 sm:text-sm"
               required
             />
             <button
@@ -85,8 +85,7 @@ const FProjectDetails = ({ project }) => {
                   ></path>
                 </svg>
               )}
-
-              {3 == 23 ? "Processing..." : "Bid now"}
+              Bid now
             </button>
           </form>
         </div>

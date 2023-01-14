@@ -113,12 +113,12 @@ const RegPage = ({ history }) => {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className="w-full rounded py-3 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+                className="w-full rounded py-3 mt-6 font-medium tracking-widest text-white uppercase bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:shadow-none"
               >
                 Sign up
               </button>
               <Link to="/login">
-                <p className="flex justify-between inline-block mt-4 text-xs text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                <p className="flex justify-between mt-4 text-xs text-indigo-600 hover:text-indigo-500 cursor-pointer">
                   Already registered?
                 </p>
               </Link>

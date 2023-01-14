@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./App.css";
+import { baseURL } from "./baseURL";
 import Header from "./Components/Header";
 import PrivateRoute, { PrivateRoute2 } from "./Components/PrivateRoute";
 import { LoggedUserProvider } from "./Context/LoggedUserProvider";
@@ -22,7 +23,7 @@ import RegFirstStep from "./Screens/RegFirstStep";
 import RegPage from "./Screens/RegPage";
 import Welcome from "./Screens/Welcome";
 
-export const socket = io("http://localhost:5001");
+export const socket = io(baseURL);
 
 function App() {
   return (

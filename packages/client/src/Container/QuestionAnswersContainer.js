@@ -6,7 +6,7 @@ import Answer from "../Components/Answer";
 import { Picker } from "emoji-mart";
 import CommentLoader from "../Components/CommentLoader";
 
-const QuestionAnswersContainer = ({ question, details }) => {
+const QuestionAnswersContainer = ({ question }) => {
   const dispatch = useDispatch();
   const [answer, setAnswer] = useState("");
   const [emojiOn, setEmoji] = useState(false);

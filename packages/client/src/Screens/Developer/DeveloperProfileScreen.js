@@ -721,7 +721,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                     id="present"
                                     label="Present"
                                     type="checkbox"
-                                    className="border dark:border-gray-600 rounded dark:bg-gray-800 py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm"
+                                    className="dark:border-gray-600 rounded dark:bg-gray-800 py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm"
                                     name={`education.${idx}.present`}
                                   />
                                   <MyTextField
@@ -816,7 +816,7 @@ const DeveloperProfileScreen = ({ location }) => {
                                     id="present"
                                     type="checkbox"
                                     label="Present"
-                                    className="border dark:bg-gray-800 dark:border-gray-600 rounded py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm"
+                                    className="dark:bg-gray-800 dark:border-gray-600 rounded py-2 px-3 mr-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm"
                                     name={`experience.${idx}.present`}
                                   />
                                 </div>
@@ -948,7 +948,7 @@ const DeveloperProfileScreen = ({ location }) => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+                    className="w-full rounded py-2 mt-6 font-medium tracking-widest uppercase text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:shadow-none"
                   >
                     {editLoading ? "Updating..." : "Update"}
                   </button>

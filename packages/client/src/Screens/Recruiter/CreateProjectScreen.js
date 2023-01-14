@@ -156,7 +156,7 @@ const CreateProjectScreen = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+                className="w-full rounded py-2 mt-6 font-medium tracking-widest text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
               >
                 Post
               </button>

@@ -7,6 +7,7 @@ import Alert from "../../Components/Alert";
 import { articleCreate } from "../../redux/action/ArticleAction";
 import { Editor } from "@tinymce/tinymce-react";
 import Spinner from "../../Components/Spinner";
+import { TINY_MCE_KEY } from "../../constant/config";
 
 const CreateArticleScreen = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const CreateArticleScreen = () => {
                   <Editor
                     style={{ backgroundColor: "transparent" }}
                     id="article_body"
-                    apiKey={process.env.TINY_MCE_KEY}
+                    apiKey={TINY_MCE_KEY}
                     initialValue="Write..."
                     init={{
                       height: 500,

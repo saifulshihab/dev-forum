@@ -11,7 +11,7 @@ const GithubRepo = ({ repo }) => {
         </p>
       </a>
       <p className="h-14 text-xs">{repo.description}</p>
-      <div className="flex mt-2 h-6 items-center text-xs mt-auto">
+      <div className="flex h-6 items-center text-xs mt-auto">
         <div className="mr-4">
           <RepoLangDot lang={repo.language} />
           {repo.language}

@@ -1,7 +1,6 @@
 {
   "name": "dev-forum-server",
-  "version": "1.0.0",
-  "description": "Dev-forum is an online platform for software developers",
+  "version": "1.0.0",  
   "main": "index.js",
   "type": "module",
   "scripts": {

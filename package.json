@@ -6,7 +6,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start:web": "yarn workspace dev-forum-client start",
+    "start:client": "yarn workspace dev-forum-client start",
     "start:server": "yarn workspace dev-forum-server dev",
     "build:web": "yarn workspace dev-forum-client build",
     "build:server": "yarn workspace dev-forum-server build",

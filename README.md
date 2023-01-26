@@ -1,6 +1,6 @@
 ### ⚠️⚠️⚠️WARNING⚠️⚠️⚠️
 
-#### Some pages has re-redering issue, this happened after upgrading to React 18. A fix is in progress.
+#### Some pages have re-rendering issue, this happened after upgrading to React 18. A fix is in progress.
 
 [DevForum](https://devforum.netlify.app) is an online platform for software developers, build portfolio, bid projects & get hired by recruiters.
 

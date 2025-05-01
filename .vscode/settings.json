@@ -1,0 +1,6 @@
+{
+  "cSpell.words": ["turbopack"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  }
+}

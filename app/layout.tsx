@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -18,12 +19,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>
-        <main className="m-auto flex h-screen max-w-3/4 bg-gray-100">
-          <AppSidebar />
-          {children}
-        </main>
+        <ThemeProvider
+          enableSystem
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <main className="m-auto flex h-screen max-w-3/4 border-r border-dashed">
+            <AppSidebar />
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

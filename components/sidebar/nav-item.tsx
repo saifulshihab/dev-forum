@@ -19,7 +19,7 @@ function NavItem(props: Props) {
     <Link
       href={href}
       className={`flex items-center px-4 py-3 ${
-        isActive ? "bg-gray-300" : "hover:bg-gray-300"
+        isActive ? "bg-zinc-900" : "hover:bg-zinc-900"
       } ${collapsed ? "justify-center" : "justify-between"}`}
     >
       <div className="flex items-center">

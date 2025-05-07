@@ -23,16 +23,16 @@ async function Page(props: { params: Promise<{ id: string }> }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 rounded-md bg-gray-200 p-3">
+      <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3">
         <h2 className="text-sm font-semibold">{question.title}</h2>
-        <p className="text-sm text-gray-600">{question.description}</p>
+        <p className="text-sm text-zinc-400">{question.description}</p>
         <div className="flex items-center justify-between">
           <div className="inline-flex items-center gap-2">
             {question.tags?.length
               ? question.tags.map((tag, idx) => (
                   <p
                     key={idx}
-                    className="rounded bg-gray-300 px-1 py-[1px] text-xs font-semibold text-gray-500"
+                    className="rounded bg-zinc-800 px-1 py-[1px] text-xs font-semibold"
                   >
                     {tag}
                   </p>
@@ -40,15 +40,15 @@ async function Page(props: { params: Promise<{ id: string }> }) {
               : null}
           </div>
           <div className="inline-flex items-center gap-4">
-            <div className="inline-flex items-center gap-1 text-xs text-gray-500">
+            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
               <EyeIcon size={12} />
               <p>{question.views} views</p>
             </div>
-            <div className="inline-flex items-center gap-1 text-xs text-gray-500">
+            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
               <MessageCircle size={12} />
               <p>{question.answers?.length || "0"} answers</p>
             </div>
-            <div className="inline-flex items-center gap-1 text-xs text-gray-500">
+            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
               <User size={12} />
               <Link href={"#"} className="hover:text-black">
                 <p>{question.user}</p>
@@ -57,9 +57,9 @@ async function Page(props: { params: Promise<{ id: string }> }) {
           </div>
         </div>
       </div>
-      <div className="mt-3 rounded-md bg-gray-200 p-3">
+      <div className="mt-3 rounded-md bg-zinc-900 p-3">
         <h2 className="text-sm font-semibold">Answers</h2>
-        <div className="my-3 h-[1px] bg-gray-300" />
+        <div className="my-3 h-[1px] bg-zinc-800" />
         <div className="my-2">
           {question.answers?.length ? (
             <div className="flex flex-col gap-5">
@@ -69,14 +69,14 @@ async function Page(props: { params: Promise<{ id: string }> }) {
                     <Button size="icon" variant="outline">
                       <ChevronUp />
                     </Button>
-                    <p className="text-sm text-gray-600">{0}</p>
+                    <p className="text-sm text-zinc-500">{0}</p>
                     <Button size="icon" variant="outline">
                       <ChevronDown />
                     </Button>
                   </div>
-                  <div className="rounded-md bg-gray-300 p-2">
+                  <div className="rounded-md bg-zinc-800 p-2">
                     <p className="text-sm font-semibold">{ans.user}</p>
-                    <p className="text-sm text-gray-600">{ans.description}</p>
+                    <p className="text-sm text-zinc-400">{ans.description}</p>
                   </div>
                 </div>
               ))}
@@ -84,17 +84,16 @@ async function Page(props: { params: Promise<{ id: string }> }) {
           ) : (
             <div className="mt-5 flex flex-col items-center justify-center gap-1">
               <MessageCircleOff size={16} />
-              <p className="text-xs text-gray-600">No answers yet</p>
+              <p className="text-xs text-zinc-600">No answers yet</p>
             </div>
           )}
         </div>
-        <div className="mt-8 flex flex-col gap-3 border-t border-gray-300 pt-4">
+        <div className="mt-8 flex flex-col gap-3 border-t pt-4">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="answer">Your Answer</Label>
             <Textarea
               id="answer"
               rows={1}
-              className="border-gray-300"
               placeholder="Type your answer here"
             />
           </div>

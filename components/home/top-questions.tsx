@@ -10,7 +10,7 @@ async function TopQuestions() {
           <TopQuestionCard key={question.id} question={question} />
         ))
       ) : (
-        <p className="text-xs text-gray-600">No data</p>
+        <p className="text-xs text-zinc-600">No data</p>
       )}
     </div>
   );

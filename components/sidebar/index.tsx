@@ -38,21 +38,17 @@ export function AppSidebar() {
 
   return (
     <div
-      className={`bg-gray-200 transition-all duration-300 ${
-        sidebarOpen ? "w-64" : "w-16"
-      }`}
+      className={`border-r border-l border-dashed transition-all duration-300 ${sidebarOpen ? "w-64" : "w-16"}`}
     >
-      <div className="group relative flex h-16 items-center justify-between px-4">
-        <div className="inline-flex items-center gap-2">
+      <div className="group relative flex h-[3.125rem] items-center justify-center border-b border-dashed">
+        <div className="inline-flex items-center gap-2 self-center">
           <Image
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             alt="app-logo"
             src={"/images/code.png"}
           />
-          <p
-            className={`line-clamp-1 text-xl font-bold ${!sidebarOpen && "hidden"}`}
-          >
+          <p className={`line-clamp-1 font-bold ${!sidebarOpen && "hidden"}`}>
             Dev Forum
           </p>
         </div>
@@ -67,7 +63,7 @@ export function AppSidebar() {
           )}
         </button>
       </div>
-      <nav className="mt-6">
+      <nav>
         {navItems.map((item, idx) => (
           <NavItem
             key={idx}

@@ -6,7 +6,7 @@ function Spinner({ size, className }: { size?: number; className?: string }) {
     <div className="flex items-center justify-center">
       <LoaderIcon
         size={size}
-        className={cn("animate-spin text-gray-500", className)}
+        className={cn("animate-spin text-zinc-500", className)}
       />
     </div>
   );

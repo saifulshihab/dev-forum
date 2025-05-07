@@ -10,13 +10,13 @@ function HomeLayout({
 }>) {
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between border-b border-gray-200 p-2 px-4">
+      <div className="flex h-[50px] items-center justify-between border-b border-dashed p-2 px-4">
         <p className="font-semibold">Latest questions</p>
         <Button>Ask Question</Button>
       </div>
-      <div className="flex h-[calc(100vh-49px)]">
+      <div className="flex h-[calc(100vh-50px)]">
         <div className="flex-1 overflow-y-auto p-4">{children}</div>
-        <div className="h-full w-64 border-l border-gray-200 p-4">
+        <div className="h-full w-64 border-l border-dashed p-4">
           <p className="mb-2 text-sm font-semibold">Top questions</p>
           <Suspense
             fallback={
@@ -26,7 +26,7 @@ function HomeLayout({
                   .map((_, idx) => (
                     <Skeleton
                       key={idx}
-                      className="h-[4.25rem] w-full rounded-md bg-gray-300"
+                      className="h-[4.25rem] w-full rounded-md bg-zinc-900"
                     />
                   ))}
               </div>

@@ -38,7 +38,7 @@ export function AppSidebar() {
 
   return (
     <div
-      className={`border-r border-l border-dashed transition-all duration-300 ${sidebarOpen ? "w-64" : "w-16"}`}
+      className={`border-r border-l border-dashed transition-all duration-300 ${sidebarOpen ? "w-56 shrink-0" : "w-16 shrink-0"}`}
     >
       <div className="group relative flex h-[3.125rem] items-center justify-center border-b border-dashed">
         <div className="inline-flex items-center gap-2 self-center">

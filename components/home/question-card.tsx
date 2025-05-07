@@ -2,7 +2,7 @@ import { TQuestion } from "@/app/data";
 import { EyeIcon, MessageCircle, User } from "lucide-react";
 import Link from "next/link";
 
-function Question(props: { question: TQuestion }) {
+function QuestionCard(props: { question: TQuestion }) {
   const { question } = props;
   return (
     <div className="flex flex-col gap-2 rounded-md bg-gray-200 p-3">
@@ -13,7 +13,7 @@ function Question(props: { question: TQuestion }) {
         {question.description}
       </p>
       <div className="flex items-center justify-between">
-        <div className="inline-flex items-center gap-4">
+        <div className="inline-flex items-center gap-2">
           {question.tags?.length
             ? question.tags.map((tag, idx) => (
                 <p
@@ -32,7 +32,7 @@ function Question(props: { question: TQuestion }) {
           </div>
           <div className="inline-flex items-center gap-1 text-xs text-gray-500">
             <MessageCircle size={12} />
-            <p>{question.answers?.length} answers</p>
+            <p>{question.answers?.length || 0} answers</p>
           </div>
           <div className="inline-flex items-center gap-1 text-xs text-gray-500">
             <User size={12} />
@@ -46,4 +46,4 @@ function Question(props: { question: TQuestion }) {
   );
 }
 
-export default Question;
+export default QuestionCard;

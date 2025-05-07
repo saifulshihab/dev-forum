@@ -1,4 +1,4 @@
-import Question from "@/components/home/question";
+import QuestionCard from "@/components/home/question-card";
 import { getQuestions } from "../api";
 
 export default async function Home() {
@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-5">
       {questions.map((question) => (
-        <Question key={question.id} question={question} />
+        <QuestionCard key={question.id} question={question} />
       ))}
     </div>
   );

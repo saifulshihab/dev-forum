@@ -6,4 +6,4 @@ Dev Forum is an online platform where software developers can showcase their por
 
 Live: https://dev-forum-rho.vercel.app
 
-*Note: This project is currently under development, with a migration to the Next.js App Router underway. You can check out the master branch to view the older version of the project.*
+*Note: This project is currently under development, with a migration to the Next.js App Router underway. You can check out the `master` branch to view the older version of the project.*

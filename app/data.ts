@@ -10,6 +10,8 @@ export type TQuestion = {
     id: string;
     description: string;
     user: string;
+    upvote: number;
+    downvote: number;
   }[];
 };
 
@@ -37,12 +39,16 @@ export const questions: TQuestion[] = [
       {
         id: "11",
         description: "This is your answer",
-        user: "shihab"
+        user: "shihab",
+        upvote: 0,
+        downvote: 1
       },
       {
         id: "sdsd",
         description: `This contrasts with client-side rendering (CSR), where the browser handles generating the HTML content. SSR provides benefits like faster initial page load times, improved SEO, and a better user experience, especially for applications with dynamic content.`,
-        user: "jon"
+        user: "jon",
+        upvote: 0,
+        downvote: 1
       }
     ]
   },

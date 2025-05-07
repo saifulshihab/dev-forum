@@ -64,19 +64,20 @@ async function Page(props: { params: Promise<{ id: string }> }) {
           {question.answers?.length ? (
             <div className="flex flex-col gap-5">
               {question.answers.map((ans) => (
-                <div key={ans.id} className="flex w-full items-center gap-2">
-                  <div className="flex flex-col items-center">
-                    <Button size="icon" variant="outline">
-                      <ChevronUp />
-                    </Button>
-                    <p className="text-sm text-zinc-500">{0}</p>
-                    <Button size="icon" variant="outline">
-                      <ChevronDown />
-                    </Button>
-                  </div>
+                <div key={ans.id} className="flex w-full flex-col gap-2">
                   <div className="rounded-md bg-zinc-800 p-2">
                     <p className="text-sm font-semibold">{ans.user}</p>
                     <p className="text-sm text-zinc-400">{ans.description}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button className="flex cursor-pointer items-center gap-1">
+                      <ChevronUp size={16} />
+                      <span className="text-xs">{ans.upvote || "0"}</span>
+                    </button>
+                    <button className="flex cursor-pointer items-center gap-1">
+                      <ChevronDown size={16} />
+                      <span className="text-xs">{ans.downvote || "0"}</span>
+                    </button>
                   </div>
                 </div>
               ))}

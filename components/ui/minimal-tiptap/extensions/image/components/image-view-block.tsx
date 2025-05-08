@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { NodeViewWrapper, type NodeViewProps } from "@tiptap/react";
 import { InfoIcon, TrashIcon } from "lucide-react";
+import Image from "next/image";
 import * as React from "react";
 import { Controlled as ControlledZoom } from "react-medium-image-zoom";
 import { Spinner } from "../../../components/spinner";
@@ -263,7 +264,7 @@ export const ImageViewBlock: React.FC<NodeViewProps> = ({
                   setImageState((prev) => ({ ...prev, isZoomed: false }))
                 }
               >
-                <img
+                <Image
                   className={cn(
                     "h-auto rounded object-contain transition-shadow",
                     {

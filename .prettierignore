@@ -6,4 +6,4 @@ node_modules
 
 public
 
-.prettierrc
+yarn.lock

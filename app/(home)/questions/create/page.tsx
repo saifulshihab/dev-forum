@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 function Page() {
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <h2 className="text-xl font-bold">Ask you question</h2>
+      <h2 className="text-xl font-bold">Ask your question</h2>
       <form
         action={async () => {
           "use server";

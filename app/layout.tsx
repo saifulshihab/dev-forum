@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -27,10 +28,12 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <main className="m-auto flex h-screen max-w-3/4 border-r border-dashed">
-            <AppSidebar />
-            {children}
-          </main>
+          <TooltipProvider>
+            <main className="m-auto flex h-screen max-w-3/4 border-r border-dashed">
+              <AppSidebar />
+              {children}
+            </main>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,7 +2,7 @@ import { getQuestion } from "@/app/api";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/components/ui/text-editor";
 import {
   ChevronDown,
   ChevronUp,
@@ -25,7 +25,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   return (
     <div>
       <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3">
-        <h2 className="text-sm font-semibold">{question.title}</h2>
+        <h2 className="text-2xl font-bold">{question.title}</h2>
         <p className="text-sm text-zinc-400">{question.description}</p>
         <div className="flex items-center justify-between">
           <div className="inline-flex items-center gap-2">
@@ -71,11 +71,11 @@ async function Page(props: { params: Promise<{ id: string }> }) {
                     <p className="text-sm text-zinc-400">{ans.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button className="flex cursor-pointer items-center gap-1">
+                    <button className="flex transform cursor-pointer items-center gap-1 rounded p-1 transition hover:bg-zinc-700 active:scale-95">
                       <ChevronUp size={16} />
                       <span className="text-xs">{ans.upvote || "0"}</span>
                     </button>
-                    <button className="flex cursor-pointer items-center gap-1">
+                    <button className="flex transform cursor-pointer items-center gap-1 rounded p-1 transition hover:bg-zinc-700 active:scale-95">
                       <ChevronDown size={16} />
                       <span className="text-xs">{ans.downvote || "0"}</span>
                     </button>
@@ -94,11 +94,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
         <div className="mt-8 flex flex-col gap-3">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="answer">Your Answer</Label>
-            <Textarea
-              id="answer"
-              rows={1}
-              placeholder="Type your answer here"
-            />
+            <TextEditor />
           </div>
           <div className="flex justify-end">
             <Button>Submit</Button>

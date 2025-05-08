@@ -1,6 +1,7 @@
 import { getQuestion } from "@/app/api";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import {
   ChevronDown,
@@ -59,10 +60,10 @@ async function Page(props: { params: Promise<{ id: string }> }) {
       </div>
       <div className="mt-3 rounded-md bg-zinc-900 p-3">
         <h2 className="text-sm font-semibold">Answers</h2>
-        <div className="my-3 h-[1px] bg-zinc-800" />
+        <Separator className="my-3" />
         <div className="my-2">
           {question.answers?.length ? (
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4">
               {question.answers.map((ans) => (
                 <div key={ans.id} className="flex w-full flex-col gap-2">
                   <div className="rounded-md bg-zinc-800 p-2">
@@ -89,7 +90,8 @@ async function Page(props: { params: Promise<{ id: string }> }) {
             </div>
           )}
         </div>
-        <div className="mt-8 flex flex-col gap-3 border-t pt-4">
+        <Separator className="my-5" />
+        <div className="mt-8 flex flex-col gap-3">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="answer">Your Answer</Label>
             <Textarea

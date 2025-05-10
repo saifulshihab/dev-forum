@@ -1,4 +1,4 @@
-import { TQuestion } from "@/app/data";
+import { TQuestion } from "@/types/question";
 import Link from "next/link";
 
 function TopQuestionCard(props: { question: TQuestion }) {

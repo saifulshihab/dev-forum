@@ -1,4 +1,4 @@
-import { TQuestion } from "@/app/data";
+import { TQuestion } from "@/types/question";
 import { EyeIcon, MessageCircle, User } from "lucide-react";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ function QuestionCard(props: { question: TQuestion }) {
   return (
     <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3">
       <Link href={`/questions/${question.id}`}>
-        <h2 className="text-sm font-semibold">{question.title}</h2>
+        <h2 className="font-semibold">{question.title}</h2>
       </Link>
       <p className="line-clamp-3 text-sm text-zinc-400">
         {question.description}
@@ -26,16 +26,16 @@ function QuestionCard(props: { question: TQuestion }) {
             : null}
         </div>
         <div className="inline-flex items-center gap-4">
-          <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-            <EyeIcon size={12} />
+          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+            <EyeIcon size={14} />
             <p>{question.views} views</p>
           </div>
-          <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-            <MessageCircle size={12} />
+          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+            <MessageCircle size={14} />
             <p>{question.answers?.length || 0} answers</p>
           </div>
-          <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-            <User size={12} />
+          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+            <User size={14} />
             <Link href={"#"} className="hover:text-black">
               <p>{question.user}</p>
             </Link>

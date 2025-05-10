@@ -1,5 +1,6 @@
 import { getQuestion } from "@/app/api";
 import { Button } from "@/components/ui/button";
+import Empty from "@/components/ui/empty";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import TextEditor from "@/components/ui/text-editor";
@@ -84,10 +85,10 @@ async function Page(props: { params: Promise<{ id: string }> }) {
               ))}
             </div>
           ) : (
-            <div className="mt-5 flex flex-col items-center justify-center gap-1">
-              <MessageCircleOff size={16} />
-              <p className="text-xs text-zinc-600">No answers yet</p>
-            </div>
+            <Empty
+              icon={<MessageCircleOff size={16} />}
+              text="No answers yet"
+            />
           )}
         </div>
         <Separator className="my-5" />

@@ -1,4 +1,5 @@
 import { getTopQuestions } from "@/app/api";
+import Empty from "../ui/empty";
 import TopQuestionCard from "./top-question-card";
 
 async function TopQuestions() {
@@ -10,7 +11,7 @@ async function TopQuestions() {
           <TopQuestionCard key={question.id} question={question} />
         ))
       ) : (
-        <p className="text-xs text-zinc-600">No data</p>
+        <Empty />
       )}
     </div>
   );

@@ -11,15 +11,15 @@ function HomeLayout({
 }>) {
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-dashed px-4 py-[5.5px]">
+      <div className="flex h-[3.125rem] items-center justify-between border-b border-dashed px-3">
         <p className="font-semibold">Latest questions</p>
         <Link href="/questions/create">
           <Button>Ask Question</Button>
         </Link>
       </div>
       <div className="flex h-[calc(100vh-6.25rem)]">
-        <div className="flex-1 overflow-y-auto p-4">{children}</div>
-        <div className="box-border h-full w-56 shrink-0 border-l border-dashed p-4">
+        <div className="flex-1 overflow-y-auto p-3">{children}</div>
+        <div className="box-border h-full w-56 shrink-0 border-l border-dashed p-3">
           <p className="mb-2 text-sm font-semibold">Top questions</p>
           <Suspense
             fallback={

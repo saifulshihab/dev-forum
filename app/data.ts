@@ -1,3 +1,4 @@
+import { IJobCircular } from "@/types/job";
 import { BudgetType, IProject } from "@/types/project";
 import { TQuestion } from "@/types/question";
 
@@ -319,5 +320,230 @@ export const projects: IProject[] = [
     ],
     created_at: "2025-05-09T08:00:00Z",
     updated_at: "2025-05-09T08:00:00Z"
+  }
+];
+
+export const jobs: IJobCircular[] = [
+  {
+    id: "job-123",
+    title: "Senior Frontend Developer",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "TechCorp Solutions",
+    location: "San Francisco, CA (Remote)",
+    employment_type: "Full-time",
+    salary: {
+      min: 120000,
+      max: 150000,
+      currency: "USD",
+      period: "yearly"
+    },
+    experience_level: "Senior level",
+    posted_date: "2025-05-02",
+    application_deadline: "2025-06-02",
+    responsibilities: [
+      "Build responsive web applications using React",
+      "Collaborate with design team to implement UI/UX",
+      "Write clean, maintainable, and efficient code",
+      "Perform code reviews and mentor junior developers"
+    ],
+    requirements: [
+      "5+ years of experience with React and TypeScript",
+      "Strong understanding of web performance optimization",
+      "Experience with state management libraries",
+      "CSS-in-JS and component libraries expertise"
+    ],
+    benefits: [
+      "Flexible working hours",
+      "Remote work options",
+      "Health insurance",
+      "401(k) matching"
+    ],
+    tags: ["React", "TypeScript", "Frontend", "Remote"],
+    logo: "https://picsum.photos/48/48"
+  },
+  {
+    id: "job-456",
+    title: "Data Scientist",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "AnalyticsMind",
+    location: "Boston, MA (Hybrid)",
+    employment_type: "Full-time",
+    salary: {
+      min: 110000,
+      max: 140000,
+      currency: "USD",
+      period: "yearly"
+    },
+    experience_level: "Mid level",
+    posted_date: "2025-05-07",
+    application_deadline: "2025-05-28",
+    responsibilities: [
+      "Develop and implement machine learning models",
+      "Clean and preprocess large datasets",
+      "Present insights and findings to stakeholders",
+      "Collaborate with engineering teams to deploy models"
+    ],
+    requirements: [
+      "Masters or PhD in Statistics, Computer Science, or related field",
+      "3+ years experience with Python and data science libraries",
+      "Knowledge of SQL and database structures",
+      "Experience with cloud-based ML platforms (AWS, GCP, or Azure)"
+    ],
+    benefits: [
+      "Professional development budget",
+      "Flexible work schedule",
+      "Comprehensive health benefits",
+      "Annual company retreat"
+    ],
+    tags: ["Python", "Machine Learning", "Data Science", "SQL"],
+    logo: "https://picsum.photos/48/48"
+  },
+  {
+    id: "job-789",
+    title: "UX/UI Designer",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "CreativeWave",
+    location: "New York, NY (On-site)",
+    employment_type: "Full-time",
+    salary: {
+      min: 90000,
+      max: 115000,
+      currency: "USD",
+      period: "yearly"
+    },
+    experience_level: "Mid level",
+    posted_date: "2025-05-05",
+    application_deadline: "2025-05-30",
+    responsibilities: [
+      "Create user-centered designs for web and mobile applications",
+      "Develop wireframes, prototypes, and high-fidelity mockups",
+      "Conduct user research and usability testing",
+      "Collaborate with product managers and developers"
+    ],
+    requirements: [
+      "Bachelor's degree in Design or related field",
+      "3+ years of experience in UX/UI design",
+      "Proficiency in design tools (Figma, Adobe XD)",
+      "Strong portfolio demonstrating user-centered design process"
+    ],
+    benefits: [
+      "Design conference stipend",
+      "Latest design hardware and software",
+      "Wellness program",
+      "Catered lunches"
+    ],
+    tags: ["UX Design", "UI Design", "Figma", "User Research"],
+    logo: "https://picsum.photos/48/48"
+  },
+  {
+    id: "job-101",
+    title: "DevOps Engineer",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "CloudNative Systems",
+    location: "Austin, TX (Remote)",
+    employment_type: "Contract",
+    salary: {
+      min: 75,
+      max: 95,
+      currency: "USD",
+      period: "hourly"
+    },
+    experience_level: "Senior level",
+    posted_date: "2025-05-09",
+    application_deadline: "2025-05-25",
+    responsibilities: [
+      "Manage CI/CD pipelines and infrastructure as code",
+      "Optimize system performance and reliability",
+      "Implement security best practices",
+      "Support development teams with deployment automation"
+    ],
+    requirements: [
+      "5+ years of experience with Docker, Kubernetes, and containerization",
+      "Strong knowledge of cloud platforms (AWS/Azure/GCP)",
+      "Experience with monitoring and alerting tools",
+      "Scripting abilities in Python, Bash, or similar"
+    ],
+    benefits: [
+      "Flexible hours",
+      "Remote work",
+      "Contract extension possibility",
+      "Weekly team social activities"
+    ],
+    tags: ["DevOps", "Kubernetes", "AWS", "CI/CD"],
+    logo: "https://picsum.photos/48/48"
+  },
+  {
+    id: "job-202",
+    title: "Marketing Coordinator",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "BrandSpark Media",
+    location: "Chicago, IL (Hybrid)",
+    employment_type: "Part-time",
+    salary: {
+      min: 35,
+      max: 45,
+      currency: "USD",
+      period: "hourly"
+    },
+    experience_level: "Entry level",
+    posted_date: "2025-05-08",
+    application_deadline: "2025-05-22",
+    responsibilities: [
+      "Assist with social media management and content creation",
+      "Help plan and execute marketing campaigns",
+      "Track and report on marketing metrics",
+      "Support event coordination and promotion"
+    ],
+    requirements: [
+      "Bachelor's degree in Marketing or related field",
+      "Excellent communication and writing skills",
+      "Familiarity with social media platforms",
+      "Basic graphic design skills"
+    ],
+    benefits: [
+      "Flexible schedule (20-25 hours/week)",
+      "Professional development opportunities",
+      "Potential for full-time conversion",
+      "Team outings and events"
+    ],
+    tags: ["Marketing", "Social Media", "Part-time", "Entry Level"],
+    logo: "https://picsum.photos/48/48"
+  },
+  {
+    id: "job-303",
+    title: "Healthcare Administrator",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    company: "MediCare Health Services",
+    location: "Denver, CO (On-site)",
+    employment_type: "Full-time",
+    salary: {
+      min: 65000,
+      max: 80000,
+      currency: "USD",
+      period: "yearly"
+    },
+    experience_level: "Mid level",
+    posted_date: "2025-05-01",
+    application_deadline: "2025-05-31",
+    responsibilities: [
+      "Oversee daily operations of healthcare facility",
+      "Manage staff scheduling and resource allocation",
+      "Ensure compliance with healthcare regulations",
+      "Coordinate with medical staff on patient care improvements"
+    ],
+    requirements: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      "2+ years experience in healthcare management",
+      "Knowledge of healthcare regulations and compliance",
+      "Strong organizational and leadership skills"
+    ],
+    benefits: [
+      "Medical and dental insurance",
+      "Retirement plan with employer match",
+      "Paid time off and sick leave",
+      "Continuing education assistance"
+    ],
+    tags: ["Healthcare", "Administration", "Management", "Medical"],
+    logo: "https://picsum.photos/48/48"
   }
 ];

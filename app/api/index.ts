@@ -1,5 +1,5 @@
 import { sleep } from "@/lib/utils";
-import { projects, questions } from "../data";
+import { jobs, projects, questions } from "../data";
 
 export async function getQuestions() {
   await sleep(1000);
@@ -19,4 +19,9 @@ export async function getTopQuestions() {
 export async function getProjects() {
   await sleep(500);
   return projects;
+}
+
+export async function getJobs() {
+  await sleep(500);
+  return jobs;
 }

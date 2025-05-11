@@ -4,11 +4,9 @@ import {
   Calendar,
   Clock,
   DollarSign,
-  EyeIcon,
   MapPin,
   Users
 } from "lucide-react";
-import { Button } from "../ui/button";
 import { formatSalary, getDaysAgo } from "./job-list";
 
 function JobCard(props: {
@@ -20,18 +18,15 @@ function JobCard(props: {
     <div className="overflow-hidden rounded-md border bg-zinc-900">
       {/* Header */}
       <div className="p-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center">
-            <div>
-              <h2 className="font-bold text-white">{job.title}</h2>
-              <p className="text-sm text-zinc-400">{job.company}</p>
-            </div>
-          </div>
-          <Button variant="secondary" onClick={() => onClick && onClick(job)}>
-            <EyeIcon size={16} />
-          </Button>
+        <div>
+          <h2
+            onClick={() => onClick && onClick(job)}
+            className="cursor-pointer font-bold text-white"
+          >
+            {job.title}
+          </h2>
+          <p className="text-sm text-zinc-400">{job.company}</p>
         </div>
-
         {/* Job Meta Information */}
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div className="flex items-center text-zinc-500">

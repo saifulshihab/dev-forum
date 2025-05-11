@@ -35,27 +35,27 @@ function JobCard(props: {
         {/* Job Meta Information */}
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div className="flex items-center text-zinc-500">
-            <MapPin size={16} className="mr-2 text-zinc-500" />
+            <MapPin size={14} className="mr-2 text-zinc-500" />
             <span>{job.location}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <Briefcase size={16} className="mr-2 text-zinc-500" />
+            <Briefcase size={14} className="mr-2 text-zinc-500" />
             <span>{job.employment_type}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <DollarSign size={16} className="mr-2 text-zinc-500" />
+            <DollarSign size={14} className="mr-2 text-zinc-500" />
             <span>{formatSalary(job.salary)}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <Users size={16} className="mr-2 text-zinc-500" />
+            <Users size={14} className="mr-2 text-zinc-500" />
             <span>{job.experience_level}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <Calendar size={16} className="mr-2 text-zinc-500" />
+            <Calendar size={14} className="mr-2 text-zinc-500" />
             <span>Posted {getDaysAgo(job.posted_date)}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <Clock size={16} className="mr-2 text-zinc-500" />
+            <Clock size={14} className="mr-2 text-zinc-500" />
             <span>
               Apply by {new Date(job.application_deadline).toLocaleDateString()}
             </span>

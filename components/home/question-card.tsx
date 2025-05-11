@@ -26,15 +26,15 @@ function QuestionCard(props: { question: TQuestion }) {
             : null}
         </div>
         <div className="inline-flex items-center gap-4">
-          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+          <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
             <EyeIcon size={14} />
             <p>{question.views} views</p>
           </div>
-          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+          <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
             <MessageCircle size={14} />
             <p>{question.answers?.length || 0} answers</p>
           </div>
-          <div className="inline-flex items-center gap-1 text-sm text-zinc-500">
+          <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
             <User size={14} />
             <Link href={"#"} className="hover:text-black">
               <p>{question.user}</p>

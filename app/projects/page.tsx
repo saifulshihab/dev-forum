@@ -3,11 +3,7 @@ import { getProjects } from "../api";
 
 async function Page() {
   const projects = await getProjects();
-  return (
-    <div className="flex flex-col gap-5">
-      <ProjectList projects={projects} />
-    </div>
-  );
+  return <ProjectList projects={projects} />;
 }
 
 export default Page;

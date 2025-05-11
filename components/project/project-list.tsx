@@ -1,6 +1,6 @@
 "use client";
 
-import { IProject } from "@/types/project";
+import { BudgetType, IProject } from "@/types/project";
 import { Fragment, useState } from "react";
 import { Button } from "../ui/button";
 import Empty from "../ui/empty";
@@ -13,21 +13,57 @@ import {
   SheetHeader,
   SheetTitle
 } from "../ui/sheet";
-import ProjectCard, { formatBudget, formatRelativeDate } from "./project-card";
+import ProjectCard from "./project-card";
+
+export const formatBudget = (project: IProject) => {
+  if (project.budget_type === BudgetType.NEGOTIABLE) {
+    return project.budget ? `${project.budget} (Negotiable)` : "Negotiable";
+  }
+
+  if (project.budget_type === BudgetType.HOURLY) {
+    if (project.budget) return `Up to $${project.budget}/hr`;
+    return "Hourly Rate";
+  }
+
+  return project.budget ? `${project.budget} (Fixed price)` : "Fixed price";
+};
+
+export const formatRelativeDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  if (diffInDays === 0) {
+    return "Today";
+  } else if (diffInDays === 1) {
+    return "Yesterday";
+  } else if (diffInDays < 30) {
+    return `${diffInDays} days ago`;
+  } else {
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+};
 
 function ProjectList(props: { projects: IProject[] }) {
   const { projects } = props;
   const [project, setProject] = useState<IProject | undefined>();
   return (
-    <Fragment>
+    <div>
       {projects.length ? (
-        projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            onClick={(project) => setProject(project)}
-          />
-        ))
+        <div className="flex flex-col gap-5">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onClick={(project) => setProject(project)}
+            />
+          ))}
+        </div>
       ) : (
         <Empty />
       )}
@@ -84,7 +120,7 @@ function ProjectList(props: { projects: IProject[] }) {
           )}
         </SheetContent>
       </Sheet>
-    </Fragment>
+    </div>
   );
 }
 

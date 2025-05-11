@@ -12,7 +12,7 @@ function HomeLayout({
   return (
     <div>
       <div className="flex h-[3.125rem] items-center justify-between border-b border-dashed px-3">
-        <p className="font-semibold">Latest questions</p>
+        <p className="font-semibold">Latest Questions</p>
         <Link href="/questions/create">
           <Button>Ask Question</Button>
         </Link>
@@ -20,7 +20,7 @@ function HomeLayout({
       <div className="flex h-[calc(100vh-6.25rem)]">
         <div className="flex-1 overflow-y-auto p-3">{children}</div>
         <div className="box-border h-full w-56 shrink-0 border-l border-dashed p-3">
-          <p className="mb-2 text-sm font-semibold">Top questions</p>
+          <p className="mb-2 text-sm font-semibold">Top Questions</p>
           <Suspense
             fallback={
               <div className="flex flex-col gap-3">

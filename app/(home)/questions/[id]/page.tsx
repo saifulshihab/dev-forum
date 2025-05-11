@@ -42,16 +42,16 @@ async function Page(props: { params: Promise<{ id: string }> }) {
               : null}
           </div>
           <div className="inline-flex items-center gap-4">
-            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-              <EyeIcon size={12} />
+            <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
+              <EyeIcon size={14} />
               <p>{question.views} views</p>
             </div>
-            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-              <MessageCircle size={12} />
+            <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
+              <MessageCircle size={14} />
               <p>{question.answers?.length || "0"} answers</p>
             </div>
-            <div className="inline-flex items-center gap-1 text-xs text-zinc-500">
-              <User size={12} />
+            <div className="inline-flex items-center gap-2 text-sm text-zinc-500">
+              <User size={14} />
               <Link href={"#"} className="hover:text-black">
                 <p>{question.user}</p>
               </Link>

@@ -1,39 +1,6 @@
-import { BudgetType, IProject } from "@/types/project";
+import { IProject } from "@/types/project";
 import { Clock, DollarSign } from "lucide-react";
-
-export const formatBudget = (project: IProject) => {
-  if (project.budget_type === BudgetType.NEGOTIABLE) {
-    return project.budget ? `${project.budget} (Negotiable)` : "Negotiable";
-  }
-
-  if (project.budget_type === BudgetType.HOURLY) {
-    if (project.budget) return `Up to $${project.budget}/hr`;
-    return "Hourly Rate";
-  }
-
-  return project.budget ? `${project.budget} (Fixed price)` : "Fixed price";
-};
-
-export const formatRelativeDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInMs = now.getTime() - date.getTime();
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  if (diffInDays === 0) {
-    return "Today";
-  } else if (diffInDays === 1) {
-    return "Yesterday";
-  } else if (diffInDays < 30) {
-    return `${diffInDays} days ago`;
-  } else {
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric"
-    });
-  }
-};
+import { formatBudget, formatRelativeDate } from "./project-list";
 
 function ProjectCard(props: {
   project: IProject;
@@ -45,12 +12,12 @@ function ProjectCard(props: {
       <div className="w-full overflow-hidden rounded-md border bg-zinc-900 shadow-md transition-shadow duration-300 hover:shadow-lg">
         {/* Card Header */}
         <div className="border-b p-3 pb-2">
-          <h3
+          <h2
             className="mb-1 cursor-pointer font-semibold"
             onClick={() => onClick && onClick(project)}
           >
             {project.title}
-          </h3>
+          </h2>
           <p className="text-sm text-zinc-500">
             Posted {formatRelativeDate(project.created_at)}
           </p>

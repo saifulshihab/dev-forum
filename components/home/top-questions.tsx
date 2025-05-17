@@ -1,4 +1,4 @@
-import { getTopQuestions } from "@/app/api";
+import { getTopQuestions } from "@/app/data";
 import Empty from "../ui/empty";
 import TopQuestionCard from "./top-question-card";
 

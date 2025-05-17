@@ -1,4 +1,4 @@
-import { getQuestion } from "@/app/api";
+import { getQuestion } from "@/app/data";
 import { Button } from "@/components/ui/button";
 import Empty from "@/components/ui/empty";
 import { Label } from "@/components/ui/label";

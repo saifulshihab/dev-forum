@@ -1,5 +1,5 @@
+import { getJobs } from "@/app/data";
 import JobList from "@/components/job/job-list";
-import { getJobs } from "../api";
 
 async function Page() {
   const jobs = await getJobs();

@@ -1,13 +1,14 @@
-import { ThemeProvider } from "@/components/theme-provider";
 import { Roboto } from "next/font/google";
 import "../globals.css";
+import { ThemeProvider } from "@/components/contexts/theme-provider";
 
 const roboto = Roboto({
-  subsets: ["latin"]
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export default async function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {

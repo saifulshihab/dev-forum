@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Spinner from "@/components/ui/spinner";
-import TextEditor from "@/components/ui/text-editor";
 import { Textarea } from "@/components/ui/textarea";
 import { Suspense } from "react";
 
@@ -20,7 +19,7 @@ function Page() {
           <Label htmlFor="title">Title</Label>
           <Textarea id="title" placeholder="Enter question title" />
           <Label>Description</Label>
-          <TextEditor />
+          <Textarea />
           <Button type="submit">Submit</Button>
         </form>
       </div>

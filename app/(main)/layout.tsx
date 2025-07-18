@@ -1,24 +1,25 @@
 import Header from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthSessionProvider } from "@/contexts/AuthSessionProvider";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
 import "../globals.css";
+import { ThemeProvider } from "@/components/contexts/theme-provider";
+import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const roboto = Roboto({
-  subsets: ["latin"]
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export const metadata: Metadata = {
   title: "Dev Forum",
-  description: "An online platform for software developers."
+  description: "An online platform for software developers.",
 };
 
 export default async function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -34,7 +35,7 @@ export default async function RootLayout({
         >
           <AuthSessionProvider session={session}>
             <TooltipProvider>
-              <main className="m-auto flex h-screen max-w-3/4 border-r border-dashed">
+              <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                 <AppSidebar />
                 <div className="w-full">
                   <Header />

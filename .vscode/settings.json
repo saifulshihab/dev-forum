@@ -2,5 +2,8 @@
   "cSpell.words": ["turbopack"],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }

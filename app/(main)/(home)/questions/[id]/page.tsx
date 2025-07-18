@@ -3,14 +3,15 @@ import { Button } from "@/components/ui/button";
 import Empty from "@/components/ui/empty";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import TextEditor from "@/components/ui/text-editor";
+import { Textarea } from "@/components/ui/textarea";
+
 import {
   ChevronDown,
   ChevronUp,
   EyeIcon,
   MessageCircle,
   MessageCircleOff,
-  User
+  User,
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -95,7 +96,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
         <div className="mt-8 flex flex-col gap-3">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="answer">Your Answer</Label>
-            <TextEditor />
+            <Textarea />
           </div>
           <div className="flex justify-end">
             <Button>Submit</Button>

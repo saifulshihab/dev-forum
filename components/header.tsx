@@ -44,7 +44,7 @@ function Header() {
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/user/settings">
+                <Link href="/user/settings/profile">
                   <DropdownMenuItem>
                     Settings
                     <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>

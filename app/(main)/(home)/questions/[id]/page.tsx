@@ -1,9 +1,9 @@
-import { getQuestion } from "@/app/data";
 import { Button } from "@/components/ui/button";
 import Empty from "@/components/ui/empty";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { getQuestion } from "@/lib/data";
 
 import {
   ChevronDown,
@@ -11,7 +11,7 @@ import {
   EyeIcon,
   MessageCircle,
   MessageCircleOff,
-  User,
+  User
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";

@@ -1,5 +1,5 @@
-import { getProjects } from "@/app/data";
 import ProjectList from "@/components/project/project-list";
+import { getProjects } from "@/lib/data";
 
 async function Page() {
   const projects = await getProjects();

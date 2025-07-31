@@ -54,9 +54,8 @@ model Skill {
 model Project {
   id          String  @id @default(cuid())
   name        String
-  description String
+  description String?
   url         String?
-  image       Bytes?
   user        User?   @relation(fields: [userId], references: [id])
   userId      String?
 }
@@ -68,10 +67,9 @@ model User {
   username    String?      @unique
   dob         DateTime?
   bio         String?
-  dp          Bytes?
   dpUrl       String?
-  cover       Bytes?
   websiteUrl  String?
+  location    String?
   socialLinks SocialLink[]
   experiences Experience[]
   educations  Education[]

@@ -1,25 +1,26 @@
+import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
+import { ThemeProvider } from "@/components/contexts/theme-provider";
 import Header from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "../globals.css";
-import { ThemeProvider } from "@/components/contexts/theme-provider";
-import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
+  weight: ["100", "300", "400", "500", "700", "900"]
 });
 
 export const metadata: Metadata = {
   title: "Dev Forum",
-  description: "An online platform for software developers.",
+  description: "An online platform for software developers."
 };
 
 export default async function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -37,10 +38,20 @@ export default async function RootLayout({
             <TooltipProvider>
               <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                 <AppSidebar />
-                <div className="w-full">
+                <div className="h-full w-full">
                   <Header />
                   {children}
                 </div>
+                <Toaster
+                  position="bottom-center"
+                  toastOptions={{
+                    style: {
+                      backgroundColor: "#18181b",
+                      color: "#fff",
+                      fontSize: 14
+                    }
+                  }}
+                />
               </main>
             </TooltipProvider>
           </AuthSessionProvider>

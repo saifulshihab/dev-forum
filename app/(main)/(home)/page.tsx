@@ -1,5 +1,5 @@
-import { getQuestions } from "@/app/data";
 import QuestionCard from "@/components/home/question-card";
+import { getQuestions } from "@/lib/data";
 
 export default async function Home() {
   const questions = await getQuestions();

@@ -400,14 +400,11 @@ function Page() {
                         <div className="flex items-center justify-between">
                           <FormField
                             control={form.control}
-                            name={`experiences.${fieldIdx}.company`}
+                            name={`experiences.${fieldIdx}.role`}
                             render={({ field }) => (
                               <FormItem className="w-1/2">
                                 <FormControl>
-                                  <Input
-                                    placeholder="Company name"
-                                    {...field}
-                                  />
+                                  <Input placeholder="Your role" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -421,6 +418,18 @@ function Page() {
                             <Trash />
                           </Button>
                         </div>
+                        <FormField
+                          control={form.control}
+                          name={`experiences.${fieldIdx}.company`}
+                          render={({ field }) => (
+                            <FormItem className="w-1/2">
+                              <FormControl>
+                                <Input placeholder="Company name" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                         <div className="flex items-center gap-3">
                           <Controller
                             name={`experiences.${fieldIdx}.from`}
@@ -472,6 +481,7 @@ function Page() {
                             <FormItem className="w-3/4">
                               <FormControl>
                                 <Textarea
+                                  rows={10}
                                   placeholder="Write job description...(optional)"
                                   {...field}
                                 />
@@ -497,7 +507,7 @@ function Page() {
                   "mt-3 rounded-md": experienceField.fields.length
                 })}
                 onClick={() => {
-                  experienceField.append({ company: "", from: null });
+                  experienceField.append({ role: "", company: "", from: null });
                 }}
               >
                 <PlusIcon />

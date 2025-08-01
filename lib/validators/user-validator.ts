@@ -20,6 +20,7 @@ const UserValidator = z.object({
     .array(
       z.object({
         id: z.string().optional(),
+        role: z.string().nonempty("Role is required"),
         company: z.string().nonempty("Company name in required"),
         from: z.date("Required").nullable(),
         to: z.date().optional(),

@@ -76,17 +76,6 @@ async function Page() {
             </div>
           ) : null}
         </div>
-        {/* {user.socialLinks.length ? (
-          <div className="flex flex-wrap items-center gap-3">
-            {user.socialLinks.map((link) =>
-              link.platform === "Facebook" ? (
-                <div key={link.id}>
-                  
-                </div>
-              ) : null
-            )}
-          </div>
-        ) : null} */}
         {user.skills.length ? (
           <div className="mt-5">
             <div className="inline-flex items-center gap-3">
@@ -111,9 +100,8 @@ async function Page() {
             <div className="mt-2 flex flex-col gap-3">
               {user.experiences.map((experience) => (
                 <div key={experience.id} className="flex flex-col gap-1">
-                  <h3 className="text-sm font-semibold">
-                    {experience.company}
-                  </h3>
+                  <h2 className="text-sm font-semibold">{experience.role}</h2>
+                  <h3 className="text-sm">{experience.company}</h3>
                   <p className="text-xs italic text-zinc-400">
                     {dayjs(experience.from).format("MMM YYYY")} -{" "}
                     {experience.present

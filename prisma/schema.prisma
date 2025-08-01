@@ -24,6 +24,7 @@ model SocialLink {
 
 model Experience {
   id          String    @id @default(cuid())
+  role        String
   company     String
   from        DateTime
   to          DateTime?

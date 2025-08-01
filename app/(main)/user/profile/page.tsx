@@ -44,37 +44,55 @@ async function Page() {
         <div className="flex flex-col gap-1 text-sm">
           {user.username ? <p className="text-xs">@{user.username}</p> : null}
           {user.bio ? <p>{user.bio}</p> : null}
-          {user.email ? (
-            <div className="inline-flex items-center gap-2">
-              <Mail size={14} />
-              <p>{user.email}</p>
+          <div className="flex justify-between gap-2">
+            <div className="flex flex-col gap-1">
+              {user.email ? (
+                <div className="inline-flex items-center gap-2">
+                  <Mail size={14} />
+                  <p>{user.email}</p>
+                </div>
+              ) : null}
+              {user.websiteUrl ? (
+                <div className="inline-flex items-center gap-2">
+                  <Globe size={14} />
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    className="hover:text-sky-400 hover:underline"
+                    href={user.websiteUrl}
+                  >
+                    {user.websiteUrl}
+                  </a>
+                </div>
+              ) : null}
+              {user.location ? (
+                <div className="inline-flex items-center gap-2">
+                  <Home size={14} />
+                  <p>From {user.location}</p>
+                </div>
+              ) : null}
+              {user.createdAt ? (
+                <div className="inline-flex items-center gap-2">
+                  <Calendar1 size={14} />
+                  <p>Joined {dayjs(user.createdAt).format("DD MMM YYYY")}</p>
+                </div>
+              ) : null}
             </div>
-          ) : null}
-          {user.websiteUrl ? (
-            <div className="inline-flex items-center gap-2">
-              <Globe size={14} />
-              <a
-                rel="noreferrer"
-                target="_blank"
-                className="hover:text-sky-400 hover:underline"
-                href={user.websiteUrl}
-              >
-                {user.websiteUrl}
-              </a>
-            </div>
-          ) : null}
-          {user.location ? (
-            <div className="inline-flex items-center gap-2">
-              <Home size={14} />
-              <p>From {user.location}</p>
-            </div>
-          ) : null}
-          {user.createdAt ? (
-            <div className="inline-flex items-center gap-2">
-              <Calendar1 size={14} />
-              <p>Joined {dayjs(user.createdAt).format("DD MMM YYYY")}</p>
-            </div>
-          ) : null}
+            {user.socialLinks.length ? (
+              <div className="flex flex-col items-end gap-1">
+                {user.socialLinks.map((socialLink) => (
+                  <a
+                    target="_blank"
+                    key={socialLink.id}
+                    href={socialLink.url}
+                    className="text-sm text-zinc-400 underline hover:text-sky-400"
+                  >
+                    {socialLink.platform}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
         {user.skills.length ? (
           <div className="mt-5">

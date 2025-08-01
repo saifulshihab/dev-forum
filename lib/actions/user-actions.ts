@@ -58,10 +58,8 @@ export async function updateProfile(
     // UPDATE SKILL DATA
     if (data?.skills?.length) {
       const removedSkillsIds = userData.skills
-        ?.filter(
-          (skill: any) => !data.skills.find((data: any) => data.id === skill.id)
-        )
-        .map((data: any) => data.id);
+        ?.filter((skill) => !data.skills.find((data) => data.id === skill.id))
+        .map((data) => data.id);
 
       if (removedSkillsIds.length) {
         await prisma.skill.deleteMany({
@@ -92,10 +90,9 @@ export async function updateProfile(
     if (data?.projects?.length) {
       const removedProjectsIds = userData.projects
         ?.filter(
-          (project: any) =>
-            !data.projects.find((data: any) => data.id === project.id)
+          (project) => !data.projects.find((data) => data.id === project.id)
         )
-        .map((data: any) => data.id);
+        .map((data) => data.id);
 
       if (removedProjectsIds.length) {
         await prisma.project.deleteMany({
@@ -127,10 +124,10 @@ export async function updateProfile(
     if (data?.experiences?.length) {
       const removedExperiencesIds = userData.experiences
         ?.filter(
-          (experience: any) =>
-            !data.experiences.find((data: any) => data.id === experience.id)
+          (experience) =>
+            !data.experiences.find((data) => data.id === experience.id)
         )
-        .map((data: any) => data.id);
+        .map((data) => data.id);
 
       if (removedExperiencesIds.length) {
         await prisma.experience.deleteMany({
@@ -162,10 +159,10 @@ export async function updateProfile(
     if (data?.educations?.length) {
       const removedEducationsIds = userData.educations
         ?.filter(
-          (education: any) =>
-            !data.educations.find((data: any) => data.id === education.id)
+          (education) =>
+            !data.educations.find((data) => data.id === education.id)
         )
-        .map((data: any) => data.id);
+        .map((data) => data.id);
 
       if (removedEducationsIds.length) {
         await prisma.education.deleteMany({
@@ -197,10 +194,10 @@ export async function updateProfile(
     if (data?.socialLinks?.length) {
       const removedSocialLinksIds = userData.socialLinks
         .filter(
-          (socialLink: any) =>
-            !data.socialLinks.find((data: any) => data.id === socialLink.id)
+          (socialLink) =>
+            !data.socialLinks.find((data) => data.id === socialLink.id)
         )
-        .map((data: any) => data.id);
+        .map((data) => data.id);
 
       if (removedSocialLinksIds.length) {
         await prisma.socialLink.deleteMany({

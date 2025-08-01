@@ -1,6 +1,6 @@
 function Page() {
   return (
-    <div className="grid h-[calc(100vh-6.25rem)] w-full place-items-center">
+    <div className="grid h-full w-full place-items-center">
       <div className="inline-flex flex-col items-center gap-5">
         <p className="text-center text-xl">
           <span className="font-bold">404</span>

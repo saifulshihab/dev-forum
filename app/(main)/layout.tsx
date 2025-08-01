@@ -40,22 +40,24 @@ export default async function RootLayout({
                 <AppSidebar />
                 <div className="h-full w-full">
                   <Header />
-                  {children}
+                  <div className="h-[calc(100vh-3.125rem)] overflow-y-auto">
+                    {children}
+                  </div>
                 </div>
-                <Toaster
-                  position="bottom-center"
-                  toastOptions={{
-                    style: {
-                      backgroundColor: "#18181b",
-                      color: "#fff",
-                      fontSize: 14
-                    }
-                  }}
-                />
               </main>
             </TooltipProvider>
           </AuthSessionProvider>
         </ThemeProvider>
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              backgroundColor: "#18181b",
+              color: "#fff",
+              fontSize: 14
+            }
+          }}
+        />
       </body>
     </html>
   );

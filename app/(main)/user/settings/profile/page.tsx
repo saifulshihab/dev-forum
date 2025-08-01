@@ -105,7 +105,7 @@ function Page() {
   };
 
   return (
-    <div className={cn("w-full", { relative: isLoading })}>
+    <div className={cn("h-full w-full", { relative: isLoading })}>
       {isLoading ? (
         <div className="absolute inset-0 z-50 grid place-content-center bg-zinc-800 bg-opacity-80">
           <Spinner />

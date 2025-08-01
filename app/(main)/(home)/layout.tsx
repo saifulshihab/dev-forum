@@ -17,8 +17,8 @@ function HomeLayout({
           <Button>Ask Question</Button>
         </Link>
       </div>
-      <div className="flex h-[calc(100vh-6.25rem)]">
-        <div className="flex-1 overflow-y-auto p-3">{children}</div>
+      <div className="flex">
+        <div className="flex-1 p-3">{children}</div>
         <div className="box-border h-full w-56 shrink-0 border-l border-dashed p-3">
           <p className="mb-2 text-sm font-semibold">Top Questions</p>
           <Suspense

@@ -58,7 +58,7 @@ async function Page() {
                   <a
                     rel="noreferrer"
                     target="_blank"
-                    className="hover:text-sky-400 hover:underline"
+                    className="hover:text-primary hover:underline"
                     href={user.websiteUrl}
                   >
                     {user.websiteUrl}
@@ -85,7 +85,7 @@ async function Page() {
                     target="_blank"
                     key={socialLink.id}
                     href={socialLink.url}
-                    className="text-sm text-zinc-400 underline hover:text-sky-400"
+                    className="text-sm text-zinc-400 underline hover:text-primary"
                   >
                     {socialLink.platform}
                   </a>
@@ -155,7 +155,7 @@ async function Page() {
                     <div className="inline-flex items-center gap-1 text-sm text-zinc-400">
                       <p>URL :</p>
                       <a
-                        className="hover:text-sky-400 hover:underline"
+                        className="hover:text-primary hover:underline"
                         href={project.url}
                         target="_blank"
                       >

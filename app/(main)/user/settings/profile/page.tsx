@@ -678,17 +678,20 @@ function Page() {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
+                                      <SelectItem value="github">
+                                        GitHub
+                                      </SelectItem>
+                                      <SelectItem value="linkedin">
+                                        LinkedIn
+                                      </SelectItem>
                                       <SelectItem value="facebook">
                                         Facebook
                                       </SelectItem>
                                       <SelectItem value="instagram">
                                         Instagram
                                       </SelectItem>
-                                      <SelectItem value="linkedin">
-                                        LinkedIn
-                                      </SelectItem>
-                                      <SelectItem value="github">
-                                        GitHub
+                                      <SelectItem value="website">
+                                        Website
                                       </SelectItem>
                                     </SelectContent>
                                   </Select>

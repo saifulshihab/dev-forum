@@ -8,7 +8,16 @@ export const nextAuthOptions: NextAuthOptions = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      profile(profile, tokens) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          accessToken: tokens.access_token
+        };
+      }
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID || "",
@@ -45,12 +54,14 @@ export const nextAuthOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user?.id) {
         token.id = user.id;
+        token.accessToken = (user as any)?.accessToken;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
         (session.user as any).id = token.id as string;
+        (session.user as any).accessToken = token.accessToken as string;
       }
       return session;
     }

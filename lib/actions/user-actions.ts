@@ -1,7 +1,9 @@
 "use server";
 
 import { Prisma } from "@/app/generated/prisma";
-import { authCheck } from "@/auth";
+import { authCheck, nextAuthOptions } from "@/auth";
+import https from "https";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 
@@ -238,6 +240,51 @@ export async function updateProfile(
     });
     revalidatePath("/user/profile");
   } catch (err: any) {
-    return { error: err?.message || "Something went wrong/" };
+    return { error: err?.message || "Something went wrong" };
+  }
+}
+
+export async function deleteAccount() {
+  try {
+    const sessionUser = await getServerSession(nextAuthOptions);
+    if (!sessionUser?.user || !sessionUser.user.id) return;
+
+    const userId = sessionUser.user.id;
+    const accessToken = sessionUser?.user?.accessToken;
+
+    const postData = "token=" + accessToken;
+    const requestOptions = {
+      host: "oauth2.googleapis.com",
+      port: "443",
+      path: "/revoke",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": Buffer.byteLength(postData)
+      }
+    };
+
+    const request = https.request(requestOptions, function (res) {
+      res.setEncoding("utf8");
+      res.on("data", async () => {
+        // revoke successful, delete user profile data from database
+        await prisma.skill.deleteMany({ where: { userId } });
+        await prisma.project.deleteMany({ where: { userId } });
+        await prisma.education.deleteMany({ where: { userId } });
+        await prisma.socialLink.deleteMany({ where: { userId } });
+        await prisma.experience.deleteMany({ where: { userId } });
+
+        await prisma.user.delete({ where: { id: userId } });
+      });
+    });
+
+    request.on("error", (error) => {
+      return { error: error.message || "Something went wrong" };
+    });
+
+    request.write(postData);
+    request.end();
+  } catch (err: any) {
+    return { error: err?.message || "Something went wrong" };
   }
 }

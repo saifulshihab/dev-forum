@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "lucide-react";
+import { CircleUser, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -36,6 +36,11 @@ export function SettingsSidebar() {
       text: "Profile",
       icon: <User size={16} />,
       href: "/user/settings/profile"
+    },
+    {
+      text: "Account",
+      icon: <CircleUser size={16} />,
+      href: "/user/settings/account"
     }
   ];
   return (

@@ -2,13 +2,14 @@ import { getServerSession, NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { redirect } from "next/navigation";
+import { env } from "./lib/constants";
 import prisma from "./lib/prisma";
 
 export const nextAuthOptions: NextAuthOptions = {
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
       profile(profile, tokens) {
         return {
           id: profile.sub,
@@ -20,8 +21,8 @@ export const nextAuthOptions: NextAuthOptions = {
       }
     }),
     Github({
-      clientId: process.env.GITHUB_CLIENT_ID || "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
       profile(profile, tokens) {
         return {
           id: profile.id.toString(),
@@ -39,7 +40,7 @@ export const nextAuthOptions: NextAuthOptions = {
   pages: {
     signIn: "/signin"
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user }) {
       if (!user.email) {

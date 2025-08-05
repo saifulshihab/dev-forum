@@ -5,6 +5,7 @@ import { authCheck, nextAuthOptions } from "@/auth";
 import https from "https";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { env } from "../constants";
 import prisma from "../prisma";
 
 export async function getUser(userId: string, fetchFullUser?: boolean) {
@@ -292,9 +293,9 @@ export async function deleteAccount() {
       request.end();
     } else if (sessionUser.user.provider === "github") {
       // revoke access of github sign in users
-      const credentials = `${process.env.GITHUB_CLIENT_ID}:${process.env.GITHUB_CLIENT_SECRET}`;
+      const credentials = `${env.GITHUB_CLIENT_ID}:${env.GITHUB_CLIENT_SECRET}`;
       await fetch(
-        `https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/grant`,
+        `https://api.github.com/applications/${env.GITHUB_CLIENT_ID}/grant`,
         {
           method: "DELETE",
           headers: {

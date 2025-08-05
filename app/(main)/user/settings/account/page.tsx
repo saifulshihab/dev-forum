@@ -27,6 +27,7 @@ function Page() {
       setIsLoading(true);
       await deleteAccount();
       await signOut();
+      setConfirmText("");
     } catch {
     } finally {
       setIsLoading(false);
@@ -35,14 +36,20 @@ function Page() {
 
   return (
     <div className="px-4 py-3">
-      <div className="flex flex-col items-start gap-2 rounded-md border p-3">
-        <h2 className="text-sm font-bold">Account Deletion</h2>
-        <p className="text-sm text-zinc-400">
-          Permanently delete your account.
-        </p>
+      <div className="rounded-md border p-3">
+        <div className="flex flex-col items-start">
+          <h2 className="text-sm font-bold">Account Deletion</h2>
+          <p className="text-sm text-zinc-400">
+            Permanently delete your account.
+          </p>
+        </div>
         <AlertDialog>
-          <AlertDialogTrigger>
-            <Button variant="destructive" isLoading={isLoading}>
+          <AlertDialogTrigger asChild>
+            <Button
+              className="mt-2"
+              variant="destructive"
+              isLoading={isLoading}
+            >
               Delete Account
             </Button>
           </AlertDialogTrigger>

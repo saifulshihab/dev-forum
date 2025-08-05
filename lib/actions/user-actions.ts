@@ -244,6 +244,16 @@ export async function updateProfile(
   }
 }
 
+async function clearUserData(userId: string) {
+  // delete user profile data
+  await prisma.skill.deleteMany({ where: { userId } });
+  await prisma.project.deleteMany({ where: { userId } });
+  await prisma.education.deleteMany({ where: { userId } });
+  await prisma.socialLink.deleteMany({ where: { userId } });
+  await prisma.experience.deleteMany({ where: { userId } });
+  await prisma.user.delete({ where: { id: userId } });
+}
+
 export async function deleteAccount() {
   try {
     const sessionUser = await getServerSession(nextAuthOptions);
@@ -252,38 +262,54 @@ export async function deleteAccount() {
     const userId = sessionUser.user.id;
     const accessToken = sessionUser?.user?.accessToken;
 
-    const postData = "token=" + accessToken;
-    const requestOptions = {
-      host: "oauth2.googleapis.com",
-      port: "443",
-      path: "/revoke",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": Buffer.byteLength(postData)
-      }
-    };
+    if (sessionUser.user.provider === "google") {
+      // revoke access of google sign in users
+      const postData = "token=" + accessToken;
+      const requestOptions = {
+        host: "oauth2.googleapis.com",
+        port: "443",
+        path: "/revoke",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": Buffer.byteLength(postData)
+        }
+      };
 
-    const request = https.request(requestOptions, function (res) {
-      res.setEncoding("utf8");
-      res.on("data", async () => {
-        // revoke successful, delete user profile data from database
-        await prisma.skill.deleteMany({ where: { userId } });
-        await prisma.project.deleteMany({ where: { userId } });
-        await prisma.education.deleteMany({ where: { userId } });
-        await prisma.socialLink.deleteMany({ where: { userId } });
-        await prisma.experience.deleteMany({ where: { userId } });
-
-        await prisma.user.delete({ where: { id: userId } });
+      const request = https.request(requestOptions, function (res) {
+        res.setEncoding("utf8");
+        res.on("data", async () => {
+          // access revoked
+          await clearUserData(userId);
+        });
       });
-    });
 
-    request.on("error", (error) => {
-      return { error: error.message || "Something went wrong" };
-    });
+      request.on("error", (error) => {
+        return { error: error.message || "Something went wrong" };
+      });
 
-    request.write(postData);
-    request.end();
+      request.write(postData);
+      request.end();
+    } else if (sessionUser.user.provider === "github") {
+      // revoke access of github sign in users
+      const credentials = `${process.env.GITHUB_CLIENT_ID}:${process.env.GITHUB_CLIENT_SECRET}`;
+      await fetch(
+        `https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/grant`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/vnd.github+json",
+            Authorization: `Basic ${Buffer.from(credentials).toString("base64")}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            access_token: sessionUser.user.accessToken
+          })
+        }
+      );
+      // access revoked
+      await clearUserData(userId);
+    }
   } catch (err: any) {
     return { error: err?.message || "Something went wrong" };
   }

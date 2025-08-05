@@ -21,7 +21,16 @@ export const nextAuthOptions: NextAuthOptions = {
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID || "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || ""
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+      profile(profile, tokens) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name ?? profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          accessToken: tokens.access_token
+        };
+      }
     })
   ],
   session: {
@@ -51,10 +60,11 @@ export const nextAuthOptions: NextAuthOptions = {
       user.id = userData.id;
       return true;
     },
-    async jwt({ token, user }) {
-      if (user?.id) {
+    async jwt({ token, user, account }) {
+      if (!!user) {
         token.id = user.id;
         token.accessToken = (user as any)?.accessToken;
+        token.provider = account?.provider;
       }
       return token;
     },
@@ -62,6 +72,7 @@ export const nextAuthOptions: NextAuthOptions = {
       if (token?.id) {
         (session.user as any).id = token.id as string;
         (session.user as any).accessToken = token.accessToken as string;
+        (session.user as any).provider = token.provider as string;
       }
       return session;
     }

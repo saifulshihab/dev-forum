@@ -198,34 +198,30 @@ function UserProfile(props: Props) {
               <Layers className="h-5 w-5 text-zinc-300" />
               <h2 className="text-xl font-semibold text-white">Projects</h2>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-6">
-                {user.projects.map((project) => (
-                  <div key={project.id} className="border-l border-dashed pl-4">
-                    <div>
-                      <h3 className="font-semibold text-white">
-                        {project.name}
-                      </h3>
-                      {project.description && (
-                        <p className="mt-1 text-sm text-zinc-400">
-                          {project.description}
-                        </p>
-                      )}
-                      {project.url && (
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 inline-flex items-center gap-1 text-sm text-teal-400 hover:underline"
-                        >
-                          View Project
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      )}
-                    </div>
+            <div className="space-y-6">
+              {user.projects.map((project) => (
+                <div key={project.id} className="border-l border-dashed pl-4">
+                  <div>
+                    <h3 className="font-semibold text-white">{project.name}</h3>
+                    {project.description && (
+                      <p className="mt-1 text-sm text-zinc-400">
+                        {project.description}
+                      </p>
+                    )}
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-1 text-sm text-teal-400 hover:underline"
+                      >
+                        View Project
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </section>
         )}

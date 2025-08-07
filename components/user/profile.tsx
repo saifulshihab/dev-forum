@@ -114,7 +114,7 @@ function UserProfile(props: Props) {
                   href={socialLink.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-md border border-dashed px-2 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-800"
+                  className="inline-flex items-center gap-1 rounded-md border border-dashed px-2 py-1 text-xs font-medium text-zinc-300 transition-colors hover:bg-primary/10"
                 >
                   {socialLink.platform}
                   <ExternalLink className="ml-1 h-3 w-3" />

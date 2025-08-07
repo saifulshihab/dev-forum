@@ -690,9 +690,6 @@ function Page() {
                                       <SelectItem value="instagram">
                                         Instagram
                                       </SelectItem>
-                                      <SelectItem value="website">
-                                        Website
-                                      </SelectItem>
                                     </SelectContent>
                                   </Select>
                                   <FormMessage />

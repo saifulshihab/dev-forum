@@ -52,7 +52,8 @@ export const nextAuthOptions: NextAuthOptions = {
         where: { email: user.email },
         create: {
           fullName: user.name || "",
-          email: user.email
+          email: user.email,
+          dpUrl: user.image
         },
         update: {}
       });

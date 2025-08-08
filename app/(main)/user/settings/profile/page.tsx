@@ -136,16 +136,16 @@ function Page() {
   };
 
   return (
-    <div className={cn("h-full w-full", { relative: isLoading })}>
+    <div className="relative flex h-full flex-col">
+      <div className="border-b border-dashed px-4 py-3 pb-3">
+        <h2 className="text-lg font-bold">Update Profile</h2>
+      </div>
       {isLoading ? (
         <div className="absolute inset-0 z-50 grid place-content-center bg-zinc-800 bg-opacity-80">
           <Spinner />
         </div>
       ) : null}
-      <div className="border-b border-dashed px-4 py-3 pb-3">
-        <h2 className="text-lg font-bold">Update Profile</h2>
-      </div>
-      <div className="max-h-[calc(100vh-6.4375rem)] overflow-y-auto px-4 py-3">
+      <div className="flex-1 px-4 py-3">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -294,7 +294,7 @@ function Page() {
                 )}
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="secondary"
                   className="border-dashed"
                   onClick={() => {
                     skillsField.append({ name: "" });
@@ -383,7 +383,7 @@ function Page() {
               </div>
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 size={projectField.fields.length ? "default" : "icon"}
                 className={cn("rounded-full", {
                   "mt-3 rounded-md": projectField.fields.length
@@ -515,7 +515,7 @@ function Page() {
               </div>
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 size={experienceField.fields.length ? "default" : "icon"}
                 className={cn("rounded-full", {
                   "mt-3 rounded-md": experienceField.fields.length
@@ -650,7 +650,7 @@ function Page() {
               </div>
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 size={educationField.fields.length ? "default" : "icon"}
                 className={cn("rounded-full", {
                   "mt-3 rounded-md": educationField.fields.length
@@ -747,7 +747,7 @@ function Page() {
               </div>
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 size={socialLinksField.fields.length ? "default" : "icon"}
                 className={cn("rounded-full", {
                   "mt-3 rounded-md": socialLinksField.fields.length
@@ -760,7 +760,7 @@ function Page() {
                 {socialLinksField.fields.length ? "Add Link" : null}
               </Button>
             </div>
-            <div className="sticky bottom-0 right-0 mt-4 flex justify-end bg-zinc-900 p-3">
+            <div className="sticky bottom-0 right-0 -mx-4 mt-4 flex justify-end border-t border-dashed bg-zinc-900 p-3">
               <Button type="submit">Save changes</Button>
             </div>
           </form>

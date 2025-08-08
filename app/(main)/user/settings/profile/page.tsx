@@ -145,7 +145,7 @@ function Page() {
       <div className="border-b border-dashed px-4 py-3 pb-3">
         <h2 className="text-lg font-bold">Update Profile</h2>
       </div>
-      <div className="px-4 py-3">
+      <div className="max-h-[calc(100vh-6.4375rem)] overflow-y-auto px-4 py-3">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -760,7 +760,7 @@ function Page() {
                 {socialLinksField.fields.length ? "Add Link" : null}
               </Button>
             </div>
-            <div className="mt-4 flex justify-end">
+            <div className="sticky bottom-0 right-0 mt-4 flex justify-end bg-zinc-900 p-3">
               <Button type="submit">Save changes</Button>
             </div>
           </form>

@@ -1,6 +1,6 @@
-import { Prisma } from "@/app/generated/prisma";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { FullUser } from "@/types";
 import dayjs from "dayjs";
 import {
   BriefcaseBusiness,
@@ -19,15 +19,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  user: Prisma.UserGetPayload<{
-    include: {
-      skills: true;
-      projects: true;
-      educations: true;
-      experiences: true;
-      socialLinks: true;
-    };
-  }>;
+  user: FullUser;
 };
 
 function UserProfile(props: Props) {

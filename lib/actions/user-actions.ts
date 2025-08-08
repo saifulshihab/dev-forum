@@ -2,6 +2,7 @@
 
 import { Prisma } from "@/app/generated/prisma";
 import { authCheck, nextAuthOptions } from "@/auth";
+import { FullUser } from "@/types";
 import https from "https";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -22,15 +23,7 @@ export async function getUser(userId: string, fetchFullUser?: boolean) {
       socialLinks: true
     };
   }
-  return (await prisma.user.findUnique(args)) as Prisma.UserGetPayload<{
-    include: {
-      skills: true;
-      projects: true;
-      educations: true;
-      experiences: true;
-      socialLinks: true;
-    };
-  }>;
+  return (await prisma.user.findUnique(args)) as FullUser;
 }
 
 export async function getCurrentUser(fetchFullUser?: boolean) {
@@ -40,193 +33,88 @@ export async function getCurrentUser(fetchFullUser?: boolean) {
   }
 }
 
-export async function updateProfile(
-  data: Prisma.UserGetPayload<{
-    include: {
-      skills: true;
-      projects: true;
-      educations: true;
-      experiences: true;
-      socialLinks: true;
-    };
-  }>
-) {
+async function updateUserSubEntity({
+  userId,
+  prismaModel,
+  newItems,
+  oldItems
+}: {
+  userId: string;
+  prismaModel: any;
+  newItems: any[];
+  oldItems: any[];
+}) {
+  if (newItems?.length) {
+    const removedIds = oldItems
+      ?.filter((old) => !newItems.find((n) => n.id === old.id))
+      .map((old) => old.id);
+
+    if (removedIds.length) {
+      await prismaModel.deleteMany({
+        where: { id: { in: removedIds }, userId }
+      });
+    }
+
+    for (const item of newItems) {
+      if (item.id) {
+        const prev = oldItems?.find((o) => o.id === item.id);
+        if (prev) {
+          await prismaModel.update({
+            where: { id: item.id },
+            data: item
+          });
+        }
+      } else {
+        await prismaModel.create({ data: { ...item, userId } });
+      }
+    }
+  } else {
+    // all items are removed, delete from db
+    await prismaModel.deleteMany({ where: { userId } });
+  }
+}
+
+export async function updateProfile(data: FullUser) {
   try {
     const { user } = await authCheck();
-
     if (!user?.id) return;
     const userData = await getUser(user.id, true);
     const userId = user.id;
 
-    // UPDATE SKILL DATA
-    if (data?.skills?.length) {
-      const removedSkillsIds = userData.skills
-        ?.filter((skill) => !data.skills.find((data) => data.id === skill.id))
-        .map((data) => data.id);
+    await updateUserSubEntity({
+      userId,
+      prismaModel: prisma.skill,
+      newItems: data?.skills ?? [],
+      oldItems: userData.skills ?? []
+    });
 
-      if (removedSkillsIds.length) {
-        await prisma.skill.deleteMany({
-          where: { id: { in: removedSkillsIds }, userId }
-        });
-      }
-      for (const skill of data.skills) {
-        if (skill.id) {
-          const prevSkill = userData.skills?.find(
-            (data) => data.id === skill.id
-          );
-          if (prevSkill) {
-            await prisma.skill.update({
-              where: { id: skill.id },
-              data: skill
-            });
-          }
-        } else {
-          await prisma.skill.create({ data: { ...skill, userId } });
-        }
-      }
-    } else {
-      // all skills are removed, delete from db
-      await prisma.skill.deleteMany({ where: { userId } });
-    }
+    await updateUserSubEntity({
+      userId,
+      prismaModel: prisma.project,
+      newItems: data?.projects ?? [],
+      oldItems: userData.projects ?? []
+    });
 
-    // UPDATE PROJECT DATA
-    if (data?.projects?.length) {
-      const removedProjectsIds = userData.projects
-        ?.filter(
-          (project) => !data.projects.find((data) => data.id === project.id)
-        )
-        .map((data) => data.id);
+    await updateUserSubEntity({
+      userId,
+      prismaModel: prisma.experience,
+      newItems: data?.experiences ?? [],
+      oldItems: userData.experiences ?? []
+    });
 
-      if (removedProjectsIds.length) {
-        await prisma.project.deleteMany({
-          where: { id: { in: removedProjectsIds }, userId }
-        });
-      }
+    await updateUserSubEntity({
+      userId,
+      prismaModel: prisma.education,
+      newItems: data?.educations ?? [],
+      oldItems: userData.educations ?? []
+    });
 
-      for (const project of data.projects) {
-        if (project.id) {
-          const prevProject = userData.projects?.find(
-            (data) => data.id === project.id
-          );
-          if (prevProject) {
-            await prisma.project.update({
-              where: { id: project.id },
-              data: project
-            });
-          }
-        } else {
-          await prisma.project.create({ data: { ...project, userId } });
-        }
-      }
-    } else {
-      // all projects are removed, delete from db
-      await prisma.project.deleteMany({ where: { userId } });
-    }
-
-    // UPDATE EXPERIENCE DATA
-    if (data?.experiences?.length) {
-      const removedExperiencesIds = userData.experiences
-        ?.filter(
-          (experience) =>
-            !data.experiences.find((data) => data.id === experience.id)
-        )
-        .map((data) => data.id);
-
-      if (removedExperiencesIds.length) {
-        await prisma.experience.deleteMany({
-          where: { id: { in: removedExperiencesIds }, userId }
-        });
-      }
-
-      for (const experience of data.experiences) {
-        if (experience.id) {
-          const prevExperience = userData.experiences?.find(
-            (data) => data.id === experience.id
-          );
-          if (prevExperience) {
-            await prisma.experience.update({
-              where: { id: experience.id },
-              data: experience
-            });
-          }
-        } else {
-          await prisma.experience.create({ data: { ...experience, userId } });
-        }
-      }
-    } else {
-      // all experiences are removed, delete from db
-      await prisma.education.deleteMany({ where: { userId } });
-    }
-
-    // UPDATE EDUCATION DATA
-    if (data?.educations?.length) {
-      const removedEducationsIds = userData.educations
-        ?.filter(
-          (education) =>
-            !data.educations.find((data) => data.id === education.id)
-        )
-        .map((data) => data.id);
-
-      if (removedEducationsIds.length) {
-        await prisma.education.deleteMany({
-          where: { id: { in: removedEducationsIds }, userId }
-        });
-      }
-
-      for (const education of data.educations) {
-        if (education.id) {
-          const prevEducation = userData.educations?.find(
-            (data) => data.id === education.id
-          );
-          if (prevEducation) {
-            await prisma.education.update({
-              where: { id: education.id },
-              data: education
-            });
-          }
-        } else {
-          await prisma.education.create({ data: { ...education, userId } });
-        }
-      }
-    } else {
-      // all educations are removed, delete from db
-      await prisma.education.deleteMany({ where: { userId } });
-    }
-
-    // UPDATE SOCIAL LINKS DATA
-    if (data?.socialLinks?.length) {
-      const removedSocialLinksIds = userData.socialLinks
-        .filter(
-          (socialLink) =>
-            !data.socialLinks.find((data) => data.id === socialLink.id)
-        )
-        .map((data) => data.id);
-
-      if (removedSocialLinksIds.length) {
-        await prisma.socialLink.deleteMany({
-          where: { id: { in: removedSocialLinksIds }, userId }
-        });
-      }
-
-      for (const socialLink of data.socialLinks) {
-        if (socialLink.id) {
-          const prevSocialLink = userData.socialLinks?.find(
-            (data) => data.id === socialLink.id
-          );
-          if (prevSocialLink) {
-            await prisma.socialLink.update({
-              where: { id: socialLink.id },
-              data: socialLink
-            });
-          }
-        } else {
-          await prisma.socialLink.create({ data: { ...socialLink, userId } });
-        }
-      }
-    } else {
-      // all social links are removed, delete from db
-      await prisma.socialLink.deleteMany({ where: { userId } });
-    }
+    await updateUserSubEntity({
+      userId,
+      prismaModel: prisma.socialLink,
+      newItems: data?.socialLinks ?? [],
+      oldItems: userData.socialLinks ?? []
+    });
 
     await prisma.user.update({
       where: { id: userId },

@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const UserValidator = z.object({
   fullName: z.string().optional(),
-  email: z.email().nonempty("Email is required"),
   username: z.string().optional(),
   dob: z.date().optional(),
   bio: z.string().optional(),
@@ -22,7 +21,7 @@ const UserValidator = z.object({
         id: z.string().optional(),
         role: z.string().nonempty("Role is required"),
         company: z.string().nonempty("Company name in required"),
-        from: z.date("Required").nullable(),
+        from: z.date("Required"),
         to: z.date().optional(),
         present: z.boolean().optional(),
         description: z.string().optional()
@@ -34,7 +33,7 @@ const UserValidator = z.object({
       z.object({
         id: z.string().optional(),
         institute: z.string().nonempty("Institute name is required"),
-        from: z.date("Required").nullable(),
+        from: z.date("Required"),
         to: z.date().optional(),
         present: z.boolean().optional(),
         description: z.string().optional()

@@ -27,6 +27,7 @@ import { getCurrentUser, updateProfile } from "@/lib/actions";
 import { countries } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { UserValidator } from "@/lib/validators/user-validator";
+import { FullUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, Trash, X } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
@@ -46,6 +47,36 @@ function Page() {
   });
   const formErrors = form.formState.errors;
 
+  // Helper function to transform user data for form reset
+  const transformUserForForm = (user: FullUser) => {
+    return {
+      ...user,
+      fullName: user.fullName ?? undefined,
+      username: user.username ?? undefined,
+      bio: user.bio ?? undefined,
+      dob: user.dob ?? undefined,
+      websiteUrl: user.websiteUrl ?? undefined,
+      location: user.location ?? undefined,
+      experiences: user.experiences?.map((exp) => ({
+        ...exp,
+        to: exp.to ?? undefined,
+        present: exp.present ?? true,
+        description: exp.description ?? undefined
+      })),
+      educations: user.educations?.map((edu) => ({
+        ...edu,
+        to: edu.to ?? undefined,
+        present: edu.present ?? true,
+        description: edu.description ?? undefined
+      })),
+      projects: user.projects?.map((project) => ({
+        ...project,
+        description: project.description ?? undefined,
+        url: project.url ?? undefined
+      }))
+    } as FullUser;
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -54,7 +85,7 @@ function Page() {
           setIsLoading(false);
           return;
         }
-        form.reset(user as any);
+        form.reset(transformUserForForm(user) as any);
         setIsLoading(false);
       } catch {
         setIsLoading(false);
@@ -96,7 +127,7 @@ function Page() {
       } else {
         toast.success("Profile updated");
         const user = await getCurrentUser(true);
-        if (user) form.reset(user as any);
+        if (user) form.reset(transformUserForForm(user) as any);
       }
     } catch {
     } finally {
@@ -157,23 +188,6 @@ function Page() {
                     <FormLabel>Bio</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your bio" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="email"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled
-                        placeholder="Enter your email address (e.g. your-name@gmail.com)"
-                        {...field}
-                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -507,7 +521,11 @@ function Page() {
                   "mt-3 rounded-md": experienceField.fields.length
                 })}
                 onClick={() => {
-                  experienceField.append({ role: "", company: "", from: null });
+                  experienceField.append({
+                    role: "",
+                    company: "",
+                    from: null as any
+                  });
                 }}
               >
                 <PlusIcon />
@@ -638,7 +656,7 @@ function Page() {
                   "mt-3 rounded-md": educationField.fields.length
                 })}
                 onClick={() => {
-                  educationField.append({ institute: "", from: null });
+                  educationField.append({ institute: "", from: null as any });
                 }}
               >
                 <PlusIcon />

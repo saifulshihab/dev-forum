@@ -17,27 +17,49 @@ const UserValidator = z.object({
     .optional(),
   experiences: z
     .array(
-      z.object({
-        id: z.string().optional(),
-        role: z.string().nonempty("Role is required"),
-        company: z.string().nonempty("Company name in required"),
-        from: z.date("Required"),
-        to: z.date().optional(),
-        present: z.boolean().optional(),
-        description: z.string().optional()
-      })
+      z
+        .object({
+          id: z.string().optional(),
+          role: z.string().nonempty("Role is required"),
+          company: z.string().nonempty("Company name in required"),
+          from: z.date("Required"),
+          to: z.date().optional(),
+          present: z.boolean().optional(),
+          description: z.string().optional()
+        })
+        .refine(
+          (data) => {
+            if (data.present === true) return true;
+            return data.to !== undefined && data.to !== null;
+          },
+          {
+            message: "Required",
+            path: ["to"]
+          }
+        )
     )
     .optional(),
   educations: z
     .array(
-      z.object({
-        id: z.string().optional(),
-        institute: z.string().nonempty("Institute name is required"),
-        from: z.date("Required"),
-        to: z.date().optional(),
-        present: z.boolean().optional(),
-        description: z.string().optional()
-      })
+      z
+        .object({
+          id: z.string().optional(),
+          institute: z.string().nonempty("Institute name is required"),
+          from: z.date("Required"),
+          to: z.date().optional(),
+          present: z.boolean().optional(),
+          description: z.string().optional()
+        })
+        .refine(
+          (data) => {
+            if (data.present === true) return true;
+            return data.to !== undefined && data.to !== null;
+          },
+          {
+            message: "Required",
+            path: ["to"]
+          }
+        )
     )
     .optional(),
   projects: z

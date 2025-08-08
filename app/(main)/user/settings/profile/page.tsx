@@ -457,36 +457,46 @@ function Page() {
                             )}
                           />
                           <Controller
-                            name={`experiences.${fieldIdx}.to`}
+                            name={`experiences.${fieldIdx}.present`}
                             control={form.control}
                             render={({ field }) => (
-                              <DatePicker
-                                label="To"
-                                date={field.value}
-                                onSelect={field.onChange}
-                              />
+                              <Fragment>
+                                <Checkbox
+                                  id={`experiences.${fieldIdx}.present`}
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                                <Label
+                                  htmlFor={`experiences.${fieldIdx}.present`}
+                                >
+                                  Present
+                                </Label>
+                              </Fragment>
                             )}
                           />
-                          <div className="flex items-center gap-3">
+                          {!form.watch(`experiences.${fieldIdx}.present`) && (
                             <Controller
-                              name={`experiences.${fieldIdx}.present`}
+                              name={`experiences.${fieldIdx}.to`}
                               control={form.control}
                               render={({ field }) => (
-                                <Fragment>
-                                  <Checkbox
-                                    id={`experiences.${fieldIdx}.present`}
-                                    checked={!field.value ? false : true}
-                                    onCheckedChange={field.onChange}
+                                <div>
+                                  <DatePicker
+                                    label="To"
+                                    date={field.value}
+                                    onSelect={field.onChange}
                                   />
-                                  <Label
-                                    htmlFor={`experiences.${fieldIdx}.present`}
-                                  >
-                                    Present
-                                  </Label>
-                                </Fragment>
+                                  {formErrors?.experiences?.[fieldIdx]?.to && (
+                                    <FormMessage>
+                                      {
+                                        formErrors?.experiences?.[fieldIdx]?.to
+                                          ?.message as string
+                                      }
+                                    </FormMessage>
+                                  )}
+                                </div>
                               )}
                             />
-                          </div>
+                          )}
                         </div>
                         <FormField
                           control={form.control}
@@ -524,7 +534,8 @@ function Page() {
                   experienceField.append({
                     role: "",
                     company: "",
-                    from: null as any
+                    from: null as any,
+                    present: true
                   });
                 }}
               >
@@ -595,36 +606,46 @@ function Page() {
                             )}
                           />
                           <Controller
-                            name={`educations.${fieldIdx}.to`}
+                            name={`educations.${fieldIdx}.present`}
                             control={form.control}
                             render={({ field }) => (
-                              <DatePicker
-                                label="To"
-                                date={field.value}
-                                onSelect={field.onChange}
-                              />
+                              <Fragment>
+                                <Checkbox
+                                  id={`educations.${fieldIdx}.present`}
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                                <Label
+                                  htmlFor={`educations.${fieldIdx}.present`}
+                                >
+                                  Present
+                                </Label>
+                              </Fragment>
                             )}
                           />
-                          <div className="flex items-center gap-3">
+                          {!form.watch(`educations.${fieldIdx}.present`) && (
                             <Controller
-                              name={`educations.${fieldIdx}.present`}
+                              name={`educations.${fieldIdx}.to`}
                               control={form.control}
                               render={({ field }) => (
-                                <Fragment>
-                                  <Checkbox
-                                    id={`educations.${fieldIdx}.present`}
-                                    checked={!field.value ? false : true}
-                                    onCheckedChange={field.onChange}
+                                <div>
+                                  <DatePicker
+                                    label="To"
+                                    date={field.value}
+                                    onSelect={field.onChange}
                                   />
-                                  <Label
-                                    htmlFor={`educations.${fieldIdx}.present`}
-                                  >
-                                    Present
-                                  </Label>
-                                </Fragment>
+                                  {formErrors?.educations?.[fieldIdx]?.to && (
+                                    <FormMessage>
+                                      {
+                                        formErrors?.educations?.[fieldIdx]?.to
+                                          ?.message as string
+                                      }
+                                    </FormMessage>
+                                  )}
+                                </div>
                               )}
                             />
-                          </div>
+                          )}
                         </div>
                         <FormField
                           control={form.control}
@@ -656,7 +677,11 @@ function Page() {
                   "mt-3 rounded-md": educationField.fields.length
                 })}
                 onClick={() => {
-                  educationField.append({ institute: "", from: null as any });
+                  educationField.append({
+                    institute: "",
+                    from: null as any,
+                    present: true
+                  });
                 }}
               >
                 <PlusIcon />

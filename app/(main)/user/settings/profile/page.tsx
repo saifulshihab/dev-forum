@@ -21,7 +21,6 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import Spinner from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { getCurrentUser, updateProfile } from "@/lib/actions";
 import { countries } from "@/lib/data";
@@ -140,12 +139,8 @@ function Page() {
       <div className="border-b border-dashed px-4 py-3 pb-3">
         <h2 className="text-lg font-bold">Update Profile</h2>
       </div>
-      {isLoading ? (
-        <div className="absolute inset-0 z-50 grid place-content-center bg-zinc-800 bg-opacity-80">
-          <Spinner />
-        </div>
-      ) : null}
-      <div className="flex-1 px-4 py-3">
+
+      <div className={cn("flex-1 px-4 py-3", { relative: isLoading })}>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -786,10 +781,15 @@ function Page() {
               </Button>
             </div>
             <div className="sticky bottom-0 right-0 -mx-4 mt-4 flex justify-end border-t border-dashed bg-zinc-900 p-3">
-              <Button type="submit">Save changes</Button>
+              <Button isLoading={isLoading} type="submit">
+                Save changes
+              </Button>
             </div>
           </form>
         </Form>
+        {isLoading ? (
+          <div className="absolute inset-0 z-50 bg-zinc-800 bg-opacity-80" />
+        ) : null}
       </div>
     </div>
   );

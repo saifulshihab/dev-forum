@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteAccount } from "@/lib/actions";
+import { Trash2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -50,6 +51,7 @@ function Page() {
               variant="destructive"
               isLoading={isLoading}
             >
+              <Trash2 className="mr-1" />
               Delete Account
             </Button>
           </AlertDialogTrigger>

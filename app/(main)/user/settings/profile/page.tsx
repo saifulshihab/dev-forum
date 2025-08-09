@@ -136,8 +136,8 @@ function Page() {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="border-b border-dashed px-4 py-3 pb-3">
-        <h2 className="text-sm font-bold">Update Profile</h2>
+      <div className="px-4 py-3 pb-4">
+        <h2 className="text-lg font-bold">Update Profile</h2>
       </div>
       <div className={cn("flex-1 px-4 py-3", { relative: isLoading })}>
         <Form {...form}>

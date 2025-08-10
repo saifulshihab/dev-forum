@@ -1,6 +1,5 @@
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
-import Header from "@/components/header";
 import { AppSidebar } from "@/components/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
@@ -38,12 +37,7 @@ export default async function RootLayout({
             <TooltipProvider>
               <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                 <AppSidebar />
-                <div className="h-full w-full">
-                  <Header />
-                  <div className="h-[calc(100vh-3.125rem)] overflow-y-auto">
-                    {children}
-                  </div>
-                </div>
+                <div className="h-full flex-1 overflow-y-auto">{children}</div>
               </main>
             </TooltipProvider>
           </AuthSessionProvider>

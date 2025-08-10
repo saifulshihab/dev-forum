@@ -136,7 +136,7 @@ function Page() {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="px-4 py-3 pb-4">
+      <div className="px-4 py-3">
         <h2 className="text-lg font-bold">Update Profile</h2>
       </div>
       <div className={cn("flex-1 px-4 py-3", { relative: isLoading })}>
@@ -779,7 +779,7 @@ function Page() {
                 {socialLinksField.fields.length ? "Add Link" : null}
               </Button>
             </div>
-            <div className="sticky bottom-0 right-0 -mx-4 mt-4 flex justify-end border-t border-dashed bg-zinc-900 p-3">
+            <div className="sticky bottom-0 right-0 -mx-4 mt-4 flex justify-end border-t border-dashed bg-gradient-to-r from-zinc-950 to-zinc-900 p-3">
               <Button isLoading={isLoading} type="submit">
                 Save changes
               </Button>

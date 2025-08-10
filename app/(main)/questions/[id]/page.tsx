@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { getQuestion } from "@/lib/data";
 
 import {
+  ArrowLeft,
   ChevronDown,
   ChevronUp,
   EyeIcon,
@@ -25,8 +26,18 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <div>
-      <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3">
+    <div className="space-y-3 p-3">
+      <div className="space-y-2 rounded-md bg-zinc-900 p-3 px-4">
+        <Button
+          asChild
+          variant="link"
+          className="px-0 text-muted-foreground hover:no-underline"
+        >
+          <Link href="/questions">
+            <ArrowLeft className="mr-1" />
+            Back
+          </Link>
+        </Button>
         <h2 className="text-2xl font-bold">{question.title}</h2>
         <p className="text-sm text-zinc-400">{question.description}</p>
         <div className="flex items-center justify-between">
@@ -60,7 +71,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
           </div>
         </div>
       </div>
-      <div className="mt-3 rounded-md bg-zinc-900 p-3">
+      <div className="rounded-md bg-zinc-900 p-3">
         <h2 className="text-sm font-semibold">Answers</h2>
         <Separator className="my-3" />
         <div className="my-2">

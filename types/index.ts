@@ -1,4 +1,4 @@
-import { Prisma } from "@/app/generated/prisma";
+import { Prisma } from "@/generated/prisma";
 
 export type FullUser = Prisma.UserGetPayload<{
   include: {

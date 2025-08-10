@@ -560,11 +560,6 @@ export async function getQuestion(id: string) {
   return questions.find((question) => question.id === id);
 }
 
-export async function getTopQuestions() {
-  await sleep(1000);
-  return questions.slice(0, 3);
-}
-
 export async function getProjects() {
   await sleep(500);
   return projects;
@@ -573,6 +568,74 @@ export async function getProjects() {
 export async function getJobs() {
   await sleep(500);
   return jobs;
+}
+
+export async function getCommunityActivity() {
+  await sleep(500);
+
+  // Mock activity data - in real app, this would come from database
+  const activities = [
+    {
+      id: "act-001",
+      type: "question" as const,
+      title: "New question about React Server Components",
+      description: "Understanding React Server Components and their use cases",
+      user: "react_dev",
+      stats: {
+        views: 45,
+        answers: 2
+      },
+      tags: ["react", "server-components"]
+    },
+    {
+      id: "act-002",
+      type: "answer" as const,
+      title: "Great answer on NextAuth.js implementation",
+      description: "Detailed explanation with code examples",
+      user: "auth_expert",
+      stats: {
+        upvotes: 12
+      },
+      tags: ["nextauth", "authentication"]
+    },
+    {
+      id: "act-003",
+      type: "user" as const,
+      title: "New member joined: Shihab",
+      description: "Full-stack developer with 5 years experience",
+      user: "shiha6"
+    },
+    {
+      id: "act-004",
+      type: "trending" as const,
+      title: "Docker vs Kubernetes discussion trending",
+      description: "Hot debate about container orchestration choices",
+      user: "cloud_architect",
+      stats: {
+        views: 234,
+        answers: 8
+      },
+      tags: ["docker", "kubernetes", "devops"]
+    }
+  ];
+
+  return activities;
+}
+
+export async function getCommunityStats() {
+  await sleep(300);
+
+  // Mock community statistics - in real app, this would be calculated from database
+  const stats = {
+    totalUsers: 1247,
+    totalQuestions: 892,
+    totalAnswers: 2156,
+    jobsPosted: 156,
+    freelanceProjects: 89,
+    trendingTopics: ["react", "nextjs", "typescript", "docker", "aws", "python"]
+  };
+
+  return stats;
 }
 
 export const countries = [

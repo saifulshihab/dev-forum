@@ -10,19 +10,15 @@ function Loading() {
           .map((_, idx) => (
             <div
               key={idx}
-              className="flex h-[11.5625rem] flex-col justify-between gap-1 rounded-md bg-zinc-900 p-3"
+              className="flex h-[8.625rem] flex-col justify-between gap-1 rounded-md bg-zinc-900 p-3 px-4"
             >
               <div className="flex flex-col gap-3">
-                <Skeleton className="h-5 w-1/3 bg-zinc-800" />
-                <Skeleton className="h-4 w-20 bg-zinc-800" />
+                <Skeleton className="h-5 w-40 bg-zinc-800" />
+                <Skeleton className="h-5 w-72 bg-zinc-800" />
               </div>
-              <div className="flex flex-col gap-3">
-                <Skeleton className="h-5 w-10/12 bg-zinc-800" />
-                <Skeleton className="h-5 w-1/2 bg-zinc-800" />
-              </div>
-              <div className="grid grid-cols-2 gap-1">
+              <div className="flex justify-between">
                 <Skeleton className="h-4 w-20 bg-zinc-800" />
-                <Skeleton className="h-4 w-20 bg-zinc-800" />
+                <Skeleton className="h-4 w-40 bg-zinc-800" />
               </div>
             </div>
           ))}

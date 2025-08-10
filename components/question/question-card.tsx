@@ -5,7 +5,7 @@ import Link from "next/link";
 function QuestionCard(props: { question: TQuestion }) {
   const { question } = props;
   return (
-    <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3">
+    <div className="flex flex-col gap-2 rounded-md bg-zinc-900 p-3 px-4">
       <Link href={`/questions/${question.id}`}>
         <h2 className="font-semibold">{question.title}</h2>
       </Link>

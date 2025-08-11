@@ -137,7 +137,7 @@ function Page() {
   return (
     <div className="relative flex h-full flex-col">
       <div className="px-4 py-3">
-        <h2 className="text-lg font-bold">Update Profile</h2>
+        <h2 className="text-xl font-bold">Update Profile</h2>
       </div>
       <div className={cn("flex-1 px-4 py-3", { relative: isLoading })}>
         <Form {...form}>
@@ -252,9 +252,9 @@ function Page() {
                 />
               </div>
             </div>
-            <Separator />
+            <Separator className="my-4" />
             <div className="flex flex-col gap-2">
-              <Label>Skills</Label>
+              <Label className="text-xl">Skills</Label>
               <div className="grid grid-cols-4 items-center gap-3">
                 {skillsField?.fields.length ? (
                   skillsField.fields.map((field, fieldIdx) => (
@@ -299,14 +299,14 @@ function Page() {
                 </Button>
               </div>
             </div>
-            <Separator />
+            <Separator className="my-4" />
             <div
               className={cn("flex w-full items-center justify-between", {
                 "flex-col items-start": projectField.fields.length
               })}
             >
               <div className="flex w-full flex-col gap-2">
-                <Label>Project</Label>
+                <Label className="text-xl">Project</Label>
                 <div className="flex flex-col gap-5">
                   {projectField.fields.length ? (
                     projectField.fields.map((field, fieldIdx) => (
@@ -390,14 +390,14 @@ function Page() {
                 {projectField.fields.length ? "Add Project" : null}
               </Button>
             </div>
-            <Separator />
+            <Separator className="my-4" />
             <div
               className={cn("flex w-full items-center justify-between", {
                 "flex-col items-start": experienceField.fields.length
               })}
             >
               <div className="flex w-full flex-col gap-2">
-                <Label>Experience</Label>
+                <Label className="text-xl">Experience</Label>
                 <div className="flex flex-col gap-5">
                   {experienceField.fields.length ? (
                     experienceField.fields.map((field, fieldIdx) => (
@@ -537,14 +537,14 @@ function Page() {
                 {experienceField.fields.length ? "Add Experience" : null}
               </Button>
             </div>
-            <Separator />
+            <Separator className="my-4" />
             <div
               className={cn("flex w-full items-center justify-between", {
                 "flex-col items-start": educationField.fields.length
               })}
             >
               <div className="flex w-full flex-col gap-2">
-                <Label>Education</Label>
+                <Label className="text-xl">Education</Label>
                 <div className="flex flex-col gap-5">
                   {educationField.fields.length ? (
                     educationField.fields.map((field, fieldIdx) => (
@@ -682,14 +682,14 @@ function Page() {
                 {educationField.fields.length ? "Add Education" : null}
               </Button>
             </div>
-            <Separator />
+            <Separator className="my-4" />
             <div
               className={cn("flex w-full items-center justify-between", {
                 "flex-col items-start": socialLinksField.fields.length
               })}
             >
               <div className="flex w-full flex-col gap-2">
-                <Label>Social Links</Label>
+                <Label className="text-xl">Social Links</Label>
                 <div className="flex flex-col gap-5">
                   {socialLinksField.fields.length ? (
                     socialLinksField.fields.map((field, fieldIdx) => (

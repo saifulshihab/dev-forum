@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import {
   BookOpen,
   Briefcase,
@@ -256,7 +257,11 @@ export function AppSidebar() {
         </div>
       )}
       {/* Main Navigation */}
-      <div className="h-[calc(100vh-17.375rem)] overflow-y-auto">
+      <div
+        className={cn("h-[calc(100vh-17.375rem)] overflow-y-auto", {
+          "h-[calc(100vh-19.1875rem)]": isAuthenticated
+        })}
+      >
         <div className="p-3">
           <p
             className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}

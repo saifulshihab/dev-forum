@@ -306,7 +306,7 @@ function Page() {
                   <Button
                     type="button"
                     variant="secondary"
-                    className="border-dashed"
+                    className="w-[8.9375rem] border-dashed"
                     onClick={() => {
                       skillsField.append({ name: "" });
                     }}

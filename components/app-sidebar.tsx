@@ -324,7 +324,7 @@ export function AppSidebar() {
       </div>
       {/* Settings */}
       {!isAuthenticated && sidebarOpen && (
-        <div className="flex h-[3.125rem] items-center">
+        <div className="flex h-[3.125rem] items-center border-t border-dashed">
           <Button
             variant="link"
             className="text-muted-foreground hover:text-white hover:no-underline"

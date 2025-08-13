@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import {
   BookOpen,
   Briefcase,
+  ChevronsUpDown,
   Code,
   HelpCircle,
   Home,
@@ -18,6 +19,7 @@ import {
   Settings,
   Star,
   TrendingUp,
+  User,
   Users,
   Zap
 } from "lucide-react";
@@ -27,7 +29,15 @@ import Link from "next/link";
 import { useState } from "react";
 import NavItem from "./nav-item";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger
+} from "./ui/dropdown-menu";
 
 export function AppSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -161,47 +171,64 @@ export function AppSidebar() {
       {/* User Profile Section */}
       {sidebarOpen ? (
         isAuthenticated ? (
-          <Link href="/user/profile">
-            <div className="border-b border-dashed p-3">
-              <div className="group flex items-center justify-between rounded-lg border border-dashed bg-muted/30 p-2">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
-                    <Avatar>
-                      <AvatarImage
-                        src={session.data.user?.image as any}
-                        alt={session.data.user?.name as any}
-                      />
-                      <AvatarFallback>{session.data.user?.name}</AvatarFallback>
-                    </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="border-b border-dashed p-3">
+                <div className="flex items-center justify-between rounded-lg border border-dashed bg-muted/30 p-2 hover:bg-muted/50">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+                      <Avatar>
+                        <AvatarImage
+                          src={session.data.user?.image as any}
+                          alt={session.data.user?.name as any}
+                        />
+                        <AvatarFallback>
+                          {session.data.user?.name}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium">
+                        {session.data.user?.name}
+                      </p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {session.data.user?.name}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">
-                      {session.data.user?.name}
-                    </p>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {session.data.user?.name}
-                    </p>
-                  </div>
-                </div>
-                <div className="translate-x-4 transform opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="h-8 w-8"
-                        onClick={() => signOut()}
-                      >
-                        <LogOut className="h-4 w-4 text-zinc-400" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Logout</p>
-                    </TooltipContent>
-                  </Tooltip>
+                  <ChevronsUpDown className="h-4 w-4 text-zinc-200" />
                 </div>
               </div>
-            </div>
-          </Link>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="right"
+              align="start"
+              className="m-auto w-56"
+            >
+              <DropdownMenuGroup>
+                <Link href="/user/profile">
+                  <DropdownMenuItem>
+                    <User />
+                    Profile
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/user/settings/profile">
+                  <DropdownMenuItem>
+                    <Settings />
+                    Settings
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={async () => await signOut()}>
+                <LogOut />
+                Log out
+                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : null
       ) : null}
       {/* Quick Actions */}
@@ -289,29 +316,17 @@ export function AppSidebar() {
         </nav>
       </div>
       {/* Settings */}
-      {isAuthenticated ? (
-        <div className="mt-auto p-3">
-          <NavItem
-            icon={<Settings size={16} />}
-            text="Settings"
-            href="/user/settings/profile"
-            collapsed={!sidebarOpen}
-            badge={null}
-          />
+      {!isAuthenticated && sidebarOpen && (
+        <div className="absolute bottom-0 flex items-center justify-center p-3">
+          <Button
+            variant="link"
+            className="w-full text-muted-foreground hover:no-underline"
+            onClick={() => signIn()}
+          >
+            <LogIn />
+            Sign in
+          </Button>
         </div>
-      ) : (
-        sidebarOpen && (
-          <div className="absolute bottom-0 flex items-center justify-center p-3">
-            <Button
-              variant="link"
-              className="w-full text-muted-foreground hover:no-underline"
-              onClick={() => signIn()}
-            >
-              <LogIn />
-              Sign in
-            </Button>
-          </div>
-        )
       )}
     </div>
   );

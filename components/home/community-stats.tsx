@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { sleep } from "@/lib/utils";
 import {
   Briefcase,
   Layers,
@@ -20,7 +21,7 @@ interface CommunityStatsProps {
   };
 }
 
-export default function CommunityStats({ stats }: CommunityStatsProps) {
+export default async function CommunityStats({ stats }: CommunityStatsProps) {
   const statCards = [
     {
       title: "Total Users",
@@ -53,7 +54,7 @@ export default function CommunityStats({ stats }: CommunityStatsProps) {
       color: "border-teal-500/20 bg-teal-500/10"
     }
   ];
-
+  await sleep(5000);
   return (
     <div className="space-y-4">
       {/* Stats Grid */}

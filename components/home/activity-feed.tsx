@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { sleep } from "@/lib/utils";
 import {
   Clock,
   Eye,
@@ -27,7 +28,8 @@ interface ActivityFeedProps {
   activities: ActivityItem[];
 }
 
-export default function ActivityFeed({ activities }: ActivityFeedProps) {
+export default async function ActivityFeed({ activities }: ActivityFeedProps) {
+  await sleep(5000);
   const getActivityIcon = (type: ActivityItem["type"]) => {
     switch (type) {
       case "question":

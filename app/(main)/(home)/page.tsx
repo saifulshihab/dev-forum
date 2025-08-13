@@ -1,4 +1,5 @@
 import ActivityFeed from "@/components/home/activity-feed";
+import CommunityHighlights from "@/components/home/community-highlights";
 import CommunityStats from "@/components/home/community-stats";
 import {
   Card,
@@ -7,6 +8,7 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getCommunityActivity, getCommunityStats } from "@/lib/data";
 import {
   BookOpen,
@@ -17,6 +19,7 @@ import {
   Users
 } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function Home() {
   const [activities, stats] = await Promise.all([
@@ -71,7 +74,41 @@ export default async function Home() {
         </CardHeader>
       </Card>
       {/* Community Stats */}
-      <CommunityStats stats={stats} />
+      <Suspense
+        fallback={
+          <div className="space-y-4">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+              {Array(5)
+                .fill(0)
+                .map((_, idx) => (
+                  <Card key={idx} className="h-20 border-dashed bg-zinc-800">
+                    <CardContent className="p-4"></CardContent>
+                  </Card>
+                ))}
+            </div>
+            {/* Trending Topics */}
+            {stats.trendingTopics.length > 0 && (
+              <Card className="border-dashed">
+                <CardHeader className="pb-3">
+                  <Skeleton className="h-[1.75rem] w-40 bg-zinc-800" />
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {Array(5)
+                      .fill(0)
+                      .map((_, idx) => (
+                        <Skeleton className="h-[22px] w-20 bg-zinc-800" />
+                      ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        }
+      >
+        <CommunityStats stats={stats} />
+      </Suspense>
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Column - Quick Actions & Featured Content */}
@@ -114,49 +151,45 @@ export default async function Home() {
             </CardContent>
           </Card>
           {/* Community Highlights */}
-          <Card className="border-dashed">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-purple-400" />
-                Community Highlights
-              </CardTitle>
-              <CardDescription>
-                Recent achievements and community milestones
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div className="rounded-lg border border-dashed p-4 text-center">
-                  <div className="mb-1 text-2xl font-bold text-blue-400">
-                    50+
+          <Suspense
+            fallback={
+              <Card className="border-dashed">
+                <CardHeader>
+                  <Skeleton className="h-6 w-[40%] bg-zinc-800" />
+                  <Skeleton className="[50%] h-5 bg-zinc-800" />
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <Skeleton className="h-[6.875rem] rounded-lg border border-dashed bg-zinc-800 p-4" />
+                    <Skeleton className="h-[6.875rem] rounded-lg border border-dashed bg-zinc-800 p-4" />
+                    <Skeleton className="h-[6.875rem] rounded-lg border border-dashed bg-zinc-800 p-4" />
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    Questions Answered Today
-                  </div>
-                </div>
-                <div className="rounded-lg border border-dashed p-4 text-center">
-                  <div className="mb-1 text-2xl font-bold text-green-400">
-                    12
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    New Users This Week
-                  </div>
-                </div>
-                <div className="rounded-lg border border-dashed p-4 text-center">
-                  <div className="mb-1 text-2xl font-bold text-purple-400">
-                    9
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Projects Completed This Week
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            }
+          >
+            <CommunityHighlights />
+          </Suspense>
         </div>
         {/* Right Column - Activity Feed */}
         <div className="lg:col-span-1">
-          <ActivityFeed activities={activities} />
+          <Suspense
+            fallback={
+              <Card className="border-dashed">
+                <CardHeader className="pb-3">
+                  <Skeleton className="h-[1.75rem] w-[90%] bg-zinc-800" />
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Skeleton className="h-[8.5rem] w-full bg-zinc-800" />
+                  <Skeleton className="h-[8.5rem] w-full bg-zinc-800" />
+                  <Skeleton className="h-[8.5rem] w-full bg-zinc-800" />
+                  <Skeleton className="h-[8.5rem] w-full bg-zinc-800" />
+                </CardContent>
+              </Card>
+            }
+          >
+            <ActivityFeed activities={activities} />
+          </Suspense>
         </div>
       </div>
     </div>

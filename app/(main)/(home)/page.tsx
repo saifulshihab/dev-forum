@@ -82,9 +82,10 @@ export default async function Home() {
               {Array(5)
                 .fill(0)
                 .map((_, idx) => (
-                  <Card key={idx} className="h-20 border-dashed bg-zinc-800">
-                    <CardContent className="p-4"></CardContent>
-                  </Card>
+                  <Skeleton
+                    key={idx}
+                    className="h-20 border-dashed bg-zinc-800"
+                  />
                 ))}
             </div>
             {/* Trending Topics */}
@@ -98,7 +99,10 @@ export default async function Home() {
                     {Array(5)
                       .fill(0)
                       .map((_, idx) => (
-                        <Skeleton className="h-[22px] w-20 bg-zinc-800" />
+                        <Skeleton
+                          key={idx}
+                          className="h-[22px] w-20 bg-zinc-800"
+                        />
                       ))}
                   </div>
                 </CardContent>

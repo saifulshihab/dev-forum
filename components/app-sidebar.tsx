@@ -43,7 +43,6 @@ import {
 export function AppSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const session = useSession();
-  const isAuthLoading = session.status === "loading";
   const isAuthenticated = session.status === "authenticated";
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -148,7 +147,7 @@ export function AppSidebar() {
         </div>
         <button
           onClick={toggleSidebar}
-          className="absolute right-[-2px] transform rounded-md p-1 opacity-0 transition-all active:scale-90 group-hover:opacity-100"
+          className="absolute right-[-2px] transform rounded-md p-1 opacity-0 transition-all group-hover:opacity-100 active:scale-90"
         >
           {sidebarOpen ? (
             <PanelRightOpen size={16} />

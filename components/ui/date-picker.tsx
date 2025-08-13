@@ -23,7 +23,7 @@ function DatePicker(props: Props) {
         <Button
           id="date"
           variant="outline"
-          className="w-48 justify-between font-normal"
+          className="w-48 justify-between bg-transparent font-normal"
         >
           {date ? date.toLocaleDateString() : label}
           <ChevronDownIcon />

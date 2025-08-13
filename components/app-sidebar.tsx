@@ -256,74 +256,76 @@ export function AppSidebar() {
         </div>
       )}
       {/* Main Navigation */}
-      <div className="p-3">
-        <p
-          className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
-        >
-          Main
-        </p>
-        <nav className="space-y-1">
-          {mainNavItems.map((item, idx) => (
-            <NavItem
-              key={idx}
-              icon={item.icon}
-              text={item.text}
-              href={item.href}
-              collapsed={!sidebarOpen}
-              badge={item.badge}
-            />
-          ))}
-        </nav>
-      </div>
-      {/* Community Section */}
-      <div className="p-3">
-        <p
-          className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
-        >
-          Community
-        </p>
-        <nav className="space-y-1">
-          {communityItems.map((item, idx) => (
-            <NavItem
-              key={idx}
-              icon={item.icon}
-              text={item.text}
-              href={item.href}
-              collapsed={!sidebarOpen}
-              badge={item.badge}
-            />
-          ))}
-        </nav>
-      </div>
-      {/* Tools Section */}
-      <div className="p-3">
-        <p
-          className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
-        >
-          Tools
-        </p>
-        <nav className="space-y-1">
-          {toolsItems.map((item, idx) => (
-            <NavItem
-              key={idx}
-              icon={item.icon}
-              text={item.text}
-              href={item.href}
-              collapsed={!sidebarOpen}
-              badge={item.badge}
-            />
-          ))}
-        </nav>
+      <div className="h-[calc(100vh-17.375rem)] overflow-y-auto">
+        <div className="p-3">
+          <p
+            className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
+          >
+            Main
+          </p>
+          <nav className="space-y-1">
+            {mainNavItems.map((item, idx) => (
+              <NavItem
+                key={idx}
+                icon={item.icon}
+                text={item.text}
+                href={item.href}
+                collapsed={!sidebarOpen}
+                badge={item.badge}
+              />
+            ))}
+          </nav>
+        </div>
+        {/* Community Section */}
+        <div className="p-3">
+          <p
+            className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
+          >
+            Community
+          </p>
+          <nav className="space-y-1">
+            {communityItems.map((item, idx) => (
+              <NavItem
+                key={idx}
+                icon={item.icon}
+                text={item.text}
+                href={item.href}
+                collapsed={!sidebarOpen}
+                badge={item.badge}
+              />
+            ))}
+          </nav>
+        </div>
+        {/* Tools Section */}
+        <div className="p-3">
+          <p
+            className={`mb-2 px-1 text-xs font-medium text-muted-foreground ${!sidebarOpen && "hidden"}`}
+          >
+            Tools
+          </p>
+          <nav className="space-y-1">
+            {toolsItems.map((item, idx) => (
+              <NavItem
+                key={idx}
+                icon={item.icon}
+                text={item.text}
+                href={item.href}
+                collapsed={!sidebarOpen}
+                badge={item.badge}
+              />
+            ))}
+          </nav>
+        </div>
       </div>
       {/* Settings */}
       {!isAuthenticated && sidebarOpen && (
-        <div className="absolute bottom-0 flex items-center justify-center p-3">
+        <div className="flex h-[3.125rem] items-center">
           <Button
             variant="link"
-            className="w-full text-muted-foreground hover:no-underline"
+            className="text-muted-foreground hover:text-white hover:no-underline"
             onClick={() => signIn()}
           >
-            <LogIn />
+            <LogIn className="mr-2" />
             Sign in
           </Button>
         </div>

@@ -1,6 +1,6 @@
+import { AppSidebar } from "@/components/app-sidebar";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
-import { AppSidebar } from "@/components/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";

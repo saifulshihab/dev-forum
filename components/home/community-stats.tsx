@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { sleep } from "@/lib/utils";
+import { getTagColor, sleep } from "@/lib/utils";
 import {
   Briefcase,
   Layers,
@@ -89,7 +89,11 @@ export default async function CommunityStats({ stats }: CommunityStatsProps) {
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {stats.trendingTopics.map((topic, index) => (
-                <Badge key={index} variant="secondary" className="text-xs">
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className={`text-xs ${getTagColor(index)}`}
+                >
                   #{topic}
                 </Badge>
               ))}

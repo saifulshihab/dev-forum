@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["NEXTAUTH", "turbopack"],
+  "cSpell.words": ["cuid", "NEXTAUTH", "turbopack"],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
   },

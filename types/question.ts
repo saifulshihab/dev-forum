@@ -1,16 +1,31 @@
+type User = {
+  id: string;
+  name: string;
+};
+
+export type Answer = {
+  id: string;
+  content: string;
+  like: number;
+  dislike: number;
+  user: User;
+  userId: string;
+  questionId: string;
+  parentId?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  replies: Answer[];
+};
+
 export type TQuestion = {
   id: string;
   title: string;
   description: string;
-  user: string;
-  created_at: Date;
+  tags: string[];
   views: number;
-  tags?: string[];
-  answers?: {
-    id: string;
-    description: string;
-    user: string;
-    upvote: number;
-    downvote: number;
-  }[];
+  user?: User | null;
+  userId?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  answers: Answer[];
 };

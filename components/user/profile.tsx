@@ -132,7 +132,7 @@ function UserProfile(props: Props) {
                 <Badge
                   key={skill.id}
                   variant="secondary"
-                  className="bg-teal-900/20 text-teal-300 hover:bg-teal-900/20"
+                  className="bg-teal-500/10 text-teal-300 hover:bg-teal-900/20"
                 >
                   {skill.name}
                 </Badge>

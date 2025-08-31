@@ -9,3 +9,17 @@ export type FullUser = Prisma.UserGetPayload<{
     socialLinks: true;
   };
 }>;
+
+export type FullQuestion = Prisma.QuestionGetPayload<{
+  include: { user: true; answers: true };
+}>;
+
+export type FullAnswer = Prisma.AnswerGetPayload<{
+  include: {
+    parent: true;
+    question: true;
+    replies: { include: { user: true; reactions: true } };
+    user: true;
+    reactions: true;
+  };
+}>;

@@ -1,128 +1,357 @@
 import { IJobCircular } from "@/types/job";
 import { BudgetType, IProject } from "@/types/project";
-import { TQuestion } from "@/types/question";
 
-export const questions: TQuestion[] = [
+export const questions: any[] = [
   {
-    id: "q-001",
-    title: "How to implement authentication with NextAuth.js?",
+    id: "q1",
+    title: "What is the difference between let, var, and const in JavaScript?",
     description:
-      "I'm building a Next.js application and want to add authentication. Has anyone implemented NextAuth.js with custom credentials provider? Any example code or best practices would be greatly appreciated.",
-    user: "dev_sarah",
-    created_at: new Date("2025-04-15T09:30:00Z"),
-    views: 342,
-    tags: ["next.js", "authentication", "nextauth", "react"],
+      "I am confused about when to use let, var, and const in JavaScript. Can someone explain with examples?",
+    tags: ["javascript", "variables", "es6"],
+    user: {
+      id: "0",
+      fullName: "saiful",
+      email: "user@gmail.com",
+      bio: "",
+      createdAt: new Date(),
+      dob: new Date(),
+      dpUrl: "",
+      location: "",
+      updatedAt: new Date(),
+      username: "",
+      websiteUrl: ""
+    },
+    userId: "u1",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    views: 0,
     answers: [
       {
-        id: "a-001-1",
-        description:
-          "I've implemented NextAuth in several projects. Here's how I set it up with a custom credentials provider: [code snippet]. Make sure you properly configure your environment variables and handle the session on both client and server side.",
-        user: "react_pro92",
-        upvote: 24,
-        downvote: 2
-      },
-      {
-        id: "a-001-2",
-        description:
-          "NextAuth.js documentation is quite thorough but I found this tutorial helpful: [link]. The key is setting up your session callbacks correctly and understanding the JWT flow.",
-        user: "webdev_jane",
-        upvote: 15,
-        downvote: 0
+        id: "a1",
+        content:
+          "`var` is function-scoped, `let` and `const` are block-scoped. `const` cannot be reassigned.",
+        user: {
+          id: "0",
+          fullName: "saiful",
+          email: "user@gmail.com",
+          bio: "",
+          createdAt: new Date(),
+          dob: new Date(),
+          dpUrl: "",
+          location: "",
+          updatedAt: new Date(),
+          username: "",
+          websiteUrl: ""
+        },
+        userId: "u2",
+        like: 0,
+        dislike: 0,
+        questionId: "q1",
+        parentId: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        replies: [
+          {
+            id: "a2",
+            content:
+              "Exactly! Also, avoid `var` in modern JavaScript unless you need legacy support.",
+            userId: "u3",
+            like: 0,
+            dislike: 0,
+            questionId: "q1",
+            parentId: "a1",
+            createdAt: new Date(),
+            updatedAt: "2025-08-14T10:06:00Z",
+            user: { id: "", name: "shihab" },
+            replies: [
+              {
+                id: "a6",
+                content:
+                  "True, but `var` can still be useful in certain closure patterns.",
+                userId: "u4",
+                like: 1,
+                dislike: 0,
+                questionId: "q1",
+                parentId: "a2",
+                createdAt: new Date(),
+                updatedAt: "2025-08-14T10:07:00Z",
+                user: { id: "1", name: "rahim" },
+                replies: [
+                  {
+                    id: "a7",
+                    content:
+                      "Right, but those cases are rare in ES6+ projects.",
+                    userId: "u5",
+                    like: 0,
+                    dislike: 0,
+                    questionId: "q1",
+                    parentId: "a6",
+                    createdAt: new Date(),
+                    updatedAt: "2025-08-14T10:08:00Z",
+                    user: { id: "2", name: "karim" },
+                    replies: []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },
   {
-    id: "q-002",
-    title: "Optimizing database queries with large datasets",
+    id: "q2",
+    title: "How to optimize SQL queries for large datasets?",
     description:
-      "Our application is facing performance issues with PostgreSQL as our dataset grows. We're currently using standard SELECT queries with multiple JOINs that worked fine with smaller datasets. What strategies should we implement for optimizing these queries?",
-    user: "db_optimizer",
-    created_at: new Date("2025-05-01T14:20:00Z"),
-    views: 189,
-    tags: ["postgresql", "database-optimization", "performance", "sql"],
+      "My database queries are getting slow when dealing with millions of rows. What can I do to improve performance?",
+    tags: ["sql", "database", "optimization"],
+    user: { id: "0", name: "saiful" },
+    userId: "u2",
+    views: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     answers: [
       {
-        id: "a-002-1",
-        description:
-          "Have you checked your indexes? Make sure you have proper indexes on columns used in JOIN conditions and WHERE clauses. Also consider using EXPLAIN ANALYZE to identify bottlenecks in your query execution plan.",
-        user: "sql_master",
-        upvote: 31,
-        downvote: 1
-      }
-    ]
-  },
-  {
-    id: "q-003",
-    title: "Understanding React Server Components",
-    description:
-      "I'm trying to understand when to use Server Components vs. Client Components in React. What are the best use cases for each, and how do they communicate with each other?",
-    user: "new_to_react",
-    created_at: new Date("2025-04-22T11:45:00Z"),
-    views: 521,
-    tags: ["react", "server-components", "next.js"],
-    answers: [
-      {
-        id: "a-003-1",
-        description:
-          "Server Components are great for data fetching, accessing backend resources directly, and keeping large dependencies server-side. Client Components should be used when you need interactivity, browser APIs, or React hooks.",
-        user: "react_architect",
-        upvote: 47,
-        downvote: 3
+        id: "a3",
+        content: "Use proper indexing and avoid SELECT * when possible.",
+        user: { id: "0", name: "saiful" },
+        userId: "u1",
+        questionId: "q2",
+        like: 0,
+        dislike: 0,
+        parentId: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        replies: [
+          {
+            id: "a4",
+            content:
+              "Also, consider using query caching if your data isn't changing frequently.",
+            user: { id: "0", name: "saiful" },
+            userId: "u3",
+            questionId: "q2",
+            like: 0,
+            dislike: 0,
+            parentId: "a3",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            replies: [
+              {
+                id: "a5",
+                content:
+                  "Yes, caching can significantly reduce load on your DB.",
+                user: { id: "0", name: "saiful" },
+                like: 0,
+                dislike: 0,
+                userId: "u2",
+                questionId: "q2",
+                parentId: "a4",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                replies: [
+                  {
+                    id: "a8",
+                    content:
+                      "Also, partitioning large tables can help improve query performance.",
+                    user: { id: "3", name: "jalal" },
+                    like: 0,
+                    dislike: 0,
+                    userId: "u6",
+                    questionId: "q2",
+                    parentId: "a5",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    replies: [
+                      {
+                        id: "a9",
+                        content:
+                          "Agreed! Especially for time-series data, partitioning is very effective.",
+                        user: { id: "4", name: "habib" },
+                        like: 0,
+                        dislike: 0,
+                        userId: "u7",
+                        questionId: "q2",
+                        parentId: "a8",
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        replies: [
+                          {
+                            id: "2232",
+                            content: "This is awesome reply. Created by saiful",
+                            createdAt: new Date(),
+                            dislike: 0,
+                            like: 0,
+                            replies: [],
+                            questionId: "q90",
+                            user: {
+                              id: "sdd",
+                              name: "shihab"
+                            },
+                            userId: "79079",
+                            updatedAt: new Date()
+                          },
+                          {
+                            id: "2232",
+                            content: "This is awesome reply. Created by saiful",
+                            createdAt: new Date(),
+                            dislike: 0,
+                            like: 0,
+                            replies: [],
+                            questionId: "q90",
+                            user: {
+                              id: "sdd",
+                              name: "shihab"
+                            },
+                            userId: "79079",
+                            updatedAt: new Date()
+                          },
+                          {
+                            id: "2232",
+                            content: "This is awesome reply. Created by saiful",
+                            createdAt: new Date(),
+                            dislike: 0,
+                            like: 0,
+                            replies: [],
+                            questionId: "q90",
+                            user: {
+                              id: "sdd",
+                              name: "shihab"
+                            },
+                            userId: "79079",
+                            updatedAt: new Date()
+                          },
+                          {
+                            id: "2232",
+                            content: "This is awesome reply. Created by saiful",
+                            createdAt: new Date(),
+                            dislike: 0,
+                            like: 0,
+                            replies: [],
+                            questionId: "q90",
+                            user: {
+                              id: "sdd",
+                              name: "shihab"
+                            },
+                            userId: "79079",
+                            updatedAt: new Date()
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        id: "a-003-2",
-        description:
-          "One pattern I've found effective is to use Server Components as containers that fetch data and pass it down to Client Components that handle the UI interactions. This gives you the best of both worlds.",
-        user: "frontend_lead",
-        upvote: 39,
-        downvote: 2
-      },
-      {
-        id: "a-003-3",
-        description:
-          "Remember that Server Components can't use hooks or browser APIs. They run only on the server and never on the client. Communication is one-way: Server Components can pass props to Client Components, but not vice versa.",
-        user: "next_expert",
-        upvote: 26,
-        downvote: 1
-      }
-    ]
-  },
-  {
-    id: "q-004",
-    title: "Deploying Docker containers on AWS ECS vs Kubernetes",
-    description:
-      "Our team is debating between AWS ECS and Kubernetes for container orchestration. We have about 20 microservices and need good scaling capabilities. Has anyone compared both in production?",
-    user: "cloud_architect",
-    created_at: new Date("2025-05-03T08:15:00Z"),
-    views: 276,
-    tags: ["aws", "docker", "kubernetes", "ecs", "devops"],
-    answers: []
-  },
-  {
-    id: "q-005",
-    title: "Best practices for handling file uploads in a web application",
-    description:
-      "I'm building a feature that allows users to upload images and documents (up to 20MB). What's the best way to handle these uploads securely and efficiently? Should I use direct uploads to S3 or process them through my server?",
-    user: "fullstack_dev",
-    created_at: new Date("2025-04-29T16:50:00Z"),
-    views: 412,
-    tags: ["file-upload", "s3", "security", "web-development"],
-    answers: [
-      {
-        id: "a-005-1",
-        description:
-          "For files this size, I recommend direct uploads to S3 using presigned URLs. This takes the load off your server and improves user experience. Just make sure to implement proper validation on both client and server sides.",
-        user: "aws_specialist",
-        upvote: 28,
-        downvote: 0
-      },
-      {
-        id: "a-005-2",
-        description:
-          "Consider implementing a chunked upload approach for better user experience, especially for larger files or users with less stable internet connections.",
-        user: "ux_engineer",
-        upvote: 19,
-        downvote: 1
+        id: "2232",
+        content: "This is awesome answer. Made by shihab",
+        createdAt: new Date(),
+        dislike: 0,
+        like: 0,
+        replies: [
+          {
+            id: "2232",
+            content: "This is awesome reply. Created by saiful",
+            createdAt: new Date(),
+            dislike: 0,
+            like: 0,
+            replies: [
+              {
+                id: "2232",
+                content: "This is awesome answer. Made by shihab",
+                createdAt: new Date(),
+                dislike: 0,
+                like: 0,
+                replies: [
+                  {
+                    id: "2232",
+                    content: "This is awesome reply. Created by saiful",
+                    createdAt: new Date(),
+                    dislike: 0,
+                    like: 0,
+                    replies: [],
+                    questionId: "q90",
+                    user: {
+                      id: "sdd",
+                      name: "shihab"
+                    },
+                    userId: "79079",
+                    updatedAt: new Date()
+                  },
+                  {
+                    id: "2232",
+                    content: "This is awesome reply. Created by saiful",
+                    createdAt: new Date(),
+                    dislike: 0,
+                    like: 0,
+                    replies: [],
+                    questionId: "q90",
+                    user: {
+                      id: "sdd",
+                      name: "shihab"
+                    },
+                    userId: "79079",
+                    updatedAt: new Date()
+                  },
+                  {
+                    id: "2232",
+                    content: "This is awesome reply. Created by saiful",
+                    createdAt: new Date(),
+                    dislike: 0,
+                    like: 0,
+                    replies: [],
+                    questionId: "q90",
+                    user: {
+                      id: "sdd",
+                      name: "shihab"
+                    },
+                    userId: "79079",
+                    updatedAt: new Date()
+                  },
+                  {
+                    id: "2232",
+                    content: "This is awesome reply. Created by saiful",
+                    createdAt: new Date(),
+                    dislike: 0,
+                    like: 0,
+                    replies: [],
+                    questionId: "q90",
+                    user: {
+                      id: "sdd",
+                      name: "shihab"
+                    },
+                    userId: "79079",
+                    updatedAt: new Date()
+                  }
+                ],
+                questionId: "q90",
+                user: {
+                  id: "sdd",
+                  name: "shihab"
+                },
+                userId: "79079",
+                updatedAt: new Date()
+              }
+            ],
+            questionId: "q90",
+            user: {
+              id: "sdd",
+              name: "shihab"
+            },
+            userId: "79079",
+            updatedAt: new Date()
+          }
+        ],
+        questionId: "q90",
+        user: {
+          id: "sdd",
+          name: "shihab"
+        },
+        userId: "79079",
+        updatedAt: new Date()
       }
     ]
   }
@@ -551,7 +780,7 @@ export const jobs: IJobCircular[] = [
 import { sleep } from "@/lib/utils";
 
 export async function getQuestions() {
-  await sleep(1000);
+  await sleep(5000);
   return questions;
 }
 

@@ -19,6 +19,7 @@ import {
   Search,
   Settings,
   Star,
+  TableOfContents,
   TrendingUp,
   User,
   Users,
@@ -41,9 +42,10 @@ import {
 } from "./ui/dropdown-menu";
 
 export function AppSidebar() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const session = useSession();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const isAuthenticated = session.status === "authenticated";
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -211,6 +213,13 @@ export function AppSidebar() {
                     <User />
                     Profile
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/user/content">
+                  <DropdownMenuItem>
+                    <TableOfContents />
+                    Manage Content
+                    <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
                 <Link href="/user/settings/profile">

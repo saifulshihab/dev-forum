@@ -27,7 +27,13 @@ function Question(props: {
   const { question, detailsView, creatorView, isDeleting, onDelete } = props;
   return (
     <div className="space-y-2 rounded-md bg-zinc-900 p-4 px-5">
-      <Link href={`/questions/${question.id}`}>
+      <Link
+        href={
+          creatorView
+            ? `/user/content/questions/${question.id}`
+            : `/questions/${question.id}`
+        }
+      >
         <h2 className="text-xl font-semibold">{question.title}</h2>
       </Link>
       <p

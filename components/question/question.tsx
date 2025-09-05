@@ -3,6 +3,17 @@ import { cn, getTagColor } from "@/lib/utils";
 import { FullQuestion } from "@/types";
 import { Clock, MessageCircle, Trash, User } from "lucide-react";
 import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "../ui/alert-dialog";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
@@ -66,18 +77,37 @@ function Question(props: {
       ) : null}
       {creatorView ? (
         <div className="flex items-center justify-end gap-3 border-t pt-2">
-          <Button
-            isLoading={isDeleting === question.id}
-            onClick={() => {
-              if (onDelete) onDelete(question.id);
-            }}
-            size="sm"
-            className="text-muted-foreground"
-            variant="ghost"
-          >
-            <Trash />
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                isLoading={isDeleting === question.id}
+                className="text-muted-foreground"
+              >
+                <Trash />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently delete your question.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    if (onDelete) onDelete(question.id);
+                  }}
+                >
+                  Yes, Confirm
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ) : null}
     </div>

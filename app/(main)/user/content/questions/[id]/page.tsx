@@ -63,7 +63,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
               <div className="inline-flex items-center gap-2 text-sm">
                 <User className="text-zinc-500" size={14} />
                 <Link
-                  href={`/user/${question.userId}`}
+                  href={`/users/${question.userId}`}
                   className="text-zinc-500 hover:text-primary"
                 >
                   <p>{question.user?.fullName}</p>

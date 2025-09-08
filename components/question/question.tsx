@@ -71,7 +71,7 @@ function Question(props: {
               <div className="inline-flex items-center gap-2">
                 <User size={14} />
                 <Link
-                  href={`/user/${question.userId}`}
+                  href={`/users/${question.userId}`}
                   className="hover:text-primary"
                 >
                   <p>{question.user?.fullName}</p>

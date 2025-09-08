@@ -81,7 +81,7 @@ export function AppSidebar() {
     {
       text: "Members",
       icon: <Users size={16} />,
-      href: "/members",
+      href: "/users",
       badge: null
     },
     {

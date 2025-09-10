@@ -12,12 +12,12 @@ import {
 
 interface CommunityStatsProps {
   stats: {
-    totalUsers: number;
-    totalQuestions: number;
-    totalAnswers: number;
-    jobsPosted: number;
-    freelanceProjects: number;
-    trendingTopics: string[];
+    totalUsers: number | undefined;
+    totalQuestions: number | undefined;
+    totalAnswers: number | undefined;
+    jobsPosted: number | undefined;
+    freelanceProjects: number | undefined;
+    trendingTopics: string[] | undefined;
   };
 }
 
@@ -25,31 +25,31 @@ export default async function CommunityStats({ stats }: CommunityStatsProps) {
   const statCards = [
     {
       title: "Total Users",
-      value: stats.totalUsers.toLocaleString(),
+      value: stats?.totalUsers?.toLocaleString(),
       icon: <Users className="h-4 w-4 text-blue-400" />,
       color: "border-blue-500/20 bg-blue-500/10"
     },
     {
       title: "Questions",
-      value: stats.totalQuestions.toLocaleString(),
+      value: stats?.totalQuestions?.toLocaleString(),
       icon: <MessageCircle className="h-4 w-4 text-green-400" />,
       color: "border-green-500/20 bg-green-500/10"
     },
     {
       title: "Answers",
-      value: stats.totalAnswers.toLocaleString(),
+      value: stats?.totalAnswers?.toLocaleString(),
       icon: <ThumbsUp className="h-4 w-4 text-purple-400" />,
       color: "border-purple-500/20 bg-purple-500/10"
     },
     {
       title: "Jobs Posted",
-      value: stats.jobsPosted.toLocaleString(),
+      value: stats?.jobsPosted?.toLocaleString(),
       icon: <Briefcase className="h-4 w-4 text-orange-400" />,
       color: "border-orange-500/20 bg-orange-500/10"
     },
     {
       title: "Freelance Projects",
-      value: stats.freelanceProjects.toLocaleString(),
+      value: stats?.freelanceProjects?.toLocaleString(),
       icon: <Layers className="h-4 w-4 text-teal-400" />,
       color: "border-teal-500/20 bg-teal-500/10"
     }
@@ -78,7 +78,7 @@ export default async function CommunityStats({ stats }: CommunityStatsProps) {
         ))}
       </div>
       {/* Trending Topics */}
-      {stats.trendingTopics.length > 0 && (
+      {stats?.trendingTopics && stats.trendingTopics.length > 0 && (
         <Card className="border-dashed">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">

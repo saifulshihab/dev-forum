@@ -1,4 +1,4 @@
-import { sleep } from "@/lib/utils";
+import { getCommunityHighlights } from "@/lib/actions";
 import { Users } from "lucide-react";
 import {
   Card,
@@ -9,7 +9,7 @@ import {
 } from "../ui/card";
 
 async function CommunityHighlights() {
-  await sleep(5000);
+  const highlights = await getCommunityHighlights();
   return (
     <Card className="border-dashed">
       <CardHeader>
@@ -24,19 +24,36 @@ async function CommunityHighlights() {
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-dashed p-4 text-center">
-            <div className="mb-1 text-2xl font-bold text-blue-400">50+</div>
+            <div className="mb-1 text-2xl font-bold text-blue-400">
+              {highlights?.questionsAnsweredToday !== undefined
+                ? highlights?.questionsAnsweredToday > 1
+                  ? `${highlights?.questionsAnsweredToday - 1}+`
+                  : highlights?.questionsAnsweredToday
+                : 0}
+            </div>
             <div className="text-sm text-muted-foreground">
               Questions Answered Today
             </div>
           </div>
           <div className="rounded-lg border border-dashed p-4 text-center">
-            <div className="mb-1 text-2xl font-bold text-green-400">12</div>
+            <div className="mb-1 text-2xl font-bold text-green-400">
+              {highlights?.usersJoinedThisWeek !== undefined
+                ? highlights?.usersJoinedThisWeek
+                : 0}
+            </div>
             <div className="text-sm text-muted-foreground">
               New Users This Week
             </div>
           </div>
           <div className="rounded-lg border border-dashed p-4 text-center">
-            <div className="mb-1 text-2xl font-bold text-purple-400">9</div>
+            <div className="mb-1 text-2xl font-bold text-purple-400">
+              {" "}
+              {highlights?.projectsCompletedThisWeek !== undefined
+                ? highlights?.projectsCompletedThisWeek === 0
+                  ? 0
+                  : `${highlights?.projectsCompletedThisWeek - 1}+`
+                : 0}
+            </div>
             <div className="text-sm text-muted-foreground">
               Projects Completed This Week
             </div>

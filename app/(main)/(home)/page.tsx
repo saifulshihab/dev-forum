@@ -9,7 +9,10 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getCommunityActivity, getCommunityStats } from "@/lib/data";
+import {
+  getCommunityActivity,
+  getCommunityStats
+} from "@/lib/actions/home-actions";
 import {
   BookOpen,
   Briefcase,
@@ -21,43 +24,42 @@ import {
 import Link from "next/link";
 import { Suspense } from "react";
 
+const quickActions = [
+  {
+    title: "Ask a Question",
+    description: "Get help from the community",
+    icon: <MessageCircle className="h-6 w-6" />,
+    href: "/questions/create",
+    color: "border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20"
+  },
+  {
+    title: "Browse Projects",
+    description: "Find freelance opportunities",
+    icon: <Briefcase className="h-6 w-6" />,
+    href: "/projects",
+    color: "border-green-500/20 bg-green-500/10 hover:bg-green-500/20"
+  },
+  {
+    title: "Job Board",
+    description: "Explore career opportunities",
+    icon: <Users className="h-6 w-6" />,
+    href: "/jobs",
+    color: "border-purple-500/20 bg-purple-500/10 hover:bg-purple-500/20"
+  },
+  {
+    title: "Learning Hub",
+    description: "Access tutorials and guides",
+    icon: <BookOpen className="h-6 w-6" />,
+    href: "/learn",
+    color: "border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20"
+  }
+];
+
 export default async function Home() {
   const [activities, stats] = await Promise.all([
     getCommunityActivity(),
     getCommunityStats()
   ]);
-
-  const quickActions = [
-    {
-      title: "Ask a Question",
-      description: "Get help from the community",
-      icon: <MessageCircle className="h-6 w-6" />,
-      href: "/questions/create",
-      color: "border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20"
-    },
-    {
-      title: "Browse Projects",
-      description: "Find freelance opportunities",
-      icon: <Briefcase className="h-6 w-6" />,
-      href: "/projects",
-      color: "border-green-500/20 bg-green-500/10 hover:bg-green-500/20"
-    },
-    {
-      title: "Job Board",
-      description: "Explore career opportunities",
-      icon: <Users className="h-6 w-6" />,
-      href: "/jobs",
-      color: "border-purple-500/20 bg-purple-500/10 hover:bg-purple-500/20"
-    },
-    {
-      title: "Learning Hub",
-      description: "Access tutorials and guides",
-      icon: <BookOpen className="h-6 w-6" />,
-      href: "/learn",
-      color: "border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20"
-    }
-  ];
-
   return (
     <div className="flex flex-col gap-6 p-3">
       {/* Welcome Section */}
@@ -89,7 +91,7 @@ export default async function Home() {
                 ))}
             </div>
             {/* Trending Topics */}
-            {stats.trendingTopics.length > 0 && (
+            {stats?.trendingTopics && stats.trendingTopics.length > 0 && (
               <Card className="border-dashed">
                 <CardHeader className="pb-3">
                   <Skeleton className="h-[1.75rem] w-40 bg-zinc-800" />
@@ -111,7 +113,7 @@ export default async function Home() {
           </div>
         }
       >
-        <CommunityStats stats={stats} />
+        <CommunityStats stats={stats as any} />
       </Suspense>
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -192,7 +194,7 @@ export default async function Home() {
               </Card>
             }
           >
-            <ActivityFeed activities={activities} />
+            <ActivityFeed activities={activities as any} />
           </Suspense>
         </div>
       </div>

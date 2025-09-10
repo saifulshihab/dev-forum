@@ -3,6 +3,7 @@ import { AuthProvider } from "@/components/contexts/auth-provider";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Analytics } from "@vercel/analytics/next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import type { Metadata } from "next";
@@ -61,6 +62,7 @@ export default async function RootLayout({
             }
           }}
         />
+        <Analytics />
       </body>
     </html>
   );

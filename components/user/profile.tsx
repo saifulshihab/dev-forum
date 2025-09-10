@@ -20,10 +20,11 @@ import Link from "next/link";
 
 type Props = {
   user: FullUser;
+  currentUser?: boolean;
 };
 
 function UserProfile(props: Props) {
-  const { user } = props;
+  const { user, currentUser } = props;
   return (
     <div className="min-h-screen">
       <div className="border-b border-dashed border-teal-900 bg-primary/5 px-8 py-8">
@@ -83,12 +84,14 @@ function UserProfile(props: Props) {
         <div className="text-center md:text-left">
           <div className="flex flex-col items-center gap-3 md:flex-row md:justify-between md:gap-0">
             <h1 className="text-3xl font-bold text-white">{user.fullName}</h1>
-            <Button asChild variant="default">
-              <Link href="/user/settings/profile">
-                <UserPen className="mr-1 h-4 w-4" />
-                Edit Profile
-              </Link>
-            </Button>
+            {currentUser ? (
+              <Button asChild variant="default">
+                <Link href="/user/settings/profile">
+                  <UserPen className="mr-1 h-4 w-4" />
+                  Edit Profile
+                </Link>
+              </Button>
+            ) : null}
           </div>
           {user.bio && (
             <p className="mt-2 text-sm text-zinc-400 md:max-w-[70%]">
@@ -132,7 +135,7 @@ function UserProfile(props: Props) {
                 <Badge
                   key={skill.id}
                   variant="secondary"
-                  className="bg-teal-900/20 text-teal-300 hover:bg-teal-900/20"
+                  className="bg-teal-500/10 text-teal-300 hover:bg-teal-900/20"
                 >
                   {skill.name}
                 </Badge>

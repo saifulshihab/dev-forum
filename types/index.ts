@@ -1,4 +1,4 @@
-import { Prisma } from "@/app/generated/prisma";
+import { Prisma } from "@/generated/prisma";
 
 export type FullUser = Prisma.UserGetPayload<{
   include: {
@@ -7,5 +7,19 @@ export type FullUser = Prisma.UserGetPayload<{
     educations: true;
     experiences: true;
     socialLinks: true;
+  };
+}>;
+
+export type FullQuestion = Prisma.QuestionGetPayload<{
+  include: { user: true; answers: true };
+}>;
+
+export type FullAnswer = Prisma.AnswerGetPayload<{
+  include: {
+    parent: true;
+    question: true;
+    replies: { include: { user: true; reactions: true } };
+    user: true;
+    reactions: true;
   };
 }>;

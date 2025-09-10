@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteAccount } from "@/lib/actions";
+import { Trash2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -35,10 +36,10 @@ function Page() {
   };
 
   return (
-    <div className="px-4 py-3">
-      <div className="rounded-md border p-3">
+    <div className="space-y-4 px-4 py-3">
+      <div className="rounded-md border border-dashed border-destructive p-3 px-4">
         <div className="flex flex-col items-start">
-          <h2 className="text-sm font-bold">Account Deletion</h2>
+          <h2 className="text-lg font-bold">Account Deletion</h2>
           <p className="text-sm text-zinc-400">
             Permanently delete your account.
           </p>
@@ -50,6 +51,7 @@ function Page() {
               variant="destructive"
               isLoading={isLoading}
             >
+              <Trash2 className="mr-1" />
               Delete Account
             </Button>
           </AlertDialogTrigger>

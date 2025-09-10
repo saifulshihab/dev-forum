@@ -58,15 +58,11 @@ function JobList(props: { jobs: IJobCircular[] }) {
   const [job, setJob] = useState<IJobCircular | undefined>();
   return (
     <div>
-      {jobs.length ? (
-        <div className="grid grid-cols-2 gap-5">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} onClick={(job) => setJob(job)} />
-          ))}
-        </div>
-      ) : (
-        <Empty />
-      )}
+      <div className="grid grid-cols-2 gap-3">
+        {jobs.map((job) => (
+          <JobCard key={job.id} job={job} onClick={(job) => setJob(job)} />
+        ))}
+      </div>
       <Dialog open={!!job} onOpenChange={() => setJob(undefined)}>
         <DialogContent className="max-w-6xl overflow-x-auto">
           {job ? (

@@ -1,7 +1,7 @@
 "use server";
 
-import { Prisma } from "@/app/generated/prisma";
 import { authCheck, nextAuthOptions } from "@/auth";
+import { Prisma } from "@/generated/prisma";
 import { FullUser } from "@/types";
 import https from "https";
 import { getServerSession } from "next-auth";

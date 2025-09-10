@@ -54,19 +54,15 @@ function ProjectList(props: { projects: IProject[] }) {
   const [project, setProject] = useState<IProject | undefined>();
   return (
     <div>
-      {projects.length ? (
-        <div className="flex flex-col gap-5">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onClick={(project) => setProject(project)}
-            />
-          ))}
-        </div>
-      ) : (
-        <Empty />
-      )}
+      <div className="space-y-3">
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            onClick={(project) => setProject(project)}
+          />
+        ))}
+      </div>
       <Sheet open={!!project} onOpenChange={() => setProject(undefined)}>
         <SheetContent className="overflow-x-auto">
           {project ? (

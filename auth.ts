@@ -1,7 +1,6 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import { redirect } from "next/navigation";
 import { env } from "./lib/constants";
 import prisma from "./lib/prisma";
 
@@ -83,6 +82,8 @@ export const nextAuthOptions: NextAuthOptions = {
 
 export async function authCheck() {
   const session = await getServerSession(nextAuthOptions);
-  if (!session) redirect("/signin");
-  return { user: session.user };
+  if (session === null) {
+    return { isAuthenticated: false, user: null };
+  }
+  return { isAuthenticated: true, user: session.user };
 }

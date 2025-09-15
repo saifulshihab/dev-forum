@@ -1,6 +1,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { getUsername } from "./lib/actions";
 import { env } from "./lib/constants";
 import prisma from "./lib/prisma";
 
@@ -43,10 +44,11 @@ export const nextAuthOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }) {
       if (!user.email) {
-        // email not found, user is not allowed to sign in
+        // Email not found, user is not allowed to sign in
         return false;
       }
-      // create the user if not registered before
+
+      // Create the user if not registered before
       const userData = await prisma.user.upsert({
         where: { email: user.email },
         create: {
@@ -56,6 +58,19 @@ export const nextAuthOptions: NextAuthOptions = {
         },
         update: {}
       });
+
+      if (!userData.username) {
+        // Create username based on user full name
+        const usernameString = user.name
+          ? user.name.toLowerCase().replace(/\s/g, "")
+          : "";
+        const username = await getUsername(usernameString);
+
+        await prisma.user.update({
+          where: { id: userData.id },
+          data: { username }
+        });
+      }
 
       if (!userData) return false;
       user.id = userData.id;

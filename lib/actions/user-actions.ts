@@ -69,7 +69,7 @@ async function updateUserSubEntity({
       }
     }
   } else {
-    // all items are removed, delete from db
+    // All items are removed, delete from db
     await prismaModel.deleteMany({ where: { userId } });
   }
 }
@@ -134,7 +134,7 @@ export async function updateProfile(data: FullUser) {
 }
 
 async function clearUserData(userId: string) {
-  // delete user profile data
+  // Delete user profile data
   await prisma.skill.deleteMany({ where: { userId } });
   await prisma.project.deleteMany({ where: { userId } });
   await prisma.education.deleteMany({ where: { userId } });
@@ -180,7 +180,7 @@ export async function deleteAccount() {
       request.write(postData);
       request.end();
     } else if (sessionUser.user.provider === "github") {
-      // revoke access of github sign in users
+      // Revoke access of github sign in users
       const credentials = `${env.GITHUB_CLIENT_ID}:${env.GITHUB_CLIENT_SECRET}`;
       await fetch(
         `https://api.github.com/applications/${env.GITHUB_CLIENT_ID}/grant`,
@@ -202,4 +202,20 @@ export async function deleteAccount() {
   } catch (err: any) {
     return { error: err?.message || "Something went wrong" };
   }
+}
+
+export async function getUsername(username: string) {
+  let usernameString = username;
+
+  const userNameExist = await prisma.user.findUnique({
+    where: { username: usernameString }
+  });
+
+  if (userNameExist) {
+    // Username exist, concat a number digit
+    usernameString = usernameString + Math.floor(Math.random() * 10);
+    await getUsername(usernameString);
+  }
+
+  return usernameString;
 }

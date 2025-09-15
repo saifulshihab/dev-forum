@@ -2,7 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getUser } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import { FullUser } from "@/types";
 import {
   BookOpen,
   Briefcase,
@@ -28,7 +30,7 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavItem from "./nav-item";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
@@ -40,11 +42,31 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from "./ui/dropdown-menu";
+import { Skeleton } from "./ui/skeleton";
 
 export function AppSidebar() {
   const session = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isAuthenticated = session.status === "authenticated";
+
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [user, setUser] = useState<FullUser | null>();
+
+  useEffect(() => {
+    (async () => {
+      if (!session.data?.user?.id) {
+        setIsUserLoading(false);
+        return;
+      }
+      try {
+        const user = await getUser(session.data.user.id);
+        setUser(user);
+        setIsUserLoading(false);
+      } catch {
+        setIsUserLoading(false);
+      }
+    })();
+  }, [session]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -193,9 +215,13 @@ export function AppSidebar() {
                       <p className="truncate text-sm font-medium">
                         {session.data.user?.name}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {session.data.user?.name}
-                      </p>
+                      {isUserLoading ? (
+                        <Skeleton className="h-4 w-20 bg-zinc-800" />
+                      ) : (
+                        <p className="truncate text-xs text-muted-foreground">
+                          @{user?.username}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <ChevronsUpDown className="h-4 w-4 text-zinc-200" />

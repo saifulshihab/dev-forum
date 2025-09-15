@@ -219,3 +219,11 @@ export async function getUsername(username: string) {
 
   return usernameString;
 }
+
+export async function checkUsernameAvailability(username: string) {
+  const userNameExist = await prisma.user.findUnique({
+    where: { username }
+  });
+  if (userNameExist) return true;
+  return false;
+}

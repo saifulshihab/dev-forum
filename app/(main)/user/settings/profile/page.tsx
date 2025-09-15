@@ -23,13 +23,17 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { getCurrentUser, updateProfile } from "@/lib/actions";
+import {
+  checkUsernameAvailability,
+  getCurrentUser,
+  updateProfile
+} from "@/lib/actions";
 import { countries } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { UserValidator } from "@/lib/validators/user-validator";
 import { FullUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon, Trash, X } from "lucide-react";
+import { CircleCheck, LoaderCircle, PlusIcon, Trash, X } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import {
   Controller,
@@ -38,6 +42,7 @@ import {
   useForm
 } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useDebouncedCallback } from "use-debounce";
 import { z } from "zod";
 
 function Page() {
@@ -45,6 +50,11 @@ function Page() {
   const form = useForm<z.infer<typeof UserValidator>>({
     resolver: zodResolver(UserValidator)
   });
+  const [usernameAvailability, setUsernameAvailability] = useState<{
+    isLoading?: boolean;
+    error?: string;
+    isAvailable?: boolean;
+  }>();
   const formErrors = form.formState.errors;
 
   // Helper function to transform user data for form reset
@@ -92,6 +102,16 @@ function Page() {
       }
     })();
   }, [form]);
+
+  const checkUsername = useDebouncedCallback(async (username: string) => {
+    setUsernameAvailability({ isLoading: true });
+    const usernameExist = await checkUsernameAvailability(username);
+    if (usernameExist) {
+      setUsernameAvailability({ error: "This username is already taken!" });
+    } else {
+      setUsernameAvailability({ isAvailable: true });
+    }
+  }, 500);
 
   const skillsField = useFieldArray({
     name: "skills",
@@ -168,19 +188,48 @@ function Page() {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      name="username"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem className="flex-1">
-                          <FormLabel>Username</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Choose a username" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div>
+                      <FormField
+                        name="username"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem className="flex-1">
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Choose a username"
+                                {...field}
+                                disabled={
+                                  field.disabled ||
+                                  usernameAvailability?.isLoading
+                                }
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  if (e.target.value.length) {
+                                    checkUsername(e.target.value);
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      {usernameAvailability?.isLoading ? (
+                        <LoaderCircle className="mt-1 h-3 animate-spin text-zinc-500" />
+                      ) : usernameAvailability?.error ? (
+                        <p className="mt-1 text-[0.8rem] font-medium text-destructive">
+                          {usernameAvailability?.error}
+                        </p>
+                      ) : usernameAvailability?.isAvailable ? (
+                        <div className="mt-1 inline-flex items-center">
+                          <CircleCheck className="h-3 text-green-500" />
+                          <p className="text-[0.8rem] font-medium text-destructive text-green-500">
+                            Username available.
+                          </p>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <FormField

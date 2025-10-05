@@ -1,6 +1,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { UserType } from "./generated/prisma";
 import { getUsername } from "./lib/actions";
 import { env } from "./lib/constants";
 import prisma from "./lib/prisma";
@@ -74,21 +75,29 @@ export const nextAuthOptions: NextAuthOptions = {
 
       if (!userData) return false;
       user.id = userData.id;
+      user.type = userData.type;
       return true;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, trigger, session }) {
       if (!!user) {
         token.id = user.id;
-        token.accessToken = (user as any)?.accessToken;
+        token.type = user.type;
         token.provider = account?.provider;
+        token.accessToken = (user as any)?.accessToken;
+      }
+      if (trigger === "update" && session?.type) {
+        token.type = session.type;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
-        (session.user as any).id = token.id as string;
-        (session.user as any).accessToken = token.accessToken as string;
-        (session.user as any).provider = token.provider as string;
+        if (session.user) {
+          session.user.id = token.id as string;
+          session.user.type = token.type as UserType;
+          session.user.provider = token.provider as string;
+          session.user.accessToken = token.accessToken as string;
+        }
       }
       return session;
     }

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { UserType } from "@/generated/prisma";
 import { getUser } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { FullUser } from "@/types";
@@ -30,7 +31,8 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "./contexts/auth-provider";
 import NavItem from "./nav-item";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
@@ -45,12 +47,60 @@ import {
 import { Skeleton } from "./ui/skeleton";
 
 export function AppSidebar() {
+  const { isAuthLoading, user: authUser } = useAuth();
   const session = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isAuthenticated = session.status === "authenticated";
 
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [user, setUser] = useState<FullUser | null>();
+
+  const [quickActions, setQuickActions] = useState<
+    { text: string; icon: React.ReactNode; href: string; variant: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (!isAuthLoading && authUser?.type) {
+      if (authUser.type === UserType.DEVELOPER) {
+        setQuickActions([
+          {
+            text: "Ask Question",
+            icon: <Zap size={16} />,
+            href: "/questions/create",
+            variant: "default"
+          },
+          {
+            text: "My Jobs",
+            icon: <Briefcase size={16} />,
+            href: "/user/content?tab=jobs",
+            variant: "secondary"
+          },
+          {
+            text: "My Projects",
+            icon: <Layers size={16} />,
+            href: "/user/content?tab=projects",
+            variant: "secondary"
+          }
+        ]);
+      }
+      if (authUser.type === UserType.RECRUITER) {
+        setQuickActions([
+          {
+            text: "Post Project",
+            icon: <Star size={16} />,
+            href: "/projects/create",
+            variant: "default"
+          },
+          {
+            text: "My Projects",
+            icon: <Briefcase size={16} />,
+            href: "/user/content?tab=projects",
+            variant: "secondary"
+          }
+        ]);
+      }
+    }
+  }, [isAuthLoading, authUser?.type]);
 
   useEffect(() => {
     (async () => {
@@ -132,21 +182,6 @@ export function AppSidebar() {
       icon: <HelpCircle size={16} />,
       href: "/help",
       badge: null
-    }
-  ];
-
-  const quickActions = [
-    {
-      text: "Ask Question",
-      icon: <Zap size={16} />,
-      href: "/questions/create",
-      variant: "default" as const
-    },
-    {
-      text: "Post Project",
-      icon: <Star size={16} />,
-      href: "/projects/create",
-      variant: "secondary" as const
     }
   ];
 
@@ -276,15 +311,15 @@ export function AppSidebar() {
             {quickActions.map((action, idx) => (
               <Button
                 key={idx}
-                variant={action.variant}
                 size="sm"
+                variant={action.variant as any}
                 className="h-8 w-full justify-start text-xs"
                 asChild
               >
-                <a href={action.href}>
+                <Link href={action.href}>
                   {action.icon}
                   <span className="ml-2">{action.text}</span>
-                </a>
+                </Link>
               </Button>
             ))}
           </div>
@@ -309,8 +344,8 @@ export function AppSidebar() {
                 icon={item.icon}
                 text={item.text}
                 href={item.href}
-                collapsed={!sidebarOpen}
                 badge={item.badge}
+                collapsed={!sidebarOpen}
               />
             ))}
           </nav>
@@ -329,8 +364,8 @@ export function AppSidebar() {
                 icon={item.icon}
                 text={item.text}
                 href={item.href}
-                collapsed={!sidebarOpen}
                 badge={item.badge}
+                collapsed={!sidebarOpen}
               />
             ))}
           </nav>

@@ -3,6 +3,7 @@ import { AuthProvider } from "@/components/contexts/auth-provider";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import SetupProfileAlert from "@/components/user/setup-profile-alert";
 import { Analytics } from "@vercel/analytics/next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -42,6 +43,7 @@ export default async function RootLayout({
           <TooltipProvider>
             <AuthSessionProvider session={session}>
               <AuthProvider>
+                <SetupProfileAlert />
                 <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                   <AppSidebar />
                   <div className="h-full flex-1 overflow-y-auto">

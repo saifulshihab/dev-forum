@@ -23,5 +23,6 @@ jobs:
       - name: Install Dependencies, Build, and Test
         run: |
           npm ci
+          npx prisma generate --no-engine
           npm run build --if-present
           npm test

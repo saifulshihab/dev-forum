@@ -9,6 +9,7 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState
 } from "react";
 import {
@@ -43,8 +44,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
   const isAuthLoading = session.status === "loading";
   const isAuthenticated = session.status === "authenticated";
+  const [user, setUser] = useState<TSessionUser | undefined>(undefined);
+
+  useEffect(() => {
+    if (session.data?.user) {
+      setUser(session.data.user);
+    }
+  }, [session.data?.user]);
 
   const requireAuth = useCallback(() => {
     if (!isAuthenticated) {
@@ -64,10 +73,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
+        user,
+        requireAuth,
         isAuthLoading,
-        isAuthenticated,
-        user: session.data?.user,
-        requireAuth
+        isAuthenticated
       }}
     >
       {children}

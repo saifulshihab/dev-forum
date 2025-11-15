@@ -1,17 +1,14 @@
-"use client";
-
+import { getCurrentUser } from "@/lib/actions";
 import { Info } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { useAuth } from "../contexts/auth-provider";
 import { Button } from "../ui/button";
 
-function SetupProfileAlert() {
-  const { isAuthLoading, isAuthenticated, user } = useAuth();
-
-  if (isAuthLoading) return null;
-  if (!isAuthenticated) return null;
-
-  if (!user?.type) {
+async function SetupProfileAlert() {
+  const session = await getServerSession();
+  const user = await getCurrentUser();
+  const isAuthenticated = !!session?.user;
+  if (isAuthenticated && !user?.type) {
     return (
       <div className="flex items-center justify-between gap-3 bg-teal-500/10 px-4 py-2">
         <div className="inline-flex items-center text-teal-300">

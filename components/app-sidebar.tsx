@@ -302,7 +302,7 @@ export function AppSidebar() {
         ) : null
       ) : null}
       {/* Quick Actions */}
-      {sidebarOpen && (
+      {sidebarOpen && quickActions.length > 0 && (
         <div className="border-b border-dashed p-3">
           <p className="mb-2 px-1 text-xs font-medium text-muted-foreground">
             Quick Actions
@@ -327,8 +327,8 @@ export function AppSidebar() {
       )}
       {/* Main Navigation */}
       <div
-        className={cn("h-[calc(100vh-17.375rem)] overflow-y-auto", {
-          "h-[calc(100vh-19.1875rem)]": isAuthenticated
+        className={cn("h-[calc(100vh-9.8125rem)] overflow-y-auto", {
+          "h-[calc(100vh-21.6875rem)]": isAuthenticated
         })}
       >
         <div className="p-3">

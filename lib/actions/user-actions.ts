@@ -28,9 +28,7 @@ export async function getUser(userId: string, fetchFullUser?: boolean) {
 
 export async function getCurrentUser(fetchFullUser?: boolean) {
   const { user } = await authCheck();
-  if (user?.id) {
-    return await getUser(user.id, fetchFullUser);
-  }
+  if (user?.id) return await getUser(user.id, fetchFullUser);
 }
 
 async function updateUserSubEntity({

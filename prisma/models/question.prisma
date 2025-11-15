@@ -1,0 +1,56 @@
+enum ReactionType {
+    LIKE
+    DISLIKE
+}
+
+model Reaction {
+    id   String       @id @default(cuid())
+    type ReactionType
+
+    answerId String?
+    answer   Answer? @relation(fields: [answerId], references: [id])
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    @@unique([userId, answerId])
+}
+
+model Answer {
+    id      String @id @default(cuid())
+    content String
+
+    likeCount    Int @default(0)
+    dislikeCount Int @default(0)
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    parent   Answer? @relation("AnswerReplies", fields: [parentId], references: [id])
+    parentId String?
+
+    replies Answer[] @relation("AnswerReplies")
+
+    question   Question @relation(fields: [questionId], references: [id])
+    questionId String
+
+    reactions Reaction[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Question {
+    id      String   @id @default(uuid())
+    title   String
+    content String
+    views   Int      @default(0)
+    tags    String[] @default([])
+    answers Answer[]
+
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

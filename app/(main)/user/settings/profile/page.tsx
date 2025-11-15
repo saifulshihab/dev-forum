@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/components/contexts/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { UserType } from "@/generated/prisma";
 import {
   checkUsernameAvailability,
   getCurrentUser,
@@ -50,6 +52,7 @@ function Page() {
   const form = useForm<z.infer<typeof UserValidator>>({
     resolver: zodResolver(UserValidator)
   });
+  const { user } = useAuth();
   const [usernameAvailability, setUsernameAvailability] = useState<{
     isLoading?: boolean;
     error?: string;
@@ -530,107 +533,116 @@ function Page() {
                 </div>
               </CardContent>
             </Card>
-            <Separator className="my-2" />
-            <Card className="border-dashed bg-zinc-700/10">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  Projects
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div
-                  className={cn("flex w-full items-center justify-between", {
-                    "flex-col items-start": projectField.fields.length
-                  })}
-                >
-                  <div className="flex w-full flex-col gap-2">
-                    <div className="flex flex-col gap-5">
-                      {projectField.fields.length ? (
-                        projectField.fields.map((field, fieldIdx) => (
-                          <div
-                            key={field.id}
-                            className="flex flex-col gap-4 rounded-md border border-dashed p-3"
-                          >
-                            <div className="flex items-center justify-between">
-                              <FormField
-                                control={form.control}
-                                name={`projects.${fieldIdx}.name`}
-                                render={({ field }) => (
-                                  <FormItem className="w-1/2">
-                                    <FormControl>
-                                      <Input
-                                        placeholder="Project name"
-                                        {...field}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                              <Button
-                                size="icon"
-                                variant="destructive"
-                                onClick={() => projectField.remove(fieldIdx)}
-                              >
-                                <Trash />
-                              </Button>
-                            </div>
-                            <FormField
-                              control={form.control}
-                              name={`projects.${fieldIdx}.description`}
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <Textarea
-                                      placeholder="Write project description...(optional)"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control}
-                              name={`projects.${fieldIdx}.url`}
-                              render={({ field }) => (
-                                <FormItem className="w-3/4">
-                                  <FormControl>
-                                    <Input
-                                      placeholder="Project url (optional)"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        <p className="text-xs text-zinc-400">
-                          No projects added
-                        </p>
+            {user?.type === UserType.DEVELOPER ? (
+              <>
+                <Separator className="my-2" />
+                <Card className="border-dashed bg-zinc-700/10">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      Projects
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div
+                      className={cn(
+                        "flex w-full items-center justify-between",
+                        {
+                          "flex-col items-start": projectField.fields.length
+                        }
                       )}
+                    >
+                      <div className="flex w-full flex-col gap-2">
+                        <div className="flex flex-col gap-5">
+                          {projectField.fields.length ? (
+                            projectField.fields.map((field, fieldIdx) => (
+                              <div
+                                key={field.id}
+                                className="flex flex-col gap-4 rounded-md border border-dashed p-3"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <FormField
+                                    control={form.control}
+                                    name={`projects.${fieldIdx}.name`}
+                                    render={({ field }) => (
+                                      <FormItem className="w-1/2">
+                                        <FormControl>
+                                          <Input
+                                            placeholder="Project name"
+                                            {...field}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <Button
+                                    size="icon"
+                                    variant="destructive"
+                                    onClick={() =>
+                                      projectField.remove(fieldIdx)
+                                    }
+                                  >
+                                    <Trash />
+                                  </Button>
+                                </div>
+                                <FormField
+                                  control={form.control}
+                                  name={`projects.${fieldIdx}.description`}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormControl>
+                                        <Textarea
+                                          placeholder="Write project description...(optional)"
+                                          {...field}
+                                        />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name={`projects.${fieldIdx}.url`}
+                                  render={({ field }) => (
+                                    <FormItem className="w-3/4">
+                                      <FormControl>
+                                        <Input
+                                          placeholder="Project url (optional)"
+                                          {...field}
+                                        />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-xs text-zinc-400">
+                              No projects added
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        size={projectField.fields.length ? "default" : "icon"}
+                        className={cn("rounded-full", {
+                          "mt-3 rounded-md": projectField.fields.length
+                        })}
+                        onClick={() => {
+                          projectField.append({ name: "" });
+                        }}
+                      >
+                        <PlusIcon />
+                        {projectField.fields.length ? "Add Project" : null}
+                      </Button>
                     </div>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size={projectField.fields.length ? "default" : "icon"}
-                    className={cn("rounded-full", {
-                      "mt-3 rounded-md": projectField.fields.length
-                    })}
-                    onClick={() => {
-                      projectField.append({ name: "" });
-                    }}
-                  >
-                    <PlusIcon />
-                    {projectField.fields.length ? "Add Project" : null}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              </>
+            ) : null}
             <Separator className="my-2" />
             <Card className="border-dashed bg-zinc-700/10">
               <CardHeader>

@@ -1,7 +1,7 @@
 "use server";
 
 import { authCheck, nextAuthOptions } from "@/auth";
-import { Prisma } from "@/generated/prisma";
+import { Prisma, UserType } from "@/generated/prisma";
 import { FullUser } from "@/types";
 import https from "https";
 import { getServerSession } from "next-auth";
@@ -28,9 +28,7 @@ export async function getUser(userId: string, fetchFullUser?: boolean) {
 
 export async function getCurrentUser(fetchFullUser?: boolean) {
   const { user } = await authCheck();
-  if (user?.id) {
-    return await getUser(user.id, fetchFullUser);
-  }
+  if (user?.id) return await getUser(user.id, fetchFullUser);
 }
 
 async function updateUserSubEntity({
@@ -226,4 +224,17 @@ export async function checkUsernameAvailability(username: string) {
   });
   if (userNameExist) return true;
   return false;
+}
+
+export async function updateProfileType(type: UserType) {
+  try {
+    const sessionUser = await getServerSession(nextAuthOptions);
+    if (!sessionUser?.user || !sessionUser.user.id) return;
+    await prisma.user.update({
+      where: { id: sessionUser.user.id },
+      data: { type }
+    });
+  } catch (err: any) {
+    return { error: err?.message || "Something went wrong" };
+  }
 }

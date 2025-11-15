@@ -3,9 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UserType } from "@/generated/prisma";
-import { getUser } from "@/lib/actions";
 import { cn } from "@/lib/utils";
-import { FullUser } from "@/types";
 import {
   BookOpen,
   Briefcase,
@@ -44,16 +42,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from "./ui/dropdown-menu";
-import { Skeleton } from "./ui/skeleton";
 
 export function AppSidebar() {
   const { isAuthLoading, user: authUser } = useAuth();
   const session = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isAuthenticated = session.status === "authenticated";
-
-  const [isUserLoading, setIsUserLoading] = useState(true);
-  const [user, setUser] = useState<FullUser | null>();
 
   const [quickActions, setQuickActions] = useState<
     { text: string; icon: React.ReactNode; href: string; variant: string }[]
@@ -101,22 +95,6 @@ export function AppSidebar() {
       }
     }
   }, [isAuthLoading, authUser?.type]);
-
-  useEffect(() => {
-    (async () => {
-      if (!session.data?.user?.id) {
-        setIsUserLoading(false);
-        return;
-      }
-      try {
-        const user = await getUser(session.data.user.id);
-        setUser(user);
-        setIsUserLoading(false);
-      } catch {
-        setIsUserLoading(false);
-      }
-    })();
-  }, [session.data?.user]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -234,7 +212,7 @@ export function AppSidebar() {
             <DropdownMenuTrigger asChild>
               <div className="border-b border-dashed p-3">
                 <div className="flex items-center justify-between rounded-lg border border-dashed bg-muted/30 p-2 hover:bg-muted/50">
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
                       <Avatar>
                         <AvatarImage
@@ -250,13 +228,13 @@ export function AppSidebar() {
                       <p className="truncate text-sm font-medium">
                         {session.data.user?.name}
                       </p>
-                      {isUserLoading ? (
-                        <Skeleton className="h-4 w-20 bg-zinc-800" />
-                      ) : (
-                        <p className="truncate text-xs text-muted-foreground">
-                          @{user?.username}
-                        </p>
-                      )}
+                      {session.data.user?.email ? (
+                        <div>
+                          <p className="min-w-0 truncate text-xs text-muted-foreground">
+                            {session.data.user?.email}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                   <ChevronsUpDown className="h-4 w-4 text-zinc-200" />

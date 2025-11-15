@@ -1,3 +1,4 @@
+import { nextAuthOptions } from "@/auth";
 import { getCurrentUser } from "@/lib/actions";
 import { Info } from "lucide-react";
 import { getServerSession } from "next-auth";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 
 async function SetupProfileAlert() {
-  const session = await getServerSession();
+  const session = await getServerSession(nextAuthOptions);
   const user = await getCurrentUser();
   const isAuthenticated = !!session?.user;
   if (isAuthenticated && !user?.type) {

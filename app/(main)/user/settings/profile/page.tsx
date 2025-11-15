@@ -36,7 +36,6 @@ import { UserValidator } from "@/lib/validators/user-validator";
 import { FullUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleCheck, LoaderCircle, PlusIcon, Trash, X } from "lucide-react";
-import { redirect } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import {
   Controller,
@@ -60,12 +59,6 @@ function Page() {
     isAvailable?: boolean;
   }>();
   const formErrors = form.formState.errors;
-
-  console.log("🚀 ~ Page ~ user:", user);
-
-  if (!user?.type) {
-    redirect("/user/type");
-  }
 
   // Helper function to transform user data for form reset
   const transformUserForForm = (user: FullUser) => {

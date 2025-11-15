@@ -116,7 +116,7 @@ export function AppSidebar() {
         setIsUserLoading(false);
       }
     })();
-  }, [session]);
+  }, [session.data?.user]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);

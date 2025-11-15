@@ -1,3 +1,4 @@
+import { nextAuthOptions } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import { AuthProvider } from "@/components/contexts/auth-provider";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
@@ -30,7 +31,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerSession(nextAuthOptions);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>

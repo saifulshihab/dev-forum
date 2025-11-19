@@ -80,25 +80,21 @@ export function AppSidebar() {
       if (authUser.type === UserType.RECRUITER) {
         setQuickActions([
           {
-            text: "Post Project",
+            text: "Post Job",
             icon: <Star size={16} />,
-            href: "/projects/create",
+            href: "/jobs/create",
             variant: "default"
           },
           {
-            text: "My Projects",
+            text: "My Jobs",
             icon: <Briefcase size={16} />,
-            href: "/user/content?tab=projects",
+            href: "/user/content?tab=jobs",
             variant: "secondary"
           }
         ]);
       }
     }
   }, [isAuthLoading, authUser?.type]);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const mainNavItems = [
     {
@@ -111,12 +107,6 @@ export function AppSidebar() {
       text: "Questions",
       icon: <MessageCircle size={16} />,
       href: "/questions",
-      badge: null
-    },
-    {
-      text: "Projects",
-      icon: <Layers size={16} />,
-      href: "/projects",
       badge: null
     },
     {
@@ -162,6 +152,10 @@ export function AppSidebar() {
       badge: null
     }
   ];
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
     <div

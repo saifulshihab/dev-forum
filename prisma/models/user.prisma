@@ -68,14 +68,15 @@ model User {
 
     type UserType?
 
-    socialLinks SocialLink[]
-    experiences Experience[]
-    educations  Education[]
-    skills      Skill[]
-    projects    Project[]
-    questions   Question[]
-    answers     Answer[]
-    reactions   Reaction[]
+    socialLinks     SocialLink[]
+    experiences     Experience[]
+    educations      Education[]
+    skills          Skill[]
+    projects        Project[]
+    questions       Question[]
+    answers         Answer[]
+    reactions       Reaction[]
+    jobApplications JobApplication[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

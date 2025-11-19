@@ -1,0 +1,88 @@
+model Job {
+    id                  String             @id @default(uuid())
+    title               String
+    description         String
+    company             String
+    location            String
+    employmentType      EmploymentType
+    salaryMin           Int
+    salaryMax           Int
+    salaryCurrency      String
+    salaryPeriod        SalaryPeriod
+    experienceLevel     ExperienceLevel
+    applicationDeadline DateTime
+    responsibilities    Responsibilities[]
+    requirements        Requirements[]
+    benefits            Benefits[]
+    tags                Tag[]
+    applicants          JobApplication[]
+    requireCoverLetter  Boolean            @default(false)
+    createdAt           DateTime           @default(now())
+    updatedAt           DateTime           @updatedAt
+}
+
+enum EmploymentType {
+    FULL_TIME
+    PART_TIME
+    CONTRACT
+    INTERNSHIP
+}
+
+enum SalaryPeriod {
+    HOURLY
+    MONTHLY
+    YEARLY
+}
+
+enum ExperienceLevel {
+    ENTRY
+    MID
+    SENIOR
+}
+
+model Responsibilities {
+    id     String @id @default(cuid())
+    detail String
+
+    job   Job    @relation(fields: [jobId], references: [id])
+    jobId String
+}
+
+model Requirements {
+    id     String @id @default(cuid())
+    detail String
+
+    job   Job    @relation(fields: [jobId], references: [id])
+    jobId String
+}
+
+model Benefits {
+    id     String @id @default(cuid())
+    detail String
+
+    job   Job    @relation(fields: [jobId], references: [id])
+    jobId String
+}
+
+model Tag {
+    id   String @id @default(cuid())
+    name String
+
+    job   Job    @relation(fields: [jobId], references: [id])
+    jobId String
+}
+
+model JobApplication {
+    id          String  @id @default(uuid())
+    coverLetter String?
+
+    userId String
+    jobId  String
+
+    user User @relation(fields: [userId], references: [id])
+    job  Job  @relation(fields: [jobId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, jobId])
+}

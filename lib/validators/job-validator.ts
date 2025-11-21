@@ -1,16 +1,22 @@
 import { z } from "zod";
 
 const JobValidator = z.object({
-  title: z.string().min(1, "Job title is required"),
+  title: z.string().min(5).nonempty("Job title is required"),
   description: z.string().min(10).nonempty("Job description is required"),
   company: z.string().min(2).nonempty("Company name is required"),
   location: z.string().min(2).nonempty("Location is required"),
   employmentType: z.enum(["FULL_TIME", "PART_TIME", "CONTRACT", "INTERNSHIP"]),
-  salaryMin: z.number().min(0).optional(),
-  salaryMax: z.number().min(0).optional(),
-  salaryCurrency: z.string().min(2).optional(),
+  salaryMin: z
+    .number()
+    .min(0)
+    .transform((val) => Number(val)),
+  salaryMax: z
+    .number()
+    .min(0)
+    .transform((val) => Number(val)),
+  salaryCurrency: z.string().min(2),
   salaryPeriod: z.enum(["HOURLY", "MONTHLY", "YEARLY"]).optional(),
-  experienceLevel: z.enum(["JUNIOR", "MID", "SENIOR", "LEAD"]).optional(),
+  experienceLevel: z.enum(["ENTRY", "MID", "SENIOR"]).optional(),
   applicationDeadline: z.date().optional(),
   requireCoverLetter: z.boolean().optional(),
   tags: z.array(
@@ -36,8 +42,7 @@ const JobValidator = z.object({
       id: z.string().optional(),
       detail: z.string().nonempty("Required")
     })
-  ),
-  deadline: z.date().optional()
+  )
 });
 
 export { JobValidator };

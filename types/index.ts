@@ -23,3 +23,13 @@ export type FullAnswer = Prisma.AnswerGetPayload<{
     reactions: true;
   };
 }>;
+
+export type FullJob = Prisma.JobGetPayload<{
+  include: {
+    applicants: true;
+    tags: true;
+    benefits: true;
+    requirements: true;
+    responsibilities: true;
+  };
+}>;

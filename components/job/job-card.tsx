@@ -1,4 +1,5 @@
-import { IJobCircular } from "@/types/job";
+import { Job } from "@/generated/prisma";
+import dayjs from "@/lib/dayjs";
 import {
   Briefcase,
   Calendar,
@@ -7,66 +8,57 @@ import {
   MapPin,
   Users
 } from "lucide-react";
-import { formatSalary, getDaysAgo } from "./job-list";
 
-function JobCard(props: {
-  job: IJobCircular;
-  onClick?: (job: IJobCircular) => void;
-}) {
+function JobCard(props: { job: Job; onClick?: (job: Job) => void }) {
   const { job, onClick } = props;
   return (
-    <div className="overflow-hidden rounded-md border bg-zinc-900">
-      {/* Header */}
-      <div className="p-3">
-        <div>
+    <div className="overflow-hidden rounded-lg border bg-zinc-900 shadow-md transition hover:shadow-lg">
+      <div className="p-4">
+        <div className="flex flex-col gap-1">
           <h2
             onClick={() => onClick && onClick(job)}
-            className="cursor-pointer font-bold text-white"
+            className="cursor-pointer text-lg font-bold text-white hover:underline"
           >
             {job.title}
           </h2>
-          <p className="text-sm text-zinc-400">{job.company}</p>
+          <p className="text-sm font-medium text-zinc-400">{job.company}</p>
         </div>
-        {/* Job Meta Information */}
-        <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+        <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
           <div className="flex items-center text-zinc-500">
-            <MapPin size={14} className="mr-2 text-zinc-500" />
+            <MapPin size={14} className="mr-2" />
             <span>{job.location}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <Briefcase size={14} className="mr-2 text-zinc-500" />
-            <span>{job.employment_type}</span>
+            <Briefcase size={14} className="mr-2" />
+            <span>{job.employmentType}</span>
           </div>
           <div className="flex items-center text-zinc-500">
-            <DollarSign size={14} className="mr-2 text-zinc-500" />
-            <span>{formatSalary(job.salary)}</span>
-          </div>
-          <div className="flex items-center text-zinc-500">
-            <Users size={14} className="mr-2 text-zinc-500" />
-            <span>{job.experience_level}</span>
-          </div>
-          <div className="flex items-center text-zinc-500">
-            <Calendar size={14} className="mr-2 text-zinc-500" />
-            <span>Posted {getDaysAgo(job.posted_date)}</span>
-          </div>
-          <div className="flex items-center text-zinc-500">
-            <Clock size={14} className="mr-2 text-zinc-500" />
+            <DollarSign size={14} className="mr-2" />
             <span>
-              Apply by {new Date(job.application_deadline).toLocaleDateString()}
+              {job.salaryCurrency} {job.salaryMin} - {job.salaryMax} /{" "}
+              {job.salaryPeriod}
             </span>
           </div>
-        </div>
-
-        {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {job.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="rounded bg-zinc-800 px-1 py-[1px] text-xs font-semibold"
-            >
-              {tag}
+          <div className="flex items-center text-zinc-500">
+            <Users size={14} className="mr-2" />
+            <span>{job.experienceLevel}</span>
+          </div>
+          <div className="flex items-center text-zinc-500">
+            <Calendar size={14} className="mr-2" />
+            <span>
+              Deadline:{" "}
+              {job.applicationDeadline
+                ? new Date(job.applicationDeadline).toLocaleDateString()
+                : "N/A"}
             </span>
-          ))}
+          </div>
+          <div className="flex items-center text-zinc-500">
+            <Clock size={14} className="mr-2" />
+            <span>
+              Posted{" "}
+              {job.createdAt ? dayjs(job.createdAt).fromNow(false) : "N/A"}
+            </span>
+          </div>
         </div>
       </div>
     </div>

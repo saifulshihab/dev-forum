@@ -1,9 +1,9 @@
 import JobList from "@/components/job/job-list";
 import Empty from "@/components/ui/empty";
-import { getJobs } from "@/lib/data";
+import prisma from "@/lib/prisma";
 
 async function Page() {
-  const jobs = await getJobs();
+  const jobs = await prisma.job.findMany();
   return (
     <div>
       <div className="flex h-[3.125rem] items-center border-b border-dashed px-4">

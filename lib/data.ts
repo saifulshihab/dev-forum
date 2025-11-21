@@ -1,10 +1,3 @@
-import { sleep } from "@/lib/utils";
-
-export async function getJobs() {
-  await sleep(500);
-  return [];
-}
-
 export const countries = [
   {
     name: "Afghanistan"

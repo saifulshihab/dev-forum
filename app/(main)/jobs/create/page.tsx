@@ -22,19 +22,26 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Prisma } from "@/generated/prisma";
+import { createJob } from "@/lib/actions/job-actions";
 import { JobValidator } from "@/lib/validators/job-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, Trash, X } from "lucide-react";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 function Page() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof JobValidator>>({
     resolver: zodResolver(JobValidator)
   });
-  const formErrors = form.formState.errors;
-  console.log("🚀 ~ Page ~ formErrors:", formErrors);
+
+  useEffect(() => {
+    form.reset({});
+  }, [form]);
 
   const requirementsField = useFieldArray({
     name: "requirements",
@@ -57,9 +64,19 @@ function Page() {
   });
 
   const onSubmit = async (data: z.infer<typeof JobValidator>) => {
-    // handle job creation logic here
-    // ...existing code...
-    console.log(data);
+    try {
+      setIsLoading(true);
+      const res = await createJob(data as Prisma.JobCreateInput);
+      if (res?.error) {
+        toast.error(res?.error);
+      } else {
+        toast.success("Job created successfully");
+        form.reset();
+      }
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -100,7 +117,7 @@ function Page() {
                       render={({ field }) => (
                         <FormItem className="flex-1">
                           <FormLabel>Company</FormLabel>
-                          <FormControl>aw
+                          <FormControl>
                             <Input placeholder="Company Name" {...field} />
                           </FormControl>
                           <FormMessage />
@@ -191,10 +208,9 @@ function Page() {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="JUNIOR">Junior</SelectItem>
+                              <SelectItem value="ENTRY">Entry</SelectItem>
                               <SelectItem value="MID">Mid</SelectItem>
                               <SelectItem value="SENIOR">Senior</SelectItem>
-                              <SelectItem value="LEAD">Lead</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -349,7 +365,18 @@ function Page() {
                         <FormItem className="flex-1">
                           <FormLabel>Salary Min</FormLabel>
                           <FormControl>
-                            <Input type="number" placeholder="Min" {...field} />
+                            <Input
+                              type="number"
+                              placeholder="Min"
+                              {...field}
+                              onChange={(e) => {
+                                if (e.target.value !== undefined) {
+                                  field.onChange(Number(e.target.value));
+                                } else {
+                                  field.onChange(undefined);
+                                }
+                              }}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -362,7 +389,18 @@ function Page() {
                         <FormItem className="flex-1">
                           <FormLabel>Salary Max</FormLabel>
                           <FormControl>
-                            <Input type="number" placeholder="Max" {...field} />
+                            <Input
+                              type="number"
+                              placeholder="Max"
+                              {...field}
+                              onChange={(e) => {
+                                if (e.target.value !== undefined) {
+                                  field.onChange(Number(e.target.value));
+                                } else {
+                                  field.onChange(undefined);
+                                }
+                              }}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -457,7 +495,7 @@ function Page() {
                   <div>
                     {/* Deadline */}
                     <Controller
-                      name="deadline"
+                      name="applicationDeadline"
                       control={form.control}
                       render={({ field }) => (
                         <FormItem>
@@ -496,7 +534,9 @@ function Page() {
               </CardContent>
             </Card>
             <div className="sticky bottom-0 right-0 -mx-4 mt-4 flex justify-end border-t border-dashed bg-gradient-to-r from-zinc-950 to-zinc-900 p-3">
-              <Button type="submit">Post Job</Button>
+              <Button isLoading={isLoading} type="submit">
+                Post Job
+              </Button>
             </div>
           </form>
         </Form>

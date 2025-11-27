@@ -141,7 +141,7 @@ function Answer(props: Props) {
       <div key={answer.id} className="w-fit">
         <div className="space-y-1 rounded-xl bg-zinc-800/50 p-3 px-4">
           <div className="flex items-center justify-between gap-1">
-            <Link href={`/user/${answer.user.id}`}>
+            <Link href={`/users/${answer.user.id}`}>
               <p className="text-xs font-semibold">{answer.user.fullName}</p>
             </Link>
             <p className="text-xs text-zinc-500">

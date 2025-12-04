@@ -22,7 +22,6 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Prisma } from "@/generated/prisma";
 import { createJob } from "@/lib/actions/job-actions";
 import { JobValidator } from "@/lib/validators/job-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -58,15 +57,12 @@ function Page() {
     control: form.control
   });
 
-  const tagsField = useFieldArray({
-    name: "tags",
-    control: form.control
-  });
+  const tagsField = useFieldArray({ name: "tags", control: form.control });
 
   const onSubmit = async (data: z.infer<typeof JobValidator>) => {
     try {
       setIsLoading(true);
-      const res = await createJob(data as Prisma.JobCreateInput);
+      const res = await createJob(data as any);
       if (res?.error) {
         toast.error(res?.error);
       } else {

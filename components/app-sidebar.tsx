@@ -11,7 +11,6 @@ import {
   Code,
   HelpCircle,
   Home,
-  Layers,
   LogIn,
   LogOut,
   MessageCircle,
@@ -66,13 +65,7 @@ export function AppSidebar() {
           {
             text: "My Jobs",
             icon: <Briefcase size={16} />,
-            href: "/user/content?tab=jobs",
-            variant: "secondary"
-          },
-          {
-            text: "My Projects",
-            icon: <Layers size={16} />,
-            href: "/user/content?tab=projects",
+            href: "/user/activity/jobs",
             variant: "secondary"
           }
         ]);
@@ -88,7 +81,7 @@ export function AppSidebar() {
           {
             text: "My Jobs",
             icon: <Briefcase size={16} />,
-            href: "/user/content?tab=jobs",
+            href: "/user/activity/jobs",
             variant: "secondary"
           }
         ]);
@@ -248,11 +241,11 @@ export function AppSidebar() {
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/user/content">
+                <Link href="/user/activity">
                   <DropdownMenuItem>
                     <TableOfContents />
-                    Manage Content
-                    <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut>
+                    Activity
+                    <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
                 <Link href="/user/settings/profile">

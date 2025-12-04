@@ -26,10 +26,10 @@ export type FullAnswer = Prisma.AnswerGetPayload<{
 
 export type FullJob = Prisma.JobGetPayload<{
   include: {
-    applicants: true;
     tags: true;
     benefits: true;
     requirements: true;
+    jobApplications: true;
     responsibilities: true;
   };
 }>;

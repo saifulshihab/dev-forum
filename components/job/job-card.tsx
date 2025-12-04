@@ -1,5 +1,6 @@
 import { Job } from "@/generated/prisma";
 import dayjs from "@/lib/dayjs";
+import { cn, toSnakeCase } from "@/lib/utils";
 import {
   Briefcase,
   Calendar,
@@ -9,10 +10,25 @@ import {
   Users
 } from "lucide-react";
 
-function JobCard(props: { job: Job; onClick?: (job: Job) => void }) {
+type Props = { job: Job; onClick?: (job: Job) => void; onClose?: () => void };
+
+function JobCard(props: Props) {
   const { job, onClick } = props;
+  const isJobOpen = dayjs(job.applicationDeadline).isAfter(dayjs());
   return (
-    <div className="overflow-hidden rounded-lg border bg-zinc-900 shadow-md transition hover:shadow-lg">
+    <div className="relative overflow-hidden rounded-lg border bg-zinc-900 shadow-md hover:shadow-lg">
+      {/* Status Badge */}
+      <span
+        className={cn(
+          "absolute right-3 top-4 rounded px-2 py-0.5 text-xs font-semibold text-white",
+          {
+            "bg-green-500/10 text-green-400": isJobOpen,
+            "bg-red-500/10 text-red-400": !isJobOpen
+          }
+        )}
+      >
+        {isJobOpen ? "Open" : "Closed"}
+      </span>
       <div className="p-4">
         <div className="flex flex-col gap-1">
           <h2
@@ -30,25 +46,25 @@ function JobCard(props: { job: Job; onClick?: (job: Job) => void }) {
           </div>
           <div className="flex items-center text-zinc-500">
             <Briefcase size={14} className="mr-2" />
-            <span>{job.employmentType}</span>
+            <span>{toSnakeCase(job.employmentType)}</span>
           </div>
           <div className="flex items-center text-zinc-500">
             <DollarSign size={14} className="mr-2" />
             <span>
               {job.salaryCurrency} {job.salaryMin} - {job.salaryMax} /{" "}
-              {job.salaryPeriod}
+              {toSnakeCase(job.salaryPeriod)}
             </span>
           </div>
           <div className="flex items-center text-zinc-500">
             <Users size={14} className="mr-2" />
-            <span>{job.experienceLevel}</span>
+            <span>{toSnakeCase(job.experienceLevel)}</span>
           </div>
           <div className="flex items-center text-zinc-500">
             <Calendar size={14} className="mr-2" />
             <span>
-              Deadline:{" "}
+              Deadline :{" "}
               {job.applicationDeadline
-                ? new Date(job.applicationDeadline).toLocaleDateString()
+                ? dayjs(job.applicationDeadline).format("DD MMM YYYY")
                 : "N/A"}
             </span>
           </div>

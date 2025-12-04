@@ -15,8 +15,9 @@ model Job {
     requirements        Requirements[]
     benefits            Benefits[]
     tags                Tag[]
-    applicants          JobApplication[]
-    requireCoverLetter  Boolean            @default(false)
+    jobApplications     JobApplication[]
+    user                User               @relation(fields: [userId], references: [id])
+    userId              String
     createdAt           DateTime           @default(now())
     updatedAt           DateTime           @updatedAt
 }
@@ -72,8 +73,16 @@ model Tag {
     jobId String
 }
 
+enum JobApplicationStatus {
+    PENDING
+    VIEWED
+    DECLINED
+}
+
 model JobApplication {
-    id          String  @id @default(uuid())
+    id String @id @default(uuid())
+
+    status      JobApplicationStatus @default(PENDING)
     coverLetter String?
 
     userId String

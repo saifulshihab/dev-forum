@@ -28,13 +28,11 @@ function Question(props: {
   return (
     <div className="space-y-2 rounded-md bg-zinc-900 p-4 px-5">
       <Link
-        href={
-          creatorView
-            ? `/user/content/questions/${question.id}`
-            : `/questions/${question.id}`
-        }
+        href={`/questions/${question.id}${creatorView ? "?creatorView=true" : ""}`}
       >
-        <h2 className="text-xl font-semibold">{question.title}</h2>
+        <h2 className={cn("text-xl font-semibold", { "text-lg": creatorView })}>
+          {question.title}
+        </h2>
       </Link>
       <p
         className={cn("line-clamp-2 text-sm text-muted-foreground", {
@@ -62,7 +60,7 @@ function Question(props: {
             <div className="inline-flex max-w-[40%] flex-wrap items-center gap-4 text-xs text-zinc-500">
               <div className="inline-flex items-center gap-2">
                 <Clock size={14} />
-                <p>{dayjs(question.createdAt).fromNow()} </p>
+                <p>{dayjs(question.createdAt).fromNow()}</p>
               </div>
               <div className="inline-flex items-center gap-2">
                 <MessageCircle size={14} />
@@ -82,14 +80,13 @@ function Question(props: {
         )
       ) : null}
       {creatorView ? (
-        <div className="flex items-center justify-end gap-3 border-t pt-2">
+        <div className="mt-2 flex items-center justify-end gap-3">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
                 size="sm"
-                variant="ghost"
+                variant="destructive"
                 isLoading={isDeleting === question.id}
-                className="text-muted-foreground"
               >
                 <Trash />
                 Delete

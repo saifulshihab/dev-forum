@@ -10,8 +10,14 @@ import { ArrowLeft, Clock, User } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-async function Page(props: { params: Promise<{ id: string }> }) {
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Record<string, string | undefined>;
+};
+
+async function Page(props: Props) {
   const id = (await props.params).id;
+  const creatorView = props.searchParams.creatorView === "true";
 
   const question = await prisma.question.findUnique({
     where: { id },
@@ -30,7 +36,7 @@ async function Page(props: { params: Promise<{ id: string }> }) {
         variant="link"
         className="px-0 text-muted-foreground hover:no-underline"
       >
-        <Link href="/questions">
+        <Link href={creatorView ? "/user/activity/questions" : "/questions"}>
           <ArrowLeft className="mr-1" />
           Back
         </Link>

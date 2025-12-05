@@ -4,7 +4,8 @@ import { Job } from "@/generated/prisma";
 import { applyJob, getJob } from "@/lib/actions/job-actions";
 import { cn } from "@/lib/utils";
 import { FullJob } from "@/types";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/auth-provider";
 import JobCard from "./job-card";
@@ -18,9 +19,13 @@ function JobList(props: { jobs: Job[] }) {
   const [isJobDetailsOpen, setJobDetailsOpen] = useState(false);
   const [fullJob, setFullJob] = useState<FullJob | undefined>();
 
-  const onJobClick = async (jobId: string) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const jobId = searchParams.get("jobId");
+
+  const fetchJobDetails = async (jobId: string) => {
     try {
-      if (jobId === fullJob?.id) return;
       setJobDetailsOpen(true);
       setJobLoading(true);
       const job = await getJob(jobId);
@@ -29,6 +34,18 @@ function JobList(props: { jobs: Job[] }) {
     } finally {
       setJobLoading(false);
     }
+  };
+
+  useEffect(() => {
+    if (!jobId) return;
+    fetchJobDetails(jobId);
+  }, [jobId]);
+
+  const onJobClick = async (jobId: string) => {
+    if (jobId === fullJob?.id) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("jobId", jobId);
+    router.push(pathname + "?" + params.toString());
   };
 
   const onApplyJob = async (

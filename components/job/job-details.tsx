@@ -93,15 +93,15 @@ function JobDetails(props: Props) {
   return (
     <div className="w-full max-w-2xl rounded-lg bg-zinc-900 p-6 shadow-lg">
       <div className="mb-6 border-b pb-4">
-        <div className="relative flex items-center">
-          <h1 className="mb-2 text-2xl font-bold text-white">{job.title}</h1>
+        <div className="flex justify-end">
           <button
-            className="absolute right-0 top-0 text-zinc-400 transition active:scale-95"
             onClick={onClose}
+            className="text-zinc-400 transition active:scale-95"
           >
-            <X />
+            <X size={16} />
           </button>
         </div>
+        <h1 className="mb-2 text-2xl font-bold text-white">{job.title}</h1>
         <p className="text-lg text-zinc-400">{job.company}</p>
         <div>
           <div className="mt-3 flex flex-col gap-2 text-sm">

@@ -6,6 +6,7 @@ import { JobApplicationStatus, Prisma } from "@/generated/prisma";
 import { getDeveloperUserJobs } from "@/lib/actions/job-actions";
 import dayjs from "@/lib/dayjs";
 import { cn, toSnakeCase } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -65,9 +66,15 @@ function DeveloperUserJobs() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between gap-2">
-                      <h2 className="line-clamp-1 cursor-pointer font-bold text-white">
-                        {application.job.title}
-                      </h2>
+                      <Link
+                        href={`/jobs?jobId=${application.jobId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <h2 className="line-clamp-1 cursor-pointer font-bold text-white hover:underline">
+                          {application.job.title}
+                        </h2>
+                      </Link>
                       <span
                         className={cn(
                           "rounded px-2 py-0.5 text-xs font-semibold text-white",

@@ -23,6 +23,7 @@ import {
 import dayjs from "@/lib/dayjs";
 import { cn } from "@/lib/utils";
 import { EyeIcon, Trash } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import JobApplicants from "./job-applicants";
@@ -84,7 +85,7 @@ function RecruiterUserJobs() {
   const onViewApplicants = async (jobId: string) => {
     try {
       setIsJobApplicationsLoading(true);
-      const job = jobs.find((j) => j.id === jobId) || null;
+      const job = jobs.find((job) => job.id === jobId) || null;
       setSelectedJob(job);
       setJobDetailsOpen(true);
       const res = await getJobApplications(jobId);
@@ -136,9 +137,15 @@ function RecruiterUserJobs() {
                   className="space-y-3 rounded-md bg-zinc-900 p-4 px-5"
                 >
                   <div className="space-y-1">
-                    <h2 className="cursor-pointer font-bold text-white">
-                      {job.title}
-                    </h2>
+                    <Link
+                      href={`/jobs?jobId=${job.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <h2 className="line-clamp-1 cursor-pointer font-bold text-white hover:underline">
+                        {job.title}
+                      </h2>
+                    </Link>
                     <p className="text-sm text-zinc-400">{job.company}</p>
                     <p className="text-sm text-zinc-400">
                       Deadline :{" "}
@@ -201,6 +208,10 @@ function RecruiterUserJobs() {
                     } as any
                   }
                   jobApplications={jobApplications}
+                  onClose={() => {
+                    setSelectedJob(null);
+                    setJobDetailsOpen(false);
+                  }}
                 />
               </div>
             ) : null}

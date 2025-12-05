@@ -10,10 +10,10 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import Spinner from "@/components/ui/spinner";
-import { Job, Prisma } from "@/generated/prisma";
+import { Job, JobApplicationStatus, Prisma } from "@/generated/prisma";
 import { markJobApplicationViewed } from "@/lib/actions/job-actions";
 import dayjs from "@/lib/dayjs";
-import { EyeIcon, Mail, User2 } from "lucide-react";
+import { EyeIcon, Mail, User2, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -27,11 +27,13 @@ type Props = {
   isLoading: boolean;
   job: Job;
   jobApplications: TJobApplication[];
+  onClose?: () => void;
 };
 
 export default function JobApplicants({
-  isLoading,
   job,
+  onClose,
+  isLoading,
   jobApplications
 }: Props) {
   const [selectedApplication, setSelectedApplication] =
@@ -45,16 +47,29 @@ export default function JobApplicants({
 
   const handleViewApplication = async (application: TJobApplication) => {
     setSelectedApplication(application);
-    await markJobApplicationViewed(application.id);
+    // Mark application as viewed
+    if (application.status !== JobApplicationStatus.VIEWED) {
+      await markJobApplicationViewed(application.id);
+    }
   };
 
   return (
     <div className="rounded-lg bg-zinc-900 p-4">
       {/* Job Header */}
       <div className="space-y-1">
-        <h2 className="cursor-pointer text-lg font-bold text-white">
-          {job.title}
-        </h2>
+        <div>
+          <div className="flex justify-end">
+            <button
+              className="text-zinc-400 transition active:scale-95"
+              onClick={onClose}
+            >
+              <X size={16} />
+            </button>
+          </div>
+          <h2 className="line-clamp-1 cursor-pointer text-lg font-bold text-white">
+            {job.title}
+          </h2>
+        </div>
         <p className="text-sm text-zinc-400">{job.company}</p>
         <p className="text-sm text-zinc-400">
           Deadline : {dayjs(job.applicationDeadline).format("DD/MM/YYYY")}
@@ -79,7 +94,6 @@ export default function JobApplicants({
                   <CardContent className="p-4">
                     <div className="space-y-2">
                       <div className="flex items-start gap-4">
-                        {" "}
                         <Avatar>
                           {application.user.dpUrl ? (
                             <AvatarImage
@@ -114,6 +128,7 @@ export default function JobApplicants({
                             </div>
                           </div>
                           <Button
+                            size="sm"
                             onClick={() => handleViewApplication(application)}
                           >
                             <EyeIcon />

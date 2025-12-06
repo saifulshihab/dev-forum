@@ -158,7 +158,7 @@ function RecruiterUserJobs() {
                   key={idx}
                   className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-md"
                 >
-                  <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
+                  <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
                     <div className="mb-3 flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <Skeleton className="mb-2 h-6 w-3/4 bg-zinc-800" />
@@ -193,7 +193,7 @@ function RecruiterUserJobs() {
                     className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-md transition-all hover:border-zinc-700 hover:shadow-xl"
                   >
                     {/* Header Section */}
-                    <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
+                    <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
                       <div className="mb-3 flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
                           <h2 className="mb-2 line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">

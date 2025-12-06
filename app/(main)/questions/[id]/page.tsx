@@ -39,8 +39,8 @@ async function Page(props: Props) {
       {/* Back Button */}
       <Button
         asChild
-        variant="ghost"
         size="sm"
+        variant="ghost"
         className="text-zinc-400 hover:text-white"
       >
         <Link href={creatorView ? "/user/activity/questions" : "/questions"}>

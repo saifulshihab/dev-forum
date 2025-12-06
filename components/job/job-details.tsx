@@ -51,7 +51,7 @@ function JobDetails(props: Props) {
   if (isLoading) {
     return (
       <div className="w-full max-w-2xl rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
-        <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+        <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
           <div className="mb-4 flex items-start justify-between">
             <div className="flex-1">
               <Skeleton className="mb-3 h-8 w-3/4" />
@@ -86,7 +86,7 @@ function JobDetails(props: Props) {
   return (
     <div className="w-full max-w-2xl rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
       {/* Header Section */}
-      <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+      <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
         <div className="mb-4 flex items-start justify-between">
           <div className="flex-1">
             <h1 className="mb-2 text-3xl font-bold text-white">{job.title}</h1>

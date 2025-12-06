@@ -15,11 +15,12 @@ async function Page(props: Props) {
     <div className="space-y-3">
       <Button
         asChild
-        variant="link"
-        className="px-0 text-muted-foreground hover:no-underline"
+        size="sm"
+        variant="ghost"
+        className="text-zinc-400 hover:text-white"
       >
         <Link href="/users">
-          <ArrowLeft className="mr-1" />
+          <ArrowLeft size={16} className="mr-2" />
           Back
         </Link>
       </Button>

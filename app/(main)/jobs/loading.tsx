@@ -3,13 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 function Loading() {
   return (
     <div>
-      {/* Header */}
-      <div className="flex h-[3.125rem] items-center border-b border-dashed px-4">
-        <Skeleton className="h-7 w-20 bg-zinc-800" />
-      </div>
-
       {/* Content */}
-      <div className="h-[calc(100vh-3.125rem)] space-y-3 overflow-y-auto p-3">
+      <div className="h-[calc(100vh-3.125rem)] space-y-3 overflow-y-auto">
         {/* Filter Skeleton */}
         <div className="space-y-2 rounded-lg border border-zinc-800 bg-zinc-900 p-4">
           <div className="flex items-center justify-between">

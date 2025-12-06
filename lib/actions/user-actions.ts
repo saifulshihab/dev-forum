@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { env } from "../constants";
 import prisma from "../prisma";
+import { UserValidator } from "../validators/user-validator";
 
 export async function getUser(userId: string, fetchFullUser?: boolean) {
   await authCheck();
@@ -76,6 +77,12 @@ export async function updateProfile(data: FullUser) {
   try {
     const { user } = await authCheck();
     if (!user?.id) return;
+
+    const result = UserValidator.safeParse(data);
+    if (result.error) {
+      return { error: "Invalid user data" };
+    }
+
     const userData = await getUser(user.id, true);
     const userId = user.id;
 

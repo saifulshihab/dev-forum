@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Question as TQuestion } from "@/generated/prisma";
 import { deleteQuestion, getUserQuestions } from "@/lib/actions";
 import { FullQuestion } from "@/types";
+import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -39,46 +40,61 @@ function UserQuestions() {
     try {
       setIsQuestionDeleting(questionId);
       await deleteQuestion(questionId);
-      toast.success("Question deleted");
+      toast.success("Question deleted successfully");
       setQuestions((prev) =>
         prev.filter((question) => question.id !== questionId)
       );
     } catch {
+      toast.error("Failed to delete question");
     } finally {
       setIsQuestionDeleting(undefined);
     }
   };
 
   return (
-    <div>
-      <div className="mb-4">
-        <h1 className="text-xl font-bold text-white">My Questions</h1>
-        <p className="mt-1 text-sm text-zinc-400">
-          Manage questions you have asked
-        </p>
+    <div className="space-y-6">
+      {/* Header Section */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+            <MessageCircle size={20} className="text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">My Questions</h1>
+            <p className="mt-0.5 text-sm text-zinc-400">
+              Manage and track your questions
+            </p>
+          </div>
+        </div>
       </div>
+
+      {/* Content Section */}
       {isQuestionsLoading ? (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {Array(3)
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {Array(6)
             .fill(0)
             .map((_, idx) => (
               <div
                 key={idx}
-                className="flex h-[8.625rem] flex-col justify-between gap-1 rounded-md bg-zinc-900 p-4 px-5"
+                className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-md"
               >
-                <div className="flex flex-col gap-3">
-                  <Skeleton className="h-[1.75rem] w-40 bg-zinc-800" />
-                  <Skeleton className="h-5 w-72 bg-zinc-800" />
+                <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
+                  <Skeleton className="mb-2 h-6 w-3/4 bg-zinc-800" />
+                  <Skeleton className="h-4 w-1/2 bg-zinc-800" />
                 </div>
-                <div className="flex justify-between">
-                  <Skeleton className="h-4 w-20 bg-zinc-800" />
-                  <Skeleton className="h-4 w-40 bg-zinc-800" />
+                <div className="p-4">
+                  <Skeleton className="mb-3 h-4 w-full bg-zinc-800" />
+                  <Skeleton className="mb-3 h-4 w-5/6 bg-zinc-800" />
+                  <div className="flex items-center justify-between border-t border-zinc-800 pt-3">
+                    <Skeleton className="h-3 w-20 bg-zinc-800" />
+                    <Skeleton className="h-8 w-20 rounded-md bg-zinc-800" />
+                  </div>
                 </div>
               </div>
             ))}
         </div>
       ) : questions.length ? (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {questions.map((question) => (
             <Question
               creatorView

@@ -33,3 +33,16 @@ export type FullJob = Prisma.JobGetPayload<{
     responsibilities: true;
   };
 }>;
+
+export type JobsPageSearchParams = {
+  employmentType?: string;
+  experienceLevel?: string;
+  location?: string;
+  company?: string;
+  salaryMin?: string;
+  salaryMax?: string;
+  salaryCurrency?: string;
+  salaryPeriod?: string;
+  tag?: string;
+  search?: string;
+};

@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import dayjs from "@/lib/dayjs";
@@ -6,6 +7,7 @@ import { FullJob } from "@/types";
 import {
   AlertCircleIcon,
   Briefcase,
+  Building2,
   Calendar,
   Clock,
   DollarSign,
@@ -15,7 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../contexts/auth-provider";
-import { Alert, AlertDescription } from "../ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,6 +30,7 @@ import {
 } from "../ui/alert-dialog";
 import Empty from "../ui/empty";
 import { Label } from "../ui/label";
+import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 
 type Props = {
@@ -39,50 +42,40 @@ type Props = {
 };
 
 function JobDetails(props: Props) {
-  const { isLoading, job, isApplying, onApply, onClose } = props;
   const { user } = useAuth();
+  const { isLoading, job, isApplying, onApply, onClose } = props;
   const [coverLetter, setCoverLetter] = useState<string | undefined>();
   const [isApplicationDialogOpen, setApplicationDialogOpen] = useState(false);
   const isJobOpen = job && dayjs(job.applicationDeadline).isAfter(dayjs());
+
   if (isLoading) {
     return (
-      <div className="w-full max-w-2xl rounded-lg bg-zinc-900 p-8 shadow-lg">
-        <div className="mb-6 border-b pb-4">
-          <Skeleton className="mb-2 h-8 w-2/3" />
-          <Skeleton className="h-6 w-1/3" />
-          <div className="mt-2 flex flex-col gap-4">
-            <Skeleton className="h-5 w-24" />
-            <Skeleton className="h-5 w-20" />
-            <Skeleton className="h-5 w-32" />
-            <Skeleton className="h-5 w-20" />
-            <Skeleton className="h-5 w-28" />
+      <div className="w-full max-w-2xl rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
+        <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+          <div className="mb-4 flex items-start justify-between">
+            <div className="flex-1">
+              <Skeleton className="mb-3 h-8 w-3/4" />
+              <Skeleton className="h-6 w-1/2" />
+            </div>
+            <Skeleton className="h-8 w-8 rounded-full" />
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            <Skeleton className="h-16 rounded-lg" />
+            <Skeleton className="h-16 rounded-lg" />
+            <Skeleton className="h-16 rounded-lg" />
           </div>
         </div>
-        <div className="mb-6">
-          <Skeleton className="mb-2 h-6 w-1/4" />
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="mt-2 h-5 w-5/6" />
-        </div>
-        <div className="mb-6">
-          <Skeleton className="mb-2 h-6 w-1/4" />
-          <Skeleton className="h-5 w-2/3" />
-          <Skeleton className="mt-2 h-5 w-1/2" />
-        </div>
-        <div className="mb-6">
-          <Skeleton className="mb-2 h-6 w-1/4" />
-          <Skeleton className="h-5 w-2/3" />
-          <Skeleton className="mt-2 h-5 w-1/2" />
-        </div>
-        <div className="mb-6">
-          <Skeleton className="mb-2 h-6 w-1/4" />
-          <div className="flex flex-wrap gap-2">
-            <Skeleton className="h-5 w-16" />
-            <Skeleton className="h-5 w-12" />
-            <Skeleton className="h-5 w-20" />
+        <div className="space-y-6 p-6">
+          <div>
+            <Skeleton className="mb-3 h-6 w-32" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="mt-2 h-4 w-5/6" />
           </div>
-        </div>
-        <div className="mt-8 flex justify-end">
-          <Skeleton className="mx-auto h-10 w-32" />
+          <div>
+            <Skeleton className="mb-3 h-6 w-40" />
+            <Skeleton className="h-4 w-2/3" />
+            <Skeleton className="mt-2 h-4 w-1/2" />
+          </div>
         </div>
       </div>
     );
@@ -91,170 +84,326 @@ function JobDetails(props: Props) {
   if (!job) return <Empty text="Job details not found" />;
 
   return (
-    <div className="w-full max-w-2xl rounded-lg bg-zinc-900 p-6 shadow-lg">
-      <div className="mb-6 border-b pb-4">
-        <div className="flex justify-end">
+    <div className="w-full max-w-2xl rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
+      {/* Header Section */}
+      <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+        <div className="mb-4 flex items-start justify-between">
+          <div className="flex-1">
+            <h1 className="mb-2 text-3xl font-bold text-white">{job.title}</h1>
+            <div className="flex items-center gap-2 text-lg text-zinc-400">
+              <Building2 size={18} className="text-zinc-500" />
+              <span>{job.company}</span>
+            </div>
+          </div>
           <button
             onClick={onClose}
-            className="text-zinc-400 transition active:scale-95"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white active:scale-95"
+            aria-label="Close job details"
           >
-            <X size={16} />
+            <X size={18} />
           </button>
         </div>
-        <h1 className="mb-2 text-2xl font-bold text-white">{job.title}</h1>
-        <p className="text-lg text-zinc-400">{job.company}</p>
-        <div>
-          <div className="mt-3 flex flex-col gap-2 text-sm">
-            <div className="flex items-center text-zinc-500">
-              <MapPin size={14} className="mr-2" />
-              <span>
-                <span className="text-white">Location : </span>
-                {job.location}
-              </span>
-            </div>
-            <div className="flex items-center text-zinc-500">
-              <Briefcase size={14} className="mr-2" />
-              <span>
-                <span className="text-white">Job Type : </span>
-                {toSnakeCase(job.employmentType)}
-              </span>
-            </div>
-            <div className="flex items-center text-zinc-500">
-              <DollarSign size={14} className="mr-2" />
-              <span>
-                <span className="text-white">Salary : </span>
-                {job.salaryCurrency} {job.salaryMin} - {job.salaryMax} /{" "}
-                {toSnakeCase(job.salaryPeriod)}
-              </span>
-            </div>
-            <div className="flex items-center text-zinc-500">
-              <Users size={14} className="mr-2" />
-              <span>
-                <span className="text-white">Experience Level : </span>
-                {toSnakeCase(job.experienceLevel)}
-              </span>
-            </div>
-            <div className="flex items-center text-zinc-500">
-              <Calendar size={14} className="mr-2" />
-              <span>
-                <span className="text-white">Job Type : </span>
-                {job.applicationDeadline
-                  ? new Date(job.applicationDeadline).toLocaleDateString()
-                  : "N/A"}
-              </span>
-            </div>
-            <div className="flex items-center text-zinc-500">
-              <Clock size={14} className="mr-2" />
-              <span>
-                Posted{" "}
-                {job.createdAt ? dayjs(job.createdAt).fromNow(false) : "N/A"}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mb-6">
-        <h2 className="text-md mb-2 font-semibold text-white">Description</h2>
-        <p className="whitespace-pre-line text-sm text-zinc-300">
-          {job.description}
-        </p>
-      </div>
-      {job.responsibilities?.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-md mb-2 font-semibold text-white">
-            Responsibilities
-          </h2>
-          <ul className="ml-6 list-disc text-sm text-zinc-300">
-            {job.responsibilities.map((r) => (
-              <li key={r.id}>{r.detail}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {job.requirements?.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-md mb-2 font-semibold text-white">
-            Requirements
-          </h2>
-          <ul className="ml-6 list-disc text-sm text-zinc-300">
-            {job.requirements.map((r) => (
-              <li key={r.id}>{r.detail}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {job.benefits?.length > 0 && (
-        <div className="mb-6">
-          <h2 className="mb-2 text-sm font-semibold text-white">Benefits</h2>
-          <ul className="ml-6 list-disc text-sm text-zinc-300">
-            {job.benefits.map((b) => (
-              <li key={b.id}>{b.detail}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {job.tags?.length > 0 && (
-        <div className="mb-6">
-          <h2 className="mb-2 text-sm font-semibold text-white">Tags</h2>
-          <div className="flex flex-wrap gap-2">
-            {job.tags.map((tag) => (
-              <span
-                key={tag.id}
-                className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
-              >
-                {tag.name}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-      {job.userId !== user?.id ? (
-        <div className="mt-8 flex justify-end">
-          {!isJobOpen && (
-            <span className="mr-4 self-center text-sm text-orange-400">
-              The application deadline has passed.
-            </span>
-          )}
-          <Button
-            size="lg"
-            variant="default"
-            isLoading={isApplying}
-            disabled={!isJobOpen || isApplying}
-            onClick={() => setApplicationDialogOpen(true)}
+
+        {/* Status Badge */}
+        <div className="mb-4">
+          <Badge
+            variant={isJobOpen ? "default" : "destructive"}
+            className={
+              isJobOpen
+                ? "border-green-500/20 bg-green-500/10 text-green-400 hover:bg-green-400/10"
+                : "border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-400/10"
+            }
           >
-            Apply
-          </Button>
+            {isJobOpen ? "Open for Applications" : "Application Closed"}
+          </Badge>
         </div>
-      ) : null}
+
+        {/* Key Info Grid */}
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <MapPin size={14} />
+              <span>Location</span>
+            </div>
+            <p className="text-sm font-semibold text-white">{job.location}</p>
+          </div>
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <Briefcase size={14} />
+              <span>Type</span>
+            </div>
+            <p className="text-sm font-semibold text-white">
+              {toSnakeCase(job.employmentType)}
+            </p>
+          </div>
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <Users size={14} />
+              <span>Level</span>
+            </div>
+            <p className="text-sm font-semibold text-white">
+              {toSnakeCase(job.experienceLevel)}
+            </p>
+          </div>
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <DollarSign size={14} />
+              <span>Salary</span>
+            </div>
+            <p className="text-sm font-semibold text-white">
+              {job.salaryCurrency} {job.salaryMin.toLocaleString()} -{" "}
+              {job.salaryMax.toLocaleString()}
+            </p>
+            <p className="text-xs text-zinc-500">
+              / {toSnakeCase(job.salaryPeriod)}
+            </p>
+          </div>
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <Calendar size={14} />
+              <span>Deadline</span>
+            </div>
+            <p className="text-sm font-semibold text-white">
+              {job.applicationDeadline
+                ? dayjs(job.applicationDeadline).format("MMM DD, YYYY")
+                : "N/A"}
+            </p>
+          </div>
+          <div className="rounded-lg bg-zinc-800/50 p-3">
+            <div className="mb-1 flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <Clock size={14} />
+              <span>Posted</span>
+            </div>
+            <p className="text-sm font-semibold text-white">
+              {job.createdAt ? dayjs(job.createdAt).fromNow(false) : "N/A"}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="space-y-6 p-6">
+        {/* Description */}
+        <div>
+          <h2 className="mb-3 text-lg font-semibold text-white">Description</h2>
+          <div className="rounded-lg bg-zinc-800/30 p-4">
+            <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
+              {job.description}
+            </p>
+          </div>
+        </div>
+
+        {/* Responsibilities */}
+        {job.responsibilities?.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              Responsibilities
+            </h2>
+            <div className="rounded-lg bg-zinc-800/30 p-4">
+              <ul className="space-y-2 text-sm text-zinc-300">
+                {job.responsibilities.map((responsibility) => (
+                  <li
+                    key={responsibility.id}
+                    className="flex items-start gap-2"
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{responsibility.detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Requirements */}
+        {job.requirements?.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              Requirements
+            </h2>
+            <div className="rounded-lg bg-zinc-800/30 p-4">
+              <ul className="space-y-2 text-sm text-zinc-300">
+                {job.requirements.map((requirement) => (
+                  <li key={requirement.id} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{requirement.detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Benefits */}
+        {job.benefits?.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-lg font-semibold text-white">Benefits</h2>
+            <div className="rounded-lg bg-zinc-800/30 p-4">
+              <ul className="space-y-2 text-sm text-zinc-300">
+                {job.benefits.map((benefit) => (
+                  <li key={benefit.id} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{benefit.detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Tags */}
+        {job.tags?.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-lg font-semibold text-white">Tags</h2>
+            <div className="flex flex-wrap gap-2">
+              {job.tags.map((tag) => (
+                <Badge
+                  key={tag.id}
+                  variant="secondary"
+                  className="bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                >
+                  {tag.name}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+        <Separator className="my-6" />
+        {/* Apply Section */}
+        {job.userId !== user?.id && (
+          <div className="space-y-4">
+            {!isJobOpen && (
+              <Alert
+                variant="destructive"
+                className="border-red-500/20 bg-red-500/10 text-red-400"
+              >
+                <AlertCircleIcon size={16} />
+                <AlertTitle className="text-red-400">
+                  Application Deadline Passed
+                </AlertTitle>
+                <AlertDescription className="text-red-300/90">
+                  The application deadline for this position was{" "}
+                  {job.applicationDeadline
+                    ? dayjs(job.applicationDeadline).format("MMMM DD, YYYY")
+                    : "not specified"}
+                  . This job is no longer accepting applications.
+                </AlertDescription>
+              </Alert>
+            )}
+            <div
+              className={`flex items-center ${
+                !isJobOpen ? "justify-center" : "justify-end"
+              }`}
+            >
+              <Button
+                size="lg"
+                isLoading={isApplying}
+                variant={isJobOpen ? "default" : "outline"}
+                disabled={!isJobOpen || isApplying}
+                onClick={() => setApplicationDialogOpen(true)}
+                className={`min-w-[140px] ${
+                  !isJobOpen
+                    ? "cursor-not-allowed border-zinc-700 bg-zinc-800/50 text-zinc-500 opacity-60"
+                    : ""
+                }`}
+              >
+                {isJobOpen ? "Apply Now" : "Application Closed"}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
       <AlertDialog
         open={isApplicationDialogOpen}
         onOpenChange={setApplicationDialogOpen}
       >
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Apply to {job.company}</AlertDialogTitle>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Briefcase size={20} className="text-primary" />
+              </div>
+              <div>
+                <AlertDialogTitle className="text-2xl">
+                  Apply to {job.company}
+                </AlertDialogTitle>
+                <AlertDialogDescription className="mt-1">
+                  Submit your application for the {job.title} position
+                </AlertDialogDescription>
+              </div>
+            </div>
           </AlertDialogHeader>
-          <AlertDialogDescription>
-            Are you ready to submit your application? Please review all
-            information before proceeding.
-          </AlertDialogDescription>
-          <Alert className="text-orange-400">
-            <AlertCircleIcon size={14} />
-            <AlertDescription>
-              Once submitted, you won&apos;t be able to make changes to your
-              application.
-            </AlertDescription>
-          </Alert>
-          <div className="space-y-1">
-            <Label>Cover Letter</Label>
-            <Textarea
-              value={coverLetter}
-              onChange={(e) => setCoverLetter(e.target.value)}
-              placeholder="Write cover letter...(Optional)"
-            />
+
+          <div className="space-y-6">
+            {/* Job Summary */}
+            <div className="rounded-lg border border-zinc-800 bg-zinc-800/30 p-4">
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-white">
+                  Job Position
+                </h4>
+                <p className="text-sm text-zinc-300">{job.title}</p>
+                <div className="flex items-center gap-4 text-xs text-zinc-500">
+                  <div className="flex items-center gap-1.5">
+                    <Building2 size={14} />
+                    <span>{job.company}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin size={14} />
+                    <span>{job.location}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Warning Alert */}
+            <Alert className="border-orange-500/20 bg-orange-500/10 text-orange-400">
+              <AlertCircleIcon size={16} />
+              <AlertTitle className="text-orange-400">
+                Important Notice
+              </AlertTitle>
+              <AlertDescription className="text-orange-300/90">
+                Once you submit your application, you won&apos;t be able to make
+                any changes. Please review all information carefully before
+                proceeding.
+              </AlertDescription>
+            </Alert>
+
+            {/* Cover Letter Section */}
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-white">
+                  Cover Letter
+                </Label>
+                <p className="text-xs text-zinc-400">
+                  Introduce yourself and explain why you&apos;re a good fit for
+                  this position (Optional)
+                </p>
+              </div>
+              <Textarea
+                value={coverLetter}
+                onChange={(e) => setCoverLetter(e.target.value)}
+                placeholder="Write your cover letter here... (Optional)"
+                className="min-h-[120px] resize-none bg-zinc-800/50 text-white placeholder:text-zinc-500 focus-visible:ring-primary"
+                rows={6}
+              />
+              {coverLetter && (
+                <p className="text-xs text-zinc-500">
+                  {coverLetter.length} characters
+                </p>
+              )}
+            </div>
+
+            <Separator className="bg-zinc-800" />
           </div>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setApplicationDialogOpen(false)}>
+
+          <AlertDialogFooter className="gap-2 sm:gap-0">
+            <AlertDialogCancel
+              onClick={() => {
+                setApplicationDialogOpen(false);
+                setCoverLetter(undefined);
+              }}
+              className="sm:mr-2"
+            >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
@@ -263,10 +412,12 @@ function JobDetails(props: Props) {
                 onApply &&
                 onApply(job.id, coverLetter, () => {
                   setCoverLetter(undefined);
+                  setApplicationDialogOpen(false);
                 })
               }
+              className="min-w-[140px]"
             >
-              Submit Application
+              {isApplying ? "Submitting..." : "Submit Application"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

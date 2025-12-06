@@ -168,6 +168,116 @@ export async function getJobApplications(jobId: string) {
   }
 }
 
+// Get jobs with filtering
+export async function getJobs(filters?: {
+  employmentType?: string;
+  experienceLevel?: string;
+  location?: string;
+  company?: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryCurrency?: string;
+  salaryPeriod?: string;
+  tag?: string;
+  search?: string;
+}) {
+  try {
+    const where: any = {};
+    const orConditions: any[] = [];
+
+    if (filters?.employmentType) {
+      where.employmentType = filters.employmentType;
+    }
+
+    if (filters?.experienceLevel) {
+      where.experienceLevel = filters.experienceLevel;
+    }
+
+    if (filters?.location) {
+      where.location = {
+        contains: filters.location,
+        mode: "insensitive"
+      };
+    }
+
+    if (filters?.company) {
+      where.company = {
+        contains: filters.company,
+        mode: "insensitive"
+      };
+    }
+
+    if (filters?.salaryMin !== undefined || filters?.salaryMax !== undefined) {
+      const salaryFilter: any = {};
+      if (filters?.salaryMin !== undefined) {
+        salaryFilter.salaryMax = { gte: filters.salaryMin };
+      }
+      if (filters?.salaryMax !== undefined) {
+        salaryFilter.salaryMin = { lte: filters.salaryMax };
+      }
+      where.AND = where.AND || [];
+      where.AND.push(salaryFilter);
+    }
+
+    if (filters?.salaryCurrency) {
+      where.salaryCurrency = filters.salaryCurrency;
+    }
+
+    if (filters?.salaryPeriod) {
+      where.salaryPeriod = filters.salaryPeriod;
+    }
+
+    if (filters?.tag) {
+      where.tags = {
+        some: {
+          name: {
+            contains: filters.tag,
+            mode: "insensitive"
+          }
+        }
+      };
+    }
+
+    if (filters?.search) {
+      orConditions.push(
+        {
+          title: {
+            contains: filters.search,
+            mode: "insensitive"
+          }
+        },
+        {
+          description: {
+            contains: filters.search,
+            mode: "insensitive"
+          }
+        },
+        {
+          company: {
+            contains: filters.search,
+            mode: "insensitive"
+          }
+        }
+      );
+    }
+
+    if (orConditions.length > 0) {
+      where.OR = orConditions;
+    }
+
+    const jobs = await prisma.job.findMany({
+      where,
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
+
+    return { jobs };
+  } catch (err: any) {
+    return { error: err?.message || "Something went wrong" };
+  }
+}
+
 // Delete a job and its associated applications
 export async function deleteJob(jobId: string) {
   try {

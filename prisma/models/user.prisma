@@ -56,26 +56,26 @@ enum UserType {
 }
 
 model User {
-    id         String    @id @default(uuid())
-    fullName   String
-    email      String    @unique
-    username   String?   @unique
-    dob        DateTime?
-    bio        String?
-    dpUrl      String?
-    websiteUrl String?
-    location   String?
-
-    type UserType?
-
-    socialLinks SocialLink[]
-    experiences Experience[]
-    educations  Education[]
-    skills      Skill[]
-    projects    Project[]
-    questions   Question[]
-    answers     Answer[]
-    reactions   Reaction[]
+    id              String           @id @default(uuid())
+    fullName        String
+    email           String           @unique
+    username        String?          @unique
+    dob             DateTime?
+    bio             String?
+    dpUrl           String?
+    websiteUrl      String?
+    location        String?
+    type            UserType?
+    socialLinks     SocialLink[]
+    experiences     Experience[]
+    educations      Education[]
+    skills          Skill[]
+    projects        Project[]
+    questions       Question[]
+    answers         Answer[]
+    reactions       Reaction[]
+    jobs            Job[]
+    jobApplications JobApplication[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

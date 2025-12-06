@@ -23,3 +23,26 @@ export type FullAnswer = Prisma.AnswerGetPayload<{
     reactions: true;
   };
 }>;
+
+export type FullJob = Prisma.JobGetPayload<{
+  include: {
+    tags: true;
+    benefits: true;
+    requirements: true;
+    jobApplications: true;
+    responsibilities: true;
+  };
+}>;
+
+export type JobsPageSearchParams = {
+  employmentType?: string;
+  experienceLevel?: string;
+  location?: string;
+  company?: string;
+  salaryMin?: string;
+  salaryMax?: string;
+  salaryCurrency?: string;
+  salaryPeriod?: string;
+  tag?: string;
+  search?: string;
+};

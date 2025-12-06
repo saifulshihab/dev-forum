@@ -11,7 +11,6 @@ import {
   Code,
   HelpCircle,
   Home,
-  Layers,
   LogIn,
   LogOut,
   MessageCircle,
@@ -66,13 +65,7 @@ export function AppSidebar() {
           {
             text: "My Jobs",
             icon: <Briefcase size={16} />,
-            href: "/user/content?tab=jobs",
-            variant: "secondary"
-          },
-          {
-            text: "My Projects",
-            icon: <Layers size={16} />,
-            href: "/user/content?tab=projects",
+            href: "/user/activity/jobs",
             variant: "secondary"
           }
         ]);
@@ -80,25 +73,21 @@ export function AppSidebar() {
       if (authUser.type === UserType.RECRUITER) {
         setQuickActions([
           {
-            text: "Post Project",
+            text: "Post Job",
             icon: <Star size={16} />,
-            href: "/projects/create",
+            href: "/jobs/create",
             variant: "default"
           },
           {
-            text: "My Projects",
+            text: "My Jobs",
             icon: <Briefcase size={16} />,
-            href: "/user/content?tab=projects",
+            href: "/user/activity/jobs",
             variant: "secondary"
           }
         ]);
       }
     }
   }, [isAuthLoading, authUser?.type]);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   const mainNavItems = [
     {
@@ -111,12 +100,6 @@ export function AppSidebar() {
       text: "Questions",
       icon: <MessageCircle size={16} />,
       href: "/questions",
-      badge: null
-    },
-    {
-      text: "Projects",
-      icon: <Layers size={16} />,
-      href: "/projects",
       badge: null
     },
     {
@@ -162,6 +145,10 @@ export function AppSidebar() {
       badge: null
     }
   ];
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
     <div
@@ -254,11 +241,11 @@ export function AppSidebar() {
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/user/content">
+                <Link href="/user/activity">
                   <DropdownMenuItem>
                     <TableOfContents />
-                    Manage Content
-                    <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut>
+                    Activity
+                    <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
                 <Link href="/user/settings/profile">

@@ -16,7 +16,7 @@ import { createQuestion } from "@/lib/actions";
 import { QuestionValidator } from "@/lib/validators/question-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { Suspense, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";

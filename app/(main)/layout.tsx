@@ -11,6 +11,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import "../globals.css";
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>
+        <NextTopLoader color="#00857a" />
         <ThemeProvider
           enableSystem
           attribute="class"

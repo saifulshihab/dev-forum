@@ -3,9 +3,8 @@
 import Question from "@/components/question/question";
 import Empty from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Question as TQuestion } from "@/generated/prisma";
+import { Prisma } from "@/generated/prisma";
 import { deleteQuestion, getUserQuestions } from "@/lib/actions";
-import { FullQuestion } from "@/types";
 import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,7 +14,11 @@ function UserQuestions() {
   const [isQuestionDeleting, setIsQuestionDeleting] = useState<
     string | undefined
   >();
-  const [questions, setQuestions] = useState<TQuestion[]>([]);
+  const [questions, setQuestions] = useState<
+    Prisma.QuestionGetPayload<{
+      include: { user: true; _count: { select: { answers: true } } };
+    }>[]
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -78,7 +81,7 @@ function UserQuestions() {
                 key={idx}
                 className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-md"
               >
-                <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
+                <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
                   <Skeleton className="mb-2 h-6 w-3/4 bg-zinc-800" />
                   <Skeleton className="h-4 w-1/2 bg-zinc-800" />
                 </div>
@@ -101,7 +104,7 @@ function UserQuestions() {
               key={question.id}
               onDelete={handleDelete}
               isDeleting={isQuestionDeleting}
-              question={question as FullQuestion}
+              question={question as any}
             />
           ))}
         </div>

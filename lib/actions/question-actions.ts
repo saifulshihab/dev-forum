@@ -45,7 +45,8 @@ export async function getUserQuestions() {
     const { user } = await authCheck();
     if (!user?.id) return;
     const questions = await prisma.question.findMany({
-      where: { userId: user.id }
+      where: { userId: user.id },
+      include: { user: true, _count: { select: { answers: true } } }
     });
     return { questions };
   } catch (err: any) {

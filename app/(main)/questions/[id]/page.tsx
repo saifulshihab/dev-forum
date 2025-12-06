@@ -1,12 +1,17 @@
 import QuestionAnswers from "@/components/question/answers";
-import Question from "@/components/question/question";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import dayjs from "@/lib/dayjs";
 import prisma from "@/lib/prisma";
 import { getTagColor } from "@/lib/utils";
-import { FullQuestion } from "@/types";
-import { ArrowLeft, Clock, User } from "lucide-react";
+import {
+  ArrowLeft,
+  Clock,
+  HelpCircle,
+  MessageCircle,
+  User
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -30,48 +35,99 @@ async function Page(props: Props) {
   if (!question) notFound();
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
+      {/* Back Button */}
       <Button
         asChild
-        variant="link"
-        className="px-0 text-muted-foreground hover:no-underline"
+        variant="ghost"
+        size="sm"
+        className="text-zinc-400 hover:text-white"
       >
         <Link href={creatorView ? "/user/activity/questions" : "/questions"}>
-          <ArrowLeft className="mr-1" />
+          <ArrowLeft size={16} className="mr-2" />
           Back
         </Link>
       </Button>
-      <Question detailsView question={question as FullQuestion} />
-      <div className="flex items-center justify-between">
-        <div className="inline-flex max-w-[60%] flex-wrap items-center gap-2">
-          {question.tags?.length
-            ? question.tags.map((tag, index) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className={`cursor-pointer border text-xs transition-all duration-200 ${getTagColor(index)}`}
-                >
-                  {tag}
-                </Badge>
-              ))
-            : null}
+      {/* Question Card */}
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
+        {/* Header Section */}
+        <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <HelpCircle size={20} className="text-primary" />
+                </div>
+                <h1 className="text-3xl font-bold text-white">
+                  {question.title}
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          {/* Meta Information */}
+          <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-400">
+            <div className="flex items-center gap-2">
+              <User size={16} className="text-zinc-500" />
+              <Link
+                href={`/users/${question.userId}`}
+                className="font-medium transition-colors hover:text-primary"
+              >
+                {question.user?.fullName}
+              </Link>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock size={16} className="text-zinc-500" />
+              <span>Asked {dayjs(question.createdAt).fromNow(false)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MessageCircle size={16} className="text-zinc-500" />
+              <span className="font-medium text-zinc-300">
+                {question.answers?.length || 0}
+              </span>
+              <span>
+                {(question.answers?.length || 0) === 1 ? "answer" : "answers"}
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="inline-flex max-w-[40%] flex-wrap items-center gap-5 text-xs text-muted-foreground text-zinc-500">
-          <div className="inline-flex items-center gap-3">
-            <Clock size={14} />
-            <p>Asked {dayjs(question.createdAt).fromNow()} </p>
+
+        {/* Content Section */}
+        <div className="p-6">
+          <div className="mb-6">
+            <h2 className="mb-3 text-lg font-semibold text-white">
+              Description
+            </h2>
+            <div className="rounded-lg bg-zinc-800/30 p-4">
+              <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-300">
+                {question.content}
+              </p>
+            </div>
           </div>
-          <div className="inline-flex items-center gap-2 text-sm">
-            <User className="text-zinc-500" size={14} />
-            <Link
-              href={`/users/${question.userId}`}
-              className="text-zinc-500 hover:text-primary"
-            >
-              <p>{question.user?.fullName}</p>
-            </Link>
-          </div>
+
+          {/* Tags */}
+          {question.tags?.length > 0 && (
+            <div>
+              <h3 className="mb-3 text-sm font-semibold text-white">Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {question.tags.map((tag, index) => (
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className={`cursor-pointer border text-xs transition-all duration-200 ${getTagColor(index)}`}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Separator className="my-6 bg-zinc-800" />
         </div>
       </div>
+
+      {/* Answers Section */}
       <QuestionAnswers questionId={question.id} />
     </div>
   );

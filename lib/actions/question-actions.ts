@@ -61,6 +61,8 @@ export async function deleteQuestion(questionId: string) {
   try {
     await authCheck();
     await prisma.question.delete({ where: { id: questionId } });
+    // Delete question answers
+    await prisma.answer.deleteMany({ where: { questionId } });
   } catch (err: any) {
     return { error: err?.message || "Something went wrong" };
   }

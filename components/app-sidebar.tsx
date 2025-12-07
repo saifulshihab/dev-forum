@@ -13,7 +13,7 @@ import {
   Home,
   LogIn,
   LogOut,
-  MessageCircle,
+  MessageCircleQuestionMark,
   PanelRightClose,
   PanelRightOpen,
   Search,
@@ -98,7 +98,7 @@ export function AppSidebar() {
     },
     {
       text: "Questions",
-      icon: <MessageCircle size={16} />,
+      icon: <MessageCircleQuestionMark size={16} />,
       href: "/questions",
       badge: null
     },

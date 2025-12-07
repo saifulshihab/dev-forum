@@ -116,7 +116,7 @@ function QuestionAnswers(props: Props) {
             <MessageCircle size={20} className="text-primary" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-xl font-bold text-white">
               Answers
               {answers.length > 0 && (
                 <span className="ml-2 text-lg font-normal text-zinc-400">

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Answer, Question, User } from "@/generated/prisma";
 import {
   Clock,
-  MessageCircle,
+  MessageCircleQuestionMark,
   ThumbsUp,
   TrendingUp,
   UserPlus
@@ -37,7 +37,7 @@ export default async function ActivityFeed({ activities }: ActivityFeedProps) {
             {activities.latestQuestion ? (
               <div className="flex items-start gap-3 rounded-lg border border-blue-500/20 bg-blue-500/10 p-3 transition-colors hover:bg-muted/50">
                 <div className="mt-0.5">
-                  <MessageCircle className="h-4 w-4 text-blue-400" />
+                  <MessageCircleQuestionMark className="h-4 w-4 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center gap-2">

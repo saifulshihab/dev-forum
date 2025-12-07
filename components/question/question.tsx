@@ -37,7 +37,7 @@ function Question(props: {
             href={`/questions/${question.id}?creatorView=true`}
             className="block"
           >
-            <h2 className="mb-2 line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">
+            <h2 className="line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">
               {question.title}
             </h2>
           </Link>
@@ -45,7 +45,7 @@ function Question(props: {
 
         {/* Content Section */}
         <div className="flex flex-1 flex-col p-4">
-          <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-zinc-300">
+          <p className="mb-4 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-zinc-300">
             {question.content}
           </p>
 
@@ -126,7 +126,7 @@ function Question(props: {
       {/* Header Section */}
       <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4">
         <Link href={`/questions/${question.id}`} className="block">
-          <h2 className="mb-2 line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">
+          <h2 className="line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-primary">
             {question.title}
           </h2>
         </Link>
@@ -135,16 +135,19 @@ function Question(props: {
       {/* Content Section */}
       <div className="p-4">
         <p
-          className={cn("mb-4 text-sm leading-relaxed text-zinc-300", {
-            "line-clamp-3": !detailsView,
-            "line-clamp-none": detailsView
-          })}
+          className={cn(
+            "mb-4 whitespace-pre-line text-sm leading-relaxed text-zinc-300",
+            {
+              "line-clamp-3": !detailsView,
+              "line-clamp-none": detailsView
+            }
+          )}
         >
           {question.content}
         </p>
 
         {/* Stats */}
-        <div className="mb-4 flex items-center gap-4 border-t border-zinc-800 pt-3">
+        <div className="flex items-center gap-4 border-t border-zinc-800 pt-3">
           <div className="flex items-center gap-1.5 text-xs text-zinc-500">
             <MessageCircle size={14} />
             <span className="font-medium text-zinc-400">
@@ -169,7 +172,7 @@ function Question(props: {
 
         {/* Tags */}
         {question.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-2">
             {question.tags.map((tag, index) => (
               <Badge
                 key={tag}

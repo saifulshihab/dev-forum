@@ -1,15 +1,14 @@
 import QuestionAnswers from "@/components/question/answers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import dayjs from "@/lib/dayjs";
 import prisma from "@/lib/prisma";
 import { getTagColor } from "@/lib/utils";
 import {
   ArrowLeft,
   Clock,
-  HelpCircle,
   MessageCircle,
+  MessageCircleQuestionMark,
   User
 } from "lucide-react";
 import Link from "next/link";
@@ -54,11 +53,14 @@ async function Page(props: Props) {
         <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div className="flex-1">
-              <div className="mb-3 flex items-center gap-3">
+              <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                  <HelpCircle size={20} className="text-primary" />
+                  <MessageCircleQuestionMark
+                    size={20}
+                    className="text-primary"
+                  />
                 </div>
-                <h1 className="text-3xl font-bold text-white">
+                <h1 className="text-2xl font-bold text-white">
                   {question.title}
                 </h1>
               </div>
@@ -94,7 +96,7 @@ async function Page(props: Props) {
 
         {/* Content Section */}
         <div className="p-6">
-          <div className="mb-6">
+          <div>
             <h2 className="mb-3 text-lg font-semibold text-white">
               Description
             </h2>
@@ -107,7 +109,7 @@ async function Page(props: Props) {
 
           {/* Tags */}
           {question.tags?.length > 0 && (
-            <div>
+            <div className="mt-6">
               <h3 className="mb-3 text-sm font-semibold text-white">Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {question.tags.map((tag, index) => (
@@ -122,8 +124,6 @@ async function Page(props: Props) {
               </div>
             </div>
           )}
-
-          <Separator className="my-6 bg-zinc-800" />
         </div>
       </div>
 

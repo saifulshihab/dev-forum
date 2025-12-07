@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/components/contexts/auth-provider";
 import { UserType } from "@/generated/prisma";
-import { Briefcase, MessageCircle } from "lucide-react";
+import { Briefcase, MessageCircleQuestionMark } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import NavItem from "./nav-item";
 
@@ -18,7 +18,7 @@ function UserActivityLayoutNavbar() {
         {
           text: "Questions Asked",
           href: "/user/activity/questions",
-          icon: <MessageCircle size={16} />
+          icon: <MessageCircleQuestionMark size={16} />
         },
         {
           text: "Applied Jobs",

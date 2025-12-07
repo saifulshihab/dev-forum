@@ -36,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>
-        <NextTopLoader color="#00857a" />
+        <NextTopLoader color="#00857a" showSpinner={false} />
         <ThemeProvider
           enableSystem
           attribute="class"

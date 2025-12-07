@@ -46,7 +46,10 @@ export async function getUserQuestions() {
     if (!user?.id) return;
     const questions = await prisma.question.findMany({
       where: { userId: user.id },
-      include: { user: true, _count: { select: { answers: true } } }
+      include: {
+        user: true,
+        _count: { select: { answers: { where: { parentId: null } } } }
+      }
     });
     return { questions };
   } catch (err: any) {

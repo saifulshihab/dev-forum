@@ -28,7 +28,7 @@ async function Page(props: Props) {
     where: { id },
     include: {
       user: { select: { id: true, fullName: true } },
-      answers: { where: { parentId: null } }
+      _count: { select: { answers: { where: { parentId: null } } } }
     }
   });
 
@@ -83,10 +83,10 @@ async function Page(props: Props) {
             <div className="flex items-center gap-2">
               <MessageCircle size={16} className="text-zinc-500" />
               <span className="font-medium text-zinc-300">
-                {question.answers?.length || 0}
+                {question._count.answers}
               </span>
               <span>
-                {(question.answers?.length || 0) === 1 ? "answer" : "answers"}
+                {question._count.answers === 1 ? "answer" : "answers"}
               </span>
             </div>
           </div>

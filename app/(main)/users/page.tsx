@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 async function Page() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({ orderBy: { createdAt: "asc" } });
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
       {users.map((user) => (

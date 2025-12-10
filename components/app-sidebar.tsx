@@ -292,7 +292,7 @@ export function AppSidebar() {
       )}
       {/* Main Navigation */}
       <div
-        className={cn("h-[calc(100vh-9.8125rem)] overflow-y-auto", {
+        className={cn("h-[calc(100vh-10.8125rem)] overflow-y-auto", {
           "h-[calc(100vh-21.6875rem)]": isAuthenticated
         })}
       >
@@ -357,7 +357,26 @@ export function AppSidebar() {
         </div>
       </div>
       {/* Settings */}
-      {!isAuthenticated && sidebarOpen && (
+      {sidebarOpen ? (
+        <div className="flex items-center gap-2 px-4 text-xs text-zinc-500">
+          <a
+            href="mailto:shihabmd1970@gmail.com"
+            className="cursor-pointer hover:underline"
+          >
+            Contact Us
+          </a>
+          <span>•</span>
+          <a
+            rel="noreferrer"
+            target="_blank"
+            href="https://github.com/saifulshihab/dev-forum"
+            className="cursor-pointer hover:underline"
+          >
+            GitHub
+          </a>
+        </div>
+      ) : null}
+      {!isAuthenticated && sidebarOpen ? (
         <div className="flex h-[3.125rem] items-center border-t border-dashed">
           <Button
             variant="link"
@@ -368,7 +387,7 @@ export function AppSidebar() {
             Sign in
           </Button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

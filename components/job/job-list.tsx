@@ -1,7 +1,7 @@
 "use client";
 
 import { Job } from "@/generated/prisma";
-import { applyJob, getJob } from "@/lib/actions/job-actions";
+import { applyJob, getJob } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { FullJob } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

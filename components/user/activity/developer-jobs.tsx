@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Empty from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { JobApplicationStatus, Prisma } from "@/generated/prisma";
-import { getDeveloperUserJobs } from "@/lib/actions/job-actions";
+import { getDeveloperUserJobs } from "@/lib/actions";
 import dayjs from "@/lib/dayjs";
 import { Briefcase, Building2, Calendar, ExternalLink } from "lucide-react";
 import Link from "next/link";

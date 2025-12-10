@@ -20,7 +20,7 @@ import {
   deleteJob,
   getJobApplications,
   getRecruiterUserJobs
-} from "@/lib/actions/job-actions";
+} from "@/lib/actions";
 import dayjs from "@/lib/dayjs";
 import { cn } from "@/lib/utils";
 import {

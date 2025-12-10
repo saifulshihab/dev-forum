@@ -22,7 +22,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createJob } from "@/lib/actions/job-actions";
+import { createJob } from "@/lib/actions";
 import { JobValidator } from "@/lib/validators/job-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, Trash, X } from "lucide-react";

@@ -1,5 +1,5 @@
 import JobList from "@/components/job/job-list";
-import { getJobs } from "@/lib/actions/job-actions";
+import { getJobs } from "@/lib/actions";
 import { JobsPageSearchParams } from "@/types";
 
 async function Page({ searchParams }: { searchParams: JobsPageSearchParams }) {

@@ -11,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Job, JobApplicationStatus, Prisma } from "@/generated/prisma";
-import { markJobApplicationViewed } from "@/lib/actions/job-actions";
+import { markJobApplicationViewed } from "@/lib/actions";
 import dayjs from "@/lib/dayjs";
 import {
   Building2,

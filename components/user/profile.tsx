@@ -64,8 +64,8 @@ function UserProfile(props: Props) {
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-zinc-500" />
                 <a
-                  href={user.websiteUrl}
                   target="_blank"
+                  href={user.websiteUrl}
                   rel="noopener noreferrer"
                   className="text-sm text-primary hover:underline"
                 >
@@ -76,7 +76,7 @@ function UserProfile(props: Props) {
             <div className="flex items-center gap-2 text-zinc-500">
               <Calendar1 className="h-4 w-4" />
               <span className="text-sm">
-                Member since {dayjs(user.createdAt).format("MMMM YYYY")}
+                Member since {dayjs(user.createdAt).format("DD MMMM YYYY")}
               </span>
             </div>
           </div>

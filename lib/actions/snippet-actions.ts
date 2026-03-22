@@ -16,7 +16,7 @@ export async function createSnippet(
 
     const result = SnippetValidator.safeParse(data);
     if (result.error) {
-      return { error: result.error.errors[0]?.message || "Invalid snippet data" };
+      return { error: result.error.message || "Invalid snippet data" };
     }
 
     const snippet = await prisma.snippet.create({
@@ -89,7 +89,9 @@ export async function updateSnippet(
 
     const result = SnippetValidator.safeParse(data);
     if (result.error) {
-      return { error: result.error.errors[0]?.message || "Invalid snippet data" };
+      return {
+        error: result.error.message || "Invalid snippet data"
+      };
     }
 
     const snippet = await prisma.snippet.update({

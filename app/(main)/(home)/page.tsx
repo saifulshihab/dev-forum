@@ -63,7 +63,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-6 p-3">
       {/* Welcome Section */}
-      <Card className="border-dashed bg-gradient-to-r from-blue-500/10 to-purple-500/10">
+      <Card className="border-dashed bg-gradient-to-r from-blue-500/10 to-teal-500/10">
         <CardHeader className="text-center">
           <CardTitle className="flex items-center justify-center gap-2 text-2xl">
             <Rocket className="h-7 w-7 text-blue-400" />

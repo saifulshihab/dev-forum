@@ -45,7 +45,11 @@ export async function getUserQuestions() {
     const { user } = await authCheck();
     if (!user?.id) return;
     const questions = await prisma.question.findMany({
-      where: { userId: user.id }
+      where: { userId: user.id },
+      include: {
+        user: true,
+        _count: { select: { answers: { where: { parentId: null } } } }
+      }
     });
     return { questions };
   } catch (err: any) {
@@ -57,6 +61,8 @@ export async function deleteQuestion(questionId: string) {
   try {
     await authCheck();
     await prisma.question.delete({ where: { id: questionId } });
+    // Delete question answers
+    await prisma.answer.deleteMany({ where: { questionId } });
   } catch (err: any) {
     return { error: err?.message || "Something went wrong" };
   }

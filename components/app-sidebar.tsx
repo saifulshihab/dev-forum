@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { UserType } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 import {
   BookOpen,
@@ -10,10 +11,9 @@ import {
   Code,
   HelpCircle,
   Home,
-  Layers,
   LogIn,
   LogOut,
-  MessageCircle,
+  MessageCircleQuestionMark,
   PanelRightClose,
   PanelRightOpen,
   Search,
@@ -28,7 +28,8 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "./contexts/auth-provider";
 import NavItem from "./nav-item";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
@@ -42,13 +43,63 @@ import {
 } from "./ui/dropdown-menu";
 
 export function AppSidebar() {
+  const { isAuthLoading, user: authUser } = useAuth();
   const session = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isAuthenticated = session.status === "authenticated";
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  const [quickActions, setQuickActions] = useState<
+    { text: string; icon: React.ReactNode; href: string; variant: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (!isAuthLoading && authUser?.type) {
+      if (authUser.type === UserType.DEVELOPER) {
+        setQuickActions([
+          {
+            text: "Ask Question",
+            icon: <Zap size={16} />,
+            href: "/questions/create",
+            variant: "default"
+          },
+          {
+            text: "New Snippet",
+            icon: <Code size={16} />,
+            href: "/snippets/create",
+            variant: "secondary"
+          },
+          {
+            text: "My Jobs",
+            icon: <Briefcase size={16} />,
+            href: "/user/activity/jobs",
+            variant: "secondary"
+          }
+        ]);
+      }
+      if (authUser.type === UserType.RECRUITER) {
+        setQuickActions([
+          {
+            text: "Post Job",
+            icon: <Star size={16} />,
+            href: "/jobs/create",
+            variant: "default"
+          },
+          {
+            text: "New Snippet",
+            icon: <Code size={16} />,
+            href: "/snippets/create",
+            variant: "secondary"
+          },
+          {
+            text: "My Jobs",
+            icon: <Briefcase size={16} />,
+            href: "/user/activity/jobs",
+            variant: "secondary"
+          }
+        ]);
+      }
+    }
+  }, [isAuthLoading, authUser?.type]);
 
   const mainNavItems = [
     {
@@ -59,14 +110,8 @@ export function AppSidebar() {
     },
     {
       text: "Questions",
-      icon: <MessageCircle size={16} />,
+      icon: <MessageCircleQuestionMark size={16} />,
       href: "/questions",
-      badge: null
-    },
-    {
-      text: "Projects",
-      icon: <Layers size={16} />,
-      href: "/projects",
       badge: null
     },
     {
@@ -113,20 +158,9 @@ export function AppSidebar() {
     }
   ];
 
-  const quickActions = [
-    {
-      text: "Ask Question",
-      icon: <Zap size={16} />,
-      href: "/questions/create",
-      variant: "default" as const
-    },
-    {
-      text: "Post Project",
-      icon: <Star size={16} />,
-      href: "/projects/create",
-      variant: "secondary" as const
-    }
-  ];
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
     <div
@@ -177,7 +211,7 @@ export function AppSidebar() {
             <DropdownMenuTrigger asChild>
               <div className="border-b border-dashed p-3">
                 <div className="flex items-center justify-between rounded-lg border border-dashed bg-muted/30 p-2 hover:bg-muted/50">
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
                       <Avatar>
                         <AvatarImage
@@ -193,9 +227,13 @@ export function AppSidebar() {
                       <p className="truncate text-sm font-medium">
                         {session.data.user?.name}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {session.data.user?.name}
-                      </p>
+                      {session.data.user?.email ? (
+                        <div>
+                          <p className="min-w-0 truncate text-xs text-muted-foreground">
+                            {session.data.user?.email}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                   <ChevronsUpDown className="h-4 w-4 text-zinc-200" />
@@ -215,11 +253,11 @@ export function AppSidebar() {
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link href="/user/content">
+                <Link href="/user/activity">
                   <DropdownMenuItem>
                     <TableOfContents />
-                    Manage Content
-                    <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut>
+                    Activity
+                    <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
                 <Link href="/user/settings/profile">
@@ -241,7 +279,7 @@ export function AppSidebar() {
         ) : null
       ) : null}
       {/* Quick Actions */}
-      {sidebarOpen && (
+      {sidebarOpen && quickActions.length > 0 && (
         <div className="border-b border-dashed p-3">
           <p className="mb-2 px-1 text-xs font-medium text-muted-foreground">
             Quick Actions
@@ -250,15 +288,15 @@ export function AppSidebar() {
             {quickActions.map((action, idx) => (
               <Button
                 key={idx}
-                variant={action.variant}
                 size="sm"
+                variant={action.variant as any}
                 className="h-8 w-full justify-start text-xs"
                 asChild
               >
-                <a href={action.href}>
+                <Link href={action.href}>
                   {action.icon}
                   <span className="ml-2">{action.text}</span>
-                </a>
+                </Link>
               </Button>
             ))}
           </div>
@@ -266,8 +304,8 @@ export function AppSidebar() {
       )}
       {/* Main Navigation */}
       <div
-        className={cn("h-[calc(100vh-17.375rem)] overflow-y-auto", {
-          "h-[calc(100vh-19.1875rem)]": isAuthenticated
+        className={cn("h-[calc(100vh-10.8125rem)] overflow-y-auto", {
+          "h-[calc(100vh-21.6875rem)]": isAuthenticated
         })}
       >
         <div className="p-3">
@@ -283,8 +321,8 @@ export function AppSidebar() {
                 icon={item.icon}
                 text={item.text}
                 href={item.href}
-                collapsed={!sidebarOpen}
                 badge={item.badge}
+                collapsed={!sidebarOpen}
               />
             ))}
           </nav>
@@ -303,8 +341,8 @@ export function AppSidebar() {
                 icon={item.icon}
                 text={item.text}
                 href={item.href}
-                collapsed={!sidebarOpen}
                 badge={item.badge}
+                collapsed={!sidebarOpen}
               />
             ))}
           </nav>
@@ -331,7 +369,26 @@ export function AppSidebar() {
         </div>
       </div>
       {/* Settings */}
-      {!isAuthenticated && sidebarOpen && (
+      {sidebarOpen ? (
+        <div className="flex items-center gap-2 px-4 text-xs text-zinc-500">
+          <a
+            href="mailto:shihabmd1970@gmail.com"
+            className="cursor-pointer hover:underline"
+          >
+            Contact Us
+          </a>
+          <span>•</span>
+          <a
+            rel="noreferrer"
+            target="_blank"
+            href="https://github.com/saifulshihab/dev-forum"
+            className="cursor-pointer hover:underline"
+          >
+            GitHub
+          </a>
+        </div>
+      ) : null}
+      {!isAuthenticated && sidebarOpen ? (
         <div className="flex h-[3.125rem] items-center border-t border-dashed">
           <Button
             variant="link"
@@ -342,7 +399,7 @@ export function AppSidebar() {
             Sign in
           </Button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

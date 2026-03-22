@@ -1,13 +1,14 @@
 "use server";
 
 import { authCheck, nextAuthOptions } from "@/auth";
-import { Prisma } from "@/generated/prisma";
+import { Prisma, UserType } from "@/generated/prisma";
 import { FullUser } from "@/types";
 import https from "https";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { env } from "../constants";
 import prisma from "../prisma";
+import { UserValidator } from "../validators/user-validator";
 
 export async function getUser(userId: string, fetchFullUser?: boolean) {
   await authCheck();
@@ -28,9 +29,7 @@ export async function getUser(userId: string, fetchFullUser?: boolean) {
 
 export async function getCurrentUser(fetchFullUser?: boolean) {
   const { user } = await authCheck();
-  if (user?.id) {
-    return await getUser(user.id, fetchFullUser);
-  }
+  if (user?.id) return await getUser(user.id, fetchFullUser);
 }
 
 async function updateUserSubEntity({
@@ -69,7 +68,7 @@ async function updateUserSubEntity({
       }
     }
   } else {
-    // all items are removed, delete from db
+    // All items are removed, delete from db
     await prismaModel.deleteMany({ where: { userId } });
   }
 }
@@ -78,6 +77,12 @@ export async function updateProfile(data: FullUser) {
   try {
     const { user } = await authCheck();
     if (!user?.id) return;
+
+    const result = UserValidator.safeParse(data);
+    if (result.error) {
+      return { error: "Invalid user data" };
+    }
+
     const userData = await getUser(user.id, true);
     const userId = user.id;
 
@@ -134,7 +139,7 @@ export async function updateProfile(data: FullUser) {
 }
 
 async function clearUserData(userId: string) {
-  // delete user profile data
+  // Delete user profile data
   await prisma.skill.deleteMany({ where: { userId } });
   await prisma.project.deleteMany({ where: { userId } });
   await prisma.education.deleteMany({ where: { userId } });
@@ -180,7 +185,7 @@ export async function deleteAccount() {
       request.write(postData);
       request.end();
     } else if (sessionUser.user.provider === "github") {
-      // revoke access of github sign in users
+      // Revoke access of github sign in users
       const credentials = `${env.GITHUB_CLIENT_ID}:${env.GITHUB_CLIENT_SECRET}`;
       await fetch(
         `https://api.github.com/applications/${env.GITHUB_CLIENT_ID}/grant`,
@@ -199,6 +204,43 @@ export async function deleteAccount() {
       // access revoked
       await clearUserData(userId);
     }
+  } catch (err: any) {
+    return { error: err?.message || "Something went wrong" };
+  }
+}
+
+export async function getUsername(username: string) {
+  let usernameString = username;
+
+  const userNameExist = await prisma.user.findUnique({
+    where: { username: usernameString }
+  });
+
+  if (userNameExist) {
+    // Username exist, concat a number digit
+    usernameString = usernameString + Math.floor(Math.random() * 10);
+    await getUsername(usernameString);
+  }
+
+  return usernameString;
+}
+
+export async function checkUsernameAvailability(username: string) {
+  const userNameExist = await prisma.user.findUnique({
+    where: { username }
+  });
+  if (userNameExist) return true;
+  return false;
+}
+
+export async function updateProfileType(type: UserType) {
+  try {
+    const sessionUser = await getServerSession(nextAuthOptions);
+    if (!sessionUser?.user || !sessionUser.user.id) return;
+    await prisma.user.update({
+      where: { id: sessionUser.user.id },
+      data: { type }
+    });
   } catch (err: any) {
     return { error: err?.message || "Something went wrong" };
   }

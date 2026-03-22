@@ -18,3 +18,9 @@ export const getTagColor = (index: number) => {
   ];
   return colors[index % colors.length];
 };
+
+export const toSnakeCase = (str: string) => {
+  if (!str?.length) return str;
+  const text = str.replace(/_/g, " ").toLowerCase();
+  return text[0].toUpperCase() + text.substring(1);
+};

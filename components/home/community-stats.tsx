@@ -5,7 +5,7 @@ import {
   Briefcase,
   Layers,
   MessageCircle,
-  ThumbsUp,
+  MessageCircleQuestionMark,
   TrendingUp,
   Users
 } from "lucide-react";
@@ -32,13 +32,13 @@ export default async function CommunityStats({ stats }: CommunityStatsProps) {
     {
       title: "Questions",
       value: stats?.totalQuestions?.toLocaleString(),
-      icon: <MessageCircle className="h-4 w-4 text-green-400" />,
+      icon: <MessageCircleQuestionMark className="h-4 w-4 text-green-400" />,
       color: "border-green-500/20 bg-green-500/10"
     },
     {
       title: "Answers",
       value: stats?.totalAnswers?.toLocaleString(),
-      icon: <ThumbsUp className="h-4 w-4 text-purple-400" />,
+      icon: <MessageCircle className="h-4 w-4 text-purple-400" />,
       color: "border-purple-500/20 bg-purple-500/10"
     },
     {

@@ -1,5 +1,6 @@
 "use client";
 
+import { UserType } from "@/generated/prisma";
 import { DefaultSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState
 } from "react";
 import {
@@ -23,11 +25,13 @@ import {
 
 type TSessionUser = {
   id?: string;
-  accessToken?: string;
   provider?: string;
+  accessToken?: string;
+  type?: UserType | null;
 } & DefaultSession["user"];
 
 type TAuthContext = {
+  isAuthLoading: boolean;
   isAuthenticated: boolean;
   requireAuth: () => boolean;
   user: TSessionUser | undefined;
@@ -40,7 +44,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const isAuthLoading = session.status === "loading";
   const isAuthenticated = session.status === "authenticated";
+  const [user, setUser] = useState<TSessionUser | undefined>(undefined);
+
+  useEffect(() => {
+    if (session.data?.user) {
+      setUser(session.data.user);
+    }
+  }, [session.data?.user]);
 
   const requireAuth = useCallback(() => {
     if (!isAuthenticated) {
@@ -59,7 +72,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user: session.data?.user, requireAuth }}
+      value={{
+        user,
+        requireAuth,
+        isAuthLoading,
+        isAuthenticated
+      }}
     >
       {children}
       <AlertDialog open={open} onOpenChange={setOpen}>

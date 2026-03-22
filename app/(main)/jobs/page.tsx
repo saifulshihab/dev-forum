@@ -1,23 +1,38 @@
 import JobList from "@/components/job/job-list";
-import Empty from "@/components/ui/empty";
-import { getJobs } from "@/lib/data";
+import { getJobs } from "@/lib/actions";
+import { JobsPageSearchParams } from "@/types";
 
-async function Page() {
-  const jobs = await getJobs();
-  return (
-    <div>
-      <div className="flex h-[3.125rem] items-center border-b border-dashed px-4">
-        <h1 className="text-2xl font-semibold leading-none">Jobs</h1>
-      </div>
-      <div className="h-[calc(100vh-3.125rem)] space-y-3 overflow-y-auto p-3">
-        {jobs.length ? (
-          <JobList jobs={jobs} />
-        ) : (
-          <Empty text="No jobs circular yet" />
-        )}
-      </div>
-    </div>
-  );
+async function Page({ searchParams }: { searchParams: JobsPageSearchParams }) {
+  const {
+    tag,
+    search,
+    company,
+    location,
+    salaryMin,
+    salaryMax,
+    salaryPeriod,
+    employmentType,
+    experienceLevel,
+    salaryCurrency
+  } = searchParams;
+
+  const filters = {
+    tag,
+    search,
+    company,
+    location,
+    employmentType,
+    salaryPeriod,
+    salaryCurrency,
+    experienceLevel,
+    salaryMin: salaryMin ? parseInt(salaryMin) : undefined,
+    salaryMax: salaryMax ? parseInt(salaryMax) : undefined
+  };
+
+  const result = await getJobs(filters);
+  const jobs = result?.jobs || [];
+
+  return <JobList jobs={jobs} />;
 }
 
 export default Page;

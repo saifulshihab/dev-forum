@@ -1,14 +1,25 @@
-import { sleep } from "@/lib/utils";
-
-export async function getProjects() {
-  await sleep(500);
-  return [];
-}
-
-export async function getJobs() {
-  await sleep(500);
-  return [];
-}
+export const SNIPPET_LANGUAGES = [
+  { value: "typescript", label: "TypeScript" },
+  { value: "javascript", label: "JavaScript" },
+  { value: "python", label: "Python" },
+  { value: "rust", label: "Rust" },
+  { value: "go", label: "Go" },
+  { value: "java", label: "Java" },
+  { value: "cpp", label: "C++" },
+  { value: "c", label: "C" },
+  { value: "csharp", label: "C#" },
+  { value: "php", label: "PHP" },
+  { value: "ruby", label: "Ruby" },
+  { value: "swift", label: "Swift" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "html", label: "HTML" },
+  { value: "css", label: "CSS" },
+  { value: "sql", label: "SQL" },
+  { value: "bash", label: "Bash / Shell" },
+  { value: "yaml", label: "YAML" },
+  { value: "json", label: "JSON" },
+  { value: "other", label: "Other" }
+];
 
 export const countries = [
   {

@@ -4,6 +4,7 @@ import { FullUser } from "@/types";
 import dayjs from "dayjs";
 import {
   BriefcaseBusiness,
+  Building2,
   Calendar1,
   ExternalLink,
   Globe,
@@ -63,8 +64,8 @@ function UserProfile(props: Props) {
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-zinc-500" />
                 <a
-                  href={user.websiteUrl}
                   target="_blank"
+                  href={user.websiteUrl}
                   rel="noopener noreferrer"
                   className="text-sm text-primary hover:underline"
                 >
@@ -75,7 +76,7 @@ function UserProfile(props: Props) {
             <div className="flex items-center gap-2 text-zinc-500">
               <Calendar1 className="h-4 w-4" />
               <span className="text-sm">
-                Member since {dayjs(user.createdAt).format("MMMM YYYY")}
+                Member since {dayjs(user.createdAt).format("DD MMMM YYYY")}
               </span>
             </div>
           </div>
@@ -164,9 +165,12 @@ function UserProfile(props: Props) {
                         <h3 className="font-semibold text-white">
                           {experience.role}
                         </h3>
-                        <p className="text-base text-zinc-400">
-                          {experience.company}
-                        </p>
+                        <div className="flex items-center gap-2 text-lg text-zinc-400">
+                          <Building2 size={16} className="text-zinc-500" />
+                          <span className="text-base text-zinc-400">
+                            {experience.company}
+                          </span>
+                        </div>
                       </div>
                       <span className="text-sm text-zinc-500">
                         {dayjs(experience.from).format("MMM YYYY")} -{" "}

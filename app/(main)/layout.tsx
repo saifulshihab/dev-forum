@@ -1,14 +1,17 @@
+import { nextAuthOptions } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import { AuthProvider } from "@/components/contexts/auth-provider";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import SetupProfileAlert from "@/components/user/setup-profile-alert";
 import { Analytics } from "@vercel/analytics/next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import "../globals.css";
 
@@ -29,10 +32,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerSession(nextAuthOptions);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className} antialiased`}>
+        <NextTopLoader color="#00857a" showSpinner={false} />
         <ThemeProvider
           enableSystem
           attribute="class"
@@ -42,6 +46,7 @@ export default async function RootLayout({
           <TooltipProvider>
             <AuthSessionProvider session={session}>
               <AuthProvider>
+                <SetupProfileAlert />
                 <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                   <AppSidebar />
                   <div className="h-full flex-1 overflow-y-auto">

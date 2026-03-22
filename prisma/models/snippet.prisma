@@ -1,0 +1,12 @@
+model Snippet {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  code        String
+  language    String
+  tags        String[] @default([])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

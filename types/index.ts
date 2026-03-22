@@ -34,6 +34,10 @@ export type FullJob = Prisma.JobGetPayload<{
   };
 }>;
 
+export type SnippetWithUser = Prisma.SnippetGetPayload<{
+  include: { user: { select: { id: true; fullName: true } } };
+}>;
+
 export type JobsPageSearchParams = {
   employmentType?: string;
   experienceLevel?: string;

@@ -63,6 +63,12 @@ export function AppSidebar() {
             variant: "default"
           },
           {
+            text: "New Snippet",
+            icon: <Code size={16} />,
+            href: "/snippets/create",
+            variant: "secondary"
+          },
+          {
             text: "My Jobs",
             icon: <Briefcase size={16} />,
             href: "/user/activity/jobs",
@@ -77,6 +83,12 @@ export function AppSidebar() {
             icon: <Star size={16} />,
             href: "/jobs/create",
             variant: "default"
+          },
+          {
+            text: "New Snippet",
+            icon: <Code size={16} />,
+            href: "/snippets/create",
+            variant: "secondary"
           },
           {
             text: "My Jobs",

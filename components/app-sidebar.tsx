@@ -9,6 +9,7 @@ import {
   Briefcase,
   ChevronsUpDown,
   Code,
+  FileText,
   HelpCircle,
   Home,
   LogIn,
@@ -118,6 +119,12 @@ export function AppSidebar() {
       text: "Jobs",
       icon: <Briefcase size={16} />,
       href: "/jobs",
+      badge: null
+    },
+    {
+      text: "Blogs",
+      icon: <FileText size={16} />,
+      href: "/blogs",
       badge: null
     }
   ];
@@ -305,7 +312,7 @@ export function AppSidebar() {
       {/* Main Navigation */}
       <div
         className={cn("h-[calc(100vh-10.8125rem)] overflow-y-auto", {
-          "h-[calc(100vh-21.6875rem)]": isAuthenticated
+          "h-[calc(100vh-370px)]": isAuthenticated
         })}
       >
         <div className="p-3">

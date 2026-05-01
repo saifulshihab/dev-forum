@@ -34,7 +34,7 @@ async function Page(props: Props) {
   if (!question) notFound();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Back Button */}
       <Button
         asChild

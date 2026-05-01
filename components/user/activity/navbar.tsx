@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/components/contexts/auth-provider";
 import { UserType } from "@/generated/prisma";
-import { Briefcase, MessageCircleQuestionMark } from "lucide-react";
+import { Briefcase, FileText, MessageCircleQuestionMark } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import NavItem from "./nav-item";
 
@@ -21,6 +21,11 @@ function UserActivityLayoutNavbar() {
           icon: <MessageCircleQuestionMark size={16} />
         },
         {
+          text: "My Blogs",
+          href: "/user/activity/blogs",
+          icon: <FileText size={16} />
+        },
+        {
           text: "Applied Jobs",
           href: "/user/activity/jobs",
           icon: <Briefcase size={16} />
@@ -32,6 +37,11 @@ function UserActivityLayoutNavbar() {
           text: "Job Openings",
           href: "/user/activity/jobs",
           icon: <Briefcase size={16} />
+        },
+        {
+          text: "My Blogs",
+          href: "/user/activity/blogs",
+          icon: <FileText size={16} />
         }
       ]);
     }

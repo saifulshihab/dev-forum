@@ -13,11 +13,20 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import dayjs from "@/lib/dayjs";
 import { deleteSnippet } from "@/lib/actions";
+import dayjs from "@/lib/dayjs";
 import { getTagColor } from "@/lib/utils";
 import { SnippetWithUser } from "@/types";
-import { ArrowLeft, Check, Clock, Code, Copy, Pencil, Trash, User } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  Clock,
+  Code,
+  Copy,
+  Pencil,
+  Trash,
+  User
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
@@ -58,10 +67,7 @@ function normalizeLanguage(language: string) {
   return LANGUAGE_MAP[lower] ?? lower;
 }
 
-function SnippetDetail(props: {
-  snippet: SnippetWithUser;
-  isOwner: boolean;
-}) {
+function SnippetDetail(props: { snippet: SnippetWithUser; isOwner: boolean }) {
   const { snippet, isOwner } = props;
   const router = useRouter();
   const [copied, setCopied] = useState(false);
@@ -91,18 +97,18 @@ function SnippetDetail(props: {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Back link */}
-      <div>
-        <Link
-          href="/snippets"
-          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 transition-colors hover:text-zinc-300"
-        >
-          <ArrowLeft size={14} />
-          Back to snippets
+    <div className="space-y-3">
+      <Button
+        asChild
+        size="sm"
+        variant="ghost"
+        className="text-zinc-400 hover:text-white"
+      >
+        <Link href="/snippets">
+          <ArrowLeft size={16} className="mr-2" />
+          Back
         </Link>
-      </div>
-
+      </Button>
       <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
         {/* Header */}
         <div className="border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-5">
@@ -134,7 +140,12 @@ function SnippetDetail(props: {
                 )}
               </Button>
               {isOwner && (
-                <Button size="sm" variant="secondary" className="h-8 gap-1.5" asChild>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="h-8 gap-1.5"
+                  asChild
+                >
                   <Link href={`/snippets/${snippet.id}/edit`}>
                     <Pencil size={13} />
                     Edit

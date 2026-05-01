@@ -38,6 +38,17 @@ export type SnippetWithUser = Prisma.SnippetGetPayload<{
   include: { user: { select: { id: true; fullName: true } } };
 }>;
 
+export type BlogPostWithUser = Prisma.BlogPostGetPayload<{
+  include: {
+    user: { select: { id: true; fullName: true } };
+    _count: { select: { comments: true } };
+  };
+}>;
+
+export type BlogCommentWithUser = Prisma.BlogCommentGetPayload<{
+  include: { user: { select: { id: true; fullName: true } } };
+}>;
+
 export type JobsPageSearchParams = {
   employmentType?: string;
   experienceLevel?: string;

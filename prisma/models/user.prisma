@@ -77,6 +77,8 @@ model User {
   jobs            Job[]
   jobApplications JobApplication[]
   snippets        Snippet[]
+  blogPosts       BlogPost[]
+  blogComments    BlogComment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

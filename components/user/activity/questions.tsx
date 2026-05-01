@@ -2,10 +2,12 @@
 
 import Question from "@/components/question/question";
 import Empty from "@/components/ui/empty";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Prisma } from "@/generated/prisma";
 import { deleteQuestion, getUserQuestions } from "@/lib/actions";
-import { MessageCircleQuestionMark } from "lucide-react";
+import { MessageCircleQuestionMark, PlusIcon } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -58,16 +60,25 @@ function UserQuestions() {
     <div className="space-y-6">
       {/* Header Section */}
       <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-            <MessageCircleQuestionMark size={20} className="text-primary" />
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <MessageCircleQuestionMark size={20} className="text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white">My Questions</h1>
+              <p className="mt-0.5 text-sm text-zinc-400">
+                Manage and track your questions
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-white">My Questions</h1>
-            <p className="mt-0.5 text-sm text-zinc-400">
-              Manage and track your questions
-            </p>
-          </div>
+
+          <Button asChild size="sm" className="h-9">
+            <Link href="/questions/create">
+              <PlusIcon size={14} />
+              Add Question
+            </Link>
+          </Button>
         </div>
       </div>
 

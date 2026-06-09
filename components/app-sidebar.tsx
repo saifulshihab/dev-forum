@@ -171,7 +171,7 @@ export function AppSidebar() {
 
   return (
     <div
-      className={`border-l border-r border-dashed transition-all duration-300 ${
+      className={`hidden border-l border-r border-dashed transition-all duration-300 md:block ${
         sidebarOpen ? "w-64 shrink-0" : "w-16 shrink-0"
       }`}
     >

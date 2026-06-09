@@ -98,8 +98,10 @@ function JobList(props: { jobs: Job[] }) {
         <div className="flex w-full items-start gap-3">
           <div
             className={cn(
-              "grid max-h-[calc(100vh-4.625rem)] w-full grid-cols-2 gap-3 overflow-y-auto",
-              isJobDetailsOpen && "w-1/2 grid-cols-1"
+              "grid w-full gap-3 overflow-y-auto",
+              isJobDetailsOpen
+                ? "hidden md:grid md:max-h-[calc(100vh-4.625rem)] md:w-1/2 md:grid-cols-1"
+                : "grid-cols-1 sm:grid-cols-2 md:max-h-[calc(100vh-4.625rem)]"
             )}
           >
             {jobs.map((job) => (
@@ -111,7 +113,7 @@ function JobList(props: { jobs: Job[] }) {
             ))}
           </div>
           {isJobDetailsOpen ? (
-            <div className="max-h-[calc(100vh-4.625rem)] w-1/2 overflow-y-auto">
+            <div className="w-full overflow-y-auto md:max-h-[calc(100vh-4.625rem)] md:w-1/2">
               <JobDetails
                 job={fullJob}
                 onApply={onApplyJob}

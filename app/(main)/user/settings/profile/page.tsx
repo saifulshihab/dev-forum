@@ -174,7 +174,7 @@ function Page() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <FormField
                       name="fullName"
                       control={form.control}
@@ -234,7 +234,7 @@ function Page() {
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <FormField
                       name="bio"
                       control={form.control}
@@ -265,7 +265,7 @@ function Page() {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <div className="flex-1">
                       <FormField
                         control={form.control}
@@ -324,7 +324,7 @@ function Page() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-4 items-center gap-3">
+                <div className="grid grid-cols-2 items-center gap-3 sm:grid-cols-3 md:grid-cols-4">
                   {skillsField?.fields.length ? (
                     skillsField.fields.map((field, fieldIdx) => (
                       <div key={field.id} className="group col-span-1 flex">
@@ -395,7 +395,7 @@ function Page() {
                                 control={form.control}
                                 name={`experiences.${fieldIdx}.role`}
                                 render={({ field }) => (
-                                  <FormItem className="w-1/2">
+                                  <FormItem className="flex-1">
                                     <FormControl>
                                       <Input
                                         placeholder="Your role"
@@ -418,7 +418,7 @@ function Page() {
                               control={form.control}
                               name={`experiences.${fieldIdx}.company`}
                               render={({ field }) => (
-                                <FormItem className="w-1/2">
+                                <FormItem className="w-full sm:w-1/2">
                                   <FormControl>
                                     <Input
                                       placeholder="Company name"
@@ -429,7 +429,7 @@ function Page() {
                                 </FormItem>
                               )}
                             />
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-wrap items-center gap-3">
                               <Controller
                                 name={`experiences.${fieldIdx}.from`}
                                 control={form.control}
@@ -490,7 +490,7 @@ function Page() {
                               control={form.control}
                               name={`experiences.${fieldIdx}.description`}
                               render={({ field }) => (
-                                <FormItem className="w-3/4">
+                                <FormItem className="w-full sm:w-3/4">
                                   <FormControl>
                                     <Textarea
                                       rows={10}
@@ -564,7 +564,7 @@ function Page() {
                                     control={form.control}
                                     name={`projects.${fieldIdx}.name`}
                                     render={({ field }) => (
-                                      <FormItem className="w-1/2">
+                                      <FormItem className="flex-1">
                                         <FormControl>
                                           <Input
                                             placeholder="Project name"
@@ -604,7 +604,7 @@ function Page() {
                                   control={form.control}
                                   name={`projects.${fieldIdx}.url`}
                                   render={({ field }) => (
-                                    <FormItem className="w-3/4">
+                                    <FormItem className="w-full sm:w-3/4">
                                       <FormControl>
                                         <Input
                                           placeholder="Project url (optional)"
@@ -669,7 +669,7 @@ function Page() {
                                 control={form.control}
                                 name={`educations.${fieldIdx}.institute`}
                                 render={({ field }) => (
-                                  <FormItem className="w-1/2">
+                                  <FormItem className="flex-1">
                                     <FormControl>
                                       <Input
                                         placeholder="Institute name"
@@ -688,7 +688,7 @@ function Page() {
                                 <Trash />
                               </Button>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-wrap items-center gap-3">
                               <Controller
                                 name={`educations.${fieldIdx}.from`}
                                 control={form.control}
@@ -760,7 +760,7 @@ function Page() {
                               control={form.control}
                               name={`educations.${fieldIdx}.description`}
                               render={({ field }) => (
-                                <FormItem className="w-3/4">
+                                <FormItem className="w-full sm:w-3/4">
                                   <FormControl>
                                     <Textarea
                                       {...field}

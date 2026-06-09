@@ -105,7 +105,7 @@ function Page() {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     {/* Company */}
                     <FormField
                       name="company"
@@ -153,7 +153,7 @@ function Page() {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     {/* Type */}
                     <FormField
                       name="employmentType"
@@ -353,7 +353,7 @@ function Page() {
                     </Button>
                   </div>
                   {/* Salary range */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <FormField
                       name="salaryMin"
                       control={form.control}

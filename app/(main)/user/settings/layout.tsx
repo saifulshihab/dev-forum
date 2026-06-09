@@ -3,9 +3,9 @@ import React from "react";
 
 function SidebarLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex h-full">
+    <div className="flex flex-col md:flex-row">
       <SettingsSidebar />
-      <div className="h-full max-h-full flex-1 overflow-y-auto">{children}</div>
+      <div className="flex-1 p-4">{children}</div>
     </div>
   );
 }

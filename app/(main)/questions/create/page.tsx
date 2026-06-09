@@ -112,7 +112,7 @@ function Page() {
             />
             <div className="space-y-2">
               <FormLabel>Tags</FormLabel>
-              <div className="grid grid-cols-4 items-center gap-3">
+              <div className="grid grid-cols-2 items-center gap-3 sm:grid-cols-3 md:grid-cols-4">
                 {tags.map((tag, tagIndex) => (
                   <div key={tagIndex} className="group col-span-1 flex">
                     <Input

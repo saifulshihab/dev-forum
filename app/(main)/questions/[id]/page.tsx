@@ -50,17 +50,17 @@ async function Page(props: Props) {
       {/* Question Card */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 shadow-xl">
         {/* Header Section */}
-        <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-6">
+        <div className="rounded-t-xl border-b border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-800/50 p-4 md:p-6">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div className="flex-1">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 md:h-10 md:w-10">
                   <MessageCircleQuestionMark
-                    size={20}
+                    size={18}
                     className="text-primary"
                   />
                 </div>
-                <h1 className="text-2xl font-bold text-white">
+                <h1 className="text-xl font-bold text-white md:text-2xl">
                   {question.title}
                 </h1>
               </div>
@@ -95,7 +95,7 @@ async function Page(props: Props) {
         </div>
 
         {/* Content Section */}
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           <div>
             <h2 className="mb-3 text-lg font-semibold text-white">
               Description

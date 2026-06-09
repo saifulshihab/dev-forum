@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { AuthProvider } from "@/components/contexts/auth-provider";
 import { AuthSessionProvider } from "@/components/contexts/auth-session-provider";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
+import MobileNav from "@/components/mobile-nav";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import SetupProfileAlert from "@/components/user/setup-profile-alert";
 import { Analytics } from "@vercel/analytics/next";
@@ -49,8 +50,11 @@ export default async function RootLayout({
                 <SetupProfileAlert />
                 <main className="m-auto flex h-screen max-w-screen-xl border-r border-dashed">
                   <AppSidebar />
-                  <div className="h-full flex-1 overflow-y-auto">
-                    {children}
+                  <div className="flex h-full flex-1 flex-col overflow-hidden">
+                    <MobileNav />
+                    <div className="flex-1 overflow-y-auto">
+                      {children}
+                    </div>
                   </div>
                 </main>
               </AuthProvider>

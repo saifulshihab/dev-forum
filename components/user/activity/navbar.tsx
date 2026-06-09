@@ -48,9 +48,11 @@ function UserActivityLayoutNavbar() {
   }, [user?.type]);
 
   return (
-    <nav className="flex items-center gap-4 border-b border-dashed px-4 py-2">
+    <nav className="flex items-center gap-2 overflow-x-auto border-b border-dashed px-4 py-2">
       {navItems.map((item, idx) => (
-        <NavItem key={idx} text={item.text} href={item.href} icon={item.icon} />
+        <div key={idx} className="shrink-0">
+          <NavItem text={item.text} href={item.href} icon={item.icon} />
+        </div>
       ))}
     </nav>
   );

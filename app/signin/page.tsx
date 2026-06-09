@@ -9,7 +9,7 @@ function SignInPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   return (
-    <div className="w-96 rounded-md bg-zinc-900 p-10">
+    <div className="w-full max-w-sm rounded-md bg-zinc-900 p-6 mx-4 sm:p-10">
       <div className="mb-6 flex flex-col items-center">
         <div className="flex flex-col items-center gap-1">
           <Image

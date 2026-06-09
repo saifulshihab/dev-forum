@@ -32,9 +32,9 @@ async function Page({ searchParams }: { searchParams: SearchParams }) {
   return (
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
-      <div className="flex items-center gap-2">
-        <form className="flex flex-1 items-center gap-2" method="GET">
-          <div className="relative flex-1">
+      <div className="flex flex-wrap items-center gap-2">
+        <form className="flex flex-1 flex-wrap items-center gap-2" method="GET">
+          <div className="relative min-w-[8rem] flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               name="search"
@@ -44,7 +44,7 @@ async function Page({ searchParams }: { searchParams: SearchParams }) {
             />
           </div>
           <Select name="language" defaultValue={language || "all"}>
-            <SelectTrigger className="h-9 w-44 border-dashed bg-muted/50 text-sm">
+            <SelectTrigger className="h-9 w-36 border-dashed bg-muted/50 text-sm sm:w-44">
               <SelectValue placeholder="All languages" />
             </SelectTrigger>
             <SelectContent>
@@ -64,7 +64,8 @@ async function Page({ searchParams }: { searchParams: SearchParams }) {
           <Button size="sm" className="h-9" asChild>
             <Link href="/snippets/create">
               <PlusIcon size={14} />
-              New Snippet
+              <span className="hidden sm:inline">New Snippet</span>
+              <span className="sm:hidden">New</span>
             </Link>
           </Button>
         )}

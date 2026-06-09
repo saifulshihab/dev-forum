@@ -28,7 +28,7 @@ function UserProfile(props: Props) {
   const { user, currentUser } = props;
   return (
     <div className="min-h-screen">
-      <div className="border-b border-dashed border-teal-900 bg-primary/5 px-8 py-8">
+      <div className="border-b border-dashed border-teal-900 bg-primary/5 px-4 py-6 md:px-8 md:py-8">
         <div className="mb-4 flex flex-col items-center gap-5 md:flex-row md:items-start md:justify-between md:gap-0">
           <div className="relative h-40 w-40 rounded-md border-primary shadow-lg">
             {user.dpUrl ? (
@@ -121,7 +121,7 @@ function UserProfile(props: Props) {
         </div>
       </div>
       {/* Main Content */}
-      <div className="px-8 py-6">
+      <div className="px-4 py-6 md:px-8">
         {/* Skills Section */}
         {user.skills.length > 0 && (
           <section className="mb-8">
@@ -160,7 +160,7 @@ function UserProfile(props: Props) {
                   className="border-l border-dashed pl-4"
                 >
                   <div className="flex flex-col gap-1">
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-semibold text-white">
                           {experience.role}
@@ -235,7 +235,7 @@ function UserProfile(props: Props) {
               {user.educations.map((education) => (
                 <div key={education.id} className="border-l border-dashed pl-4">
                   <div className="flex flex-col gap-1">
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-semibold text-white">
                           {education.institute}

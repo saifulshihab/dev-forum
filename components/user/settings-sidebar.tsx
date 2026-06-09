@@ -17,11 +17,11 @@ export function SettingsSidebar() {
     }
   ];
   return (
-    <div className="h-screen border-r border-dashed">
+    <div className="border-b border-dashed md:h-screen md:border-b-0 md:border-r">
       <p className="mt-3 px-3 text-xs font-medium text-muted-foreground">
         Settings
       </p>
-      <nav className="w-52 space-y-1 p-3">
+      <nav className="flex flex-row flex-wrap gap-1 p-3 md:w-52 md:flex-col">
         {navItems.map((item, idx) => (
           <NavItem
             collapsed={false}
